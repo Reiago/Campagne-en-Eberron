@@ -1,27 +1,39 @@
 
 document.addEventListener("DOMContentLoaded", function() {
-  const navHTML = `
-<nav class="main-nav">
-  <a href="index.html">Accueil</a>
-  <a href="Nains.html">Nains</a>
-  <a href="Elfe.html">Elfes</a>
-  <a href="Humain.html">Humains</a>
-  <a href="Hobbit.html">Hobbits</a>
-  <a href="Gnome.html">Gnomes</a>
-  <a href="Demi_Elfe.html">Demi-Elfes</a>
-  <a href="Demi_Orc.html">Demi-Orcs</a>
-  <a href="Changelin.html">Changelins</a>
-  <a href="Drakeide.html">Drakeides</a>
-  <a href="Féral.html">Féraux</a>
-  <a href="Forgelier.html">Forgeliers</a>
-  <a href="Kalashtar.html">Kalashtars</a>
-  <a href="maisons_draconiques.html">Maisons</a>
-  <a href="Marques_draconiques.html">Marques</a>
-  <a href="Dons.html">Dons</a>
-  <a href="Liens_Ideaux.html">Liens & Idéaux</a>
-</nav>
-  `;
-  const container = document.getElementById('nav-container');
+  const path = window.location.pathname.replace(/\\/g, "/");
+  const inRaces = /\/races(?:\/|$)/.test(path);
+
+  const root = inRaces ? "../" : "";
+  const races = inRaces ? "" : "races/";
+
+  const links = [
+    { href: root + "index.html", label: "Accueil" },
+    { href: races + "Nains.html", label: "Nains" },
+    { href: races + "Elfe.html", label: "Elfes" },
+    { href: races + "Humain.html", label: "Humains" },
+    { href: races + "Hobbit.html", label: "Hobbits" },
+    { href: races + "Gnome.html", label: "Gnomes" },
+    { href: races + "Demi_Elfe.html", label: "Demi-Elfes" },
+    { href: races + "Demi_Orc.html", label: "Demi-Orcs" },
+    { href: races + "Changelin.html", label: "Changelins" },
+    { href: races + "Drakeide.html", label: "Drakeides" },
+    { href: races + "Féral.html", label: "Féraux" },
+    { href: races + "Forgelier.html", label: "Forgeliers" },
+    { href: races + "Kalashtar.html", label: "Kalashtars" },
+    { href: root + "maisons_draconiques.html", label: "Maisons" },
+    { href: root + "Marques_draconiques.html", label: "Marques" },
+    { href: root + "Dons.html", label: "Dons" },
+    { href: root + "Liens_Ideaux.html", label: "Liens & Idéaux" },
+  ];
+
+  const navHTML =
+    "<nav class=\"main-nav\">\n" +
+    links.map(function(l) {
+      return "  <a href=\"" + l.href + "\">" + l.label + "</a>";
+    }).join("\n") +
+    "\n</nav>";
+
+  const container = document.getElementById("nav-container");
   if (container) {
     container.innerHTML = navHTML;
   }

@@ -44,10 +44,10 @@ La page d’accueil est `index.html` à la racine — configuration par défaut 
 | Fichier / dossier | Rôle |
 |-------------------|------|
 | `index.html` | Page d’accueil |
-| `nav.html`, `nav.js` | Navigation commune injectée dans les pages |
+| `races/` | Fiches des 12 races (HTML + sources `.txt`) |
+| `nav.html`, `nav.js` | Navigation commune (`nav.js` adapte les liens selon la page) |
 | `style.css` | Styles globaux |
-| `*.html` | Fiches publiées |
-| `*.txt` | Notes / sources texte |
+| `*.html` (racine) | Maisons, marques, dons, liens & idéaux |
 
 ## Licence
 
