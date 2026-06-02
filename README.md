@@ -38,9 +38,6 @@ Ce dépôt est prévu pour être hébergé en **site statique** sur GitHub Pages
 
 La page d’accueil est `index.html` à la racine — configuration par défaut pour Pages, sans build ni framework.
 
-### Nom du dépôt et URL
-
-L’URL Pages dépend du **nom du dépôt** sur GitHub (`https://<utilisateur>.github.io/<nom-du-depot>/`). Si vous renommez le dépôt, l’URL change en conséquence.
 
 ## Structure du projet
 
@@ -58,4 +55,4 @@ Le contenu Eberron et D&D appartient à **Wizards of the Coast**. Ce dépôt est
 
 ## Dépôt
 
-- GitHub : [Reiago/2026---JdR](https://github.com/Reiago/2026---JdR)
+- GitHub : [Reiago/Campagne-en-Eberron](https://github.com/Reiago/Campagne-en-Eberron)
