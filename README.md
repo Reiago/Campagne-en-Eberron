@@ -34,7 +34,7 @@ Ce dépôt est prévu pour être hébergé en **site statique** sur GitHub Pages
 4. Branche : `main`, dossier : **/ (root)**.
 5. Enregistrez ; après quelques minutes, le site est disponible à l’URL :
 
-   **https://reiago.github.io/2026---JdR/**
+   **https://reiago.github.io/Campagne-en-Eberron/**
 
 La page d’accueil est `index.html` à la racine — configuration par défaut pour Pages, sans build ni framework.
 
