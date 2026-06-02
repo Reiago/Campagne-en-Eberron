@@ -1,0 +1,33 @@
+"Les demi‑elfes sont relativement répandus au Khorvaire, bien plus que dans la plupart des autres mondes connus. Cette présence s’explique par les contacts anciens et durables entre les elfes et les humains, en particulier dans les régions côtières et les grandes cités marchandes. Héritiers de deux cultures, les demi‑elfes développent souvent une identité propre, distincte à la fois de celle des humains et de celle des elfes. Leur longévité accrue et leur sensibilité aux traditions elfiques contrastent avec leur adaptabilité et leur pragmatisme hérités des humains.
+Souvent perçus comme des intermédiaires naturels entre les peuples, les demi‑elfes excellent dans les domaines où diplomatie, intuition et compréhension des cultures sont essentielles. Bien qu’ils puissent parfois souffrir d’un sentiment de déracinement, beaucoup embrassent pleinement leur double héritage et en font une force, se forgeant une place influente dans la société du Khorvaire."
+Territoires  Les demi‑elfes ne possèdent pas de terres propres et vivent principalement au sein des nations humaines du Khorvaire. Ils sont particulièrement nombreux dans les régions côtières, comme Lhazaar et les cités portuaires, ainsi que dans les grandes métropoles telles que Sharn. On les rencontre également parmi les communautés elfiques, bien qu’ils y soient souvent considérés comme des étrangers.
+Marques draconiques  La maison Lyrandar, porteuse du Marque draconique de la Tempête, est presque exclusivement composée de demi‑elfes. Spécialisée dans la navigation, le contrôle des vents et des tempêtes, ainsi que le transport maritime et aérien, elle tire pleinement parti de l’héritage mixte de ses membres, combinant intuition elfique et ambition humaine. On retrouve aussi les demi elfes portant les marques draconiques de la Détection et de la Transcription.
+
+"Noms de demi-elfes
+Les demi-elfes d’Eberron vivent souvent entre deux mondes, et leurs noms reflètent cette dualité. Certains portent des noms humains transmis par leur famille mortelle, tandis que d’autres adoptent des noms elfiques pour honorer leur héritage féerique. Dans les grandes cités comme Sharn, il n’est pas rare qu’un demi-elfe utilise plusieurs noms selon le contexte social ou culturel.
+Les demi-elfes issus des Maisons draconiques portent fréquemment des noms liés à leur lignée, renforçant leur identité et leur statut. D’autres préfèrent des surnoms ou des noms choisis, marquant leur indépendance vis-à-vis des traditions.
+Noms masculins demi-elfes : Aelar, Corin, Dain, Erdan, Kael, Lucan, Miro, Rolen, Theren, Valen
+Noms féminins demi-elfes : Alia, Brynn, Enna, Lethiel, Mira, Naeris, Sariel, Talia, Vira, Ysolde
+Noms de famille : d’Cannith, d’Lyrandar, d’Medani, d’Phiarlan, d’Tharashk, ir’Wynarn, ir’Talan"
+"Traits des demi-elfes
+Votre personnage demi-elfe possède les traits suivants."
+"Augmentation de caractéristiques
+Votre Charisme augmente de 2, et deux autres caractéristiques de votre choix augmentent de 1 chacune."
+"Âge
+Les demi-elfes atteignent l’âge adulte à peu près au même rythme que les humains, mais leur longévité est légèrement supérieure. Beaucoup vivent jusqu’à 150 ans, conservant une apparence jeune plus longtemps que leurs pairs humains."
+"Alignement
+Habitués à naviguer entre différentes cultures, les demi-elfes sont souvent flexibles dans leurs convictions. Ils tendent vers des alignements neutres, privilégiant l’adaptation et la compréhension plutôt que des idéaux rigides."
+"Taille
+Les demi-elfes mesurent généralement entre 1,60 et 1,90 mètre. Leur silhouette combine la grâce elfique et la robustesse humaine. Votre taille est Moyenne."
+"Vitesse
+Votre vitesse de déplacement de base est de 9 mètres."
+"Vision dans le noir
+Grâce à votre héritage elfique, vous pouvez voir dans une lumière faible à 18 mètres comme si c’était une lumière vive, et dans l’obscurité comme si c’était une lumière faible. Vous ne distinguez pas les couleurs dans l’obscurité, seulement des nuances de gris."
+"Héritage féerique
+Vous avez un avantage aux jets de sauvegarde contre l’état charmé, et la magie ne peut pas vous endormir."
+"Polyvalence des compétences
+Vous gagnez la maîtrise de deux compétences de votre choix."
+"Sensibilité culturelle
+Les demi-elfes sont naturellement attentifs aux dynamiques sociales. Vous avez un avantage aux tests de Charisme (Persuasion ou Intuition) lorsque vous interagissez avec des créatures issues de cultures différentes de la vôtre."
+"Langues
+Vous pouvez parler, lire et écrire le commun, l’elfique, et une langue supplémentaire de votre choix."

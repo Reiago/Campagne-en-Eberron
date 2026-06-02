@@ -1,0 +1,49 @@
+"Les forgeliers sont des êtres artificiels créés durant la Dernière Guerre pour servir de soldats. Conçus à partir de bois vivant, de métal et de pierre, animés par une étincelle de vie encore mal comprise, ils furent produits en grand nombre par les forges de la Maison Cannith. Bien qu’ils aient été conçus comme des armes, les forgeliers possèdent une conscience, une volonté propre et une capacité d’apprentissage comparables à celles des races vivantes.
+Depuis la fin de la guerre et la signature du Traité du Trône, les forgeliers ont obtenu le statut d’êtres libres. Beaucoup d’entre eux peinent toutefois à trouver leur place dans un monde qui les considère encore comme des outils ou des vestiges d’un conflit révolu. Dépourvus de traditions anciennes et de structures sociales établies, ils cherchent souvent à définir leur propre identité, explorant des concepts tels que la liberté, la foi, le but et l’humanité."													
+Territoires  Les forgeliers ne possèdent aucune terre propre. On les rencontre principalement dans les anciennes zones de conflit, notamment en Breland et dans les ruines du Cyre, aujourd’hui connues sous le nom de Mournland. Certains se sont regroupés dans des communautés isolées, tandis que d’autres ont choisi de s’intégrer aux sociétés humaines des grandes cités du Khorvaire, où ils exercent divers métiers civils ou militaires.													
+Marques draconiques  Les forgeliers sont étroitement liés à la maison Cannith, porteuse du Marque draconique de la Fabrication, m^me s'ils ne peuvent pas eux même être porteurs de marques draconiques si ce n'est une marque aberrante. Bien que la maison Cannith ait officiellement perdu le droit de créer de nouveaux forgeliers à l'issue de la grande guerre, nombre d’entre eux entretiennent encore des liens complexes avec leurs anciens créateurs, oscillant entre loyauté, méfiance et désir d’indépendance.													
+Les forgeliers ont été construits pour se battre lors de la Dernière guerre. Les premiers d'entre-eux étaient des automates stupides, mais la Maison Cannith a mobilisé d'énormes moyens afin d'améliorer ces soldats d'acier. Une avancée inattendue a alors produit des soldats pleinement conscients à base de matériaux organiques et inorganiques. Les forgeliers peuvent être fabriqués à partir de bois et de métal, et ressentir de la douleur et de l'émotion. Construits comme des armes, ils doivent maintenant se trouver un but après la guerre. Un forgelier peut être un inébranlable allié, une machine à tuer au cœur froid, ou un visionnaire en quête de but et de sens.													
+"Personnalité d'un forgelier
+Les forgeliers ont été construits pour servir et combattre. Durant la majeure partie de leur existence, les forgeliers ont eu une fonction clairement définie et étaient encouragés à se concentrer uniquement sur ce rôle. Le traité de Thronehold les a alors libérés, mais beaucoup ont encore du mal à trouver leur place dans le monde d'après-guerre et à se lier aux créatures qui les ont créés. Un forgelier typique montre peu d'émotion. Nombre d'entre-eux se fixent un objectif concret, comme protéger des alliés, conclure un contrat ou explorer une terre, et ils se consacrent à cette tâche comme ils faisaient la guerre. Cependant, certains aiment aussi explorer leurs sentiments, leur liberté et leurs relations avec les autres. La plupart des forgeliers n'ont aucun intérêt pour la religion, mais certains embrassent la foi et le mysticisme, à la recherche d'un but plus spirituel et d'un sens plus profond.
+
+Le forgelier typique a un corps asexué. Certains ignorent totalement le concept de genre, et d'autres adoptent une identité de genre. En fait, plus un forgelier développe son individualité, plus il est susceptible de modifier son corps, cherchant alors un artificier pour personnaliser l'apparence de son visage, de ses membres et de son blindage."													
+"Excentricités
+Les forgeliers affichent souvent un ou deux traits de personnalité étranges, dû au fait qu'ils soient nouveaux dans le monde. La table ci-dessous propose des exemples d'excentricités.
+
+d8	Excentricité
+1	Vous analysez à haute voix la menace potentielle posée par chaque créature que vous rencontrez.
+2	Vous interprétez souvent mal les indices émotionnels.
+3	Vous êtes un farouche protecteur de vos amis.
+4	Vous essayez d'appliquer la discipline de guerre à chaque situation.
+5	Vous ne savez pas gérer vos sentiments et êtes sujet à des explosions émotionnelles dramatiques.
+6	Vous ne comprenez pas l'utilité des vêtements et supposez qu'ils dénotent la fonction d'une personne.
+7	Vous êtes obsédé par votre apparence et vous vous polissez constamment.
+8	La guerre est la seule chose qui a du sens pour vous ; vous êtes toujours à la recherche d'un combat."													
+"Noms de forgeliers
+On assigne aux forgeliers des désignations numériques pour leur usage militaire. Mais beaucoup d'entre eux adoptent des surnoms, souvent donnés par leurs camarades. En tant qu'individus libres, certains ont choisi de nouveaux noms pour exprimer leur chemin dans la vie. Quelques-uns prennent des noms humains, souvent le nom d'un ami disparu ou d'un mentor.
+
+Noms forgeliers : Anchor, Banner, Bastion, Blade, Blue, Bow, Cart, Church, Crunch, Crystal, Dagger, Dent, Five, Glaive, Hammer, Iron, Lucky, Mace, Oak, Onyx, Pants, Pierce, Red, Rod, Rusty, Scout, Seven, Shield, Slash, Smith, Spike, Temple, Vault, Wall."													
+"Traits
+Votre personnage forgelier possède les traits suivants."													
+Augmentation de caractéristiques. Votre Constitution augmente de 2 et une autre caractéristique de votre choix augmente de 1.													
+Âge. Un forgelier typique a entre deux et trente ans. La durée de vie maximale d'un forgelier reste un mystère ; jusqu'à présent les forgeliers n'ont montré aucun signe de détérioration à cause de l'âge. Vous êtes immunisé contre les effets de l'âge.													
+Alignement. La plupart des forgeliers aiment l'ordre et la discipline, tendant vers la loi et la neutralité, mais certains adoptent la moralité (ou son absence) des êtres avec lesquels ils ont servi.													
+"Taille. Votre taille est Moyenne. Pour déterminer votre taille et votre poids, vous pouvez utiliser la table suivante :
+
+Race         Taille          Modificateur             Poids                Modificateur
+                 de base	 de taille (cm)          de base             de poids (kg)
+Forgelier  1,80 m        +2d6 x 2,50	              120 kg	   +2d6 x 2"													
+Vitesse. Votre vitesse de base est de 9 mètres.													
+"Résistance des forgeliers. Vous avez été créé pour avoir une force étonnante, qui est représentée par les avantages suivants :
+
+Vous avez un avantage aux jets de sauvegarde contre l'état empoisonné et la résistance aux dégâts de poison.
+Vous n'avez pas besoin de manger, ni de boire ni de respirer.
+Vous êtes immunisé contre les maladies.
+Vous n'avez pas besoin de dormir et la magie ne peut pas vous endormir."													
+Repos de la sentinelle. Lorsque vous prenez un repos long, vous devez passer au moins six heures dans un état inactif et immobile plutôt que de dormir. Dans cet état, vous semblez inerte, mais cela ne vous rend pas inconscient, et vous pouvez voir et entendre normalement.													
+"Protection intégrée. Votre corps possède des couches de protection intégrée qui peuvent être améliorées par une armure :
+Vous gagnez un bonus de +1 à la Classe d'Armure.
+Vous ne pouvez mettre une armure que si vous la maîtrisez. Pour mettre une armure, vous devez l'incorporer à votre corps. Cela vous prend 1 heure, durant laquelle vous restez en contact avec l'armure. Quitter une armure vous prend également 1 heure. Vous pouvez vous reposer pendant que vous mettez ou quittez une armure de cette manière.
+Tant que vous êtes en vie, votre armure ne peut pas être quittée de votre corps contre votre volonté."													
+Conception spécialisée. Vous obtenez la maîtrise d'une compétence de votre choix et d'un outil de votre choix.													
+Langues. Vous pouvez parler, lire et écrire le commun et une autre langue de votre choix.													

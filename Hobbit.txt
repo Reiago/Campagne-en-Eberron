@@ -1,0 +1,39 @@
+"Les halfelins sont relativement nombreux au Khorvaire et se distinguent nettement de l’image paisible et sédentaire que l’on associe souvent à leur peuple dans d’autres mondes. À Eberron, ils forment une culture dynamique et variée, allant de communautés nomades farouchement indépendantes à des familles influentes profondément intégrées aux sociétés humaines. Leur petite taille dissimule souvent une grande détermination, ainsi qu’un sens aigu de la loyauté et de la survie.
+Deux traditions majeures dominent la culture halfeline. Les halfelins des plaines de Talenta mènent une existence nomade, vivant de chasse et d’élevage, et sont réputés pour leur maîtrise des montures exotiques, notamment les dinosaures. À l’inverse, les halfelins urbains ont adopté un mode de vie plus sédentaire et jouent souvent des rôles clés dans le commerce, la politique et les réseaux d’information. Malgré ces différences, tous partagent un fort attachement à la famille et à la communauté."
+Territoires  Les halfelins des plaines de Talenta occupent les vastes étendues herbeuses de l’est du Khorvaire, où ils se déplacent en tribus nomades. Les halfelins urbains, quant à eux, sont présents dans presque toutes les grandes cités du continent, notamment à Sharn, où ils vivent mêlés aux autres peuples et occupent souvent des positions d’influence discrète.
+Marques draconiques. La maison halfeline de Ghallanda porte le Marque draconique de l'Hospitalite, ce qui confère certaines aptitudes magiques en rapport avec la nourriture, la boisson et le gite à ses membres, que l'on retrouve à la gestion d'auberges et de relais gastronomiques, assurant la restauration des familles royales, ou encore invoquant des vivres pour leurs congénères en vadrouille dans les plaines de Talante. La maison Jorasco, porteuse du Marque draconique de la Guérison, est principalement composée de halfelins. Spécialisée dans les soins médicaux et magiques, elle joue un rôle essentiel dans la société du Khorvaire, fournissant ses services à toutes les nations, indépendamment des conflits politiques. De manière très rare, les halfelins peuvent être porteurs de la marque draconique de la tempête ou de l'ombre.
+
+"Noms de halfelins
+Les halfelins d’Eberron portent des noms simples et chaleureux, souvent transmis au sein de la famille ou du clan. Leur culture valorise la communauté, la mémoire collective et les liens personnels, et les noms reflètent cette proximité. Les halfelins des Plaines Talenta utilisent parfois des noms liés à des animaux, des exploits ou des événements marquants, tandis que ceux vivant dans les cités de Khorvaire adoptent des noms plus communs pour s’intégrer facilement.
+Les surnoms sont fréquents chez les halfelins et peuvent évoluer au fil du temps, marquant un trait de caractère, une habitude ou un fait notable. Le genre est perçu de manière souple, et les noms ne sont pas strictement genrés.
+Noms halfelins : Alton, Bree, Callie, Daro, Eldon, Fenna, Jori, Lyle, Mira, Nilo, Poppy, Rill, Tavi, Wella, Zane"
+"Traits des halfelins
+Votre personnage halfelin possède les traits suivants."
+"Augmentation de caractéristiques
+Votre Dextérité augmente de 2."
+"Âge
+Les halfelins atteignent l’âge adulte vers 20 ans et peuvent vivre jusqu’à 150 ans. Leur longévité leur permet de tisser des liens durables et de transmettre traditions et récits sur plusieurs générations."
+"Alignement
+Les halfelins privilégient la liberté personnelle, la loyauté envers leurs proches et une vie équilibrée. Beaucoup tendent vers des alignements neutres ou chaotiques bons, préférant l’harmonie quotidienne aux grandes idéologies."
+"Taille
+Les halfelins mesurent généralement entre 0,90 et 1,10 mètre et ont une carrure légère. Votre taille est Petite."
+"Vitesse
+Votre vitesse de déplacement de base est de 7,5 mètres."
+"Chanceux
+Lorsque vous obtenez un 1 naturel sur un jet d’attaque, de caractéristique ou de sauvegarde, vous pouvez relancer le dé et devez utiliser le nouveau résultat."
+"Brave
+Vous avez un avantage aux jets de sauvegarde contre l’état effrayé."
+"Agilité halfeline
+Vous pouvez vous déplacer à travers l’espace occupé par toute créature d’une taille supérieure à la vôtre."
+"Langues
+Vous pouvez parler, lire et écrire le commun et le halfelin."
+"Halfelins des Plaines Talenta
+Nomades et cavaliers, les halfelins des Plaines Talenta vivent en harmonie avec la nature et les créatures qu’ils élèvent.
+Augmentation de caractéristiques : Votre Sagesse augmente de 1.
+Survie nomade : Vous gagnez la maîtrise de la compétence Survie.
+Cavalier des plaines : Vous avez un avantage aux tests de Dextérité (Acrobaties) ou de Sagesse (Dressage) liés à la monte."
+"Halfelins urbains
+Installés dans les cités de Khorvaire, ces halfelins sont commerçants, artisans ou aventuriers, réputés pour leur adaptabilité.
+Augmentation de caractéristiques : Votre Charisme augmente de 1.
+Polyvalence sociale : Vous gagnez la maîtrise d’une compétence de Charisme de votre choix.
+Sens pratique : Une fois par repos long, vous pouvez relancer un test de caractéristique lié à une interaction sociale."

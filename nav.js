@@ -1,0 +1,28 @@
+
+document.addEventListener("DOMContentLoaded", function() {
+  const navHTML = `
+<nav class="main-nav">
+  <a href="index.html">Accueil</a>
+  <a href="Nains.html">Nains</a>
+  <a href="Elfe.html">Elfes</a>
+  <a href="Humain.html">Humains</a>
+  <a href="Hobbit.html">Hobbits</a>
+  <a href="Gnome.html">Gnomes</a>
+  <a href="Demi_Elfe.html">Demi-Elfes</a>
+  <a href="Demi_Orc.html">Demi-Orcs</a>
+  <a href="Changelin.html">Changelins</a>
+  <a href="Drakeide.html">Drakeides</a>
+  <a href="Féral.html">Féraux</a>
+  <a href="Forgelier.html">Forgeliers</a>
+  <a href="Kalashtar.html">Kalashtars</a>
+  <a href="maisons_draconiques.html">Maisons</a>
+  <a href="Marques_draconiques.html">Marques</a>
+  <a href="Dons.html">Dons</a>
+  <a href="Liens_Ideaux.html">Liens & Idéaux</a>
+</nav>
+  `;
+  const container = document.getElementById('nav-container');
+  if (container) {
+    container.innerHTML = navHTML;
+  }
+});

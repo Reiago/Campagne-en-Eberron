@@ -1,0 +1,43 @@
+"Les férals, parfois appelés shifters, sont les descendants lointains des lycanthropes qui ravagèrent autrefois le Khorvaire. Bien qu’ils ne soient pas eux‑mêmes des métamorphes complets, ils conservent des traits bestiaux hérités de leurs ancêtres, tant sur le plan physique que comportemental. Leur apparence évoque souvent celle d’humains aux traits sauvages: canines proéminentes, yeux perçants, pilosité abondante ou griffes rétractiles. Cette ascendance trouble leur vaut une réputation ambiguë, oscillant entre fascination et méfiance.
+Les férals mènent généralement une existence simple et proche de la nature. Leur culture valorise l’instinct, la liberté et la survie, et beaucoup d’entre eux préfèrent les communautés rurales ou isolées aux grandes cités. Bien qu’ils soient capables de s’intégrer à la société humaine, ils restent souvent perçus comme des marginaux, en raison de leur héritage lié à la Malédiction de la Lune et aux persécutions passées contre les lycanthropes."													
+Territoires  Les férals ne possèdent pas de terres propres et vivent dispersés à travers le Khorvaire. On les rencontre principalement dans les régions sauvages ou frontalières, telles que les confins d’Eldeen, les Marches de l’Ombre et certaines zones rurales de Breland et d’Aundair. Quelques‑uns se sont installés dans les grandes villes, mais ils y restent minoritaires et souvent discrets.													
+Marques draconiques Les férals sont étroitement associés à la maison Vadalis, porteuse du Marque draconique du Dressage. Spécialisée dans l’élevage, la domestication et l’amélioration des créatures vivantes, cette maison emploie de nombreux férals pour leur affinité naturelle avec les bêtes et leur compréhension instinctive du monde animal. Les Férals peuvent également être porteurs des marques draconiques du Passage ou de la Protection.													
+Les férals [ou féraux, les deux orthographes sont correctes] sont les descendants d'humains et de lycanthropes. Ce sont des humanoïdes avec un aspect bestial. Bien qu'ils ne puissent pas changer complètement de forme, ils peuvent améliorer temporairement leurs capacités animales ; un état qu'ils appellent le changement. Quelles que soient leurs origines, les férals ont évolué pour devenir une race unique. Un féral marche sur la lame du couteau entre les mondes sauvages et la civilisation. Quel bord choisira leur instinct primitif ?													
+"Noms de férals
+Les férals n'ont pas de langue propre et vivent souvent dans des communautés mixtes. En tant que tel, leurs noms sont généralement issus de noms d'autres cultures dans leur région. De nombreux férals réservent leurs vrais noms pour leurs amis et utilisent des « noms errants » avec des inconnus. Ces noms sont généralement liés à un trait physique ou de personnalité évident.
+
+Noms férlas : Agile, Blaireau, Chat, Cicatrice, Crocs, Grâce, Loup, Lune, Moustaches, Ours, Pluie, Rayé, Rouge, Sinistre."													
+"Traits
+Votre personnage féral possède les traits suivants."													
+Augmentation de caractéristiques. Votre Dextérité augmente de 1.													
+Âge. Les férals parviennent rapidement à leur maturité physique et émotionnelle, atteignant le stade adulte à l'âge de 10 ans. Ils vivent rarement au-delà de 70 ans.													
+Alignement. Les férals tendent vers la neutralité, étant plus axés sur la survie que sur les concepts de bien et de mal. Un amour pour leur liberté peut les conduire vers des alignements chaotiques.													
+Taille. Les férals mesurent entre 1,50 et 2,10 mètres suivant leur sous-race. Votre taille est Moyenne.													
+Vitesse. Votre vitesse de base est de 9 mètres.													
+Vision dans le noir. Vous pouvez voir avec une lumière faible jusqu'à 18 mètres comme vous verriez avec une lumière vive, et dans le noir comme vous verriez avec une lumière faible. Dans le noir, vous ne discernez pas les couleurs, uniquement des nuances de gris.													
+Sens aiguisés. Vous maîtrisez la compétence Perception.													
+Changement. Par une action bonus, vous pouvez prendre une apparence plus bestiale. La transformation dure 1 minute, jusqu'à ce que vous mouriez, ou jusqu'à ce que vous reveniez à votre apparence normale par une action bonus. Pendant le changement, vous gagnez des points de vie temporaires égaux à votre niveau + votre bonus de Constitution (minimum 1 pv temporaire). Vous gagnez aussi des caractéristiques qui dépendent de votre sous-race de féral (voir ci-dessous). Vous devez terminer un repos court ou long avant de pouvoir utiliser à nouveau la capacité de Changement.													
+Langues. Vous pouvez parler, lire et écrire le commun.													
+Sous-race. Choisissez l'une des sous-races suivantes, qui représente votre bête intérieure : peau de bête, longues dents, longue foulée ou traque sauvage.													
+"Peau de bête
+En tant que féral peau de bête, vous êtes spécialement résistant dans la bataille.
+Augmentation de caractéristiques. Votre Constitution augmente de 2.
+Robuste. Vous maîtrisez la compétence Athlétisme.
+Capacité de changement. Lors de votre changement, vous gagnez 1d6 points de vie temporaires additionnels et un bonus de +1 a la CA."													
+"Longues dents
+En tant que féral longues dents, vous êtes un combattant féroce.
+Augmentation de caractéristiques. Votre Force augmente de 2.
+Furieux. Vous maîtrisez la compétence Intimidation.
+Capacité de changement. Pendant votre changement, vous pouvez utiliser vos crocs pour réaliser une attaque à mains nues avec une action bonus. Si vous touchez, vous infligez 1d6 + votre modificateur de Force de dégâts perforants au lieu des dégâts contondants classiques d'une attaque à mains nues."													
+"Longue foulée
+Les férals longue foulée sont aériens et insaisissables.
+Augmentation de caractéristiques. Votre Dextérité et votre Charisme augmentent de 1.
+Gracieux. Vous maîtrisez la compétence Acrobaties.
+Foulée rapide. Votre vitesse de marche augmente de 1,50 mètre.
+Capacité de changement. Pendant votre changement, votre vitesse de marche augmente de 1,50 mètre. De plus, vous pouvez vous déplacer de 3 mètres en réaction à un ennemi qui termine son tour à 1,50 mètre ou moins de vous. Ce mouvement ne provoque pas d'attaques d'opportunité."													
+"Traqueur sauvage
+Votre héritage de traqueur sauvage fait de vous un expert du pistage et de la survie.
+Augmentation de caractéristiques. Votre Sagesse augmente de 2.
+Traqueur inné. Vous maîtrisez la compétence Survie.
+Fixer le parfum. Par une action bonus, vous pouvez marquer une créature que vous pouvez voir dans un rayon de 3 mètres autour de vous. Jusqu'à la fin de votre prochain repos long, votre bonus de maîtrise est doublé pour tout jet de caractéristique que vous faites pour retrouver la créature marquée, et vous connaissez toujours l'emplacement de cette créature si elle se trouve à 18 mètres ou moins de vous. Vous ne pouvez plus utiliser ce trait jusqu'à ce que vous ayez fini un repos court ou long.
+Capacité de changement. Pendant votre changement, vous gagnez un avantage aux jets de Sagesse."													

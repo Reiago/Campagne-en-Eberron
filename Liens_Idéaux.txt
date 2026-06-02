@@ -1,0 +1,322 @@
+Liens	
+d100	
+1	Je n’hésiterais devant rien pour récupérer un héritage familial inestimable volé il y a des années.
+2	Je ne reculerais devant rien pour restaurer l’honneur de ma famille, à jamais entachée par les sombres actes de mon grand-père.
+3	Je n’hésiterais devant rien pour restaurer l’honneur de ma famille, dépouillée de leurs terres et de leur titre par un dirigeant cruel et injuste.
+4	Je n’hésiterais devant rien pour restaurer mon ancien domaine familial, laissé en ruines après un incendie mystérieux et réputé envahi par des monstres.
+5	Je n’hésiterais devant rien pour retrouver un texte ancien sacré à ma foi.
+6	Je ne reculerais devant rien pour récupérer un ancien volume de sorts censés détenir le secret de la vie éternelle.
+7	Je ne reculerais devant rien pour trouver un ancien et maudit grimoire censé contenir les pires secrets des arts nécromantiques et le détruire une bonne fois pour toutes.
+8	Je ne reculerais devant rien pour trouver un livre de sorts ancien et maudit, censé contenir les pires secrets des arts nécromantiques, et l’utiliser à mes propres fins.
+9	Je ne reculerais devant rien pour trouver un remède à l’affliction d’un membre de ma famille, car la malédiction de la lycanthropie les tient en sa main, et je refuse de croire que la mort est la seule option.
+10	Je mourrais pour récupérer la relique la plus sacrée de ma religion.
+11	Un jour, je reprendrai ma place légitime sur le trône d’un royaume lointain.
+12	Je ferai tout ce qu’il faut pour protéger et soutenir le temple qui m’a accueilli enfant.
+13	Il n’y a pas un animal, un enfant ou une chose sans défense dans le multivers pour lequel je ne mourrais pas pour protéger.
+14	Je suis obligé de protéger l’emplacement d’un objet de grand pouvoir — un artefact ancien et maudit que beaucoup de personnes malfaites cherchent à utiliser à leurs propres fins.
+15	Moi (ainsi que six autres) sommes tenus de garder l’emplacement d’un fragment d’un artefact magique. Si elle était réassemblée, elle pourrait signifier la fin de toute la création.
+16	Je dois ma vie aux fermiers qui m’ont accueilli comme enfant orphelin.
+17	Je dois ma vie à la bande de bandits qui m’a recueillie comme orpheline et m’a tout appris.
+18	Je dois ma vie aux musiciens itinérants qui m’ont offert un foyer sur la route quand j’étais enfant.
+19	Je dois tout à la famille noble qui m’a élevée comme la leur, sans jamais révéler à personne ma véritable filiation.
+20	Quelque part, il y a les gens qui ont pris ma sœur. Je la retrouverai et je leur ferai payer même si c’est la dernière chose que je fais.
+21	J’ai affronté la mauvaise personne, et maintenant je dois m’assurer qu’elle ne me retrouve jamais, ni les gens que j’aime.
+22	J’ai réussi à convaincre des gens très dangereux que je suis mort. S’ils découvrent la vérité, ce serait très, très grave.
+23	J’ai volé des gens très puissants et très dangereux, et maintenant je dois les rembourser avec des intérêts, sinon tous ceux que j’aime paieront.
+24	Je dois tout à mon mentor qui m’a appris à faire fonctionner. Un de ces jours, je les trouverai et je leur ferai payer pour m’avoir trahi.
+25	Quand j’ai quitté mon ancienne vie, j’ai dû laisser mon meilleur ami dans une situation qui lui a coûté la vie. Maintenant, j’envoie de l’argent à leur famille dès que je peux.
+26	Ce que je tiens le plus au monde a été pris par un groupe de personnes puissantes. Je le récupérerai même si c’est la dernière chose que je fais.
+27	Je deviendrai la plus grande [Insérer classe] que le monde ait jamais connue.
+28	J’ai fait quelque chose d’impardonnable dans ma vie précédente, et tout ce que je fais maintenant est dans la quête d’expiation.
+29	Quelqu’un qui me faisait confiance a été gravement blessé, de façon permanente, à cause de moi. Maintenant, je m’occupe d’eux comme je peux.
+30	Ma rivalité avec un ennemi d’enfance alimente tout ce que je fais.
+31	Ma rivalité avec un autre aventurier est ce qui me fait sortir du lit le matin.
+32	Je ferais n’importe quoi pour mes camarades aventuriers — passés ou présents.
+33	J’ai une idole dont j’imite les exploits dès que je le peux.
+34	Mon [Insérer Arme ou Objet] porte le nom d’une ancienne flamme dont je n’arrive pas à me remettre.
+35	Un aventurier rival m’a pris ma part de mon dernier travail, et je ne me reposerai pas tant que nous ne serons pas quittes.
+36	Ma famille a été vendue comme esclave par des monstres, et je les cherche partout où je vais.
+37	Des monstres ont attaqué mon village et emporté mes enfants. Je dois les trouver.
+38	Le village où j’ai grandi est l’endroit le plus important au monde pour moi.
+39	L’arène où j’ai vu mon premier combat est en gros un terrain sacré pour moi.
+40	La bibliothèque où j’ai lu mon premier livre de magie est l’endroit où j’imagine me trouver chaque fois que les choses deviennent trop difficiles à supporter.
+41	Quand je suis triste, en colère ou effrayé, je pense simplement à la voix de mon mentor et j’imagine ce qu’il dirait.
+42	J’adore une grande beauté de mon village natal. Un jour, quand je serai riche, célèbre et puissant, ils n’auront d’autre choix que de me remarquer.
+43	Rien n’a plus d’importance pour moi que les membres de mon ordre/guilde/monastère/etc.
+44	Je brûlerais ce bar pour une goutte de rhum de plus.
+45	J’ai un faible pour les cartes à encoches et les dés chargés.
+46	La cuisine de mon pays natal me fait toujours gronder l’estomac et me donner une larme aux yeux.
+47	J’ai affronté des démons, des dragons, et pire ; C’est préférable à la déception de ma famille.
+48	J’ai juré de respecter le credo de mon ordre.
+49	J’ai prêté serment d’accomplir les devoirs que ma foi m’impose.
+50	J’ai juré de défendre cette terre et son peuple jusqu’à ma mort.
+51	J’ai juré de trouver et de restaurer l’héritier légitime de ces terres.
+52	Ma loyauté envers le souverain de ces terres est inébranlable.
+53	J’ai juré mon service au peuple, et je mourrais pour les voir en sécurité.
+54	Je suis amoureuse de l’héritier d’une famille qui est en guerre avec la mienne depuis des générations.
+55	Si je rentre chez moi, ce sera pour épouser quelqu’un que je n’aime pas.
+56	Je suis convaincu de l’existence d’une apocalypse imminente et je ferais tout pour l’éviter.
+57	Je suis le dernier de ma maison. C’est mon devoir de porter notre nom, nos histoires et notre avenir.
+58	Je suis le dernier de mon ordre. C’est ma responsabilité sacrée de préserver notre savoir ancien de peur qu’il ne tombe entre de mauvaises mains.
+59	Je suis le dernier disciple d’un dieu mourant. Ils me parlent à voix basse qui s’estompent chaque jour. Je dois leur trouver de nouveaux croyants, sinon ils disparaîtront bientôt.
+60	Je vengerai tout mal causé à la terre sur laquelle j’ai grandi.
+61	Il y a une question ancienne posée par un vénérable érudit de mon ordre, et trouver la réponse est l’œuvre de ma vie.
+62	Découvrir les secrets du passé est ma grande passion. Tout l’or et les gemmes aident juste à payer les factures.
+63	J’ai fait des choses terribles en quête de connaissances cachées, et maintenant je dois utiliser les informations que j’ai recueillies pour arranger les choses.
+64	Je suis loyal envers l’autorité et je chercherai quelqu’un pour réfléchir à ma place si personne ne se présente visiblement.
+65	Quiconque se bat à mes côtés est un ami pour la vie.
+66	À quoi bon pouvoir se battre à moins de me battre pour ceux qui ne peuvent pas se protéger eux-mêmes ?
+67	Il y a une petite auberge dans mon village. Un jour, quand j’aurai économisé assez d’or, je vais l’acheter et m’installer.
+68	J’ai fait partie d’une rébellion ratée. Même si la plupart des gens ne se souviennent pas du chemin, je lutte contre lui à chaque occasion.
+69	La beauté sous toutes ses formes est mon obsession. Vêtements, art, gens — si je vois quelque chose d’exquis, je dois l’avoir.
+70	La ville où je suis né est le centre de l’univers. Nulle part ailleurs ne se compare, et je la défendrai — que je débatte des mérites comparatifs de ses célèbres tourtes à la viande ou que je manie une épée au sommet de ses murs.
+71	Je n’aurais pas survécu sans quelqu’un qui m’a pris sous son aile.
+72	J’ai aidé à mener une rébellion réussie. Les personnes que nous avons mises au pouvoir se sont révélées beaucoup moins agréables que prévu, et maintenant c’est à moi de corriger l’erreur.
+73	J’ai grandi dans une grande famille aimante, et je me surprends toujours à essayer de recréer cette atmosphère, où que je sois.
+74	J’étais sur un chemin sombre dans ma jeunesse, et j’aurais pu finir dans un bien pire endroit sans un ami.
+75	Je suis désespérément amoureuse d’un ami proche, et j’ai peur qu’il ne ressente pas la même chose.
+76	J’ai vu un démon invoqué une fois. Il a regardé droit dans mes yeux, et j’ai bien peur qu’il ait vu mon âme. La nuit, quand je suis seul, parfois je me surprends à murmurer son nom à voix basse.
+77	Un monstre a attaqué la ferme familiale quand j’étais jeune. Un aventurier est arrivé juste à temps pour nous sauver, et à partir de ce moment-là, j’ai su ce que je voulais être.
+78	J’ai vu un grand mage célèbre réaliser une série d’illusions lors d’un festival en ville, et depuis, je suis obsédé par la magie.
+79	Je me suis perdu dans les bois quand j’étais enfant. Je suis resté seul pendant des jours sans manger ni boire. Un druide m’a trouvé et m’a ramené chez moi. Depuis, j’ai toujours rendu hommage à la nature.
+80	Je me suis perdu dans les montagnes quand j’étais enfant. J’ai erré seul pendant des jours jusqu’à ce qu’une bande de nains me trouve. Ils m’ont ramenée auprès de ma famille, et j’ai toujours été reconnaissante.
+81	J’ai un porte-bonheur que je ne laisserai voir à personne d’autre, sinon le sort sera brisé.
+82	Je garde un petit couteau en argent attaché à une chaîne autour du cou. Je ne le dégainerai pas avant le moment de tuer le monstre que je chasse.
+83	J’ai un tatouage dont je ne me souviens pas m’être fait — un fouillis déroutant de formes géométriques, de lignes et de runes que je ne comprends pas. Si seulement je pouvais trouver quelqu’un qui pourrait me dire ce qu’ils signifient.
+84	J’ai une difformité hideuse — résultat d’une rencontre avec un cruel sorcier magique sauvage, et c’est pourquoi je préfère tuer un sorcier plutôt que de croiser son regard.
+85	J’ai grandi entouré d’un type particulier d’animal (chevaux, chiens, loups, oiseaux, vaches, etc.), et j’ai toujours eu une réelle affection pour eux — sans parler d’une connaissance encyclopédique de leurs habitudes alimentaires et de leurs schémas migratoires.
+86	J’ai une carte imprimée sur un étrange type de papier qui représente une ville sans nom dans un pays qui n’existe pas.
+87	J’ai un désir insatiable d’essayer de nouvelles choses — la nourriture, les expériences, les escapades audacieuses... Plus c’est extravagant, mieux c’est.
+88	Je rassemble des notes détaillées et abondantes sur un type très spécifique de données — humidité, température ambiante, nombre de côtés sur les objets, etc. Je n’expliquerai pas pourquoi.
+89	Il n’y a pas de personne plus importante que le groupe, et je donnerais volontiers ma vie pour le défendre.
+90	Ma diesse (dieu) a disparu. Je dois les retrouver et les ramener sains et saufs.
+91	Ma diesse (dieu) a disparu. Je dois les retrouver et les tabasser jusqu’à ce qu’ils s’excusent pour ce qu’ils ont fait.
+92	Je cherche quelqu’un pour me remplacer après mon départ.
+93	Mon arme est ma meilleure (certains diraient la seule) amie. Je lui parle parfois.
+94	Je vis dans l’ombre d’un frère ou d’une sœur plus âgée, plus réussie. Je vais les éclipser par tous les moyens nécessaires.
+95	Je ne suis que le dernier d’une longue lignée de soldats menant une guerre que la plupart des gens ignorent.
+96	Je suis juré de respecter les codes de ma guilde.
+97	Mon vaisseau/cheval/moyen de transport est, la plupart des gens le soupçonnent, mon unique véritable amour.
+98	J’ai conclu un marché avec une puissante fée, et maintenant chaque année, je dois leur apporter un sacrifice quelconque, sinon ils m’enleveront à jamais.
+99	J’ai vendu mon âme à une sorcière en échange de richesse et de pouvoir. Maintenant, si je veux le récupérer, je devrai lui apporter quelque chose de mieux en échange.
+100	J’ai un groupe d’amis proches pour qui je ferais n’importe quoi.
+	
+Défauts	
+d100	
+1	(Acolyte) Je juge les autres sévèrement et moi-même encore plus sévèrement.
+2	(Acolyte) Je fais trop confiance à ceux qui détiennent le pouvoir au sein de la hiérarchie de mon temple/ordre/royaume.
+3	(Acolyte) Ma piété me pousse parfois à faire aveuglément confiance à ceux qui professent la foi en mon dieu.
+4	(Acolyte) Je suis inflexible dans ma façon de penser.
+5	(Acolyte) Je me méfie des inconnus et j’attends le pire d’eux.
+6	(Acolyte) Une fois que je choisis un objectif, je deviens obsédé par lui au détriment de tout le reste dans ma vie.
+7	(Charlatan) Je ne peux pas résister à un joli visage.
+8	(Charlatan) Je suis toujours endetté. Je dépense mes gains mal acquis en luxes décadents plus vite que je ne les apporte.
+9	(Charlatan) Je suis convaincu que personne ne pourrait jamais me tromper comme je trompe les autres.
+10	(Charlatan) Je suis trop gourmand pour mon propre bien. Je ne peux pas résister à prendre un risque s’il y a de l’argent en jeu.
+11	(Charlatan) Je ne peux pas résister à l’envie d’arnaquer des gens plus puissants que moi.
+12	(Charlatan) Je déteste l’admettre et je vais me détester pour ça, mais je courrai et je préserverai ma propre cachette si ça devient difficile.
+13	(Criminel) Quand je vois quelque chose de précieux, je ne peux penser qu’à comment le voler.
+14	(Criminel) Quand je dois choisir entre l’argent et mes amis, je choisis généralement l’argent.
+15	(Criminel) S’il y a un plan, je l’oublierai. Si je ne l’oublie pas, je l’ignore.
+16	(Criminel) J’ai un « signe » qui révèle quand je suis en train de mentir.
+17	(Criminel) Je fais demi-tour et je fuis quand ça va mal.
+18	(Criminel) Une personne innocente est en prison pour un crime que j’ai commis. Ça me va.
+19	(Artiste) Je ferai n’importe quoi pour gagner la célébrité et la renommée.
+20	(Artiste) Je suis fan d’un joli visage.
+21	(Artiste) Un scandale m’empêche de rentrer chez moi un jour. Ce genre de problème me suit partout.
+22	(Artiste) J’ai déjà tourné en dérision un noble qui veut encore ma tête. C’était une erreur que je vais probablement répéter.
+23	(Artiste) J’ai du mal à cacher mes vrais sentiments. Ma langue acérée me cause des ennuis.
+24	(Artiste) Malgré tous mes efforts, je suis peu fiable avec mes amis.
+25	(Héros Populaire) Le tyran qui règne sur ma terre ne reculera devant rien pour me voir tué.
+26	(Héros Populaire) Je suis convaincu de l’importance de mon destin et aveugle à mes défauts et au risque d’échec.
+27	(Héros Populaire) Les gens qui me connaissaient quand j’étais jeune connaissent mon honteux secret, donc je ne pourrai jamais rentrer chez moi.
+28	(Héros Populaire) J’ai une faiblesse pour les vices de la ville, surtout les boissons fortes.
+29	(Héros Populaire) En secret, je crois que les choses iraient mieux si j’étais un tyran dominant la terre.
+30	(Héros Populaire) J’ai du mal à faire confiance à mes alliés.
+31	(Artisan de la Guilde) Je ferais n’importe quoi pour mettre la main sur quelque chose de rare ou d’inestimable.
+32	(Artisan de la Guilde) Je suppose vite que quelqu’un essaie de me tromper.
+33	(Artisan de la Guilde) Personne ne doit jamais apprendre que j’ai volé de l’argent dans les coffres de la guilde.
+34	(Artisan de la Guilde) Je ne suis jamais satisfaite de ce que j’ai – j’en veux toujours plus.
+35	(Artisan de la Guilde) Je tuerais pour acquérir un titre de noblesse.
+36	(Artisan de la Guilde) Je suis terriblement jaloux de quiconque peut éclipser mon œuvre. Partout où je vais, je suis entouré de rivaux.
+37	(Ermite) Maintenant que je suis de retour dans ce monde, j’apprécie un peu trop ses plaisirs.
+38	(Ermite) J’aime garder des secrets et je ne les partage avec personne.
+39	(Ermite) J’ai des pensées sombres et sanguinaires que mon isolement et ma méditation n’ont pas réussi à apaiser.
+40	(Ermite) Je suis dogmatique dans mes pensées et ma philosophie.
+41	(Ermite) J’ai laissé mon besoin de gagner les disputes éclipser les amitiés et l’harmonie.
+42	(Ermite) Je prendrais trop de risques pour retrouver un peu de connaissance perdu.
+43	(Noble) Je crois secrètement que tout le monde est inférieur à moi.
+44	(Noble) Je cache un secret vraiment scandaleux qui ruinerait ma famille à jamais.
+45	(Noble) J’entends trop souvent des insultes et des menaces voilées dans chaque mot qui m’est adressé, et je me mets vite en colère.
+46	(Noble) J’ai un désir insatiable de plaisirs charnels.
+47	(Noble) En fait, le monde tourne autour de moi.
+48	(Noble) Par mes paroles et mes actes, j’apporte souvent honte à ma famille.
+49	(Étranger) Je suis trop passionné par la bière, le vin et d’autres substances enivrantes.
+50	(Étranger) Il n’y a pas de place pour la prudence dans une vie vécue pleinement.
+51	(Étranger) Je me souviens de chaque insulte que j’ai reçue et nourris un ressentiment silencieux envers quiconque m’a déjà fait du tort.
+52	(Étranger) Je suis lente à faire confiance aux membres d’autres races, tribus et sociétés.
+53	(Étranger) La violence est ma réponse à presque tous les défis.
+54	(Étranger) Ne t’attends pas à ce que je sauve ceux qui ne peuvent pas se sauver eux-mêmes. C’est la manière de la nature que les forts prospèrent et que les faibles périssent.
+55	(Sage) Je me laisse facilement distraire par la promesse d’informations.
+56	(Sage) La plupart des gens crient et fuient quand ils voient un démon. Je m’arrête et je prends des notes sur son anatomie.
+57	(Sage) Déverrouiller un mystère ancien vaut le prix d’une civilisation.
+58	(Sage) Je néglige les solutions évidentes au profit de solutions compliquées.
+59	(Sage) Je parle sans vraiment réfléchir à mes mots, insultant invariablement les autres.
+60	(Sage) Je ne peux pas garder un secret pour sauver ma vie ou celle de quelqu’un d’autre.
+61	(Marin) Je suis les ordres, même si je pense qu’ils sont faux.
+62	(Marin) Je dirai n’importe quoi pour éviter de devoir faire du travail supplémentaire.
+63	(Marin) Dès que quelqu’un remet en question mon courage, je ne recule jamais, peu importe le danger de la situation.
+64	(Marin) Une fois que je commence à boire, il m’est difficile d’arrêter.
+65	(Marin) Je ne peux m’empêcher de mettre dans ma poche des pièces en vracs et d’autres bibelots que je croise.
+66	(Marin) Ma fierté mènera probablement à ma destruction.
+67	(Soldat) L’ennemi monstrueux que nous avons affronté au combat me laisse encore frissonner de peur.
+68	(Soldat) J’ai peu de respect pour quiconque n’est pas un guerrier aguerri.
+69	(Soldat) J’ai commis une terrible erreur au combat qui a coûté de nombreuses vies – et je ferais n’importe quoi pour garder cette erreur secrète.
+70	(Soldat) Ma haine de mes ennemis est aveugle et irrationnelle.
+71	(Soldat) J’obéis à la loi, même si elle cause la misère.
+72	(Soldat) Je préfère manger mon armure plutôt que d’admettre quand je me trompe.
+73	(Oursin) Si je suis en infériorité numérique, je fuirai un combat.
+74	(Oursin) L’or me semble beaucoup d’argent, et je ferais à peu près n’importe quoi pour en avoir plus.
+75	(Oursin) Je ne ferai jamais entièrement confiance à personne d’autre qu’à moi-même.
+76	(Oursin) Je préfère tuer quelqu’un dans son sommeil plutôt que de me battre franchement.
+77	(Oursin) Ce n’est pas voler si j’en ai plus besoin que quelqu’un d’autre.
+78	(Oursin) Les personnes qui ne peuvent pas se débrouiller reçoivent ce qu’elles méritent.
+79	(Citadelle Noire) Ma croyance en une puissance supérieure me rend négligent, jugeant et impulsif.
+80	(Citadelle Noire) J’ai une curiosité morbide qui m’entraîne dans des situations dangereuses, et me pousse à gratter les blessures émotionnelles comme une croûte fraîchement guérie.
+81	(Citadelle Noire) J’ai du mal à faire confiance à des gens trop différents de moi.
+82	(Citadelle Noire) Ma foi dans les capacités de mes amis frôle le danger de naïfité.
+83	(Citadelle Noire) Je crois que tout le monde est innocent jusqu’à preuve du contraire, même lorsque les preuves sont accablantes.  
+84	(Citadelle Noire) Je suis convaincu que chaque monstre est simplement incompris et, au fond, qu’il a juste besoin d’être aimé. J’ai essayé de caresser un ours-hibou une fois, et je vais recommencer.
+85	(Citadelle Noire) Je vendrais mon âme pour une chance de gloire et de fortune.
+86	(Citadelle Noire) Je fais semblant que blesser les gens est nécessaire. Vraiment, j’aime bien ça.
+87	(Citadelle Noire) Quiconque me regarde bizarrement est déjà à plus de la moitié du chemin pour se faire battre.
+88	(Citadelle Noire) Je tiens bien plus à mes biens qu’à mes amis.
+89	(Citadelle Noire) J’ai une faiblesse pour les belles choses.
+90	(Citadelle Noire) Je ne peux laisser personne savoir que je suis autre chose qu’un tueur froid. Montrer de la faiblesse, c’est la mort dans cette vie.
+91	(Citadelle Noire) Je suis un lâche. Quand les choses tournent mal, je ne peux pas m’empêcher de prendre la fuite et de fuir.
+92	(Citadelle Noire) J’ai une peur paralysante de [d6. 1. L’obscurité, 2. Espaces étroits, 3. Espaces ouverts, 4. Heights, 5. Araignées, 6. Tout cela], et je perds la capacité de penser rationnellement quand je suis avec l’un d’eux.
+93	(Citadelle Noire) Je me considère comme le champion évoqué dans une ancienne prophétie et donc ne peut être tué ni vaincu au combat.
+94	(Citadelle Noire) Je suis prêt à accepter d’énormes dégâts collatéraux pour la victoire.
+95	(Citadelle Noire) Il n’y a pas d’endroit aussi bas où je ne me baisserais pas pour avoir un coup de main sur mes ennemis (ou mes amis).
+96	(Citadelle Noire) Je suis pratiquement incapable de prendre une décision.
+97	(Citadelle Noire) Je suis pratiquement incapable de réfléchir avant d’agir.
+98	(Citadelle Noire) Les bruits forts, les objets brillants et tout petit animal mignon sont des moyens infaillibles de ne pas perdre la concentration sur la tâche à accomplir.
+99	(Citadelle Noire) Un ami proche m’a trahi par le passé. Maintenant, je ne laisserai plus jamais personne s’approcher autant.
+100	(Citadelle Noire) J’ai failli me noyer une fois, et maintenant je ne peux pas entrer ni même approcher un plan d’eau. Cela inclut les bains.
+101	(Citadelle Noire) Du sang, de la bave, l’odeur de chair en décomposition ? Non ! Je suis incurablement sensible et je préférerais mourir plutôt que de m’approcher (et encore moins toucher) quelque chose de dégoûtant.
+102 	(Citadelle Noire) Je suis une personne très importante, et les personnes très importantes ne portent pas leurs propres affaires. En plus, mes bras se fatiguent.
+103	(Citadelle Noire) Il n’y a rien de tel qu’un inconnu sympathique ou un garde de ville poli pour me convaincre qu’une sinistre conspiration est en cours.
+104	(Citadelle Noire) Tout le monde est contre moi, alors je ferais mieux de les avoir d’abord.
+105	(Citadelle Noire) Les objets brillants et chers ont tendance à disparaître autour de moi.
+106	(Citadelle Noire) Je suis pragmatique à l’excès et je prendrai toujours la voie la plus sensée, qu’elle soit sans cœur ou insensible.
+107	(Citadelle Noire) J’apprécie le son de ma propre voix mélodieuse et j’ai une prédilection à démontrer avec une clarté cristalline la quantité pure et la variation vertigineuse que l’on trouve dans la multitude de mots à ma disposition.
+108	(Citadelle Noire) Pourquoi utiliser autant de mots quand un seul suffit ? Pourquoi parler quand on peut grogner ou lever les yeux au ciel ?
+109	(Citadelle Noire) J’exagère chaque geste possible, chaque histoire et chaque cri de douleur.
+110	(Citadelle Noire) Mes vêtements doivent être exquis, mes cheveux parfaitement coiffés, et mes chaussures récemment cirées. Je m’arrêterai en plein milieu de l’aventure pour refaire mon look exquis.
+111	(Citadelle Noire) Je n’ai aucune notion d’espace personnel ni de limites.
+112	(Citadelle Noire) Je veux bien faire, mais j’ai été élevé par des personnes très mauvaises et mes instincts pour savoir ce qui est juste et ce qui est très, très mal est assez brouillé.
+113	(Citadelle Noire) Je crois que toute personne appartenant à une classe sociale inférieure est inférieure à moi et que ceux qui sont plus haut placés que moi sont irréprochables.
+114	(Citadelle Noire) Il n’y a rien que j’aime plus que de trouver le bar le plus dur de la ville et de semer les ennuis.
+115	(Citadelle Noire) J’ai le don de m’éloigner ou de trouver quelque chose de vraiment important à faire juste au moment où un travail difficile est sur le point d’être accompli.
+116	(Citadelle Noire) J’adore cuisiner. Je suis spectaculairement mauvais à ça et je craque ou explose au moindre signe de critique.
+117	(Citadelle Noire) Je vois des ennemis partout — des démons dans chaque ombre, des monstres sous chaque roche, un vampire dans chaque sourire.
+118	(Citadelle Noire) J’ai l’impression d’avoir le don de dire la chose la moins tactique possible à tout moment.
+119	(Citadelle Noire) Il y a une personne puissante qui veut ma mort et essaie régulièrement de faire en sorte que ça arrive.
+120	(Citadelle Noire) Peu importe à quel point l’insulte ou la manipulation était minime, j’ai probablement déjà tué pour moins que ça.
+	
+Idéaux	
+d100	
+1	L’honnêteté. Je dis toujours la vérité, même quand cela attire des ennuis à mes amis et moi.
+2	Le respect. J’essaie toujours de traiter les gens avec respect et j’attends qu’ils fassent de même pour moi.
+3	Légalité. Les lois et les règles sont tout ce qui nous sépare des animaux. Ils existent pour être suivis, et ceux qui les enfreignent doivent être tenus responsables.
+4	Intégrité. Ne fais jamais une promesse que tu ne peux pas tenir. Ne prenez jamais une décision que vous ne resterez pas ferme. Ta parole est ton engagement.
+5	Confiance. Une fois votre confiance gagnée, elle devient inébranlable.
+6	Dignité. D’autres personnes méritent d’avoir accès à ce dont elles ont besoin pour mener une vie digne. Priver quelqu’un de la capacité de vivre dignement, c’est aussi bon que de le tuer. Ta propre dignité est quelque chose que tu protèges aussi étroitement que ta vie.
+7	La créativité. Les actes de création sont ce qui rend la vie digne d’être vécue, et vous valorisez l’originalité avant tout. On fait rarement, pense ou dit la même chose deux fois.
+8	La responsabilité. Un engagement doit être respecté, que ce soit envers nos amis, notre famille, un credo, un royaume ou un dieu.
+9	Le pouvoir. Un jour, tu atteindras la maîtrise des autres.
+10	La cupidité. Tout ce que vous faites est au service de l’accumulation — argent, savoir, antiquités rares, peu importe. Tu veux plus, plus, plus.
+11	La famille. Le sang coule plus épais que l’eau, et notre devoir envers notre famille est le plus important que nous ayons.
+12	La rédemption. Aucun péché ni erreur ne laisse une tache assez sombre pour que la véritable rédemption ne puisse l’effacer. La route est longue et difficile, mais au bout il y a une lumière.
+13	Honor. J’ai un code que je respecte et que je ne dois jamais enfreindre.
+14	Dogmatisme. L’obéissance exacte à la lettre de la loi (qu’il s’agisse de textes sacrés ou de règles et règlements bureaucratiques) est le fondement de tout comportement moral et approprié.
+15	La foi. La lumière du divin est la seule qui peut percer l’obscurité de l’indécision et révéler le véritable chemin. Tout le reste n’est que des murmures de faux prophètes.
+16	Beauté. La bonté réside dans les belles choses, les lieux et les gens. Seule une chose de vraiment maléfique pouvait être vraiment laide.
+17	Peut-être. Ceux qui ont le droit de régner et de décider ce qui est bon ou mal sont ceux qui ont la force de le faire — d’imposer leur volonté au monde.
+18	C’est juste. L’impartialité et traiter chaque question de manière à ce que toutes les parties en bénéficient également est l’essence même de la morale.
+19	L’égalité. Je traite tout le monde de la même façon, qu’il s’agisse d’un prince ou d’un pauvre, d’un dieu ou d’un gobelin.
+20	La liberté. Règles, rois, royaumes, dieux — ce sont tous une autre forme de chaîne autour de notre cou.
+21	Loyauté. Mes amis, ma famille, mes camarades — peu importe que ce qu’ils fassent soit bon ou mal ; Je suis de leur côté.
+22	Communauté. Les liens que nous tissons avec ceux qui nous entourent doivent être renforcés pour un bénéfice mutuel.
+23	Les gens. Des idéaux élevés, des lois, des dieux et des traditions — tout dépend des personnes auxquelles vous tenez et de ce que vous feriez pour elles. Si je tiens assez à quelqu’un, il n’y a rien que je ne ferais pas pour lui, et le bien ou le mal n’entre même pas en compte.
+24	Aspiration. Richesse, statut, savoir — ce sont toutes des choses à collecter par le travail acharné et le talent naturel.
+25	La société. Les besoins du plus grand nombre l’emportent sur ceux de quelques-uns. Nous devons toujours faire ce qui est le mieux pour le plus grand nombre de personnes, même si de tels actes de calcul éthique détaché laissent un goût amer sur le moment.
+26	La rationalité. La raison et la logique sont les seuls vrais moyens de prendre des décisions ; L’émotion doit être retirée de l’équation.
+27	L’émotion. On peut rationaliser les atrocités, les meurtres et la cupidité, mais son instinct sait toujours quand quelque chose ne va pas. Fais confiance à ton cœur, pas à ta tête.
+28	Indépendance. Les organisations, les gouvernements, même les amitiés — ils ne font que me freiner.
+29	Le pouvoir. Plus tu es puissant, plus tu peux faire de bien. Par conséquent, la poursuite du pouvoir est un bien axiomatique.
+30	Obligation. J’ai prêté un serment il y a longtemps, et le tenir motive tout ce que je fais.
+31	Gloire. Je dois prouver ma valeur par de grandes actions. Ce n’est qu’alors que j’apporterai gloire à mon nom et à mon peuple.
+32	La civilisation. Sécurité, sûreté, abondance — ce n’est qu’en étendant les frontières du monde civilisé que nous pouvons surmonter les horreurs barbares de la nature.
+33	Progrès. Petit à petit, mais inexorablement malgré tout, nous pouvons élargir notre compréhension de la magie, de la médecine, de la science, de l’art et de la philosophie pour être meilleurs que ceux qui nous ont précédés.
+34	Tradition. Les rites, histoires et chants d’un temps loin révolu nous rappellent qui nous sommes et nous enseignent ce que nous devons faire. La sagesse des anciens doit être préservée, honorée et défendue.
+35	Effort artistique. L’art – qu’il s’agisse d’histoire, de chanson, d’argile, de peinture ou de mouvement – c’est la façon dont nous racontons des histoires, et les histoires que nous racontons définissent qui nous sommes.
+36	Découverte. Quels mondes nouveaux étranges pourraient se trouver au-delà de l’horizon ? Que pourrions-nous en apprendre ?
+37	La hiérarchie. Les castes sociales strictes dans lesquelles chacun connaît sa place sont la seule barrière entre ordre et chaos, prospérité et chaos anarchique.
+38	Charity. Je sacrifierais mon propre bonheur et mon confort pour aider ceux qui en ont besoin.
+39	L’innovation. Les nouvelles idées et les nouvelles créations me fascinent, et il n’y a pas de vocation plus élevée que la recherche de nouvelles inventions au service du peuple.
+40	La gentillesse. Je traite chaque personne que je rencontre avec la même gentillesse et l’hospitalité que j’aimerais qu’on me témoigne. Si plus de gens étaient comme ça, nous aurions peut-être un monde meilleur à partager.
+41	L’altruisme. Il vaut mieux donner que recevoir ou garder. Je crois qu’aider les autres est l’appel le plus élevé auquel on puisse répondre.
+42	Devoir. Que ce soit pour la couronne, l’État, le peuple, un dieu ou un code — le service honorable à quelque chose de plus grand que soi-même est ce qui compte le plus.
+43	La curiosité. Tant de choses ont été perdues, et tant d’autres restent à découvrir. Sûrement, les réponses existent, et il y a peu de choses que je ne ferais pas pour apprendre quelque chose de nouveau.
+44	La connaissance. La connaissance, c’est le pouvoir, la compréhension et la sagesse. Rassemblé, préservé, accumulé ou transmis — le savoir vaut plus que tout l’or dans le trésor d’un dragon.
+45	L’ascétisme. Ce n’est qu’en rejetant ce qui nous lie et nous aveugle — richesse matérielle, attachements, pouvoir et statut — que nous pouvons vraiment nous connaître nous-mêmes.
+46	Le professionnalisme. Si un travail vaut la peine d’être fait, il en vaut la peine de bien faire, et je ne prends pas les emplois qui ne valent pas la peine d’être faits.
+47	Du courage. Nous ne savons pas vraiment qui nous sommes avant d’avoir affronté la peur, regardé dans la bouche affamée de la mort et en ressortir.
+48	Fiabilité. Il est important que l’on puisse compter sur chacun pour les personnes qui comptent le plus.
+49	L’amitié. La vraie famille, ce sont ces liens que nous choisissons de forger, et je mourrais pour mes amis en un clin d’œil.
+50	Destin. J’ai une vocation supérieure, et personne ni rien ne peut l’empêcher.
+51	Indulgence. Nous n’avons qu’une seule vie, alors pourquoi ne pas l’utiliser pour tout goûter : plaisir, douleur, amour, chagrin, haine, et tous les fétiches et vices imaginables. Plus je m’adonne à la curiosité, aux envies et aux envies, plus je vis.
+52	La simplicité. Une vie vécue simplement, tous les besoins comblés et rien de plus, sans fioritures ni indulgences, est le seul type de vie exempt de tentation, de vice et de péché.
+53	Prudence. La modération en tout domaine et une approche prudente et réfléchie sont les signes d’un aventurier sage (et longévateur).
+54	L’optimisme. Les choses finiront probablement par s’arranger pour le mieux, et même si ce n’est pas le cas, il y a sans doute une lueur d’espoir cachée parmi tous ces nuages.
+55	Le pacifisme. Je déteste la violence et je préférerais toujours chercher une résolution d’un conflit qui n’implique pas de bain de sang.
+56	L’égoïsme. Si ce n’est pas bon pour moi et mes objectifs, je n’en vois pas la valeur. Ça ne me dérange pas que d’autres s’en passent si je suis pris en charge, mais c’est parce que je le mérite, et ils feraient probablement pareil avec moi.
+57	La compétition. Ce n’est qu’en mettant constamment à l’épreuve notre courage face aux adversaires les plus forts et talentueux que nous pouvons connaître notre propre valeur et nous améliorer.
+58	Le pessimisme. Si quelque chose peut mal tourner, ça arrivera. Si vous pensez que le pire est arrivé, vous vous trompez ; Ça peut toujours être pire que ça.
+59	La vengeance. Une injustice ne peut être réparée que par vengeance, sanglante ou non, et rien ne peut me convaincre de tendre l’autre joue.
+60	La justice. Les torts doivent être réparés. La balance doit être équilibrée. Les coupables doivent payer pour leurs crimes.
+61	Ordre. Le bien et le mal sont des préoccupations mesquines en plus du besoin de stabilité. Une société ordonnée doit être préservée, car l’ordre est préférable à long terme que la justice.
+62	L’ambition. Le monde est une échelle faite de personnes, et je vais grimper jusqu’au sommet, soit en étant le meilleur, soit par tous les moyens nécessaires.
+63	Anarchie. Dieux, rois, maîtres — tous des tyrans d’une autre tendance et tous ennemis de la liberté et du peuple. Leur heure viendra.
+64	Flexibilité. Les survivants ne sont ni les plus forts ni les plus rapides ; Ce sont eux qui sont les plus capables de s’adapter à un nouveau monde.
+65	Tolérance. Tant que tu ne t’en mêles pas à moi et aux miens, je me fiche de ce que tu fais.
+66	Phlegmatisme. Une émotion forte et incontrôlée est tellement inconvenante. Le stoïcisme calme est un comportement qui mérite d’être cultivé.
+67	La bienséance. Les bonnes manières et la morale sociale sont tout ce qui nous distingue des bêtes. L’observation appropriée des conventions est la plus importante.
+68	Persévérance. Je sais que si je continue et que je n’abandonne pas, il n’y a rien que je ne puisse faire.
+69	La sensualité. La passion, l’émotion et le plaisir sont ce qui me motive dans tout.
+70	La célébrité. Le monde connaîtra mon nom avant que j’aie fini.
+71	Stabilité. Je suis fier d’être celui qui tient le coup quand tout le reste s’effondre et brûle.
+72	Sensibilité. Il est plus important d’être gentil que d’avoir raison, alors j’ai appris à lire une pièce.
+73	Patience. Toutes les bonnes choses arrivent à ceux qui attendent le bon moment pour frapper.
+74	La sagesse. Qu’il s’agisse de grimoires poussiéreuses et de rouleaux ou des dures réalités de la vie dans la rue, cultiver la sagesse (et écouter quand les gens sages ont quelque chose à dire) est la chose la plus importante pour moi.
+75	Popularité. Je veux juste que tout le monde m’aime. Tu serais surpris de ce que tu peux faire quand les gens t’aiment.
+76	Le patriotisme. Je dois ma vie et mon service à mon pays, et je me battrai pour offrir un avenir meilleur à tous ceux qui l’appellent chez eux.
+77	L’argent. Le monde tourne comme une grande roue, et l’or et l’argent sont les carburants qui le font vibrer. Accumulez assez d’argent, et vous êtes intouchable — un roi, une sorte de dieu.
+78	L’hospitalité. Les anciens rites de l’hôte et de l’invité sont d’une importance immense, et je préférerais mourir plutôt que d’attaquer un étranger chez moi qui n’aurait pas levé son arme contre moi ni insulté la cuisine de mon hôte.
+79	Révolution. Le monde est pourri et cruel, divisé entre ceux qui en ont et ceux qui ont une botte sur le cou. Pour construire un avenir meilleur, nous devons démolir le présent.
+80	Courage. Le courage face au danger et à la peur est la marque d’un véritable héros.
+81	Résilience. La force et l’endurance face à l’adversité et aux difficultés sont la vertu la plus importante que vous puissiez cultiver dans cette vie.
+82	Sacrifice. Parfois, nous devons renoncer à des choses pour un bien supérieur afin de plaire aux dieux et d’obtenir ce que nous voulons.
+83	De l’audace. Je vis sans peur, agissant d’abord et délibérant ensuite. Seuls les audacieux avancent dans ce monde.
+	
+Alignement	
+1. Loyal bon – Promeut des valeurs sociales et éthiques positives.	
+2. Loyal Neutre – Respecteurs des règles, lois et codes de conduite	
+3. Loyal Mauvais – Structure et règles pour leurs propres fins	
+4. Neutre Bon – Cherchez à promouvoir la morale éthique, indépendamment des lois	
+5. Neutre – Libéré des lois ou de la morale dans sa vision	
+6. Neutre Mauvais – Recherche de gain personnel et prêt à faire des sacrifices	
+7. Chaotique Bon – Anti-autoritaires cherchant à promouvoir leur vision du bien	
+8. Chaotique Neutre – Accorde une grande importance aux libertés individuelles avant tout	
+9. Chaotic Mauvais – Opposé à la hiérarchie sociale et au bien communautaire	

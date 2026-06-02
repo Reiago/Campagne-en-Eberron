@@ -1,0 +1,147 @@
+Les Maisons draconiques
+
+Les Maisons draconiques sont des organisations dynastiques fondées autour de lignées humaines, demi-elfes, halfelines ou autres, dont certains membres manifestent des Marques du Dragon — des sceaux mystiques héréditaires conférant des pouvoirs uniques. Ces maisons ne sont pas des nations, mais leur influence économique, politique et magique dépasse souvent celle des royaumes de Khorvaire.
+Chaque Maison est spécialisée dans un domaine précis : transport, communication, guérison, artisanat, espionnage ou guerre. Bien que leurs membres soient liés par le sang, les Maisons fonctionnent comme des guildes transnationales, régies par des règles strictes de neutralité politique et de concurrence contrôlée.
+"Organisation et influence
+Chaque Maison est dirigée par un conseil familial, composé des membres les plus influents de la lignée. Les décisions sont prises dans l’intérêt de la Maison avant toute autre considération. Les alliances entre Maisons sont fréquentes, mais la rivalité est constante, bien que rarement ouverte.
+Les Maisons respectent un accord ancien interdisant toute prise de pouvoir politique directe. En pratique, leur contrôle des infrastructures vitales leur confère une influence considérable sur les royaumes de Khorvaire."
+
+"🛠️ Maison Cannith — Marque de la Fabrication
+Peuple principal : Humains
+Domaine : Artisanat magique, création, innovation
+La Maison Cannith est le cœur industriel de Khorvaire. Elle conçoit armes, armures, objets magiques et merveilles technologiques. Responsable de la création des forgés, elle porte encore le poids moral et politique de cet héritage.
+Culture : Ingénieurs, inventeurs, pragmatiques
+Rôle en jeu : Fournisseurs d’équipement, intrigues industrielles, secrets technologiques
+Conflits internes : Maison divisée en factions rivales depuis la Guerre de la Marque"
+"Avantage : Artisan de la Maison
+Maîtrise d’un outil d’artisan supplémentaire
+Une fois par repos long, réduisez de moitié le coût de fabrication d’un objet non magique ou magique commun
+Avantage aux tests d’Intelligence (Arcanes ou Investigation) liés aux objets"
+"🛡️ Maison Deneith — Marque de la Sentinelle
+Peuple principal : Humains
+Domaine : Mercenariat, protection, justice contractuelle
+Deneith fournit des soldats, des gardes et des arbitres impartiaux. Elle est garante de nombreux contrats militaires et juridiques à travers Khorvaire.
+Culture : Discipline, honneur, loyauté
+Rôle en jeu : Employeurs militaires, gardes du corps, conflits de loyauté
+Spécificité : Neutralité stricte, même face aux royaumes"
+"Avantage : Garde sous Contrat
+Maîtrise d’une arme martiale ou des armures intermédiaires
+Une fois par repos long, réaction : +2 CA à un allié adjacent contre une attaque"
+"🌩️ Maison Lyrandar — Marque de la Tempête
+Peuple principal : Demi-elfes
+Domaine : Transport aérien et maritime
+Maîtres des vents et des flots, les Lyrandar contrôlent les vaisseaux élémentaires. Leur flotte aérienne et navale est essentielle au commerce moderne.
+Culture : Liberté, aventure, prestige
+Rôle en jeu : Voyages rapides, intrigues commerciales, exploration
+Spécificité : Forte identité familiale et maritime"
+"Avantage : Navigateur Élémentaire
+Maîtrise de Véhicules (air ou eau)
+Avantage aux tests de Survie liés à la météo ou navigation
+Une fois par repos long, ignorez le terrain difficile dû au vent ou à la mer pendant 1 minute"
+"🛤️ Maison Orien — Marque du Passage
+Peuple principal : Humains
+Domaine : Routes, messagerie, transport terrestre
+Orien gère les routes commerciales et le rail de foudre. Elle relie les nations et maintient la circulation des biens et des informations.
+Culture : Fiabilité, efficacité, réseau
+Rôle en jeu : Transport, sabotage, protection de convois
+Conflits : Rivalité avec Lyrandar"
+"Avantage : Messager de la Route
++1,5 m de vitesse
+Une fois par repos long, relance d’un jet lié à déplacement, poursuite ou voyage"
+"✉️ Maison Sivis — Marque de l'Ecriture
+Peuple principal : Gnomes
+Domaine : Communication, archives, traduction
+Sivis contrôle les communications officielles, les contrats et les messages magiques. Elle est le pilier administratif de Khorvaire.
+Culture : Précision, neutralité, secret
+Rôle en jeu : Espionnage, falsification, diplomatie
+Spécificité : Influence discrète mais omniprésente"
+"Avantage : Autorité Contractuelle
+Maîtrise d’un outil de calligraphie ou d’une langue supplémentaire
+Avantage aux tests de Persuasion lors de négociations officielles
+Une fois par repos long, authentifiez un document sans test (hors magie majeure)"
+"💉 Maison Jorasco — Marque de la Guérison
+Peuple principal : Halfelins
+Domaine : Soins, médecine, hôpitaux
+Jorasco fournit soins magiques et médicaux à grande échelle. Elle est indispensable, mais ses services ont un coût.
+Culture : Compassion pragmatique
+Rôle en jeu : Soins, dilemmes moraux, accès limité
+Spécificité : Neutralité même face à la souffrance"
+"Avantage : Médecin de la Maison
+Maîtrise du kit de guérisseur
+Soins avec le kit : PV supplémentaires = bonus de maîtrise
+Une fois par repos long, stabilisez automatiquement toutes les créatures inconscientes à 3 m"
+"🎭 Maison Phiarlan — Marque de l’Ombre
+Peuple principal : Elfes
+Domaine : Arts, espionnage
+Phiarlan mêle spectacle et renseignement. Derrière les masques et les scènes se cache un réseau d’espions redoutable.
+Culture : Élégance, secret, tradition
+Rôle en jeu : Intrigues, infiltration, manipulation
+Conflit : Scission avec la Maison Thuranni"
+"Avantage : Masque de Scène
+Maîtrise de Représentation ou Tromperie
+Une fois par repos long, avantage à un jet de Discrétion ou Persuasion après un changement d’identité"
+"🗡️ Maison Thuranni — Marque de l’Ombre
+Peuple principal : Elfes
+Domaine : Assassinat, renseignement ciblé
+Plus froide et directe que Phiarlan, Thuranni vend la mort avec précision et discrétion.
+Culture : Efficacité, silence, loyauté interne
+Rôle en jeu : Assassins, contrats dangereux
+Spécificité : Relations tendues avec toutes les Maisons"
+"Avantage : Lame Silencieuse
+Maîtrise de Discrétion
+Une fois par repos long, attaque contre une cible surprise : dégâts bonus = bonus de maîtrise"
+"🔍 Maison Medani — Marque de la Détection
+Peuple principal : Demi-elfes
+Domaine : Enquêtes, protection, contre-espionnage
+Medani excelle dans la prévention des menaces et la détection des complots.
+Culture : Vigilance, analyse
+Rôle en jeu : Enquêtes, protection de PNJ
+Spécificité : Spécialistes du danger invisible"
+"Avantage : Vigilance Permanente
+Maîtrise d’Intuition ou Investigation
+Avantage aux jets d’initiative
+Une fois par repos long, forcez un ennemi à relancer une attaque"
+"⛏️ Maison Tharashk — Marque de la Découverte
+Peuple principal : Demi-orcs
+Domaine : Chasseurs de primes, ressources
+Tharashk traque personnes, artefacts et ressources rares. Elle est brutale mais efficace.
+Culture : Pragmatique, tribale
+Rôle en jeu : Traques, conflits moraux
+Spécificité : Intégration des traditions orcs"
+"Avantage : Chasseur de Primes
+Maîtrise de Survie
+Avantage pour pister une créature
+Une fois par repos long, marquez une cible : +1 aux attaques contre elle pendant 1 minute"
+"🐾 Maison Vadalis — Marque du Dressage
+Peuple principal : Humains
+Domaine : Élevage, créatures, expérimentation
+Vadalis élève et modifie des créatures pour le travail, la guerre ou le prestige.
+Culture : Innovation biologique
+Rôle en jeu : Créatures étranges, dilemmes éthiques
+Spécificité : Frontière floue entre science et monstruosité"
+"Avantage : Manipulateur de Créatures
+Maîtrise de Dressage
+Les bêtes non hostiles ont un désavantage pour vous attaquer au premier round
+Une fois par repos long, donnez à une bête alliée avantage à un jet"
+"🏦 Maison Kundarak — Marque de la Protection
+Peuple principal : Nains
+Domaine : Banques, coffres, sécurité
+Kundarak protège richesses et secrets. Rien n’est plus sûr qu’un coffre Kundarak.
+Culture : Prudence, fiabilité
+Rôle en jeu : Cambriolages, contrats, secrets
+Spécificité : Neutralité absolue"
+"Avantage : Gardien des Coffres
+Maîtrise des outils de voleur ou de maçon
+Avantage pour détecter pièges et serrures
+Une fois par repos long, annulez un coup critique"
+"🍻 Maison Ghallanda — Marque de l’Hospitalité
+Peuple principal : Halfelins
+Domaine : Auberges, refuges
+Ghallanda offre sécurité et confort aux voyageurs. Ses établissements sont des havres neutres.
+Culture : Accueil, communauté
+Rôle en jeu : Points de rencontre, intrigues sociales
+Spécificité : Réseau d’informations informel"
+"Avantage : Hôte de Confiance
+Maîtrise de Persuasion
+Accès garanti à abri et nourriture sûrs en zone civilisée
+Une fois par repos long, accordez à un allié avantage à un jet de sauvegarde"

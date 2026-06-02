@@ -1,0 +1,22 @@
+# Système
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Éditeurs / IDE
+.vscode/
+.idea/
+*.suo
+*.user
+*.swp
+*~
+
+# Notes personnelles (non publiées)
+_TODO_.txt
+
+# Outils locaux éventuels
+node_modules/
+dist/
+.env
+.env.*

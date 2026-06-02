@@ -1,0 +1,340 @@
+Don 	Prérequis 	Description 	Eberron
+"Marque draconique majeur
+"	Prérequis : Niveau 8, le personnage doit posséder un Marque draconique	"Votre Marque draconique a grandi en taille et en puissance. Ce don améliore le Marque draconique présent sur votre corps, et les avantages gagnés dépendent du type de Marque draconique que vous possédez. Un Marque draconique majeur prodigue les avantages suivants : Le type de dé que vous lancez comme dé d'intuition avec votre Marque draconique augmente d'une taille.
+Augmentez une de vos caractéristiques de 1, sans dépasser 20. Les caractéristiques que vous pouvez augmenter dépendent de votre Marque draconique.
+Les pouvoirs ont un effet ou leur degré de difficulté augmenté (fixé lors de la prise du don)."	X
+Accord d'arme magique	Création d'armes et armures magiques, niveau 5 de lanceur de sorts	Quand il manie une arme magiquele personnage bénéficie de +1 aux jets d'attaque et de dégâts après 24h de mise à disposition.	x
+Acrobate		"Vous devenez plus agile, et obtenez les avantages suivants :
+Augmentez votre valeur de Dextérité de 1, pour un maximum de 20.
+Vous gagnez la maîtrise de la compétence Acrobaties. Si vous maîtrisez déjà cette compétence, ajoutez le double de votre bonus de maîtrise aux jets de cette compétence.
+Par une action bonus, vous pouvez effectuer un jet de Dextérité (Acrobaties) DD 15. En cas de réussite, un terrain difficile ne vous coûte pas de mouvement supplémentaire jusqu'à la fin du tour en cours."	
+Acrobate des falaises	Féral	en rage, la vitesse d'escalade augmente de 3m. Cumulable avec la marque d'arpenteur des falaise.	x
+Acteur		"Entraîné au mimétisme et à l'art dramatique, vous gagnez les avantages suivants :
+Augmentez votre valeur de Charisme de 1, pour un maximum de 20.
+Vous avez l'avantage aux jets de Charisme (Tromperie) et Charisme (Représentation) pour essayer de vous faire passer pour une autre personne.
+Vous pouvez imiter le discours d'une autre personne ou les sons émis par d'autres créatures. Vous devez avoir entendu la personne qui parle, ou entendu la créature émettre le son, pendant au moins 1 minute. Un jet réussi de Sagesse (Perspicacité) contre votre jet de Charisme (Tromperie) permet à celui qui écoute de déterminer qu'il s'agit d'une imitation."	
+Adepte de la métamagie	Capacité Incantation ou Magie de pacte	Vous apprenez deux options de métamagie et gagnez 2 points de sorcellerie.	
+Adepte élémentaire	Capacité de lancer au moins un sort	"Quand vous gagnez ce don, choisissez l'un des types de dégâts suivants : acide, froid, feu, foudre ou tonnerre.
+Les sorts que vous lancez ignorent la résistance aux dégâts du type choisi. En outre, lorsque vous lancez les dés de dégâts pour un sort que vous avez lancé et qui inflige des dégâts de ce type, vous pouvez traiter tout 1 aux dés comme un 2.
+Vous pouvez sélectionner ce don plusieurs fois. Chaque fois que vous faites cela, vous devez choisir un type de dégâts différent."	
+Adepte martial		"Vous avez une formation martiale qui vous permet d'effectuer des manœuvres de combat spéciales. Vous obtenez les avantages suivants :
+Vous apprenez deux manœuvres de votre choix parmi celles disponibles pour l'archétype de guerrier du maître de bataille. Si une manœuvre que vous utilisez nécessite que la cible fasse un jet de sauvegarde pour résister aux effets de la manœuvre, le DD du jet de sauvegarde est égal à 8 + votre bonus de maîtrise + votre modificateur de Force ou de Dextérité (selon votre choix).
+Si vous avez déjà des dés de supériorité, vous en gagner un de plus ; sinon, vous obtenez un dé de supériorité, qui est un d6. Ce dé est utilisé pour alimenter vos manœuvres. Un dé de supériorité est dépensé lorsque vous l'utilisez. Vous regagnez vos dés de supériorité dépensés lorsque vous terminez un repos court ou long."	
+Adepte occulte	Capacité Incantation ou Magie de pacte	Vous apprenez une manifestation occulte.	
+Agilité des courts-sur-pattes	Nain ou race de taille P	"Vous êtes particulièrement agile pour votre race. Vous obtenez les avantages suivants :
+Augmentez votre valeur de Force ou de Dextérité de 1, pour un maximum de 20.
+Augmentez votre vitesse de marche de 1,50 mètre.
+Vous gagnez la maîtrise de la compétence Acrobaties ou Athlétisme.
+Vous avez un avantage à vos jets de Force (Athlétisme) ou Dextérité (Acrobaties) pour vous échapper si vous êtes agrippé."	
+Agressivité orc	Demi-orc	En utilisant une action bonus, vous pouvez vous déplacer de votre vitesse en direction d'un ennemi de votre choix que vous pouvez voir ou entendre. Vous devez terminer ce déplacement plus proche de l'ennemi que vous ne l'étiez.	
+Alchimiste		"Vous avez étudié les secrets de l'alchimie et êtes un expert dans sa pratique, ce qui vous donne les avantages suivants :
+Augmentez votre valeur d'Intelligence de +1, jusqu'à un maximum de 20.
+Vous gagnez la maîtrise du matériel d'alchimie. Si vous le maîtrisez déjà, vous ajoutez le double de votre bonus de maîtrise aux jets que vous faîtes avec lui.
+Par une action, vous pouvez identifier une potion à 1,50 mètre ou moins de vous, comme si vous l'aviez goûté. Vous devez voir le liquide pour que cet avantage fonctionne.
+Au cours de tout repos court, vous pouvez améliorer temporairement la puissance d'une potion de soins, quelle que soit sa rareté. Pour utiliser cet avantage, vous devez avoir le matériel d'alchimie avec vous, et la potion doit être à portée de main. Si la potion est bue moins d'une heure après la fin du repos court, la créature qui boit la potion peut renoncer à jeter les dés de la potion et récupérer le maximum de points de vie que la potion peut restaurer."	
+Amateur d'armes à feu		+1 en Dex., maîtrise des armes à feu, ignore la propriété rechargement de ces armes et aucun désavantage à l'attaque au contact.	
+Amateur d'armures intermédiaires	Maîtrise des armures légères	"Vous avez été formé pour maîtriser l'utilisation des armures intermédiaires et des boucliers, et vous bénéficiez des avantages suivants :
+Augmentez votre valeur de Force ou de Dextérité de 1, pour un maximum de 20,
+Vous gagnez la maîtrise des armures intermédiaires et des boucliers."	
+Amateur d'armures légères		"Vous avez été formé pour maîtriser l'utilisation des armures légères, et vous bénéficiez des avantages suivants :
+Augmentez votre valeur de Force ou de Dextérité de 1, pour un maximum de 20,
+Vous gagnez la maîtrise des armures légères."	
+Amateur d'armures lourdes	Maîtrise des armures intermédiaires	"Vous avez été formé pour maîtriser l'utilisation des armures lourdes, et vous bénéficiez des avantages suivants :
+Augmentez votre valeur de Force de 1, pour un maximum de 20,
+Vous gagnez la maîtrise des armures lourdes."	
+Ami des bestioles	Gnome	"Votre empathie avec les animaux augmente mystérieusement. Vous obtenez les bénéfices suivants :
+Vous gagnez la maîtrise de la compétence Dressage. Si vous la maîtrisez déjà, votre bonus de maîtrise pour cette compétence est doublé.
+Vous apprenez le sort compréhension animale et vous pouvez le lancer à volonté, sans dépenser d'emplacement de sort. Vous apprenez également le sort amitié animale, et vous pouvez le lancer une fois, grâce à ce don, sans dépenser d'emplacement de sort. Vous devez terminer un repos long avant de pouvoir de nouveau lancer le sort amitié animale via ce don. L'Intelligence est votre caractéristique de lanceur de sorts dans le cadre de ce don."	
+Arcaniste		"Vous étudiez les arts des arcanes, et obtenez les avantages suivants :
+Augmentez votre valeur d'Intelligence de 1, pour un maximum de 20.
+Vous gagnez la maîtrise de la compétence Arcanes. Si vous maîtrisez déjà cette compétence, ajoutez le double de votre bonus de maîtrise aux jets de cette compétence.
+Vous apprenez les sorts prestidigitation et détection de la magie. Vous pouvez lancer détection de la magie une fois sans dépenser d'emplacement de sort, et vous regagnez cette capacité lorsque vous terminez un long repos."	
+Archiviste aerini	Elfe	Maîtrise magique ancestrale	x
+Arme naturelle supérieure	Féral	Le dégâts augmentent d'un cran 1d2, 1d3, 1d4, 1d6, 1d8, 2d6, 3d6, 4d6, 6d6, 8d6, 12d6 ou 1d10, 2d8, 3d8, 4d8, 6d8, 12d8	x
+Artiste		"Vous maîtrisez les représentations et la scène. Vous obtenez les avantages suivants :
+Augmentez votre valeur de Charisme de 1, pour un maximum de 20.
+Vous gagnez la maîtrise de la compétence Représentation. Si vous maîtrisez déjà cette compétence, ajoutez le double de votre bonus de maîtrise aux jets de cette compétence.
+Lors d'une représentation, vous pouvez essayer de distraire un humanoïde que vous pouvez voir et qui peut vous voir et vous entendre. Faites un jet de Charisme (Représentation) opposé à un jet de Sagesse (Perspicacité) de l'humanoïde. En cas de réussite, vous captez suffisamment l'attention de l'humanoïde pour que ses jets de Sagesse (Perception) et d'Intelligence (Investigation) aient un désavantage jusqu'à ce que vous arrêtiez votre numéro."	
+Athlète		"Vous avez suivi une forte formation physique qui vous donne les avantages suivants : 
+Augmentez votre valeur de Force ou de Dextérité de 1, pour un maximum de 20.
+Lorsque vous êtes à terre, vous relever prend seulement 1,50 mètre de votre mouvement.
+Escalader ne vous coûte pas de mouvement supplémentaire.
+Vous pouvez faire un saut en longueur ou en hauteur avec seulement 1,50 mètre d'élan, au lieu de 3 mètres."	
+Asservissement d'élémentaires	Création d'objets merveilleux, Niveau 9 de lanceur de sort	Créer un object à élémentaire asservi ets proche de la conception d'un objet merveilleux en dehors du fait que l'appel et l'asservissement de l'élémentaire font partie intégrante du processus de création. Tous le sobjets à élémentaires asservis ont un sort de la famille de contrat dans leurs conditions de création ainsi qu'un dracolithede Khyber comme réceptacle. L'élémentaire a droit à un jet de sauvegarde. 	x
+Attaquant sauvage		Une fois par tour quand vous lancez les dégâts d'une attaque au corps à corps avec une arme, vous pouvez relancer les dégâts de l'arme et choisir le meilleur des deux résultats.	
+Attaque multiple du féral	Féral avec longues dents ou griffes affilées, bonus d'attaque +6	L'attaque secondaire avec une arme naturelle est de -2 au lieu de -5	x
+Audace des nains	Nain	Vous êtes soit naturellement calme et le cœur résolu face à la terreur d'un danger imminant, ou bien vous être très bon pour le cacher. Vous êtes immunisé à la frayeur.	
+Bagarreur de tavernes		"Habitué à vous battre comme un chiffonnier en utilisant tout ce qui vous tombe sous la main, vous recevez les bénéfices suivants :
+Augmentez votre valeur de Force ou de Constitution de 1, sans dépasser 20.
+Vous maîtrisez les armes improvisées.
+Votre attaque à mains nues utilise un d4 pour les dégâts.
+Pendant votre tour, si vous touchez une cible avec une attaque à mains nues ou une arme improvisée, vous pouvez utiliser une action bonus pour essayer d'engager une lutte avec la cible."	
+Banquier Kundarak	Nain	Sécurité, contrats, résistance mentale	x
+Broyeur		+1 en For. ou Con., mouvement extra de 1,50 m en cas d'attaque réussie et attaques avec avantage après un coup critique.	
+Cambrioleur		"Vous vous vantez de votre rapidité et de votre connaissance approfondie de certaines activités clandestines. Vous gagnez les avantages suivants :
+Augmentez votre valeur de Dextérité de +1, jusqu'à un maximum de 20.
+Vous gagnez la maîtrise des outils de voleur. Si vous les maîtrisez déjà, vous ajoutez le double de votre bonus de maîtrise aux jets que vous faîtes avec eux.
+Si vous tentez d'entrer par effraction dans un lieu, vous pouvez passer une journée à étudier les allés et venus, les points d'entrées et de sorties afin d'obtenir un maximum d'information utile. Lancez un jet d'Intelligence + votre bonus de maîtrise. Le DD dépend de la taille et de la sécurité de la structure étudiée. Sur un échec, vous éveillez les soupçons. Sur un succès partiel, vous obtenez les informations nécessaire afin de préparer un cambriolage. Sur un succès complet, vous trouvez une faille dans la sécurité qui vous permet d'y pénétrer sans avoir à faire aucun jet supplémentaire."	
+Caméléon social	Changelin	Avantages en tromperie et persuasion	x
+Cavalier de Talenta	Halfelin	Maîtrise des montures exotiques	x
+Chance abondante	Halfelin	À chaque fois qu'un allié que vous pouvez voir et qui se trouve à 9 mètres ou moins de vous maximum obtient un 1 naturel sur un d20 lors d'un jet d'attaque, de caractéristique ou de sauvegarde, vous pouvez utiliser votre réaction pour permettre à cet allié de relancer son dé. L'allié est obligé d'utiliser le nouveau résultat.	
+Chanceux	Humain	"Votre chance vous a sauvé plusieurs fois la vie par le passé. Vous obtenez les bénéfices suivants :
+Si vous obtenez un 1 naturel sur un jet de sauvegarde, vous pouvez relancer ce dé. Vous devez utiliser ce nouveau résultat.
+Si vous êtes la cible d'une attaque et qu'il s'agit d'un coup critique, vous pouvez annuler l'effet du critique. Vous ne pouvez réutiliser cette capacité qu'après avoir terminé un repos court ou long."	
+Chargeur		Quand tu utilises l’action Foncer et que tu te déplaces d’au moins 3 mètres en ligne droite :Tu peux faire une attaque de mêlée en action bonus et tu choisis l’un des deux effets (+5 dégâts si tu fais une attaque d’arme de mêlée ou Pousser la cible de 3 mètres si tu fais une bousculade)	
+Charge en puissance	Chargeur	Si chargeur et attaque atteint la cible +1d8 de dégâts si de taille M ou 2d6 si de taille G, 3d6 si TG, 4d6 si Gig ou 6d6 si C à sa première attaque. 	
+Chef		+1 en Con. ou Sag., maîtrise des ustensiles de cuisinier et cuisine des plats qui redonnent des pv.	
+Combattant à deux armes		"Vous maîtrisez le combat à deux armes, et obtenez les avantages suivants :
+Vous gagnez un bonus de +1 à la CA si vous tenez une arme de corps à corps différente dans chaque main.
+Vous pouvez utiliser le combat à deux armes même si les armes de corps à corps à une main que vous tenez ne sont pas légères.
+Vous pouvez dégainer ou rengainer deux armes à une main alors que normalement vous ne pourriez le faire que pour une seule."	
+Combattant monté		"Vous êtes un dangereux ennemi à affronter lorsque vous êtes monté. Lorsque vous êtes monté et pas incapable d'agir, vous gagnez les avantages suivants :
+Vous avez l'avantage aux jets d'attaque au corps à corps contre toute créature non montée qui est plus petite que votre monture.
+Vous pouvez forcer une attaque qui vous cible à cibler votre monture à votre place.
+Si votre monture est soumise à un effet qui lui permet de faire un jet de sauvegarde de Dextérité pour ne prendre que la moitié des dégâts, elle ne prend aucun dégât si le jet de sauvegarde est réussi, et seulement la moitié des dégâts en cas d'échec."	
+Constitution infernale	Tieffelin	"Votre héritage diabolique est particulièrement présent chez vous. Vous obtenez les bénéfices suivants :
+Augmentez votre valeur de Constitution de 1, pour un maximum de 20.
+Vous avez la résistance aux dégâts de froid et de poison.
+Vous avez l'avantage à vos jets de sauvegarde effectués contre la condition empoisonné."	
+Construction vivante avancée	Forgelier	Résistances accrues, endurance	x
+Corps d'Adamantium	Forgelier	le bonus d'armure passe à +8 et résistance aux dégâts de 2/adamantium. Par contre vitesse de déplassement tombe à 6m et considéré comme portant une armure lourde. Le bonus de dextérité maximal à la CA passe à +1 et malus d'armure de 5 aux tests Acrobaties, Déplacement silencieux, Discrétion, Equilibre, EScalade, Escamotage, Evasion, Natation et Sauts) et échec aux sorts de 35%. 	x
+Corps de Mithril	Forgelier	Le bonus d'"armure passe à +5 et est considéré porté une armure légère. Le bonus maximal à la Dextérité est de 5 et malus d'armure de 2 aux tests Acrobaties, Déplacement silencieux, Discrétion, Equilibre, EScalade, Escamotage, Evasion, Natation et Sauts) et échec aux sorts de 15%. 	x
+Cuir du dragon	Drakéide	"Vous avez hérité de la puissance et de la majesté de vos ancêtres dragons. Vous obtenez les avantages suivants :
+Augmentez votre valeur de Force, de Constitution ou de Charisme de 1, pour un maximum de 20.
+Vos écailles se durcissent. Tant que vous ne portez aucune armure, votre CA est de 13 + votre modificateur de Dextérité. Vous pouvez utiliser un bouclier et profiter de cet avantage.
+Des griffes rétractables ont poussé à l'extrémité de vos doigts. Sortir ou rentrer vos griffes ne requiert aucune action. Les griffes sont des armes naturelles que vous pouvez utiliser pour effectuer des attaques à mains nues. Si vous touchez au cours d'une attaque à mains nues, vous infligez un montant de dégâts tranchants égal à 1d4 + votre modificateur de Force, au lieu des dégâts contondants traditionnels des attaques à mains nues."	
+Défense supérieure	Forgelier, bonus de base à l'attaque de 6	Immunité aux dégâts supplémentaires des attaque ssournoises et des coups critiques mais ne peut plus être soigné par les sorts du registre de la guérison	x
+Détermination humaine	Humain	"Vous êtes mu par une volonté hors du commun, capable d'accomplir l'insurmontable. Vous obtenez les bénéfices suivants : 
+Augmentez la valeur d'une de vos caractéristiques (au choix) de 1, pour un maximum de 20.
+Lorsque vous effectuez un jet d'attaque, de caractéristique ou de sauvegarde, vous pouvez décider d'avoir l'avantage à votre jet. Vous ne pouvez réutiliser cette capacité qu'après avoir terminé un repos court ou long."	
+Deuxième chance	Halfelin	"La chance vous sourit. Vous obtenez les bénéfices suivants :
+Augmentez votre valeur de Dextérité, de Constitution, ou de Charisme de 1, pour un maximum de 20.
+Lorsqu'une créature que vous pouvez voir vous touche avec un jet d'attaque, vous pouvez utiliser votre réaction pour obliger cette créature à relancer son jet. Une fois cette capacité utilisée, vous devez terminer un repos court ou long pour pouvoir la réutiliser."	
+Diplomate		"Vous maîtrisez l'art de la diplomatie, et obtenez les avantages suivants :
+Augmentez votre valeur de Charisme de 1, pour un maximum de 20.
+Vous gagnez la maîtrise de la compétence Persuasion. Si vous maîtrisez déjà cette compétence, ajoutez le double de votre bonus de maîtrise aux jets de cette compétence.
+Si vous passez une minute à parler à quelqu'un qui peut comprendre ce que vous dites, vous pouvez faire un jet de Charisme (Persuasion) opposé à un jet de Sagesse (Perspicacité) de la créature. Si vous ou vos compagnons combattez la créature, votre jet échoue automatiquement. En cas de réussite, vous charmez la cible tant qu'elle reste dans un rayon de 18 mètres autour de vous et pendant 1 minute par la suite."	
+Discipline onirique	Kalashtar	Contrôle des rêves et de l’esprit	x
+Discret	13 ou plus en Dextérité	"Vous savez comment bien vous cacher et obtenez les avantages suivants :
+Augmentez votre valeur de Dextérité de 1, pour un maximum de 20.
+Vous gagnez la maîtrise de la compétence Discrétion. Si vous maîtrisez déjà cette compétence, ajoutez le double de votre bonus de maîtrise aux jets de cette compétence.
+Si vous êtes caché, vous pouvez vous déplacer de 3 mètres à découvert sans vous faire voir si vous terminez le mouvement dans une position où vous n'êtes pas clairement visible."	
+Dresseur		"Vous maîtrisez les techniques nécessaires pour entraîner et dresser des animaux. Vous gagnez les avantages suivants :
+Augmentez votre valeur de Charisme de 1, pour un maximum de 20.
+Vous gagnez la maîtrise de la compétence Dressage. Si vous maîtrisez déjà cette compétence, ajoutez le double de votre bonus de maîtrise aux jets de cette compétence.
+Vous pouvez utiliser une action bonus à votre tour pour dominer une bête amicale à 18 mètres ou moins de vous qui peut vous entendre et qui n'est pas dominée par quelqu'un d'autre. Vous décidez maintenant de l'action que prendra la bête et de l'endroit où elle se déplacera au cours de son prochain tour, ou vous lui donnez un ordre générale qui dure 1 minute, comme protéger une zone particulière."	
+Doué		Vous gagnez la maîtrise de trois compétences ou outils de votre choix, avec la combinaison que vous souhaitez.	
+Duelliste défensif	13 ou plus en Dextérité	Lorsque vous tenez une arme de finesse que vous maîtrisez et qu'une autre créature vous touche avec une attaque au corps à corps, vous pouvez utiliser votre réaction pour ajouter votre bonus de maîtrise à votre CA pour cette attaque, ce qui pourrait faire que l'attaque vous rate.	
+Ecailles renfocées	Drakéide	Les écailles du drakéide deviennent plus épaisses et résistantes. Sa protection naturelle s’améliore (CA+2), lui permettant de mieux encaisser les coups sans entraver sa mobilité.	
+Effacement	Gnome	"Vous pouvez puiser dans votre héritage magique pour vous échapper du danger. Vous obtenez les bénéfices suivants :
+Augmentez votre valeur d'Intelligence de 1, pour un maximum de 20.
+Lorsque vous subissez des dégâts, vous pouvez utiliser votre réaction pour devenir invisible par magie jusqu'à la fin de votre prochain tour ou jusqu'à ce que vous attaquiez, infligiez des dégâts, ou forciez quelqu'un à effectuer un jet de sauvegarde. Une fois utilisée, vous devez terminer un repos court ou long avant de pouvoir réutiliser cette capacité."	
+Eloquent		"Vous développez vos talents de communication pour mieux tromper les autres. Vous obtenez les avantages suivants :
+Augmentez votre valeur de Charisme de 1, pour un maximum de 20.
+Vous gagnez la maîtrise de la compétence Tromperie. Si vous maîtrisez déjà cette compétence, ajoutez le double de votre bonus de maîtrise aux jets de cette compétence.
+Lorsque vous prenez l'action Attaquer à votre tour, vous pouvez remplacer une attaque par une tentative de tromper un humanoïde que vous pouvez voir à 9 mètres ou moins de vous et qui peut vous voir et vous entendre. Faites un jet de Charisme (Tromperie) opposé à un jet de Sagesse (Perspicacité) de la cible. En cas de réussite, votre mouvement ne provoque pas d'attaque d'opportunité de la cible et vos attaques contre elle ont l'avantage. Ces deux gains durent jusqu'à la fin de votre prochain tour ou jusqu'à ce que vous utilisiez cette capacité sur une cible différente. En cas d'échec, vous ne pouvez plus tromper la cible de cette façon durant 1 heure."	
+Empaleur		+1 en For. ou Dex., relance un dé de dégâts en cas d'attaque réussie et un dé de dégâts supplémentaire en cas de coup critique.	
+Empathique		"Vous devinez la façon dont les autres pensent et ressentent. Vous obtenez les avantages suivants :
+Augmentez votre valeur de Sagesse de 1, pour un maximum de 20.
+Vous gagnez la maîtrise de la compétence Perspicacité. Si vous maîtrisez déjà cette compétence, ajoutez le double de votre bonus de maîtrise aux jets de cette compétence.
+Vous pouvez utiliser votre action pour essayer d'avoir une troublante intuition au sujet d'un humanoïde que vous pouvez voir à 9 mètres ou moins de vous. Faites un jet de Sagesse (Perspicacité) opposé à un jet de Charisme (Tromperie) de la cible. En cas de réussite, vous avez l'avantage aux jets d'attaque et de caractéristique contre la cible jusqu'à la fin de votre prochain tour."	
+Empoisonneur		Maîtrise du kit d'empoisonneur, application par une action bonus et vos attaques ignorent la résistance aux dégâts de poison.	
+Endurant		"Robuste et résistant, vous gagnez les avantages suivants :
+Augmentez votre valeur de Constitution de 1, jusqu'à un maximum de 20.
+Lorsque vous jetez un Dé de vie pour regagner des points de vie, le nombre minimum de points de vie que vous regagnez de ce jet est égal à deux fois votre modificateur de Constitution (minimum 2)."	
+Esprit affûté		"Vous avez un esprit qui permet de repérer le temps, les directions et les détails avec une précision étonnante. Vous obtenez les avantages suivants :
+Augmentez votre valeur d'Intelligence de 1, jusqu'à un maximum de 20.
+Vous savez toujours où est le nord.
+Vous savez toujours le nombre d'heures restantes avant le lever du soleil suivant ou le coucher du soleil.
+Vous pouvez vous rappeler avec précision ce que vous avez vu ou entendu au cours du mois passé."	
+Esprit coopératif	Humain	"Vous avez appris qu'il n'y a qu'en mettant vos différences de côtés et en vous entraidant que vous pouvez accomplir de grandes choses. Vous obtenez les bénéfices suivants :
+Lorsque vous utilisez l'action Aider, vous octroyez un bonus de 1d4 au jet de la cible.
+Vous pouvez Aider un allié au prix d'une réaction."	
+Esprit solide	Kalashtar, Sag 11	Le personnage bénéficie d'un bonus de +3 au jet de sauvegarde contre les effets psioniques et les attaques psychiques les avantages de ce don ne s'appliquent pas contre les sorts les pouvoirs magiques et les objets magiques qui ne font que reproduire des effets psioniques 	x
+Eventration du prédateur	Féral, BBA +4	Si le personnage réussit ces 2 attaques de griffes dans le même Rhône il infligent des dégâts supplémentaires s'élevant à Un des Plus modificateur de force auquel s'ajoute un point par tranche de 4 niveaux 	
+Expert de la charge		"Lorsque vous utilisez votre action pour Foncer, vous pouvez utiliser une action bonus pour faire une attaque au corps à corps avec une arme ou bousculer une créature.
+Si vous vous déplacez d'au moins 3 mètres en ligne droite juste avant de prendre cette action bonus, vous gagnez soit un bonus de +5 aux dégâts de l'attaque (si vous avez choisi de faire une attaque au corps à corps et que vous touchez), soit vous repoussez la cible jusqu'à 3 mètres de vous (si vous avez choisi de la bousculer et que vous réussissez)."	
+Explorateur de donjons		"Vigilant face aux pièges cachés et portes secrètes que l'on trouve dans de nombreux donjons, vous obtenez les avantages suivants :
+Vous avez l'avantage aux jets de Sagesse (Perception) et Intelligence (Investigation) effectués pour détecter la présence de portes secrètes.
+Vous avez avantage aux jets de sauvegarde pour éviter ou résister aux pièges.
+Vous obtenez la résistance aux dégâts infligés par les pièges.
+Vous pouvez rechercher des pièges tout en vous déplaçant à un rythme normal, au lieu d'un rythme lent."	
+Faiseur de Merveilles	Gnome	"Vous maîtrisez les techniques d'artisanat de votre peuple. Vous obtenez les bénéfices suivants :
+Augmentez votre valeur de Dextérité ou d'Intelligence de 1, pour un maximum de 20.
+Lorsque vous effectuez un jet utilisant votre maîtrise des outils de bricoleur, vous ajoutez le double de votre bonus de maîtrise à ce jet.
+Lorsque vous fabriquez un mécanisme avec votre trait Bricoleur, vous disposez des options supplémentaires listées ci-dessous :
+Alarme. Ce mécanisme repère une créature qui se déplace dans un rayon de 4,50 mètres autour de lui sans prononcer à haute voix le mot de passe choisi lorsqu'il a été créé. Le round après que la créature ait pénétré dans sa zone de détection, l'alarme déclenche une sonnerie stridente qui dure 1 minute et peut être entendue jusqu'à 90 mètres à la ronde.
+Calculateur. Ce mécanisme permet d'effectuer des additions facilement.
+Cric. Ce mécanisme peut être utilisé comme appareil de levage ou comme moyen de blocage, permettant à son utilisateur de soulever jusqu'à 5 fois plus de poids que ce qu'il pourrait normalement soulever.
+Garde-temps. Cette montre à gousset permet de connaître avec précision l'heure qu'il est.
+Station météo. En utilisant une action, ce mécanisme prédit les conditions météorologiques à venir dans les 4 prochaines heures dans un rayon de 1,6 kilomètre, indiquant un symbole (nuage, soleil/lune, pluie ou neige) pour chacune des heures."	
+Férocité férale	Féral, Sag13	En état de sauvagerie le personnage peut continuer à se battre sans malus quand il est hors de combat ou mourant. À 0 point de vie Il peut continuer à agir comme s'il n'était pas hors de combat ce qui signifie qu'il n'est pas limité à une seule action de mouvement ou action simple par round. Il ne risque pas non plus de perdre un point de vie en exécutant une action simple ou une autre activité exigeante tant qu'il reste à 0 point de vie. Si le personnage se retrouve entre  -1 et -9 points de vie il ne tombe pas inconscient et ne perd pas automatiquement un point de vie par round. Si les points de vie du personnage tombent à moins 10 ou plus bas celuici meurt instantanément 	x
+Flammes de Phlégéthos	Tieffelin	"Vous avez appris à maîtriser les flammes de l'enfer. Vous obtenez les bénéfices suivants :
+Augmentez votre valeur d'Intelligence ou de Charisme de 1, pour un maximum de 20.
+Lorsque vous infligez des dégâts de feu avec un sort que vous lancez, vous pouvez relancer n'importe quel 1 sur vos dés de dégâts de feu, mais vous devez forcément utiliser le nouveau résultat obtenu, mais s'il s'agit à nouveau d'un 1.
+À chaque fois que vous lancez un sort qui inflige des dégâts de feu, vous pouvez décider que des flammes encerclent votre tête jusqu'à la fin de votre prochain tour. Les flammes ne blessent ni vous ni vos possessions, et elles émettent une lumière vive dans un rayon de 9 mètres autour de vous ainsi qu'une lumière faible sur 9 mètres de plus. Tant que les flammes sont présentes, toute créature, se trouvant à 1,50 mètre ou moins de vous et qui vous touche au cours d'une attaque au corps à corps subit 1d4 dégâts de feu."	
+Fluidité du mithril	Forgelier, corps de mithril	Le Bonus de dextérité maximal que le Forgelier peut appliquer à sa classe d'armure augmente de 1. De plus le malus d'armure au test d'Acrobatie, déplacement silencieux, discrétion, équilibre, escalade, escamotage, évasion et saut est réduit de 1. Ce don peut être choisi plusieurs fois. Mais le malus d'armure aux tests ne peut descendre en dessous de 0.	x
+Fourreau de protection	Nain	Le fourreau de protection de votre dague de clan vous sert à parer les coups que les adversaires que vous affrontez vous rendent. Lorsque vous attaquez avec votre dague de clan et que vous tenez son fourreau en seconde main, vous obtenez un bonus de bouclier de +2 à la CA contre chaque cible que vous attaquez, que vous touchiez ou non, jusqu'au début de votre prochain tour.	
+Fureur orc	Demi-orc	"La fureur qui vous habite brûle sans relâche. Vous obtenez les bénéfices suivants :
+Augmentez votre valeur de Force ou de Constitution de 1, pour un maximum de 20.
+Lorsque vous touchez au cours d'une attaque effectuée avec une arme courante ou de guerre, vous pouvez lancer de nouveau un dé de dégâts et l'ajouter en tant que dégâts supplémentaires du type de l'arme. Une fois que vous avez utilisé cette capacité, vous devez terminer un repos court ou long avant de pouvoir la réutiliser.
+Immédiatement après avoir utilisé votre trait Acharnement, vous pouvez utiliser votre réaction pour effectuer une attaque avec une arme."	
+Furtif	13 ou plus en Dextérité	"Vous êtes expert pour vous faufiler discrètement dans l'ombre. Vous obtenez les avantages suivants :
+Vous pouvez essayer de vous cacher d'une créature quand vous êtes dans une zone dont la visibilité est réduite pour elle.
+Lorsque vous êtes caché d'une créature et que vous ratez une attaque à distance avec une arme, l'attaque ne révèle pas votre position.
+Une lumière faible n'impose pas un désavantage à vos jets de Sagesse (Perception) en relation avec la vue."	
+Gourmand		"Vous maîtrisez de nombreuses recettes spéciales, ce qui vous permet de préparer des plats exotiques avec des effets utiles. Vous gagnez les avantages suivants :
+Augmentez votre valeur de Constitution de +1, jusqu'à un maximum de 20.
+Vous gagnez la maîtrise des ustensiles de cuisine. Si vous les maîtrisez déjà, vous ajoutez le double de votre bonus de maîtrise aux jets que vous faîtes avec eux.
+Par une action, vous pouvez inspecter un verre ou une assiette de nourriture qui se trouve à 1,50 mètre ou moins de vous et déterminer s'il est empoisonné, à condition que vous puissiez le voir et le sentir.
+Pendant un repos long, vous pouvez préparer et servir un repas qui vous aidera, vous et vos alliés, à récupérer des rigueurs de l'aventure, à condition que vous ayez de la nourriture appropriée, des ustensiles de cuisine et d'autres fournitures en main. Le repas nourrit jusqu'à six personnes, et chaque personne qui mange récupère deux Dés de Vie supplémentaires à la fin du repos long. En outre, ceux qui participent au repas ont l'avantage aux jets de sauvegarde de Constitution contre la maladie pour les prochaines 24 heures."	
+Guérisseur		"Vous êtes un habile médecin, ce qui vous permet de guérir les blessures rapidement pour que vos alliés puissent retourner au combat. Vous gagnez les avantages suivants :
+Lorsque vous utilisez une trousse de soins pour stabiliser une créature mourante, cette créature regagne également 1 point de vie.
+Par une action, vous pouvez dépenser une utilisation d'une trousse de soins pour soigner une créature et lui redonner 1d6 + 4 points de vie, plus un nombre de points de vie supplémentaires égal au nombre maximum de Dés de vie de la créature. La créature ne peut pas bénéficier de vos soins de nouveau jusqu'à ce qu'elle termine un repos court ou long."	
+Guerrier du bouclier		"Vous avez maîtrisé l'art de vous battre avec un bouclier. Votre bouclier est simplement une autre arme à votre disposition afin de contrôler le rythme de la bataille. Vous gagnez les avantages et les capacités suivantes lorsque vous portez un bouclier :
+Si vous réalisez une action Attaquer durant votre tour, vous pouvez utiliser une Action Bonus afin de réaliser un Coup de Bouclier sur une créature qui est à portée d'attaque de mêlée. Cela compte comme une attaque qui inflige 1d6 dégâts contondants.
+Au prix d'une action, vous pouvez réaliser une Attaque Bélier. Il s'agit d'une attaque de mêlée réalisée avec votre bouclier qui inflige 1d6 dégâts contondants si elle touche et force la créature a réussir un jet de sauvegarde de Dextérité (DD = 8 + votre bonus de maitrise + votre modificateur de Force) ou être mise à terre. La cible doit être d'une taille égale ou inférieur à la votre.
+Au prix d'une action, vous pouvez placer votre bouclier face à vous et prendre une posture défensive. Toutes les attaques d'armes que vous pouvez voir ont un désavantage contre vous. Vous êtes également préparé à contre-attaquer dès que l'opportunité se présente, ce qui vous permet d'utiliser votre réaction afin de réaliser une attaque contre une créature qui vous a attaqué et qui se trouve à portée d'attaque."	
+Harmonie sauvage	Elfe	"Vous développez un lien mystique très puissant avec le monde naturel, ce qui vous octroie les avantages suivants lorsque vous vous trouvez dans celui-ci :
+Lorsque vous utilisez un dé de vie pendant un repos court afin de regagner des points de vie, le résultat du dé de vie est doublé.
+Vous avez l'avantage au jet d'Initiative.
+Vous localisez parfaitement la position de chaque créature présente dans un rayon de 18m lors de votre premier tour de combat."	
+Haute magie drow	Elfe (drow)	Vous pouvez lancer détection de la magie (à volonté), lévitation et dissipation de la magie (1/repos long).	
+Héritage Draconique éveillé	Drakéide	Le lien ancestral qui unit le drakéide aux dragons s’intensifie, renforçant son souffle élémentaire et sa résistance naturelle. Le personnage peut utiliser son souffle plus fréquemment et bénéficie d’une meilleure maîtrise de l’énergie draconique qui coule dans ses veines.	
+Historien		"Vos études sur l'histoire sont récompensées avec les avantages suivants :
+Augmentez votre valeur d'Intelligence de 1, pour un maximum de 20.
+Vous gagnez la maîtrise de la compétence Histoire. Si vous maîtrisez déjà cette compétence, ajoutez le double de votre bonus de maîtrise aux jets de cette compétence.
+Lorsque vous prenez l'action Aider pour soutenir le jet de caractéristique d'une autre créature, vous pouvez effectuer un jet d'Intelligence (Histoire) DD 15. En cas de réussite, le jet de cette créature gagne un bonus égal à votre bonus de maîtrise, car vous partagez avec elle des conseils pertinents et des exemples historiques. Pour recevoir ce bonus, la créature doit pouvoir comprendre ce que vous dites."	
+Initié à la magie		"Choisissez une classe : barde, clerc, druide, ensorceleur, magicien ou occultiste. Vous apprenez deux sorts mineurs de votre choix parmi la liste de sorts de cette classe.
+En outre, choisissez un sort de niveau 1 à apprendre dans cette même liste. En utilisant ce don, vous pouvez lancer le sort à son niveau le plus bas et devez ensuite terminer un repos long avant de pouvoir le lancer à nouveau de cette manière.
+Votre caractéristique d'incantation ces sorts dépend de la classe que vous avez choisie : Charisme pour barde, ensorceleur ou occultiste ; Sagesse pour clerc ou druide ; Intelligence pour magicien."	
+Initié au combat	Maîtrise d'une arme de guerre	Vous apprenez une option de Style de combat de la classe de guerrier.	
+Initié des artificiers		Vous apprenez 1 sort mineur et 1 sort de niv 1 d'artificier (à lancer sans emplacement), maîtrise d'un type d'outils d'artisan.	
+Investigateur		"Vous avez l'oeil pour les détails et pouvez détecter les plus petits indices. Vous obtenez les avantages suivants :
+Augmentez votre valeur d'Intelligence de 1, pour un maximum de 20.
+Vous gagnez la maîtrise de la compétence Investigation. Si vous maîtrisez déjà cette compétence, ajoutez le double de votre bonus de maîtrise aux jets de cette compétence.
+Vous pouvez prendre l'action Rechercher en tant qu'action bonus."	
+L'ami de tout le monde	Demi-elfe	"Vous avez développé une personnalité magnétique dans le but de vous simplifier la vie. Vous obtenez les bénéfices suivants :
+Augmentez votre valeur de Charisme de 1, pour un maximum de 20.
+Vous gagnez la maîtrise des compétences Tromperie et Persuasion. Si vous maîtriseriez déjà l'une ou l'autre de ces compétences (ou les deux), votre bonus de maîtrise est doublé quand vous utilisez ladite compétence."	
+Linguiste		"Vous avez étudié les langues et les codes, et bénéficiez des avantages suivants :
+Augmentez votre valeur d'Intelligence de 1, jusqu'à un maximum de 20.
+Vous apprenez trois langues de votre choix.
+Vous pouvez coder des messages avec compétence. D'autres personnes ne peuvent déchiffrer un code que vous avez créé à moins que vous le leur ayez enseigné, qu'elles réussissent un jet d'Intelligence (DD égal à votre valeur d'Intelligence + votre bonus de maîtrise) ou qu'elles utilisent la magie pour le déchiffrer."	
+Lutteur	13 ou plus en Force	"Vous avez développé les compétences nécessaires pour vous défendre tout seul dans les combats de rues. Vous obtenez les avantages suivants :
+Vous avez un avantage aux jets d'attaque contre une créature avec laquelle vous êtes engagé dans une lutte.
+Vous pouvez utiliser votre action pour tenter de bloquer une créature avec qui vous avez engagé une lutte. Dans ce cas, faites un nouveau jet de lutte. Si vous réussissez, vous et la créature êtes tous deux entravés jusqu'à ce que la lutte se termine."	
+Mage de guerre	Capacité de lancer au moins un sort	"Vous avez pratiqué le lancer de sorts au milieu d'un combat, apprenant des techniques que vous accordent les avantages suivants :
+Vous avez un avantage aux jets de sauvegarde de Constitution pour maintenir votre concentration sur un sort lorsque vous subissez des dégâts.
+Vous pouvez effectuer les composantes somatiques d'un sort même si vous avez des armes ou un bouclier dans les mains.
+Lorsque le mouvement d'une créature hostile provoque une attaque d'opportunité pour vous, vous pouvez utiliser votre réaction pour lancer un sort à la créature, plutôt que de faire une attaque d'opportunité. Le sort doit avoir un temps d'incantation de 1 action et ne doit viser que cette créature."	
+Mage offensif	Capacité de lancer au moins un sort	"Vous avez appris des techniques pour améliorer vos attaques avec certains types de sorts, et vous obtenez les avantages suivants :
+Lorsque vous lancez un sort qui vous oblige à faire un jet d'attaque, la portée du sort est doublée.
+Vos attaques à distance avec un sort ignorent les abris partiels et les abris importants.
+Vous apprenez un sort mineur qui nécessite un jet d'attaque. Choisissez un sort mineur de la liste de sorts de barde, clerc, druide, ensorceleur, magicien ou occultiste. Votre caractéristique d'incantation pour ce sort mineur dépend de la liste de sorts que vous avez choisie : Charisme pour barde, ensorceleur ou occultiste ; Sagesse pour clerc ou druide ; Intelligence pour magicien."	
+Magie des elfes des bois	Elfe (bois)	Vous apprenez la magie des forêts primaires. Vous connaissez un sort mineur de druide de votre choix. Vous connaissez également les sorts grand pas et passage sans trace, et pouvez lancer chacun d'eux une fois sans dépenser d'emplacement de sort. Vous récupérez la capacité de lancer ces sorts via ce don après avoir terminé un repos long. La Sagesse est votre caractéristique de lanceur de sorts dans le cadre de ce don.	
+Magie rituelle	13 ou plus en Intelligence ou Sagesse	"Vous avez appris un certain nombre de sorts que vous pouvez lancer comme des rituels. Ces sorts sont écrits dans un livre de rituels, que vous devez avoir en main lorsque vous lancez l'un d'entre eux.
+Lorsque vous choisissez ce don, vous entrez en possession d'un livre de rituels qui comporte deux sorts de niveau 1 de votre choix. Choisissez l'une des classes suivantes : barde, clerc, druide, ensorceleur, magicien ou occultiste. Vous devez choisir vos sorts de la liste de sorts de cette classe, et les sorts que vous choisissez doivent avoir l'étiquette rituel. La classe que vous choisissez détermine également votre caractéristique d'incantation pour ces sorts : Charisme pour barde, ensorceleur ou occultiste ; Sagesse pour clerc ou druide ; Intelligence pour magicien.
+Si vous tombez sur un sort sous une forme écrite, comme un parchemin de sort magique ou le grimoire d'un magicien, vous pouvez être en mesure de l'ajouter à votre livre de rituels. Le sort doit être sur la liste de sorts de la classe que vous avez choisie, le niveau du sort ne peut être supérieur à la moitié de votre niveau (arrondi au supérieur), et il doit avoir l'étiquette rituel. Le processus de copie du sort dans votre livre de rituels prend 2 heures par niveau du sort, au prix de 50 po par niveau. Le coût représente les composantes matérielles que vous dépensez lors d'expériences pour maîtriser le sort, ainsi que les fines encres dont vous avez besoin pour la copie."	
+Maître d'armes		"Vous avez énormément pratiqué avec une grande variété d'armes, et obtenez les avantages suivants :
+Augmentez votre valeur de Force ou de Dextérité de 1, jusqu'à un maximum de 20.
+Vous gagnez la maîtrise de quatre armes de votre choix. Chacune d'elles doit être une arme courante ou une arme de guerre."	
+Maître d'hast		"Vous pouvez garder vos ennemis à distance avec des armes à allonge. Vous obtenez les avantages suivants :
+Lorsque vous prenez l'action Attaquer et attaquez avec seulement une coutille, une hallebarde, un bâton ou une lance, vous pouvez utiliser une action bonus pour effectuer une attaque au corps à corps avec l'extrémité opposée de l'arme. Cette attaque utilise le même modificateur de caractéristique que l'attaque initiale. Le dé de dégâts pour cette attaque est un d4, et l'attaque inflige des dégâts contondants.
+Lorsque vous portez une coutille, une hallebarde, une pique, un bâton ou une lance, vous pouvez effectuer une attaque d'opportunité lorsqu'une créature entre à portée de votre allonge."	
+Maître des armes à deux mains		"Vous avez appris à tirer avantage du poids d'une arme, laissant son élan augmenter l'efficacité de vos frappes. Vous obtenez les avantages suivants :
+À votre tour, lorsque vous réalisez un coup critique avec une arme de corps à corps ou faîtes tomber les points de vie d'une créature à 0 avec ce type d'arme, vous pouvez réaliser une attaque au corps à corps avec une arme comme action bonus.
+Avant de faire une attaque au corps à corps avec une arme lourde que vous maîtrisez, vous pouvez choisir de prendre un malus de -5 au jet d'attaque. Si l'attaque réussit, vous ajoutez +10 aux dégâts de l'attaque."	
+Maître des armures intermédiaires	Maîtrise des armures intermédiaires	"Vous avez pratiqué le déplacement avec une armure intermédiaire pour obtenir les avantages suivants :
+Porter une armure intermédiaire n'impose pas de désavantage à vos jets de Dextérité (Discrétion).
+Lorsque vous portez une armure intermédiaire, vous pouvez ajouter 3, au lieu de 2, à votre CA si vous avez une Dextérité de 16 ou plus."	
+Maître des armures lourdes	Maîtrise des armures lourdes	"Vous pouvez utiliser votre armure pour détourner des attaques qui en auraient tué plus d'un. Vous obtenez les avantages suivants :
+Augmentez votre valeur de Force de 1, pour un maximum de 20.
+Lorsque vous portez une armure lourde, les dégâts contondants, perforants et tranchants que vous recevez d'attaques non magiques sont réduits de 3."	
+Maître des boucliers		"Vous utilisez les boucliers non seulement pour vous protéger, mais aussi de manière offensive. Vous obtenez les avantages suivants lorsque vous portez un bouclier :
+Si vous prenez l'action Attaquer à votre tour, vous pouvez utiliser une action bonus pour essayer de bousculer une créature située à 1,50 mètre ou moins de vous avec votre bouclier.
+Si vous n'êtes pas incapable d'agir, vous pouvez ajouter le bonus à la CA de votre bouclier à tout jet de sauvegarde de Dextérité contre tout sort ou autre effet nocif qui vous prend pour cible.
+Si vous êtes soumis à un effet qui vous permet de faire un jet de sauvegarde de Dextérité pour ne prendre que la moitié des dégâts, vous pouvez utiliser votre réaction pour ne prendre aucun dommage si vous réussissez le jet de sauvegarde, en interposant votre bouclier entre vous et la source de l'effet."	
+Maître-arbalétrier		"Grâce à votre longue pratique de l'arbalète, vous gagnez les avantages suivants :
+Vous ignorez la propriété chargement des arbalètes que vous maîtrisez.
+Être à 1,50 mètre ou moins d'une créature hostile n'impose pas un désavantage à vos jets d'attaque à distance.
+Lorsque vous utilisez l'action Attaquer et attaquez avec une arme à une main, vous pouvez utiliser une action bonus pour attaquer avec une arbalète de poing si vous en tenez une."	
+Marque férale supplémentaire	Féral, 2 autres dons de Féral	Le personnage sélectionne une 2nde marque férale parmi celles qui sont indiquées dans la description de sa race. Le personnage manifeste tous les avantages de cette 2nde marque férale à l'exception du bonus a une valeur de caractéristique 	x
+Meneur exaltant	13 ou plus en Charisme	Vous pouvez passer 10 minutes à inspirer vos compagnons, confortant leur détermination à se battre. Lorsque vous faites cela, choisissez jusqu'à six créatures amicales (vous pouvez en faire partie) dans un rayon de 9 mètres autour de vous, qui peuvent vous voir ou vous entendre, et qui peuvent vous comprendre. Chaque créature peut gagner un nombre de points de vie temporaires égal à votre niveau + votre modificateur de Charisme. Une créature ne peut pas gagner de nouveaux points de vie temporaires grâce à ce don jusqu'à ce qu'elle ait fini un repos court ou long.	
+Mobile		"Vous êtes exceptionnellement rapide. Vous gagnez les avantages suivants :
+Votre vitesse augmente de 3 mètres.
+Lorsque vous utilisez l'action Foncer, un terrain difficile ne vous coûte pas de mouvement supplémentaire pour ce tour.
+Lorsque vous effectuez une attaque au corps à corps contre une créature, vous ne provoquez pas d'attaques d'opportunité pour cette créature pour le reste du tour, que vous touchiez ou pas."	
+Morsure du prédateur	Féral longues dents, bonus de base à l'attaque +6	Les attaques de crocs du personnage voient leurs facteurs de critique passer à x3 	x
+Observateur		"Vous notez rapidement des détails dans votre environnement. Vous gagnez les avantages suivants :
+Augmentez votre valeur d'Intelligence ou de Sagesse de 1, pour un maximum de 20.
+Si vous pouvez voir la bouche d'une créature alors qu'elle parle une langue que vous comprenez, vous pouvez interpréter ce qu'elle dit en lisant ses lèvres.
+Vous avez un bonus de +5 à vos jets de Sagesse (Perception) passive et d'Intelligence (Investigation) passive."	
+Peau barbelée	Tiefflin	"L'un de vos ancêtres était un diable barbelé ou tout autre fiélon hérissé d'épines. Des barbillons poussent sur votre tête. Vous obtenez les bénéfices suivants :
+Augmentez votre valeur de Constitution ou de Charisme de 1, pour un maximum de 20.
+En utilisant une action bonus, vous pouvez faire saillir des épines sur l'ensemble de votre corps ou les faire se rétracter. Au début de chacun de vos tours et tant que vos épines sont hérissées, vous infligez 1d6 dégâts perforants à toute créature qui vous agrippe ou à toute créature que vous agrippez.
+Vous gagnez la maîtrise de la compétence Intimidation. Si vous la maîtrisez déjà, votre bonus de maîtrise pour cette compétence est doublé."	
+Peau de bête	Féral peau de bête	Le bonus d'armure naturelle du personnage passe à +4 	x
+Peur du dragon	Drakéide	"Lorsque vous êtes en colère vous irradiez le danger. Vous obtenez les avantages suivants :
+Augmentez votre valeur de Force, de Constitution ou de Charisme de 1, pour un maximum de 20.
+Plutôt que d'avoir un souffle basé sur une énergie destructrice, vous pouvez rugir et dépenser une utilisation de votre Arme de souffle pour forcer chaque créature de votre choix qui se trouve dans un rayon de 9 mètres autour de vous à effectuer un jet de sauvegarde de Sagesse (DD 8 + votre bonus de maîtrise + votre modificateur de Charisme). Une cible réussit automatiquement son jet de sauvegarde si elle ne peut ni vous voir ni vous entendre. En cas d'échec, vous effrayez la cible pendant 1 minute. Si une cible effrayée subit des dégâts, elle peut retenter son jet de sauvegarde, mettant un terme à l'effet qui l'affecte en cas de réussite."	
+Porteur de rancunes	Nain	"Vous être habité par une haine viscérale envers un type de créature particulier. Choisissez vos ennemis, un type de créature qui devra subir votre courroux : aberration, bête, céleste, créature artificielle, dragon, élémentaire, fée, fiélon, géant, créature monstrueuse, vase, plante ou mort-vivant. Vous pouvez sinon choisir deux races d'humanoïdes (comme les gnolls et les orques). Vous obtenez les bénéfices suivants :
+Augmentez votre valeur de Force, de Constitution, ou de Sagesse de 1, pour un maximum de 20.
+Au cours du premier round de chacun des combats que vous effectuez contre les ennemis choisis, vos jets d'attaque contre n'importe lequel d'entre eux ont l'avantage.
+Quand n'importe lequel de vos ennemis choisis effectue une attaque d'opportunité contre vous, il effectue son jet d'attaque avec un désavantage.
+Lorsque vous effectuez un jet d'Intelligence (Arcanes, Histoire, Nature ou Religion) pour vous rappeler d'une information concernant vos ennemis choisis, vous ajoutez le double de votre bonus de maîtrise au jet, même si vous ne maîtrisez normalement pas cette compétence."	
+Pourfendeur		+1 en For. ou Dex., réduit la vitesse de 3 m en cas d'attaque réussie et désavantage aux jets d'attaque après un coup critique.	
+Précision elfique	Demi-elfe, elfe	"Vous êtes doté d'un fantastique doigté. Vous obtenez les bénéfices suivants :
+Augmentez votre valeur de Dextérité de 1, pour un maximum de 20.
+À chaque fois que vous avez l'avantage à un jet d'attaque, vous pouvez relancer l'un des dés une fois de plus."	
+Prodige	Demi-elfe, demi-orc, humain	"Vous êtes extrêmement doué pour apprendre de nouvelles choses. Vous obtenez les bénéfices suivants :
+Augmentez la valeur d'une de vos caractéristiques de 1, pour un maximum de 20.
+Vous gagnez la maîtrise d'une compétence et d'un outil de votre choix, et parlez couramment une langue de votre choix."	
+Réduction des dégâts supérieure	Forgelier	Le personnage acquiert une réduction des dégâts de 1/Adamantium ou augmente sa réduction des dégâts existants de 1 point. Si le personnage dispose du don corps d'Adamantium il peut sélectionner ce don plusieurs fois.	x
+Résilient		"Choisissez une caractéristique. Vous gagnez les avantages suivants :
+Augmentez la valeur de cette caractéristique de 1, pour un maximum de 20.
+Vous gagnez la maîtrise des jets de sauvegarde qui utilisent la caractéristique choisie."	
+Robuste		Votre maximum de points de vie augmente d'un montant égal au double de votre niveau quand vous gagnez ce don. Chaque fois que vous gagnez un niveau par la suite, votre maximum de points de vie augmente de 2 points de vie supplémentaires.	
+Sang de Khyber	Drakéide	Le drakéide porte en lui une influence sombre issue des profondeurs de Khyber. Il gagne une affinité avec les énergies corruptrices et intimidantes, renforçant ses capacités offensives ou psychologiques au prix d’une aura inquiétante.	x
+Sang de Syberis	Drakéide	Le drakéide est touché par l’énergie céleste de Siberys. Son souffle ou ses capacités draconiques gagnent une dimension lumineuse ou protectrice, et il bénéficie d’une meilleure résistance aux influences mentales.	x
+Sauvagerie réparatrice	Féral, Constitition 13	À la fin d'une période de sauvagerie le personnage récupéré immédiatement un nombre de points de vie égale à son niveau global. Cet avantage n'est pas applicable dans le cas d'un personnage qui meurt avant que sa sauvagerie ne prenne fin 	x
+Sentinelle		"Vous maîtrisez les techniques pour tirer avantage de chaque faiblesse dans la garde de tout ennemi, et bénéficiez des avantages suivants :
+Lorsque vous touchez une créature avec une attaque d'opportunité, la vitesse de la créature devient 0 pour le reste du tour.
+Vous pouvez effectuer une attaque d'opportunité même si une créature prend l'action Se désengager avant de se mettre hors de portée de votre allonge.
+Quand une créature à 1,50 mètre ou moins de vous fait une attaque contre une cible autre que vous (et que cette cible n'a pas ce don), vous pouvez utiliser votre réaction pour réaliser une attaque au corps à corps avec une arme contre la créature attaquante."	
+Sociétaire influent	Race de la maison à marque draconique	La famille du personnage est très influente et puissante si bien qu'il a le privilège de pouvoir demander des faveurs à d'autres membres de sa maison et à leurs multiples relations. Par le biais d'un test de faveur le personnage peut faire appel à des contacts pour récupérer de précieux renseignements sans devoir subir les pertes de temps et autres soucis occasionnés par les tests de renseignement. Les faveurs peuvent également servir à bénéficier d'un prêt de matériel ou de documents auprès de relations influentes. Une requête de faveur se résout par le biais d'un test de faveur Le personnage lance un d20 auquel il ajoute un bonus dépendant de son niveau global défini comme suit 1 au niveau 1 et 2 au niveau 3 à 6, 3 au niveau 7 à 11, 4 au niveau 12 à 15 et 5 à partir du niveau 16. Le maître de jeu fixe le degré de difficulté du test en fonction de l'ampleur de la requête, ce qui peut aller de 10 pour une faveur très raisonnable jusqu'à 25 dans le cas d'une faveur particulièrement périlleuse chère ou illégale. Il n'est pas possible de faire 10 ou de faire 20 à ce test. De même on ne peut bénéficier d'une nouvelle tentative pour une même faveur ou une faveur presque identique. La fonction des faveurs est de faire avancer l'intrigue de l'aventure, une faveur visant à éviter l'intrigue ne saura en aucun cas être accordée au personnage quel que soit le résultat du test de faveur. Le personnage peut solliciter une telle faveur un nombre de fois par semaine égale à la moitié de son niveau global arrondi à l'inférieur. En aucun cas il ne pourra demander plus d'une faveur au même contact et dans la même semaine. Ainsi un personnage de niveau 7 peut solliciter jusqu'à 3 faveurs par semaine. Mais chaque requête doit s'adresser à une relation différente parmi celles qui sont associées avec sa maison marchande Le maître de jeu est parfaitement en droit de rejeter toute requête de faveur qu'il estime néfaste à sa campagne.	x
+Soigneur		"Vous êtes un habile médecin, ce qui vous permet de guérir les blessures rapidement pour que vos alliés puissent retourner au combat. Vous gagnez les avantages suivants :
+Lorsque vous utilisez une trousse de soins pour stabiliser une créature mourante, cette créature regagne également 1 point de vie.
+Par une action, vous pouvez dépenser une utilisation d'une trousse de soins pour soigner une créature et lui redonner 1d6 + 4 points de vie, plus un nombre de points de vie supplémentaires égal au nombre maximum de dés de vie de la créature. La créature ne peut pas bénéficier de vos soins de nouveau jusqu'à ce qu'elle termine un repos court ou long."	
+Souffle perfectionné	Drakéide, Héritage draconique éveillé	Le drakéide affine son souffle élémentaire, augmentant sa portée, sa précision ou sa puissance. Il peut également en modifier légèrement la forme, par exemple en cône plus étroit ou en ligne plus concentrée.	
+Spécialiste		+1 dans une caractéristique, maîtrise d'une compétence et expertise dans une autre que vous maîtrisez.	
+Télékinésie		+1 en Int., Sag. ou Cha., vous apprenez main de mage et pouvez tenter de pousser mentalement une créature (1,50 m).	
+Télépathie		+1 en Int., Sag. ou Cha., vous pouvez lancer détection des pensées et parler télépathiquement à une créature à 18 m.	
+Téléportation féerique	Elfe (haut), Gnome	"En puisant dans votre ascendance féerique, vous avez appris à vous téléporter. Vous obtenez les bénéfices suivants :
+Augmentez votre valeur d'Intelligence de 1, pour un maximum de 20.
+Vous apprenez le sort foulée brumeuse et pouvez le lancer une fois sans dépenser d'emplacement de sort. Vous récupérez la capacité de lancer ce sort de cette manière après avoir terminé un repos court ou long. L'Intelligence est votre caractéristique de lanceur de sorts dans le cadre de ce don."	
+Ténacité naine	Nain	"Le sang des héros de la race naine coule dans vos veines. Vous obtenez les bénéfices suivants :
+Augmentez votre valeur de Constitution de 1, pour un maximum de 20.
+À chaque fois que vous utilisez l'action Esquiver en combat, vous pouvez dépenser un Dé de Vie pour vous soigner. Lancez le dé, ajoutez votre modificateur de Constitution, et récupérez un nombre de points de vie égal à ce total (pour un minimum de 1)."	
+Tireur d'élite		"Vous êtes un maître du combat à distance et pouvez faire des tirs que d'autres penseraient impossible. Vous obtenez les avantages suivants :
+Attaquer à longue portée n'impose pas de désavantage à vos jets d'attaque à distance avec une arme.
+Vos attaques à distance avec une arme ignorent les abris partiels et les abris importants.
+Avant de faire une attaque avec une arme à distance que vous maîtrisez, vous pouvez choisir de prendre un malus de -5 au jet d'attaque. Si l'attaque réussit, vous ajoutez +10 aux dégâts de l'attaque."	
+Touché par les fées		+1 en Int., Sag. ou Cha., et vous apprenez foulée brumeuse et un sort de divination ou d'enchantement de niveau 1.	
+Touché par les ombres		+1 en Int., Sag. ou Cha., et vous apprenez invisibilité et un sort d'illusion ou de nécromancie de niveau 1.	
+Tradition naine	Nain	"Vous avez absorbé les vieilles histoires et traditions de vos ancêtres, vos dieux, votre peuple et étudier des sujets et techniques transmises de génération en génération. Vous obtenez les bénéfices suivants :
+Vous obtenez la maîtrise des compétences Intelligence (Religion) et Intelligence (Histoire).
+Vous obtenez la maîtrise des outils d'artisanat.
+Lorsque vous faites un jet d'Intelligence (Religion) ou d'Intelligence (Histoire) concernant les nains, doublez le bonus de maîtrise si ce n'est pas déjà fait."	
+Tueur de mages		"Vous avez pratiqué des techniques utiles en combat au corps à corps contre les lanceurs de sorts, et vous bénéficiez des avantages suivants :
+Quand une créature dans un rayon de 1,50 mètre autour de vous lance un sort, vous pouvez utiliser votre réaction pour effectuer une attaque au corps à corps avec une arme contre cette créature.
+Si vous touchez une créature qui se concentre sur un sort, cette créature a un désavantage à son jet de sauvegarde pour maintenir sa concentration.
+Vous avez un avantage aux jets de sauvegarde contre les sorts lancés par les créatures dans un rayon de 1,50 mètre autour de vous."	
+Vengence glorieuse	Nain	"Vous honorez la défaite de votre allié. Lorsqu'un allié dans un rayon de 18 mètres atteint 0 points de vie, vous obtenez les avantages suivants durant 1 minute ou jusqu'à ce que le responsable direct de son état soit éliminé :
+Au début de chacun de vos tours, vous gagnez autant de points de vie temporaire que votre niveau.
+Vous obtenez l'avantage aux jets d'attaque et de sauvegarde contre le responsable direct de la défaite de votre allié."	
+Vigilant		"Toujours en train de guetter le danger, vous gagnez les avantages suivants :
+Vous gagnez un bonus de +5 à l'initiative.
+Vous ne pouvez pas être surpris tant que vous êtes conscient.
+Les autres créatures n'ont pas un avantage aux jets d'attaque contre vous du fait que vous ne les voyez pas."	
+Voix de la prophétie	Drakéide	Le drakéide perçoit des fragments de la Prophétie draconique à travers des visions, des rêves ou des intuitions soudaines. Il gagne des avantages lors de tests liés aux connaissances du passé, à la magie draconique ou à l’interprétation de signes mystiques, et peut parfois anticiper un danger imminent (+4 en initiative 1 fois par repos long).	x

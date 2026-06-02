@@ -1,0 +1,250 @@
+Un tableau suggérant des combinaisons entre marques/ maisons/ races et classes se trouve en fin de cet onglet.																									
+																									
+Un Marque draconique [dragonmark] est un symbole enchanté qui apparaît sur la peau. Cette marque est une source de pouvoir magique qui est aussi capable d'augmenter la capacité du porteur à réaliser certaines tâches. À Eberron, chaque marque est liée à une lignée bien spécifique. Les familles qui portent ces marques forment les maisons à Marques draconiques, de puissantes forces qui dominent différents secteurs d'activités du monde. Tous les membres d'une même famille ne possèdent pas forcément de Marque draconique ; de la même façon, le fait de posséder un Marque draconique ne donne pas un statut particulier au sein de la maison. Quand vous créez un personnage porteur de Marque draconique, l'historique du personnage peut vous aider à établir le type de relation qu'il a avec sa maison. Un personnage d'origine noble viendra peut-être des membres dirigeants de la famille. Un artisan de guilde ou un artiste pourront travailler dans une des guildes de la maison. Un criminel aura peut-être été exilé par sa famille, alors qu'un enfant des rue pourrait être un orphelin n'ayant jamais su qu'il avait des liens avec une des familles à Marques draconiques.																									
+"Créer un personnage à Marque draconique
+Les Marques draconiques sont associés à une race et sont représentés par un ensemble de races et de sous-races.
+Pour les humains, le Marque draconique est une race alternative qui remplace les traits normaux associés à cette race.
+Pour les demi-elfes et les demi-orcs, le Marque draconique est aussi une race alternative. Vous gardez certaines des caractéristiques de la race d'origine et remplacez les autres par les traits associés à la marque.
+Pour les nains, les elfes, les gnomes et les halfelins, le Marque draconique remplace la sous-race. Ainsi, si vous faites un personnage elfe, vous pouvez choisir de prendre la marque de l'Ombre au lieu de la sous-race Elfes d’Aerenal ou Elfes de Valenar.
+Il existe deux options additionnelles en relation avec les Marques draconiques. Quand votre personnage à Marque draconique gagnera de l'expérience, vous pourrez prendre le don Marque draconique majeur qui représentera l'augmentation de puissance de votre Marque draconique. De même, le don Marque draconique aberrant donnera à un personnage des pouvoirs magiques certes limités, mais très dangereux. Les Marques draconiques aberrants ne sont pas liés à l'une ou l'autre des maisons à Marques draconiques et peuvent être pris par tous les personnages."																									
+"Dés d'Inspiration
+Un Marque draconique améliore votre capacité à réaliser un certain type de tâche. La marque de la Découverte aiguise vos sens et améliore votre perception, tandis que la marque de la Création guide vos mains lorsque vous utilisez des outils d'artisan. Chaque Marque draconique possède un trait qui vous accorde le droit de lancer un dé d'Inspiration, un d4, quand vous réalisez un jet de caractéristique avec une compétence ou un outil particulier. Vous ajoutez alors le résultat du dé au jet de caractéristique. Vous n'avez pas besoin de maîtriser la compétence ou l'outils pour gagner cet avantage.
+
+Des dons, des objets magiques ou d'autres avantages peuvent améliorer votre dé d'inspiration. Ceci augmentera le type de dé que vous lancerez d'une taille (d6, d8 et d10) jusqu'à un maximum d'un d10. Vous ne pouvez lancer qu'un seul dé d'Inspiration par jet ; si vous recevez d'autres dés d'Inspiration par d'autres sources, augmentez le dé d'une taille et lancez celui-ci. Par exemple, si un trait de Marque draconique et un don donnent tous deux des dés d'Inspiration pour les jets de Dextérité (Discrétion), vous lancez 1d6 au lieu de 1d4. Trois occurrences augmenteront donc votre dé d'Inspiration à 1d8, et ainsi de suite."																									
+																									
+"Aspect d'un Marque draconique
+Un Marque draconique est un signe distinctif qui apparaît sur la peau. Il existe douze Marques draconiques connus, chacun ayant une forme et un pouvoir unique. Une Marque draconique peut apparaître sur n'importe quelle partie du corps. Un demi-elfe pourra avoir une marque de Détection sur un œil, alors qu'un autre l'aura sur la paume de sa main. Les Marques draconiques sont constitués de formes vives bleues ou violettes qui semblent miroiter. Quand vous les utilisez, ils deviennent chauds au toucher et peuvent briller (mais ils ne produisent pas suffisamment de lumière pour être utilisés comme une source d'éclairage). Un Marque draconique ne peut être enlevé, même si le membre qui le porte est coupé, la marque se manifestant alors sur une autre partie du corps du porteur. Toutes les Marques draconiques ont le même aspect au début, mais un Marque draconique va gagner en taille et en complexité si le personnage prend le don Marque draconique majeur ou si la marque est liée à une capacité de classe. Toutefois, si les Marques draconiques partagent en général un aspect assez similaire, votre Marque draconique peut avoir une qualité particulière. Si vous souhaitez explorer cet aspect, lancez un 1d6 dans la table suivante."																									
+"1d6	         Bizarreries
+1	        Votre Marque draconique est inhabituellement petit ou exceptionnellement grand.
+2	        Votre Marque draconique se déplace lentement le long de votre corps.
+3	       Votre Marque draconique luit énormément quand vous l'utilisez.
+4	       Votre Marque draconique vous picote quand quelqu'un qui porte la même marque est proche de vous.
+5	       Votre Marque draconique vous picote quand vous l'utilisez.
+6	       Votre Marque draconique a une coloration inhabituelle mais une forme normale."																									
+																									
+"Marque de la Création/Fabrication
+La marque de la Création guide son porteur dans le processus de fabrication d'objet manufacturé. Les porteurs de la marque peuvent réparer des objets cassés par un simple contact, et ont toujours sur eux un objet magique mineur sur lequel ils travaillent. Si un artificier ou un magicien pourront tirer le meilleur parti des pouvoirs de cette marque, n'importe qui peut trouver une utilité à une lame enchantée.
+Traits de la marque de la Création
+La marque de la Création se manifeste uniquement sur les Humains, Gnomes et Nains. Si votre personnage possède la marque de la Création, ces traits remplacent le trait Augmentation de caractéristiques décrit dans le Manuel des Joueurs.
+Augmentation de caractéristiques. Votre Intelligence et votre Dextérité augmentent de 1. De plus, vous pouvez augmenter soit l'Intelligence soit la Dextérité de 1.
+Perspicacité de l'artisan. Quand vous faites un jet de caractéristique avec des outils d'artisan,  ou un test visant à identifier la fonction d’un objet, vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique.
+Forge-sort. Vous pouvez passer une minute à tisser un enchantement temporaire sur une pièce d'armure ou une arme non magique. Durant toute l'heure qui suit, cet objet devient magique et octroie un bonus de +1 à la CA si c'est une armure ou un bonus de +1 à l'attaque et aux dégâts si c'est une arme. Une fois que vous avez utilisé ce trait, vous ne pouvez plus l'utiliser avant d'avoir terminé un repos long."																									
+"Don de l'artisan. Vous connaissez le sort mineur réparation. Vous gagnez de plus la maîtrise d'un type d'outils d'artisan. À partir du niveau 3, tu peux également lancer fabrication de la même manière. Une fois que tu as lancé l’un de ces sorts via ce trait, tu dois terminer un repos long avant de pouvoir relancer ce même sort de cette façon.
+Artisanat magique. Vous pouvez créer un objet magique temporaire à partir d'un objet normal. Choisissez un tour de magie dans la liste de sorts de magicien et définissez l'objet qui lui sera connecté. Aussi longtemps que vous posséderez cet objet, vous connaîtrez ce sort mineur de niveau 0. À la fin d'un repos long, vous pouvez remplacer cet objet par un autre et choisir un nouveau tour de magie de la liste de sorts de magicien. L'Intelligence est votre caractéristique d'incantation pour tes sorts.
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."																									
+	l st	Identification 2x/jour, Disque flottant de Tenser 1x/jour																							
+	2nd	Flamme éternelle 1x/jour, Arme magique 2x/jour																							
+	3 rd	Invocation de projectiles 1x/jour, Arme élémentaire 2x/jour																							
+	4th	Fabrication2x/jour, Façonnage de la pierre 1x/jour																							
+	5th	Création 3x/jour																							
+																									
+"Marque de la Découverte
+La marque de la Découverte aiguise les sens de celui qui la porte, guidant le chasseur vers sa proie. À Eberron, elle est apparue la première fois dans les Marches de l'ombre, là où les clans de chasseurs l'utilisent afin d'atteindre leurs proies. La marque a aidé à réunir les humains et les orcs dans les Marches et à permettre le développement de la Maison Tharashk dans les Cinq Nations.
+Traits de la marque de la Découverte
+La marque de la Découverte se manifeste uniquement sur les Demi‑orcs, Humains et Changelins. Si votre personnage possède la marque de la Découverte, ces traits remplacent les traits Augmentation de caractéristiques, Menaçant, Endurance implacable et Attaques sauvages décrits dans le Manuel des Joueurs. Malgré leurs origines orcs, les héritiers de la marque de la Découverte ressemblent plus souvent à leur parent humain en apparence et en tempérament. Quand vous créez votre personnage, vous devez décider si votre ascendance orc est évidente ou subtile.
+Augmentation de caractéristiques. Votre Force et votre Sagesse augmentent de 1. De plus, vous pouvez augmenter une autre caractéristique de votre choix de 1.
+Perspicacité du chasseur. Votre marque a aiguisé vos sens et vous aide à trouver votre proie. Quand vous faites un jet de Sagesse (Perception) ou de Sagesse (Survie), vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique.
+Marquer la proie. Par une action bonus, vous pouvez choisir une créature que vous pouvez voir dans un rayon de 9 mètres autour de vous. La cible est marquée dans votre esprit jusqu'à ce qu'elle meure ou que vous utilisiez ce trait à nouveau. Vous pouvez, sinon, marquer votre cible dans votre esprit si vous réussissez un jet de Sagesse (Survie) lorsque vous la pistez. Lorsque vous pistez votre proie, vous doublez le résultat de votre dé d'inspiration. Quand votre proie marquée est à 18 mètres ou moins de vous, vous connaissez précisément sa position. Vos attaques contre elle ignorent les abris partiels. Si vous ne pouvez voir la cible lorsque vous l'attaquez, votre incapacité à voir n’entraîne pas de désavantage aux jets d'attaques. De même, votre proie ne gagne aucun avantage aux jets d'attaque lorsqu'elle vous attaque depuis une position cachée ou si elle est invisible. Une fois que vous avez utilisé ce trait, vous ne pouvez plus l'utiliser avant d'avoir terminé un repos court ou long."																									
+Vision dans le noir: Tu peux voir dans la pénombre jusqu’à 18 mètres comme s’il s’agissait de pleine lumière, et dans l’obscurité totale comme s’il s’agissait de pénombre. En revanche, tu ne distingues aucune couleur dans l’obscurité : seulement des nuances de gris.																									
+"Sens de la prospection: Tu peux lancer les sorts détection du poison et des maladies et localisation d’objet grâce à ce trait. À partir du niveau 3, tu peux également lancer clairvoyance de la même manière. Une fois que tu as lancé l’un de ces sorts via ce trait, tu dois terminer un repos long avant de pouvoir relancer ce même sort de cette façon. Ton Sagesse est la caractéristique d’incantation pour ces sorts, et tu n’as pas besoin de composantes matérielles.
+Langages: parle, écrit et lit le commun et le goblinoide
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."	l st	Lueurs féeriques 2x/jour, Grande foulée 1x/jour																							
+	2nd	Localisation d'animaux ou de plantes ou Localisation d'objet 3x/jour																							
+	3 rd	Clairvoyance ou Communication avec les plantes 3x/jour																							
+	4th	Divination 1x/jour ou Localisation de créature 2x/jour																							
+	5th	Communion avec la nature 3x/jour																							
+																									
+"Marque de la Détection
+La marque de la Détection est le fantasme de tous les investigateurs. Elle aiguise les capacités d'observation et de Perspicacité, permettant à son porteur de découvrir des connexions entre les faits et d'interpréter les indices que d'autres auraient manqués. En puisant dans ses pouvoirs, le porteur peut détecter les poisons et étudier les énergies magiques.
+Traits de la marque de la Détection
+La marque de la Détection se manifeste uniquement sur les Demi-elfes, Humains, et Elfes. Si votre personnage possède la marque de la Détection, ces traits remplacent les traits Augmentation de caractéristiques, Polyvalence et Langues décrits dans le Manuel des Joueurs.
+Augmentation de caractéristiques. Votre Intelligence et votre Charisme augmentent de 1. De plus, vous pouvez augmenter une autre caractéristique de votre choix de 1.
+Perspicacité déductive. Quand vous faites un jet d'Intelligence (Investigation) ou Sagesse (Perspicacité), vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique."																									
+"Sens du danger. Vous pouvez lancer le sort détection de la magie, mais seulement en tant que rituel. À partir du niveau 3, tu peux aussi lancer voir l’invisible de la même manière. Une fois que tu as lancé l’un de ces sorts via ce trait, tu dois terminer un repos long avant de pouvoir relancer ce même sort de cette façon.
+Ton Intelligence est la caractéristique d’incantation pour ces sorts, et tu n’as pas besoin de composantes matérielles.
+Langages. Vous pouvez parler, lire et écrire le commun et l'elfique.
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."																									
+	l st	Détection du Bien et du Mal 2x/jour, Détection du poison et des maladies 1x/jour																							
+	2nd	Détection des pensées 1x/jour, Détection des pièges 2x/jour																							
+	3 rd	Clairvoyance 2x/jour, Antidétection 1x/jour																							
+	4th	Oeil magique 2x/jour, Divination 1x/jour																							
+	5th	Mythes et légendes 3x/jour																							
+																									
+"Marque du Dressage
+La marque du Dressage donne à son porteur une connexion primitive avec les animaux et le monde naturel en général, accordant le pouvoir de calmer et de convaincre les bêtes. Ceci ne concerne pas que les animaux naturels ; la marque permet de guider un hippogriffe aussi facilement qu'un cheval.
+Traits de la marque du Dressage
+La marque du Dressage se manifeste uniquement sur les Demi‑elfes, Férals, et Demi‑orc. Si votre personnage possède la marque du Dressage, ces traits remplacent le trait Augmentation de caractéristiques décrit dans le Manuel des Joueurs.
+Augmentation de caractéristiques. Votre Dextérité et votre Sagesse augmentent de 1. De plus, vous pouvez augmenter une autre caractéristique de votre choix de 1.
+Perspicacité sauvage. Quand vous faites un jet de Sagesse (Dressage) ou d'Intelligence (Nature), vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique.
+Dresseur expert. Vous pouvez utiliser l'action Aider pour aider un compagnon animal allié ou une monture à 9 mètres ou moins de vous, au lieu de 1,50 mètre."																									
+"Connexion primitive. Vous gagnez la capacité de lancer le sort amitié animale une fois avec ce trait et regagnez la capacité de le lancer quand vous terminez un repos court ou long. La Sagesse est votre caractéristique d'incantation pour ce sort.Aussi grands soient-ils. Quand vous lancez un sort qui affecte seulement les animaux, il affecte aussi les monstruosités qui ont une Intelligence de 3 ou plus. 
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."																									
+	l st	Amitié avec les animaux ou Communication avec les animaux 3x/jour																							
+	2nd	Sens animal 1x/jour, Apaisement des émotions 2x/jour																							
+	3 rd	Lueur d'espoir 2x/jour, Invocation d'animaux 1x/jour																							
+	4th	Aura de vie 1x/jour, Domination de bête 2x/jour																							
+	5th	Éveil 3x/jour																							
+																									
+"Marque de la transcription / de l'Ecriture
+La marque de l'Écriture est liée à la communication, à la fois écrite et parlée. Un personnage qui porte cette marque peut ressentir les mots comme s'il s'agissait de créatures vivantes s'escrimant à faire comprendre leur sens. Cette marque donne accès à une vaste gamme de dons. Elle permet de traduire les langues, mais permet aussi de parler aux autres à grande distance et de transcrire leurs mots où qu'ils soient.
+Traits de la marque de l'Écriture
+La marque de l'Écriture se manifeste uniquement sur les Gnomes, Humains et Demi‑elfes. Si votre personnage possède la marque de l'Écriture, celle-ci est considérée comme une sous-race de gnome.
+Augmentation de caractéristiques. Ton score d’Intelligence augmente de 2, et tu augmentes une autre caractéristique de ton choix de 1.
+Scribe compétent. Vous maîtrisez les outils de calligraphie ainsi que le kit de contrefaçon. Quand vous faites un jet de caractéristiques pour l'un ou l'autre de ces outils, lorsque vous faites un test visant à comprendre, décoder ou analyser un texte, un symbole ou un écrit, ou un test d'Intelligence (Histoire), vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique.
+Langue supplémentaire. Vous pouvez parler, lire et écrire trois langues supplémentaires de votre choix."																									
+"Érudition magique: Tu peux lancer les sorts message et compréhension des langues grâce à ce trait. À partir du niveau 3, tu peux également lancer un sort de neutralisation sonore de la même manière (ciblé ou sur une zone). Une fois que tu as lancé l’un de ces sorts via ce trait, tu dois terminer un repos long avant de pouvoir relancer ce même sort de cette façon. Ton Intelligence est la caractéristique d’incantation pour ces sorts, et tu n’as pas besoin de composantes matérielles.
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."																									
+	l st	Compréhension des langues 2x/jour, Texte illusoire 1x/jour																							
+	2nd	Messager animalx1, Transcriptionx2																							
+	3 rd	Communication à distance ou Don des langues x3																							
+	4th	Oeil magique 1x/jour, Confusion 2x/jour																							
+	5th	Amélioration de compétence 3x/jour																							
+																									
+"Marque de la Protection / de la Garde
+La marque de la Protection permet à ses porteurs de protéger des objets de grande valeur. En utilisant sa marque, un nain peut lancer des protections et sceller des portails à l'aide de forces mystiques. Elle donne en plus à son porteur une compréhension intuitive des serrures et mécanismes utilisés pour protéger et sceller. La décision que chaque héritier de la maison doit prendre est de savoir s'il veut mettre les affaires des autres à l'abri, ou s'il préfère crocheter des serrures pour prendre ce qui est protégé par d'autres.
+Traits de la marque de la Protection
+La marque de la Protection se manifeste uniquement sur les Nains,  Humain et Férals. Si votre personnage possède la marque de la Protection, celle-ci est considérée comme une sous-race de nain.
+Augmentation de caractéristiques. Ton score de Constitution et Votre Dextérité et votre Intelligence augmentent de 1.
+Maître serrurier. Lorsque tu fais un jet de de caractéristique avec les outils de voleur sur des serrures ou des pièges, une intrusion ou une faiblesse structurelle, ou un test d'Investigation (Intelligence) ou d'Histoire (Intelligence), vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique."																									
+"Magie de garde: Tu peux lancer le sort armure de mage grâce à ce trait. À partir du niveau 3, tu peux également lancer un sort de protection runique de la même manière. Une fois que tu as lancé l’un de ces sorts via ce trait, tu dois terminer un repos long avant de pouvoir relancer ce même sort de cette façon. Ton Intelligence est la caractéristique d’incantation pour ces sorts, et tu n’as pas besoin de composantes matérielles.
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."																									
+	l st	Alarme 1x/jour, Armure d'Agathys 2x/jour																							
+	2nd	Verrou magique ou Déblocage 3x/jour																							
+	3 rd	Glyphe de protection 2x/jour, Cercle magique 1x/jour																							
+	4th	Coffre secret de Léomund 1x/jour, Chien de garde de Mordenkainen 2x/jour																							
+	5th	Coquille antivie 3x/jour																							
+																									
+"Marque de la Guérison
+Un halfelin porteur de la marque de la Guérison peut sauver une vie d'un simple contact, restaurant la vitalité et l'envie de vivre. Associée à la médecine traditionnelle, la marque aide son porteur à déterminer la nature des maladies et des affections, et de trouver le meilleur traitement. Augmentée par des objets fabriqués à partir de dracolithes (aussi appelés éclats de dragon), la marque peut même ramener les morts à la vie.
+Traits de la marque de la Guérison
+La marque de la Guérison se manifeste uniquement sur les Halfelins, Humain et Changelins. Si votre personnage possède la marque de la Guérison, celle-ci est considérée comme une sous-race d'halfelin.
+Augmentation de caractéristiques. Ton score de Sagesse augmente de 2, et tu augmentes une autre caractéristique de ton choix de 1.
+Perspicacité médicale. Quand vous faites un jet de Sagesse (Médecine), ou un jet de compétence utilisant un kit d'herboriste, vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique.
+Toucher guérisseur. Par une action, vous pouvez puiser dans la puissance de votre Marque draconique pour dépenser un de vos dés de vie et régénérer votre santé et celle d'une créature que vous touchez. Lancer le dé, additionnez votre bonus de Sagesse, et vous et la créature regagne un nombre de points de vie égal au total. Une fois que vous avez utilisé ce trait, vous ne pouvez plus l'utiliser avant d'avoir terminé un repos court ou long."																									
+"Bénédiction de Jorasco. Vous connaissez  le sort détection du poison et des maladies grâce à ce trait. À partir du niveau 3, tu peux également lancer rLevée de malédiction de la même manière. Une fois que tu as lancé l’un de ces sorts via ce trait, tu dois terminer un repos long avant de pouvoir relancer ce même sort de cette façon. Ton Sagesse est la caractéristique d’incantation pour ces sorts, et tu n’as pas besoin de composantes matérielles.
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."																									
+	l st	Soins ou Mot de guérison 3x/jour																							
+	2nd	Restauration partielle ou Prière de guérison 3x/jour																							
+	3 rd	Aura de vitalité 1x/jour, Mot de guérison de groupe 2x/jour																							
+	4th	Aura de pureté ou Aura de vie 3x/jour																							
+	5th	Restauration supérieure 3x/jour																							
+																									
+"Marque de l'Hospitalité
+S'il n'est pas toujours couvert d'or, un halfelin porteur de la marque de l'Hospitalité est sûr d'être riche en amis. La magie de la marque permet au porteur de garder un lieu propre, de chauffer, refroidir ou assaisonner la nourriture. Mais il permet aussi au porteur de se mettre en relation avec d'autres personnes et de calmer les esprits échauffés, un outil très utile mais qui peut produire l'effet contraire si on en abuse.
+Traits de la marque de l'Hospitalité
+La marque de l'Hospitalité se manifeste uniquement sur les Halfelin ,Humains, et Changelins. Si votre personnage possède la marque de l'Hospitalité, celle-ci est considérée comme une sous-race d'halfelin.
+Augmentation de caractéristiques.  Ton score de Charisme augmente de 2, et tu augmentes une autre caractéristique de ton choix de 1.
+Charme de l'aubergiste. Vous connaissez les sorts mineurs amis et prestidigitation. Le Charisme est votre caractéristique d'incantation pour ce sort.
+Bon accueil chaleureux. Quand vous faites un jet de Charisme (Persuasion) ou un jet de caractéristique qui implique un kit de brasseur ou des ustensiles de cuisine, vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique."																									
+"Hospitalité magique : Tu peux lancer les sorts de prestidigitation, de purification de l'eau et des aliments et de serviteur invisible grâce à ce trait. À partir du niveau 3, tu peux également lancer havre de paix (ou un sort équivalent de protection d’un lieu) de la même manière. Une fois que tu as lancé l’un de ces sorts via ce trait, tu dois terminer un repos long avant de pouvoir relancer ce même sort de cette façon. Ton Charisme est la caractéristique d’incantation pour ces sorts, et tu n’as pas besoin de composantes matérielles.
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."																									
+	l st	Baies nourricières 2x/jour, Sommeil 1x/jour																							
+	2nd	Aide 2x/jour, Apaisement des émotions 1x/jour																							
+	3 rd	Création de nourriture et d'eau 2x/jour, Petite hutte de Léomund 1x/jour																							
+	4th	Aura de pureté 2x/jour, Sanctuaire privé de Mordenkainen 1x/jour																							
+	5th	Sanctification 3x/jour																							
+																									
+"Marque de l'Ombre
+La marque de l'Ombre permet à un elfe de tisser des illusions à partir de l'ombre, créant images et sons pour détourner l'attention ou divertir. La marque permet aussi à son porteur de manipuler les ombres, faisant d'elles une matière malléable qui permet d'éviter les détections, voire même de disparaître à la vue de tous. C'est un outil très pratique pour un amuseur, un espion ou un assassin ; chaque elfe qui porte la marque devra choisir la voie qu'il veut suivre.
+Traits de la marque de l'Ombre
+La marque de l'Ombre se manifeste uniquement sur les Elfes, Halfelins et Gnomes. Si votre personnage possède la marque de l'Ombre, celle-ci est considérée comme une sous-race d'elfe.
+Augmentation de caractéristiques. Ton score de Charisme augmente de 2, et tu augmentes une autre caractéristique de ton choix de 1.
+Talent inné. Vous maîtrisez un instrument de musique ou la compétence Représentation.
+Don des ombres. Quand vous faites un jet de Discrétion (Dextérité) ou un test de Tromperie (Charisme) ou de Dextérité (Discrétion) impliquant la dissimulation, l’illusion ou la furtivité, vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique.
+Glisser dans les ombres. Vous pouvez utiliser l'action Se cacher en action bonus, même si vous n'avez aucun abri ou si vous êtes sous surveillance. Que l'action soit réussie ou non, une fois que vous avez utilisé cette capacité, vous devez terminer un repos court ou long avant de pouvoir l'utiliser à nouveau."																									
+"Magie des ombres: Tu peux lancer le sort illusion mineure grâce à ce trait.À partir du niveau 3, tu peux également lancer tinvisibilité de la même manière. Une fois que tu as lancé l’un de ces sorts via ce trait, tu dois terminer un repos long avant de pouvoir relancer ce même sort de cette façon. Ton Charisme est la caractéristique d’incantation pour ces sorts, et tu n’as pas besoin de composantes matérielles.
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."																									
+	l st	Déguisement 2x/jour, Image silencieuse 1x/jour																							
+	2nd	Ténèbres 2x/jour,  Passage sans trace 1x/jour																							
+	3 rd	Clairvoyance 1x/jour, Image majeure 2x/jour																							
+	4th	Invisibilité supérieure 2x/jour, Terrain hallucinatoire 1x/jour																							
+	5th	Double illusoire 3x/jour																							
+																									
+"Marque du Passage
+La marque du Passage contrôle le mouvement, permettant au porteur de bouger avec une vitesse inouïe et une grande adresse. Courir, sauter, grimper, la marque du Passage améliore tous les types de mouvement. Le porteur de la marque peut même se glisser à travers l'espace, sautant d'un endroit à un autre en un clignement d'œil.
+Traits de la marque du Passage
+La marque du Passage se manifeste uniquement sur les Humain, Féral et Elfe. Si votre personnage possède la marque du Passage, ces traits remplacent le trait Augmentation de caractéristiques décrit dans le Manuel des Joueurs.
+Augmentation de caractéristiques. Votre Dextérité augmente de 2. De plus, vous pouvez augmenter une autre caractéristique de votre choix de 1.
+Vitesse du coursier. Votre vitesse de base passe est augmenté de 6 mètres.
+Mouvement intuitif. Quand vous faites un jet de Force (Athlétisme) ou un test d’Acrobaties (Dextérité) ou un jet de caractéristique pour conduire ou contrôler un véhicule terrestre, vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique.
+Élégance d'Orien. À votre tour, vous pouvez dépenser une quantité de mouvement égale à la moitié de votre vitesse pour activer ce trait. Une fois activée, l'Élégance d'Orien fait que vous ne provoquez pas d'attaque d'opportunité pour le reste du tour."																									
+"Déplacement magique: Tu peux lancer le sort de pas brumeux grâce à ce trait. Vous pouvez amener une créature avec vous, de votre taille ou plus petite, qui transporte du matériel jusqu'à sa capacité de charge maximale. La créature doit être à 1,50 mètre ou moins de vous. À partir du niveau 3, tu peux également déplacer une autre créature ou un objet de moins de 250 kg à 1,50 mètre ou moins de vous. Une fois que tu as lancé l’un de ces sorts via ce trait, tu dois terminer un repos long avant de pouvoir relancer ce même sort de cette façon. Ta Dextérité est la caractéristique d’incantation pour ces sorts, et tu n’as pas besoin de composantes matérielles.
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."																									
+	l st	Repli expéditif 2x/jour, Saut 1x/jour																							
+	2nd	Foulée brumeuse2x/jour, Passage sans trace 1x/jour																							
+	3 rd	Clignotement 2x/jour, Monture fantôme 1x/jour																							
+	4th	Porte dimensionnelle ou Invocation d'objets 3x/jour																							
+	5th	Cercle de téléportation 3x/jour																							
+																									
+"Marque de la Sentinelle
+La marque de la Sentinelle alerte et protège. Elle renforce les sens et les réflexes, permettant à un héritier de réagir face aux dangers avec une vitesse inouïe. Que ce soit sur un champ de bataille ou dans une salle de bal, le porteur de la marque de la Sentinelle est toujours prêt à faire face au danger.
+Traits de la marque de la Sentinelle
+La marque de la Sentinelle se manifeste uniquement sur les Humains, Demi‑orcs et Nains. Si votre personnage possède la marque de la Sentinelle, ces traits remplacent le trait Augmentation de caractéristiques décrit dans le Manuel des Joueurs.
+Augmentation de caractéristiques. Votre Force et votre Sagesse augmentent de 1. De plus, vous pouvez augmenter une autre caractéristique de votre choix de 1.
+Perspicacité de la sentinelle. Quand vous faites un jet d'Initiative ou de Sagesse (Perception), vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique.
+Gardien vigilant. Par une action, vous pouvez désigner un allié que vous pouvez voir comme étant votre pupille. Vous avez un avantage aux jets de Sagesse (Perspicacité) et de Sagesse (Perception) quand il s'agit de repérer les dangers qui menacent votre pupille. De plus, quand vous êtes à 1,50 mètre ou moins de votre pupille et que ce dernier est la cible d'une attaque dont vous pouvez voir l'origine, vous pouvez, en utilisant votre réaction, changer de place avec votre pupille et devenir alors la cible de l'attaque."																									
+"Bouclier de la sentinelle. Vous connaissez le sort mineur protection contre les armes. Vous gagnez la capacité de lancer un sort de bouclier une fois avec ce trait et regagnez la capacité de le lancer quand vous terminez un repos court ou long.
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."																									
+	l st	Duel forcé ou Bouclier de la foi 3x/jour																							
+	2nd	Lien de protection 2x/jour, Zone de vérité 1x/jour																							
+	3 rd	Contresort 2x/jour, Protection contre une énergie 1x/jour																							
+	4th	Protection contre la mort 2x/jour, Gardien de la foi 1x/jour																							
+	5th	Main de Bigby 3x/jour																							
+																									
+"Marque de la Tempête
+Le vent et l'eau sont toujours les amis d'un demi-elfe porteur de la marque de la Tempête. Le vent les relève quand ils tombent et ils sont capables de nager à des vitesses incroyables. Ceux qui possèdent le don Marque draconique majeur et des focaliseurs à base de dracolithes peuvent faire appel à des pouvoirs encore plus redoutables, modifiant la météo ou permettant de faire appel au pouvoir de l'orage.
+Traits de la marque de la Tempête
+La marque de la Tempête se manifeste uniquement sur les Demi‑elfes, Humains, et Halfelin. Si votre personnage possède la marque de la Tempête, ces traits remplacent les traits Augmentation de caractéristiques, Polyvalence et Langues décrits dans le Manuel des Joueurs.
+Augmentation de caractéristiques. Votre Dextérité et votre Charisme augmentent de 1. De plus, vous pouvez augmenter une autre caractéristique de votre choix de 1.
+Loup de mer. Votre vitesse de base est de 9 mètres, et vous gagnez une vitesse de natation de 9 mètres.
+Perspicacité des artisans du vent. Quand vous faites un jet de Dextérité (Acrobaties) ou un jet de caractéristique pour conduire ou contrôler un véhicule aquatique ou aérien, ou lorsque tu fais un test de Survie (Sagesse) lié à la navigation, au climat ou à l’anticipation d’un changement de temps, ou un test de Perception (Sagesse) pour repérer un danger naturel, vous pouvez lancer un dé d'Inspiration, un d4, et ajouter le résultat au jet de caractéristique.
+Bénédiction de la tempête. Vous gagnez la résistance aux dégâts de foudre.
+Langages. Vous pouvez parler, lire et écrire le commun, l'elfique et le hobbit."																									
+"Magie des vents et du tonnerre : Vous connaissez le sort mineur rafale. À partir du niveau 3, vous pouvez lancer le sort tonnerre assourdissant grâce à ce trait. Une fois que tu as lancé l’un de ces sorts via ce trait, tu dois terminer un repos court ou long avant de pouvoir relancer ce même sort de cette façon. Ton Charisme est la caractéristique d’incantation pour ces sorts, et tu n’as pas besoin de composantes matérielles.
+Pouvoirs de la marque : les sorts associés à la Marque s'utilisent tels des pouvoirs (pas de lancer d'incantation) et s'activent pour les niveaux 1 au niveau 1, pour les niveaux 2 au niveau 3, pour les niveaux 3 au niveau 5 etc..."																									
+	l st	Feuille morte ou Nappe de brouillard 3x/jour																							
+	2nd	Bourrasque 2x/jour, Lévitation 1x/jour																							
+	3 rd	Tempête de neige 1x/jour, Mur de vent 2x/jour																							
+	4th	Invocation d'élémentaires mineurs 1x/jour, Contrôle de l'eau 2x/jour																							
+	5th	Invocation d'élémentaire 3x/jour																							
+																									
+																									
+																									
+"Marques draconiques aberrantes
+Les douze Marques draconiques sont tous issus d'une même lignée et ils passent d'une génération à l'autre dans une même famille. Ils sont fiables, stables, et leurs pouvoirs sont constructifs : ils créent, ils soignent, ils protègent. Mais il existe un autre genre de Marque draconique, des marques qui sont imprévisibles et dangereuses pour le porteur et les personnes qui l'entourent. Un porteur de ce genre de marque peut tuer d'un simple contact ou prendre le contrôle de l'esprit d'une personne d'un simple regard. Les Marques draconiques aberrants apparaissent parfois quand des personnes de familles à Marques draconiques différentes ont un enfant, et c'est pour cette raison que ces unions sont strictement interdites par les Douze. Mais les Marques draconiques aberrants peuvent apparaître sur les membres de n'importe quelle race, à n'importe quel âge, quelle que soit leur lignée. Les Marques draconiques aberrants ne sont jamais totalement identiques ; même s'ils octroient les mêmes pouvoirs, ils ont une apparence différente et vont manifester leurs pouvoirs différemment. Par exemple, si deux Marques draconiques aberrants confèrent le pouvoir de lancer le sort mineur trait de feu, une de ces marques sera peut être formée de tissus fibreux cicatriciels, alors qu'une autre sera dessinée à même la peau avec des traits de feu froid.
+
+Même si les Marques draconiques aberrants peuvent avoir un aspect inquiétant, ils ne semblent pas, au premier abord, être plus dangereux ou menaçants que les pouvoirs d'un ensorceleur. Qu'est ce qui les rend alors si particuliers ? Les Marques draconiques aberrants ont tous des points faibles. Même s'ils ne sont pas forcément nuisibles, en tous cas directement, ils sont toujours un fardeau, d'une manière ou d'une autre, pour le porteur ; un fardeau qui peut rendre folles les personnes les plus fragiles. Si vous manifestez un Marque draconique aberrant, vous pouvez choisir un défaut dans la liste ci-dessous, ou vous pouvez développer avec le MD un défaut unique à votre personnage."																									
+																									
+	1d8	Défauts de Marque draconique aberrant																							
+	1	Votre Marque draconique est constamment douloureux, 																							
+	2	Votre Marque draconique vous murmure constamment des mots que vous ne comprenez pas forcément, 																							
+	3	Dans les moments de stress importants, votre Marque draconique peut produire l'effet de son sort mineur de manière involontaire, 																							
+	4	La peau autour de votre marque a un aspect inhabituel : brulé, écailleux, flétri, etc, 																							
+	5	Les animaux normaux sont inquiets lorsque vous êtes à proximité d'eux, 																							
+	6	Vous avez des changements d'humeur radicaux lorsque vous utilisez votre Marque draconique, 																							
+	7	Votre apparence change, de manière limitée, chaque fois que vous utilisez votre Marque draconique, 																							
+	8	Vous faites d'affreux cauchemars après avoir utilisé votre Marque draconique, 																							
+																									
+"Marque draconique aberrant
+Prérequis : le personnage ne doit pas posséder de Marque draconique. C'est la seule marque possible pour un forgelier.
+
+Vous avez développé un Marque draconique aberrant. Déterminez son apparence et le défaut qui lui est associé. Vous gagnez les avantages suivants :
+Augmentation de caractéristique: Augmentez votre valeur de Constitution de 1, sans dépasser 20.
+Vigueur aberrante: Réaction : quand vous échouez à un jet de sauvegarde de Constitution, vous pouvez ajouter 1d4 au jet (une fois par repos long).
+Vous apprenez un sort mineur issu de la liste de sorts des ensorceleurs. De plus, choisissez un sort de niveau 1 de cette même liste. Vous connaissez ce sort et vous pouvez le lancer à son plus bas niveau. Une fois que vous l'avez lancé, vous ne pouvez pas le relancer avant d'avoir terminé un repos court. La Constitution est votre caractéristique d'incantation pour ces sorts.
+Soins aberrants: Quand vous lancez le sort de niveau 1 du don, vous pouvez dépenser un dé de points de vie et le lancer : si le résultat est pair, vous gagnez autant de points de vie temporaires ; si impair, une créature dans un rayon de 9 m subit des dégâts de force égaux au résultat (si aucune créature, vous subissez les dégâts). A chaque niveau supplémentaire, vous pouvez dépenser un dé de vie supplémentaire."																									
+																									
+		Marques draconiques	Maison	Races optimales	Classes optimales																				
+		Marque de la Découverte	Tharashk	Demi‑orc; Humain; Changelin	Roublard; Rôdeur; Ensorceleur	Chasseurs de primes, ressources																			
+		Marque de la Détection	Medani	Demi-Elfes; Humain; Elfe	Roublard; Ensorceleur; Guerrier (Eldritch Knight)	Enquêtes, protection																			
+		Marque de la Fabrication	Cannith	Humain; Gnome; Nain	Artificier; Roublard ; Guerrier 	Artisanat magique, forges																			
+		Marque de la Guérison	Jorasco	Halfelins; Humain; Changelin;	Clerc; Paladin; Barde	Soins, médecine																			
+		Marque du dressage	Vadalis	Humain; Féral; Demi‑orc	Druide; Rôdeur; Maître des bêtes	 Élevage, créatures																			
+		Marque de l’Ombre	Phiarlan / Thuranni	Elfe; Halfelin; Gnome	Roublard; Barde; Ensorceleur	Art, espionnage / Assassinat, renseignement																			
+		Marque du Passage	Orien	Humain; Féral; Elfe	Roublard; Ensorceleur; Guerrier	Routes, messagerie																			
+		Marque de la Protection	Kundarak	Nain; Humain; Féral	Paladin; Clerc; Guerrier	Banques, coffres																			
+		Marque de la Sentinelle	Deneith	Humain; Demi‑orc; Nains	Guerrier; Paladin; Moine	 Mercenaires, sécurité																			
+		Marque de la Tempête	Lyrandar	Demi‑elfe; Humain; Halfelin	Ensorceleur; Druide; Paladin	Transport aérien et maritime																			
+		Marque de la Transcription	Sivis	Gnome; Humain; Demi‑elfe	Ensorceleur; Barde; Artificier	Communication, archives																			
+		Marque de l'Hospitalité	Ghallanda	Halfelin; Humain; Changelin	Barde; Roublard; Clerc	Auberges, refuges																			
+		Marque aberrante	—	Toute race (rare)	Toute classe																				

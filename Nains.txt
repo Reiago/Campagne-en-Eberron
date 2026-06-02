@@ -1,0 +1,43 @@
+"Les nains sont un peuple ancien et résilient, profondément marqué par l’exil et la reconquête. Originaires des montagnes de Mror, ils furent autrefois chassés de leurs terres par des forces obscures venues des profondeurs. Après des siècles de lutte, ils parvinrent à reprendre leurs forteresses ancestrales, forgeant une culture fondée sur la persévérance, la loyauté clanique et la maîtrise de l’artisanat. Cette histoire a façonné un peuple pragmatique, méfiant envers les promesses faciles, mais farouchement attaché à l’honneur et aux traditions.
+La société naine repose sur les clans, chacun possédant ses propres richesses, alliances et rivalités. Les nains accordent une grande importance aux contrats, aux serments et à la parole donnée, qu’ils considèrent comme sacrés. Leur expertise dans l’extraction minière, la forge et la finance leur a permis d’exercer une influence considérable sur l’économie du Khorvaire, bien au‑delà de leurs frontières."
+Territoires  Les nains dominent les Montagnes de Mror, une région riche en minerais et en anciennes citadelles fortifiées. Bien que cette zone constitue leur cœur culturel et politique, de nombreux nains vivent également dans les grandes cités du Khorvaire, où ils agissent comme marchands, banquiers ou artisans spécialisés. Leur présence est particulièrement notable dans les centres économiques majeurs.
+Marques draconiques  La maison Kundarak, porteuse du Marque draconique de la Protection, est presque exclusivement composée de nains. Spécialisée dans la sécurité, la protection des biens et les services bancaires, elle est réputée pour l’inviolabilité de ses coffres et la fiabilité de ses contrats, incarnant parfaitement les valeurs de rigueur et de confiance propres à leur peuple. Les nains peuvent être aussi porteurs des marques draconiques de la Fabrication ou de la Sentinelle.
+
+"Noms de nains
+Les nains d’Eberron portent des noms solides et traditionnels, souvent transmis de génération en génération. Le nom est un symbole d’honneur, de lignée et de réputation, et il est rare qu’un nain le change sans raison majeure. Les clans nains, en particulier ceux des Montagnes Mror, attachent une grande importance aux noms de famille, qui rappellent les exploits passés, les alliances et les dettes d’honneur.
+Les nains vivant parmi d’autres peuples, notamment dans les cités de Khorvaire, peuvent adopter des surnoms ou des formes abrégées de leur nom pour faciliter les échanges, mais leur nom complet reste une part essentielle de leur identité. Le genre est respecté mais n’influence pas fortement la structure des noms.
+Noms nains : Baern, Dagna, Eberk, Fargrim, Hilda, Kildrak, Morna, Orsik, Rurik, Torga
+Noms de clan : Balderk, Dankil, Gorunn, Holderhek, Ironfist, Torunn, Ungart"
+"Traits des nains
+Votre personnage nain possède les traits suivants."
+"Augmentation de caractéristiques
+Votre Constitution augmente de 2."
+"Âge
+Les nains atteignent l’âge adulte vers 50 ans et peuvent vivre jusqu’à 350 ans. Leur longévité leur permet de bâtir des œuvres durables et de préserver des traditions anciennes."
+"Alignement
+Les nains valorisent la loyauté, l’honneur et la stabilité. Beaucoup tendent vers des alignements loyaux, bien que leur sens du devoir puisse s’exprimer de différentes manières selon leur clan ou leur histoire personnelle."
+"Taille
+Les nains mesurent généralement entre 1,20 et 1,50 mètre et ont une carrure large et robuste. Votre taille est Moyenne."
+"Vitesse
+Votre vitesse de déplacement de base est de 7,5 mètres. Votre vitesse n’est pas réduite par le port d’une armure lourde."
+"Vision dans le noir
+Habitué aux profondeurs rocheuses et aux galeries souterraines, vous pouvez voir dans une lumière faible à 18 mètres comme si c’était une lumière vive, et dans l’obscurité comme si c’était une lumière faible. Vous ne distinguez pas les couleurs dans l’obscurité."
+"Résilience naine
+Vous avez un avantage aux jets de sauvegarde contre le poison, et vous bénéficiez d’une résistance aux dégâts de poison."
+"Entraînement nain
+Vous gagnez la maîtrise de la hache de bataille, de la hachette, du marteau léger et du marteau de guerre."
+"Maîtrise des outils
+Vous gagnez la maîtrise d’un outil d’artisan de votre choix parmi : outils de forgeron, outils de brasseur ou outils de maçon."
+"Connaissance de la pierre
+Chaque fois que vous effectuez un test d’Intelligence (Histoire) lié à l’origine d’un ouvrage en pierre, vous êtes considéré comme maîtrisant la compétence et ajoutez le double de votre bonus de maîtrise au jet."
+"Langues
+Vous pouvez parler, lire et écrire le commun et le nain."
+"Nains des Montagnes Mror
+Puissants, fiers et profondément attachés à leurs clans, les nains Mror dominent les richesses minières et bancaires de Khorvaire.
+Augmentation de caractéristiques : Votre Force augmente de 2.
+Armure naine : Vous gagnez la maîtrise des armures légères et intermédiaires.
+Héritage du clan : Une fois par repos long, vous pouvez obtenir un avantage sur un jet lié à la défense de votre clan ou de ses intérêts."
+"Nains des collines
+Plus contemplatifs et résistants, ces nains privilégient la sagesse, l’endurance et la préservation des traditions.
+Augmentation de caractéristiques : Votre Sagesse augmente de 1.
+Robustesse naine : Votre maximum de points de vie augmente de 1, et augmente encore de 1 à chaque niveau."

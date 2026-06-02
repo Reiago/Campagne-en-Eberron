@@ -1,0 +1,34 @@
+Les demi -orques sont rares au Khorvaire, dans la mesure où humains et orques n’ont jamais vécu très proches les uns des autres. En revanche, dans les petites communatés humaines disséminées dans les marches de I'ombre, cette race melée s'avere plus courante  otn la rencontre également dans les régions occidentales de confins d’Eldyn et du Droâm. Les orques des marches de l'ombre ont un mode de vie très proche de celui des humains. Ils mènent une existence rustique, certes, mais qui reste bien éloignée de celle des hordes barbares impitoyables de leurs lointains ancetres. Les demi-orques s’avèrent tout aussi civilisés que les hommes de la région et pourraient souvent passer pour des humains, malgré leur taille et leur force physique.
+Territoires Les demi-orques n’ont pas de terres propre et vivent parmi les humains ou les orques des marche sde l'ombre, des confins d'Eldyn et du Droàm. Certains ont même trouvé leur place au sein d'autres nations du Khorvaire, en particulier dans les cités et vílles les plus importantes.
+Marques draconiques. La maison Tharashk, composée de demi-orques et d'humains, porte le Marque draconique de la Découverte. Les sujets de prèdilection de la maison sont les enquêtes et prospections en matière de dracolìthes. Les demi orcs peuvent aussi portés les marques draconiques du Dressage et de la Sentinelle.
+
+"Noms de demi-orcs
+Les demi-orcs d’Eberron portent souvent des noms humains simples ou rudes, hérités de leur parent mortel, bien que certains adoptent des noms orcs pour affirmer leur lien avec leurs origines tribales. Dans les régions frontalières comme les Marches de l’Ombre ou le Démon Wastes, les noms orcs sont portés avec fierté, tandis que dans les grandes cités, beaucoup de demi-orcs choisissent des noms plus neutres pour faciliter leur intégration.
+Certains demi-orcs utilisent des surnoms gagnés par leurs actes, leurs exploits ou leur réputation. Ces noms peuvent évoluer au fil de leur vie, reflétant leur parcours personnel.
+Noms masculins demi-orcs : Brug, Dorn, Gath, Harg, Karg, Mok, Rendar, Thok, Ugar, Vorn
+Noms féminins demi-orcs : Baggi, Drasha, Emra, Gura, Hela, Kesh, Myev, Ovak, Rasha, Thura
+Surnoms et titres : Brise-Os, Poing-Noir, Sang-Froid, Lame-Rouge, Marche-Guerre"
+"Traits des demi-orcs
+Votre personnage demi-orc possède les traits suivants."
+"Augmentation de caractéristiques
+Votre Force augmente de 2, et votre Constitution augmente de 1."
+"Âge
+Les demi-orcs atteignent l’âge adulte plus rapidement que les humains, souvent vers 14 ans, et vieillissent plus vite. Peu dépassent 75 ans, leur vie étant souvent marquée par la violence ou l’effort constant."
+"Alignement
+Ayant grandi entre deux cultures souvent opposées, les demi-orcs développent une vision pragmatique du monde. Beaucoup tendent vers des alignements neutres, bien que certains embrassent des idéaux plus extrêmes selon leur environnement et leur éducation."
+"Taille
+Les demi-orcs sont plus grands et plus massifs que les humains, mesurant généralement entre 1,75 et 2 mètres. Leur carrure est puissante et imposante. Votre taille est Moyenne."
+"Vitesse
+Votre vitesse de déplacement de base est de 9 mètres."
+"Vision dans le noir
+Grâce à votre héritage orc, vous pouvez voir dans une lumière faible à 18 mètres comme si c’était une lumière vive, et dans l’obscurité comme si c’était une lumière faible. Vous ne distinguez pas les couleurs dans l’obscurité."
+"Menace intimidante
+Vous gagnez la maîtrise de la compétence Intimidation."
+"Endurance implacable
+Lorsque vous êtes réduit à 0 point de vie sans être tué sur le coup, vous pouvez tomber à 1 point de vie à la place. Une fois que vous avez utilisé ce trait, vous ne pouvez plus l’utiliser avant d’avoir terminé un repos long."
+"Attaques sauvages
+Lorsque vous obtenez un coup critique avec une attaque de corps à corps, vous pouvez lancer un dé de dégâts supplémentaire de l’arme et l’ajouter aux dégâts totaux."
+"Héritage conflictuel
+Les demi-orcs sont habitués à être jugés sur leur apparence. Vous avez un avantage aux jets de sauvegarde contre l’état effrayé, votre volonté ayant été forgée par l’adversité."
+"Langues
+Vous pouvez parler, lire et écrire le commun et l’orc."

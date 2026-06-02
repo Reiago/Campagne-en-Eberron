@@ -1,0 +1,28 @@
+"Les humains constituent la race la plus nombreuse et la plus influente du Khorvaire. Leur remarquable capacité d’adaptation, leur ambition et leur diversité culturelle leur ont permis de fonder la majorité des nations du continent et de façonner son histoire récente, notamment à travers la Dernière Guerre. Contrairement à d’autres peuples plus anciens ou plus homogènes, les humains ne partagent pas une culture unique : chaque royaume, chaque cité et parfois chaque région développe ses propres traditions, croyances et structures sociales.
+Cette diversité se reflète également dans leurs talents. Les humains excellent dans presque tous les domaines, qu’il s’agisse de la magie, de l’artisanat, du commerce ou de la guerre. Leur courte espérance de vie, comparée à celle des elfes ou des nains, les pousse souvent à agir avec urgence et détermination, ce qui explique en partie leur rôle moteur dans les bouleversements politiques et technologiques du Khorvaire."
+Territoires  Les humains dominent la majorité des nations du Khorvaire, notamment le Breland, l’Aundair, le Karrnath, le Thrane et le Zilargo. Ils sont également présents dans presque toutes les grandes cités du continent, où ils vivent mêlés aux autres peuples. Aucune région ne peut véritablement être considérée comme exclusivement humaine, tant leur influence est étendue.
+Marques draconiques  Les humains sont représentés dans toutes les maisons de Marques draconiques, souvent aux côtés d’autres races, sauf celle de l'Ombre. Parmi les plus notables figurent la maison Cannith (Fabrication), la maison Deneith (Sentinelle), la maison Sivis (Écriture) et la maison Orien (Passage). Cette présence généralisée reflète leur rôle central dans l’économie, la politique et les infrastructures du Khorvaire.
+
+"Noms d’humains
+Les humains d’Eberron sont incroyablement divers, et leurs noms reflètent la richesse culturelle de Khorvaire et des autres continents. Selon leur région d’origine, leur lignée ou leur statut social, les humains peuvent porter des noms simples, nobles, anciens ou influencés par d’autres peuples. Les membres des Maisons draconiques utilisent souvent des noms de famille marqués par le préfixe d’, symbole de leur héritage et de leur pouvoir.
+Les humains changent parfois de nom au cours de leur vie, adoptant des titres, des surnoms ou des pseudonymes liés à eurs exploits, leur profession ou leur réputation. Le genre est perçu de manière souple dans de nombreuses cultures humaines, et les noms ne sont pas strictement genrés.
+Noms humains : Alaric, Brenna, Corin, Dalia, Edric, Fara, Jolan, Kael, Mira, Nolan, Risa, Tavin, Vala, Wren
+Noms de famille : d’Cannith, d’Deneith, d’Lyrandar, d’Orien, d’Phiarlan, ir’Wynarn, ir’Talan, ir’Roole"
+"Traits des humains
+Votre personnage humain possède les traits suivants."
+"Augmentation de caractéristiques
+Toutes vos caractéristiques augmentent de 1."
+"Âge
+Les humains atteignent l’âge adulte vers 18 ans et vivent rarement au-delà de 90 ans. Leur courte espérance de vie les pousse à agir avec ambition, créativité et détermination."
+"Alignement
+Les humains n’ont pas de tendance particulière en matière d’alignement. Leur adaptabilité et leur diversité culturelle les amènent à embrasser toutes les philosophies, idéaux et croyances possibles."
+"Taille
+Les humains mesurent généralement entre 1,50 et 1,90 mètre et présentent une grande variété de morphologies. Votre taille est Moyenne."
+"Vitesse
+Votre vitesse de déplacement de base est de 9 mètres."
+"Polyvalence humaine
+Vous gagnez la maîtrise d’une compétence de votre choix."
+"Talent adaptable
+Vous gagnez un don de votre choix au niveau 1, reflétant votre capacité à apprendre rapidement et à vous spécialiser."
+"Langues
+Vous pouvez parler, lire et écrire le commun et une langue supplémentaire de votre choix."

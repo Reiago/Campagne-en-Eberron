@@ -1,0 +1,76 @@
+Les elfes aereni
+Les elfes aereni vivent principalement sur l’île d’Aerenal, à l’est du Khorvaire. Isolés depuis des millénaires, ils ont développé une culture profondément tournée vers le respect des ancêtres, qu’ils considèrent comme des guides éternels plutôt que comme de simples figures du passé. Leur société est rigide, hiérarchisée et extrêmement conservatrice, chaque lignée cherchant à préserver son honneur et son héritage spirituel. Les elfes aereni sont réputés pour leur maîtrise de la magie, en particulier des arts liés à la préservation de l’âme et à la nécromancie sacrée, qu’ils pratiquent sans la connotation sinistre qu’elle revêt ailleurs au Khorvaire.
+Territoires Les elfes aereni dominent l’île d’Aerenal, où les étrangers sont rarement admis. Quelques individus quittent néanmoins leur patrie pour s’installer dans les grandes cités du Khorvaire, souvent en tant qu’érudits, ambassadeurs ou gardiens de traditions anciennes.
+Marques draconiques La maison Phiarlan, porteuse du Marque draconique de l’Ombre, trouve ses origines parmi les elfes aereni. Elle est spécialisée dans les arts du spectacle, l’espionnage et la collecte d’informations. 
+
+Les elfes valenar
+Les elfes valenar sont les descendants de guerriers aereni ayant quitté Aerenal pour conquérir les plaines orientales du Khorvaire. Contrairement à leurs cousins restés sur l’île, ils ont adopté un mode de vie nomade et martial, centré sur la guerre, la gloire personnelle et l’imitation des héros légendaires du passé. Chaque elfe valenar cherche à incarner l’esprit d’un ancien champion, guidant ses actes par des visions et des traditions guerrières. Leur culture est rude, directe et profondément honorifique.
+Territoires Les Valenar occupent les plaines qui portent leur nom, anciennement partie du royaume de Cyre. Ils y vivent en clans mobiles, parcourant les steppes à cheval et défendant farouchement leurs terres contre toute intrusion.
+Marques draconiques La maison Thuranni, détentrice du Marque draconique de l’Ombre, est issue d’une scission de la maison Phiarlan et compte de nombreux elfes valenar parmi ses membres. Elle se consacre principalement à l’assassinat et aux opérations clandestines. 
+Les elfes urbains du Khorvaire
+De nombreux elfes ont quitté Aerenal ou les terres valenar pour s’installer dans les nations humaines du Khorvaire. Ces elfes urbains ont souvent adopté les coutumes locales, tout en conservant certains traits culturels propres à leur peuple, comme leur longévité et leur sens aigu de l’histoire. Ils sont fréquemment perçus comme raffinés, distants ou mystérieux, mais s’intègrent généralement bien aux sociétés cosmopolites des grandes cités.
+Territoires On rencontre des elfes urbains dans presque toutes les grandes villes du Khorvaire, notamment à Sharn, Karrlakton et Fairhaven. Ils n’y possèdent pas de territoires propres et vivent mêlés aux autres peuples.
+Marques draconiques Outre Phiarlan et Thuranni, plusieurs elfes urbains sont affiliés à diverses maisons de Marques draconiques, bien que ces deux maisons restent les plus étroitement associées à leur peuple. Ces elfes peuvent être porteur d'une marque draconique de la Détection ou du Passage.
+
+Les elfes noirs de Xen’drik
+Les elfes noirs, ou drows, vivent dans les jungles et les ruines de Xen’drik, loin au sud du Khorvaire. Leur culture est tribale, marquée par la survie dans un environnement hostile et par le souvenir des anciens empires de géants. Profondément spirituels, ils vénèrent des divinités primitives et des esprits animaux, et se montrent généralement méfiants, voire hostiles, envers les étrangers.
+Territoires Les drows occupent les régions sauvages de Xen’drik, vivant en clans dispersés autour de ruines antiques et de territoires de chasse.
+Marques draconiques Les elfes noirs ne possèdent aucun Marque draconique connu et n’entretiennent que de rares contacts avec les maisons du Khorvaire.
+
+"Noms d’elfes
+Les elfes d’Eberron portent des noms mélodieux et anciens, souvent transmis au sein de leur lignée ou choisis pour honorer un ancêtre, un exploit ou une tradition culturelle. Selon leur origine — Aerenal, Valenar ou les communautés urbaines de Khorvaire — les elfes peuvent privilégier des noms solennels, guerriers ou adaptés aux sociétés humaines.
+Les elfes accordent une grande importance à la mémoire et à l’héritage. Certains adoptent des titres ou des épithètes liés à leur rôle, à leur clan ou à un ancêtre vénéré, en particulier parmi les elfes d’Aerenal.
+Noms masculins elfes : Aelar, Darien, Faelar, Kaelis, Laucian, Minartis, Rolen, Thamior, Vaelis, Zaos
+Noms féminins elfes : Aereni, Althaea, Enna, Lethiel, Naeris, Sariel, Thalia, Valanthe, Yllairies
+Noms de famille ou lignées : Tolaen, Shae, Vadallia, Mendyrian, Vol"
+"Noms des elfes noirs
+Les elfes noirs de Xen’drik portent des noms issus de traditions tribales anciennes, souvent liés à des esprits animaux, des phénomènes naturels ou des exploits guerriers. Contrairement aux elfes d’Aerenal ou de Valenar, leurs noms sont rarement héréditaires : ils peuvent changer au cours de la vie pour refléter un nouveau rôle, une vision spirituelle ou un rite accompli.
+Les drows de Xen’drik vivent en clans indépendants, et leurs noms servent autant à affirmer leur identité qu’à rappeler leur place dans la tribu. Certains adoptent des noms communs lorsqu’ils traitent avec les peuples de Khorvaire, mais conservent leur nom tribal comme marque sacrée.
+Noms masculins elfes noirs : Akash, Draal, Korth, Lurash, Maaka, Reth, Skaar, Thokar, Vraal
+Noms féminins elfes noirs : Ashara, Drissa, Kala, Lethka, Mavra, Nasha, Rilsa, Thava
+Titres tribaux : Marche-Esprit, Chasse-Soleil, Voix-des-Anciens, Lame-de-Pierre"
+"Traits des elfes
+Votre personnage elfe possède les traits suivants."
+"Augmentation de caractéristiques
+Votre Dextérité augmente de 2."
+"Âge
+Les elfes atteignent l’âge adulte vers 100 ans et peuvent vivre plus de 700 ans. Leur longévité leur confère une perspective unique sur le temps, l’histoire et les conflits mortels. Les elfes noirs atteignent l’âge adulte vers 80 ans et peuvent vivre jusqu’à 600 ans. Leur longévité est marquée par une forte transmission orale et spirituelle du savoir."
+"Alignement
+Les elfes valorisent la liberté personnelle et l’expression individuelle. Beaucoup tendent vers des alignements chaotiques, bien que les traditions culturelles puissent influencer leurs convictions. Les elfes noirs de Xen’drik vivent selon des traditions tribales strictes, mais profondément liées à la survie et à l’équilibre naturel. Ils tendent vers des alignements neutres, parfois chaotiques, selon les coutumes de leur clan."
+"Taille
+Les elfes mesurent généralement entre 1,50 et 1,80 mètre. Leur silhouette est élancée et gracieuse. Votre taille est Moyenne."
+"Vitesse
+Votre vitesse de déplacement de base est de 9 mètres."
+"Vision dans le noir
+Grâce à votre héritage féerique, vous pouvez voir dans une lumière faible à 18 mètres comme si c’était une lumière vive, et dans l’obscurité comme si c’était une lumière faible. Vous ne distinguez pas les couleurs dans l’obscurité. Habitué aux jungles obscures et aux ruines cyclopéennes de Xen’drik, vous pouvez voir dans l’obscurité à 36 mètres comme si c’était une lumière faible. Vous ne distinguez pas les couleurs dans l’obscurité."
+"Sens aiguisés
+Vous gagnez la maîtrise de la compétence Perception."
+"Ascendance féerique
+Vous avez un avantage aux jets de sauvegarde contre l’état charmé, et la magie ne peut pas vous endormir."
+"Transe
+Les elfes n’ont pas besoin de dormir. À la place, vous méditez profondément pendant 4 heures par jour, restant semi-conscient. Après cette transe, vous bénéficiez des mêmes effets qu’un repos long."
+"Langues
+Vous pouvez parler, lire et écrire le commun et l’elfique."
+"Elfes d’Aerenal
+Gardiens des traditions ancestrales, les elfes d’Aerenal vénèrent leurs morts et préservent la mémoire des anciens.
+
+Augmentation de caractéristiques : Votre Sagesse augmente de 1.
+Formation ancestrale : Vous gagnez la maîtrise d’une compétence ou d’un outil de votre choix.
+Lien aux Anciens : Vous avez un avantage aux tests d’Histoire liés aux elfes, aux morts ou à Aerenal."
+"Elfes Valenar
+Guerriers nomades et cavaliers redoutables, les Valenar cherchent à honorer les exploits de héros légendaires.
+
+Augmentation de caractéristiques : Votre Force augmente de 1.
+Entraînement martial : Vous gagnez la maîtrise de l’arc long, du cimeterre, de la lance et du fouet.
+Héritage héroïque : Une fois par repos long, vous pouvez obtenir un avantage sur un jet d’attaque ou de caractéristique lié à un acte martial."
+"Elfes urbains de Khorvaire
+Adaptés à la vie parmi les autres peuples, ces elfes sont diplomates, artistes ou érudits.
+
+Augmentation de caractéristiques : Votre Charisme augmente de 1.
+Polyvalence sociale : Vous gagnez la maîtrise d’une compétence de Charisme de votre choix."
+"Elfes noirs
+Augmentation de caractéristiques : Votre Constitution augmente de 1.
+Héritage tribal
+Vous gagnez la maîtrise d’une compétence parmi Survie, Discrétion ou Athlétisme (au choix), reflétant votre éducation tribale.
+Résilience de Xen’drik
+Votre corps et votre esprit sont endurcis par un environnement hostile. Vous avez un avantage aux jets de sauvegarde contre les maladies naturelles et les poisons non magiques."

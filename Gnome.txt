@@ -1,0 +1,41 @@
+"Les gnomes sont un peuple discret et méthodique, dont l’influence au Khorvaire dépasse largement leur faible nombre. Réputés pour leur intelligence vive, leur sens aigu de l’organisation et leur goût pour les intrigues subtiles, ils préfèrent agir dans l’ombre plutôt que de s’imposer par la force. Leur culture valorise la connaissance, la planification et la maîtrise de l’information, qu’ils considèrent comme l’arme la plus puissante qui soit.
+Contrairement à l’image de simples érudits ou d’artisans, les gnomes jouent un rôle central dans les réseaux de communication, d’espionnage et de diplomatie du continent. Leur société est profondément structurée, reposant sur des accords tacites, des secrets bien gardés et une loyauté farouche envers leurs institutions. Bien qu’ils puissent paraître affables et inoffensifs, les gnomes sont rarement naïfs et n’oublient jamais une dette ou une trahison."
+Les gnomes dominent le Zilargo, une nation prospère et stable située au sud‑est du Khorvaire. Bien que ce pays se présente comme une société ouverte et accueillante, il est en réalité étroitement surveillé par un vaste réseau de renseignements. En dehors du Zilargo, on rencontre des communautés gnomes dans la plupart des grandes cités du Khorvaire, où ils occupent souvent des postes liés à l’administration, au commerce ou à la transmission d’informations.
+Marques draconiques  La maison Sivis, porteuse du Marque draconique de la TRanscription, est presque exclusivement composée de gnomes. Spécialisée dans les communications, la tenue de registres et la transmission sécurisée de messages, elle constitue l’épine dorsale administrative et diplomatique du Khorvaire, reliant nations, maisons et guildes à travers tout le continent. Ils peuvent également être porteurs de la marque draconique de la Création ou de l'Ombre.
+
+"Noms de gnomes
+Les gnomes d’Eberron accordent une grande importance aux noms, qu’ils considèrent comme des outils sociaux autant que des marqueurs d’identité. Un gnome peut posséder un nom de naissance, un nom professionnel et plusieurs pseudonymes utilisés dans différents cercles. Cette pratique est particulièrement répandue parmi les gnomes de Zilargo, où l’information est une monnaie aussi précieuse que l’or.
+Les noms gnomes sont souvent courts, rythmés et faciles à retenir. Les gnomes n’hésitent pas à modifier ou adapter leur nom pour mieux s’intégrer à un environnement donné, ou pour dissimuler leurs véritables intentions. Le genre est perçu de manière souple dans la culture gnome, et les noms ne sont pas strictement genrés.
+Noms gnomes : Alfi, Brix, Calli, Davi, Elly, Fenn, Jori, Kess, Lilli, Marn, Nix, Orri, Pavo, Rill, Tavi, Zook"
+"Traits des gnomes
+Votre personnage gnome possède les traits suivants."
+"Augmentation de caractéristiques
+Votre Intelligence augmente de 2."
+"Âge
+Les gnomes atteignent l’âge adulte vers 40 ans et peuvent vivre jusqu’à 350 ans. Leur longévité leur permet d’accumuler connaissances, secrets et réseaux d’influence sur plusieurs générations."
+"Alignement
+Les gnomes valorisent la stabilité sociale et la sécurité collective, mais leur curiosité naturelle les pousse à explorer des voies inattendues. La plupart tendent vers des alignements neutres, avec une préférence pour l’ordre lorsqu’il sert le bien commun."
+"Taille
+Les gnomes mesurent généralement entre 0,90 et 1,20 mètre et ont une carrure compacte. Votre taille est Petite."
+"Vitesse
+Votre vitesse de déplacement de base est de 7,5 mètres."
+"Vision dans le noir
+Habitué aux environnements souterrains et aux ruelles mal éclairées, vous pouvez voir dans une lumière faible à 18 mètres comme si c’était une lumière vive, et dans l’obscurité comme si c’était une lumière faible. Vous ne distinguez pas les couleurs dans l’obscurité."
+"Ruse gnome
+Vous avez un avantage aux jets de sauvegarde d’Intelligence, de Sagesse et de Charisme contre la magie, reflet de votre esprit vif et de votre méfiance naturelle."
+"Esprit analytique
+Vous gagnez la maîtrise d’une compétence parmi Investigation, Histoire ou Arcanes (au choix)."
+"Culture de l’information
+Les gnomes sont entraînés dès leur plus jeune âge à observer, écouter et mémoriser. Vous avez un avantage aux tests de Sagesse (Perception) ou d’Intelligence (Investigation) lorsque vous cherchez à recueillir des informations discrètement."
+"Langues
+Vous pouvez parler, lire et écrire le commun et le gnome."
+"Gnomes de Zilargo
+Maîtres de l’espionnage, de la diplomatie et de la manipulation de l’information, les gnomes de Zilargo vivent dans une société où chaque mot compte.
+Augmentation de caractéristiques : Votre Charisme augmente de 1.
+Réseau d’informateurs : Vous gagnez la maîtrise de la compétence Persuasion ou Tromperie (au choix).
+Mémoire des secrets : Une fois par repos long, vous pouvez relancer un jet d’Intelligence lié à la collecte d’informations."
+"Gnomes des profondeurs
+Ces gnomes vivent dans des communautés souterraines isolées, développant une affinité particulière avec la magie et les illusions.
+Augmentation de caractéristiques : Votre Dextérité augmente de 1.
+Magie gnome : Vous connaissez le tour de magie illusion mineure. À partir du niveau 3, vous pouvez lancer déguisement une fois par repos long. L’Intelligence est votre caractéristique d’incantation.
+Discrétion naturelle : Vous avez un avantage aux tests de Dextérité (Discrétion) dans les environnements souterrains."

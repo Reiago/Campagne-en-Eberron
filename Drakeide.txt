@@ -1,0 +1,57 @@
+Les drakéides sont des humanoïdes à l’apparence draconique, issus de lignées anciennes liées aux dragons et à la Prophétie draconique. Contrairement aux dragons véritables, ils ne forment pas une civilisation unifiée et se présentent sous plusieurs variantes, chacune marquée par une origine et un rôle distincts dans l’histoire d’Eberron. Bien que leur apparence inspire souvent crainte ou fascination, les drakéides ne sont pas intrinsèquement belliqueux et peuvent s’intégrer aux sociétés du Khorvaire, où ils sont toutefois relativement rares car sous le joug de lois plus contraignantes, lois créées pour les réduire en esclavage, voire selon certaines rumeurs pour réaliser des expériencesdans certains "ateliers".
+Ces drakéides descendent de pactes anciens entre dragons et humanoïdes, ou de manipulations magiques liées à la Prophétie. Ils possèdent une affinité naturelle avec l’énergie draconique, qui se manifeste par un souffle élémentaire et une résistance accrue. Leur culture est souvent marquée par un profond respect des dragons, qu’ils considèrent comme des figures quasi divines ou comme les gardiens du destin du monde.
+Territoires On rencontre ces drakéides principalement dans les régions reculées du Khorvaire, à proximité des terres draconiques d’Argonnessen ou dans certaines zones montagneuses et sauvages. Quelques individus vivent dans les grandes cités, où ils mènent une existence discrète, souvent en tant que mercenaires, érudits ou gardiens.
+Marques draconiques Les drakéides de lignée draconique ne portent généralement pas de Marque draconique. Leur lien avec les dragons les place en marge des maisons, qui se méfient de leur loyauté potentielle envers Argonnessen.
+
+Les drakéides de l’Œil de Khyber
+Ces drakéides sont issus de rituels obscurs liés aux profondeurs de Khyber et aux forces démoniaques qui y sommeillent. Leur apparence est souvent plus menaçante, marquée par des écailles sombres et des traits anguleux. Ils sont fréquemment associés à des cultes draconiques ou à des organisations cherchant à exploiter la puissance des dragons à des fins destructrices.
+Territoires Ils vivent principalement dans des régions isolées, proches de failles vers Khyber, ou au sein de communautés secrètes disséminées à travers le Khorvaire. On les rencontre parfois dans les bas‑fonds des grandes villes, où ils opèrent dans l’ombre.
+Marques draconiques Aucun Marque draconique officiel n’est associé à ces drakéides. Les maisons draconiques les considèrent comme dangereux et imprévisibles, et évitent tout lien formel avec eux.
+
+Les drakéides de l’Œil de Siberys
+Plus rares encore, ces drakéides sont liés aux énergies célestes de Siberys et à la Prophétie draconique dans sa forme la plus pure. Ils sont souvent perçus comme des élus ou des messagers du destin, dotés d’une aura presque sacrée. Leur comportement est généralement guidé par une quête de sens et par la volonté de préserver l’équilibre du monde.
+Territoires Ils n’ont pas de terres propres et apparaissent là où la Prophétie semble s’éveiller : anciens sites draconiques, ruines antiques ou lieux chargés de magie. Leur présence est souvent temporaire, liée à un événement précis.
+Marques draconiques Les drakéides de Siberys ne portent aucun Marque draconique connu. Leur rôle dépasse les intérêts économiques et politiques des maisons, et ils restent indépendants de toute structure formelle.
+
+"Noms de drakéides
+Les drakéides d’Eberron portent des noms issus de la tradition draconique, souvent transmis par leurs clans ou choisis lors de rites de passage. Ces noms sont généralement courts, puissants et chargés de sens, évoquant la force, l’honneur ou un exploit marquant. Certains drakéides adoptent également des noms communs lorsqu’ils vivent parmi d’autres peuples, tout en conservant leur nom draconique comme marque d’identité profonde.
+Les drakéides accordent une grande importance aux titres et aux épithètes, qui peuvent évoluer au fil de leur vie et refléter leurs accomplissements ou leur rôle au sein de la société.
+Noms masculins drakéides : Arjhan, Balasar, Donaar, Ghesh, Kriv, Medrash, Rhogar, Torinn, Vrak, Zorath
+Noms féminins drakéides : Akra, Biri, Daar, Farideh, Harann, Kava, Mishann, Nala, Perra, Sora
+Titres et épithètes : Flamme-Écarlate, Écaille-de-Fer, Souffle-de-Guerre, Gardien-du-Clan"
+"Traits des drakéides
+Votre personnage drakéide possède les traits suivants."
+"Augmentation de caractéristiques
+Votre Force augmente de 2, et votre Charisme augmente de 1."
+"Âge
+Les drakéides atteignent l’âge adulte vers 15 ans et peuvent vivre jusqu’à 80 ans. Leur croissance est rapide, mais leur maturité émotionnelle s’acquiert souvent par l’épreuve et le combat."
+"Alignement
+Les drakéides sont guidés par un fort sens de l’honneur et de la loyauté. Beaucoup tendent vers des alignements loyaux, bien que leurs valeurs puissent varier selon leur clan, leur culture ou leur expérience personnelle."
+"Taille
+Les drakéides sont grands et puissants, mesurant généralement entre 1,80 et 2,10 mètres. Leur carrure est robuste et couverte d’écailles. Votre taille est Moyenne."
+"Vitesse
+Votre vitesse de déplacement de base est de 9 mètres."
+"Ascendance draconique
+Vous possédez une ascendance liée à un type de dragon, qui détermine l’énergie de votre souffle et votre résistance associée."
+"
+Dragon	Type de dégâts
+Noir	Acide
+Bleu	Foudre
+Vert	Poison
+Rouge	Feu
+Blanc	Froid
+Or	Feu
+Argent	Froid
+Bronze	Foudre
+Cuivre	Acide
+Laiton	Feu"
+"Souffle draconique
+Vous pouvez utiliser une action pour exhaler une énergie destructrice. La forme et le type de dégâts dépendent de votre ascendance draconique.
+Les créatures dans la zone doivent effectuer un jet de sauvegarde (DD = 8 + votre bonus de maîtrise + votre modificateur de Constitution). En cas d’échec, elles subissent des dégâts, ou la moitié en cas de réussite.
+Les dégâts augmentent avec votre niveau. Une fois ce trait utilisé, vous devez terminer un repos court ou long avant de pouvoir l’utiliser à nouveau."
+"Résistance draconique
+Vous avez une résistance au type de dégâts associé à votre ascendance draconique."
+"Présence imposante
+Votre héritage draconique inspire le respect ou la crainte. Vous gagnez la maîtrise de la compétence Intimidation ou Persuasion (au choix)."
+"Langues
+Vous pouvez parler, lire et écrire le commun et le draconique."

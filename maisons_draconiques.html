@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maisons Draconiques — Eberron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+  <div id="nav-container"></div>
+
+  <header>
+    <div class="eyebrow">Eberron — Organisations</div>
+    <h1>Maisons Draconiques</h1>
+    <p class="subtitle">Guildes du sang, pouvoirs du dragon</p>
+  </header>
+
+  <div class="intro">
+    <p>Les Maisons draconiques sont des dynasties dont certains membres manifestent des <strong style="color:var(--text-main);font-style:normal">Marques du Dragon</strong> — des sceaux mystiques héréditaires conférant des pouvoirs uniques. Ni nations ni simples guildes, leur influence économique, politique et magique dépasse souvent celle des royaumes de Khorvaire.</p>
+    <p>Chaque Maison est spécialisée dans un domaine précis et fonctionne comme une guilde transnationale, régie par des règles strictes de <strong style="color:var(--text-main);font-style:normal">neutralité politique</strong> et de concurrence contrôlée.</p>
+  </div>
+
+  <div class="section-label">Organisation</div>
+  <div class="org-grid">
+    <div class="org-card">
+      <div class="o-label">Gouvernance</div>
+      <div class="o-text">Chaque Maison est dirigée par un <strong>conseil familial</strong> composé des membres les plus influents de la lignée.</div>
+    </div>
+    <div class="org-card">
+      <div class="o-label">Accord fondateur</div>
+      <div class="o-text">Toutes les Maisons respectent un pacte ancien <strong>interdisant toute prise de pouvoir politique directe</strong>.</div>
+    </div>
+    <div class="org-card">
+      <div class="o-label">Relations inter-maisons</div>
+      <div class="o-text">Alliances fréquentes, rivalité constante — rarement ouverte. L'intérêt de la Maison prime toujours.</div>
+    </div>
+    <div class="org-card">
+      <div class="o-label">Influence réelle</div>
+      <div class="o-text">Le contrôle des <strong>infrastructures vitales</strong> (routes, banques, soins, communications) leur confère un pouvoir considérable.</div>
+    </div>
+  </div>
+
+  <div class="section-label">Les treize Maisons</div>
+  <div class="houses-grid">
+
+    <!-- Cannith -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">🛠️</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Cannith</div>
+          <div class="house-marque">Marque de la Fabrication</div>
+          <div class="house-peuple">Humains</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Cœur industriel de Khorvaire — armes, armures, objets magiques et merveilles technologiques. Créatrice des Forgés, elle porte encore le poids moral de cet héritage.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Ingénieurs, inventeurs, pragmatiques</span></div>
+          <div class="meta-pill">Rôle : <span>Équipement, intrigues industrielles</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Artisan de la Maison</div>
+          <ul class="avantage-list">
+            <li>Maîtrise d'un <strong>outil d'artisan supplémentaire</strong></li>
+            <li>1×/repos long : <strong>coût de fabrication réduit de moitié</strong> (objet non magique ou magique commun)</li>
+            <li>Avantage aux tests d'<strong>Intelligence (Arcanes ou Investigation)</strong> liés aux objets</li>
+          </ul>
+        </div>
+        <div class="conflict-note">⚠ Maison divisée en factions rivales depuis la Guerre de la Marque</div>
+      </div>
+    </div>
+
+    <!-- Deneith -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">🛡️</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Deneith</div>
+          <div class="house-marque">Marque de la Sentinelle</div>
+          <div class="house-peuple">Humains</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Fournisseur de soldats, gardes et arbitres impartiaux. Garante de nombreux contrats militaires et juridiques à travers Khorvaire.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Discipline, honneur, loyauté</span></div>
+          <div class="meta-pill">Rôle : <span>Mercenaires, gardes du corps</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Garde sous Contrat</div>
+          <ul class="avantage-list">
+            <li>Maîtrise d'une <strong>arme martiale</strong> ou des <strong>armures intermédiaires</strong></li>
+            <li>1×/repos long : réaction — <strong>+2 CA à un allié adjacent</strong> contre une attaque</li>
+          </ul>
+        </div>
+        <div class="conflict-note">Neutralité stricte, même face aux royaumes</div>
+      </div>
+    </div>
+
+    <!-- Lyrandar -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">🌩️</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Lyrandar</div>
+          <div class="house-marque">Marque de la Tempête</div>
+          <div class="house-peuple">Demi-elfes</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Maîtres des vents et des flots. Leur flotte de vaisseaux élémentaires est essentielle au commerce moderne de Khorvaire.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Liberté, aventure, prestige</span></div>
+          <div class="meta-pill">Rôle : <span>Voyages, exploration, commerce</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Navigateur Élémentaire</div>
+          <ul class="avantage-list">
+            <li>Maîtrise de <strong>Véhicules (air ou eau)</strong></li>
+            <li>Avantage aux tests de <strong>Survie</strong> liés à la météo ou à la navigation</li>
+            <li>1×/repos long : ignorer le terrain difficile dû au vent ou à la mer pendant <strong>1 minute</strong></li>
+          </ul>
+        </div>
+        <div class="conflict-note">Forte identité familiale et maritime</div>
+      </div>
+    </div>
+
+    <!-- Orien -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">🛤️</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Orien</div>
+          <div class="house-marque">Marque du Passage</div>
+          <div class="house-peuple">Humains</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Gestionnaire des routes commerciales et du rail de foudre. Orien relie les nations et maintient la circulation des biens et des informations.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Fiabilité, efficacité, réseau</span></div>
+          <div class="meta-pill">Rôle : <span>Transport, convois, sabotage</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Messager de la Route</div>
+          <ul class="avantage-list">
+            <li><strong>+1,5 m de vitesse</strong></li>
+            <li>1×/repos long : <strong>relance</strong> d'un jet lié au déplacement, à la poursuite ou au voyage</li>
+          </ul>
+        </div>
+        <div class="conflict-note">⚠ Rivalité avec la Maison Lyrandar</div>
+      </div>
+    </div>
+
+    <!-- Sivis -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">✉️</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Sivis</div>
+          <div class="house-marque">Marque de l'Écriture</div>
+          <div class="house-peuple">Gnomes</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Pilier administratif de Khorvaire. Contrôle les communications officielles, les contrats légaux et les messages magiques à travers tout le continent.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Précision, neutralité, secret</span></div>
+          <div class="meta-pill">Rôle : <span>Espionnage, falsification, diplomatie</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Autorité Contractuelle</div>
+          <ul class="avantage-list">
+            <li>Maîtrise d'un <strong>outil de calligraphie</strong> ou d'une langue supplémentaire</li>
+            <li>Avantage aux tests de <strong>Persuasion</strong> lors de négociations officielles</li>
+            <li>1×/repos long : <strong>authentifiez un document</strong> sans test (hors magie majeure)</li>
+          </ul>
+        </div>
+        <div class="conflict-note">Influence discrète mais omniprésente</div>
+      </div>
+    </div>
+
+    <!-- Jorasco -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">💉</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Jorasco</div>
+          <div class="house-marque">Marque de la Guérison</div>
+          <div class="house-peuple">Halfelins</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Fournisseur de soins magiques et médicaux à grande échelle. Ses services sont indispensables — mais ont toujours un coût.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Compassion pragmatique</span></div>
+          <div class="meta-pill">Rôle : <span>Soins, dilemmes moraux</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Médecin de la Maison</div>
+          <ul class="avantage-list">
+            <li>Maîtrise du <strong>kit de guérisseur</strong></li>
+            <li>Soins avec le kit : PV supplémentaires égaux au <strong>bonus de maîtrise</strong></li>
+            <li>1×/repos long : <strong>stabilisez automatiquement</strong> toutes les créatures inconscientes à 3 m</li>
+          </ul>
+        </div>
+        <div class="conflict-note">Neutralité maintenue même face à la souffrance</div>
+      </div>
+    </div>
+
+    <!-- Phiarlan -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">🎭</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Phiarlan</div>
+          <div class="house-marque">Marque de l'Ombre</div>
+          <div class="house-peuple">Elfes</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Derrière les masques et les scènes se cache un réseau d'espions redoutable. Phiarlan mêle spectacle et renseignement avec une élégance calculée.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Élégance, secret, tradition</span></div>
+          <div class="meta-pill">Rôle : <span>Intrigues, infiltration, manipulation</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Masque de Scène</div>
+          <ul class="avantage-list">
+            <li>Maîtrise de <strong>Représentation</strong> ou <strong>Tromperie</strong></li>
+            <li>1×/repos long : avantage à un jet de <strong>Discrétion ou Persuasion</strong> après un changement d'identité</li>
+          </ul>
+        </div>
+        <div class="conflict-note">⚠ Scission historique avec la Maison Thuranni</div>
+      </div>
+    </div>
+
+    <!-- Thuranni -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">🗡️</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Thuranni</div>
+          <div class="house-marque">Marque de l'Ombre</div>
+          <div class="house-peuple">Elfes</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Plus froide et directe que Phiarlan, Thuranni vend la mort avec précision et discrétion. Aucune fioritures — seulement l'efficacité.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Efficacité, silence, loyauté interne</span></div>
+          <div class="meta-pill">Rôle : <span>Assassins, contrats dangereux</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Lame Silencieuse</div>
+          <ul class="avantage-list">
+            <li>Maîtrise de <strong>Discrétion</strong></li>
+            <li>1×/repos long : attaque contre une cible surprise — <strong>dégâts bonus = bonus de maîtrise</strong></li>
+          </ul>
+        </div>
+        <div class="conflict-note">⚠ Relations tendues avec toutes les Maisons</div>
+      </div>
+    </div>
+
+    <!-- Medani -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">🔍</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Medani</div>
+          <div class="house-marque">Marque de la Détection</div>
+          <div class="house-peuple">Demi-elfes</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Spécialistes du danger invisible. Medani excelle dans la prévention des menaces, la détection des complots et le contre-espionnage.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Vigilance, analyse</span></div>
+          <div class="meta-pill">Rôle : <span>Enquêtes, protection de PNJ</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Vigilance Permanente</div>
+          <ul class="avantage-list">
+            <li>Maîtrise d'<strong>Intuition</strong> ou <strong>Investigation</strong></li>
+            <li>Avantage aux jets d'<strong>initiative</strong></li>
+            <li>1×/repos long : forcez un ennemi à <strong>relancer une attaque</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tharashk -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">⛏️</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Tharashk</div>
+          <div class="house-marque">Marque de la Découverte</div>
+          <div class="house-peuple">Demi-orcs</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Tharashk traque personnes, artefacts et ressources rares. Brutale mais redoutablement efficace, elle intègre les traditions guerrières orcs à ses méthodes.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Pragmatique, tribale</span></div>
+          <div class="meta-pill">Rôle : <span>Traques, conflits moraux</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Chasseur de Primes</div>
+          <ul class="avantage-list">
+            <li>Maîtrise de <strong>Survie</strong></li>
+            <li>Avantage pour <strong>pister une créature</strong></li>
+            <li>1×/repos long : marquez une cible — <strong>+1 aux attaques</strong> contre elle pendant 1 minute</li>
+          </ul>
+        </div>
+        <div class="conflict-note">Intégration des traditions et codes d'honneur orcs</div>
+      </div>
+    </div>
+
+    <!-- Vadalis -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">🐾</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Vadalis</div>
+          <div class="house-marque">Marque du Dressage</div>
+          <div class="house-peuple">Humains</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Vadalis élève et modifie des créatures pour le travail, la guerre ou le prestige. La frontière entre élevage et monstruosité y est souvent floue.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Innovation biologique</span></div>
+          <div class="meta-pill">Rôle : <span>Créatures étranges, dilemmes éthiques</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Manipulateur de Créatures</div>
+          <ul class="avantage-list">
+            <li>Maîtrise de <strong>Dressage</strong></li>
+            <li>Les bêtes non hostiles ont un <strong>désavantage</strong> pour vous attaquer au premier round</li>
+            <li>1×/repos long : donnez à une bête alliée <strong>avantage à un jet</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kundarak -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">🏦</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Kundarak</div>
+          <div class="house-marque">Marque de la Protection</div>
+          <div class="house-peuple">Nains</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Gardienne des richesses et des secrets. Un coffre Kundarak est synonyme d'inviolabilité — leur neutralité absolue est leur garantie la plus précieuse.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Prudence, fiabilité</span></div>
+          <div class="meta-pill">Rôle : <span>Banques, cambriolages, secrets</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Gardien des Coffres</div>
+          <ul class="avantage-list">
+            <li>Maîtrise des <strong>outils de voleur</strong> ou de <strong>maçon</strong></li>
+            <li>Avantage pour <strong>détecter pièges et serrures</strong></li>
+            <li>1×/repos long : <strong>annulez un coup critique</strong></li>
+          </ul>
+        </div>
+        <div class="conflict-note">Neutralité absolue — aucune exception</div>
+      </div>
+    </div>
+
+    <!-- Ghallanda -->
+    <div class="house-card">
+      <div class="house-header">
+        <div class="house-emoji">🍻</div>
+        <div class="house-header-text">
+          <div class="house-name">Maison Ghallanda</div>
+          <div class="house-marque">Marque de l'Hospitalité</div>
+          <div class="house-peuple">Halfelins</div>
+        </div>
+      </div>
+      <div class="house-body">
+        <div class="house-desc">Ses auberges et refuges sont des havres neutres reconnus par tous. Derrière l'accueil chaleureux se cache un réseau d'informations informel mais redoutablement bien renseigné.</div>
+        <div class="house-meta">
+          <div class="meta-pill">Culture : <span>Accueil, communauté</span></div>
+          <div class="meta-pill">Rôle : <span>Rencontres, intrigues sociales</span></div>
+        </div>
+        <div class="house-avantage">
+          <div class="avantage-title">Avantage — Hôte de Confiance</div>
+          <ul class="avantage-list">
+            <li>Maîtrise de <strong>Persuasion</strong></li>
+            <li>Accès garanti à un <strong>abri et nourriture sûrs</strong> en zone civilisée</li>
+            <li>1×/repos long : accordez à un allié <strong>avantage à un jet de sauvegarde</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.houses-grid -->
+
+  <div class="ornament">— ⬥ —</div>
+
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
