@@ -9,43 +9,52 @@
 
 ### 0.1 Schéma Supabase (tables séparées)
 
-- [ ] Supprimer / remplacer le schéma de test actuel (`supabase_schema.sql`)
-- [ ] Créer la table `personnages` (données principales + tous les champs scalaires)
+- [x] Supprimer / remplacer le schéma de test actuel (`supabase_schema.sql`)
+- [x] Créer la table `personnages` (données principales + tous les champs scalaires)
   - Identité : `nom`, `classe`, `niveau`, `race`, `age`, `taille_cm`, `poids_kg`, `dieu`, `devise`, `xp`, `alignement`
   - Déplacement : `vitesse_base_m`, `vitesse_nage_m`, `vitesse_escalade_m`, `vitesse_vol_m`
   - Armure : `type_armure`, `bonus_armure`, `bouclier`, `bonus_armure_magie`, `bonus_armure_autre`
-  - PV : `type_de_vie`, `pv_actuel`, `pv_temporaires`, `des_de_vie_depenses`, `jds_succes`, `jds_echecs`
+  - PV : `type_de_vie`, `pv_max`, `pv_actuel`, `pv_temporaires`, `des_de_vie_depenses`, `jds_succes`, `jds_echecs`
   - Sorts : `caracteristique_incantation`
   - Divers : `inspiration`, `traits_raciaux`, `maitrises_langues`, `trait1`, `trait2`, `ideal`, `lien`, `defaut`, `historique`, `notes`
   - Clé étrangère : `user_id uuid FK → auth.users`
-- [ ] Créer la table `caracteristiques` (6 stats + maîtrises JdS)
+- [x] Créer la table `profils` (rôle MJ / joueur, liée à auth.users)
+- [x] Créer la table `caracteristiques` (6 stats + maîtrises JdS)
   - `force`, `intelligence`, `sagesse`, `dexterite`, `constitution`, `charisme`
   - `maitrise_jds_*` (6 booléens, un par stat)
-- [ ] Créer la table `competences` (18 lignes par personnage)
+- [x] Créer la table `competences` (18 lignes par personnage)
   - `personnage_id`, `nom`, `maitrise boolean`, `expertise boolean`
-- [ ] Créer la table `armes`
+- [x] Créer la table `armes`
   - `nom`, `caracteristique`, `maitrise`, `bonus_magie`, `bonus_special`, `de_degats`, `bonus_degats_special`, `type_degats`
-- [ ] Créer la table `emplacements_sorts` (niveaux 0 à 9)
+- [x] Créer la table `emplacements_sorts` (niveaux 0 à 9)
   - `personnage_id`, `niveau_sort int`, `max_emplacements int`, `emplacements_utilises int`
-- [ ] Créer la table `sorts`
+- [x] Créer la table `sorts`
   - `nom`, `niveau_sort`, `prepare`, `temps_incantation`, `duree`, `portee`, `concentration`, `composante_v`, `composante_s`, `composante_m`, `description`
-- [ ] Créer la table `capacites`
+- [x] Créer la table `capacites`
   - `nom`, `max_utilisations`, `utilisations_actuelles`, `rechargement`, `action_requise`, `description`
-- [ ] Créer la table `equipement`
+- [x] Créer la table `equipement`
   - `nom`, `type` (equipement / possession / magique), `description`, `quantite`
-- [ ] Créer la table `monnaie`
+- [x] Créer la table `monnaie`
   - `pp`, `po`, `pe`, `pa`, `pc`
-- [ ] Activer **Realtime** sur la table `personnages` dans l'interface Supabase
-- [ ] Vérifier les clés étrangères (`personnage_id` dans toutes les tables secondaires)
-- [ ] Mettre à jour `supabase_schema.sql` avec le schéma complet
+- [x] Index sur toutes les clés étrangères + `user_id`
+- [x] Trigger `updated_at` sur `personnages`
+- [x] Trigger `init_personnage` : crée automatiquement les lignes enfants à chaque INSERT
+- [x] Trigger `create_profil_on_signup` : crée un profil à l'inscription Auth
+- [x] Policies RLS de développement (accès total `USING (true)`)
+- [x] Policies RLS de production pré-écrites en commentaire (pour Phase 5)
+- [x] Données de démonstration (3 personnages + caractéristiques + monnaie)
+- [x] Créer `supabase_config.js` — module ES partagé exportant le client Supabase
+- [ ] **ACTION MANUELLE** — Exécuter `supabase_schema.sql` dans l'éditeur SQL Supabase
+- [ ] **ACTION MANUELLE** — Activer **Realtime** sur `personnages` : Database › Replication › Source Tables
 
 ### 0.2 Configuration Supabase Auth
 
-- [ ] Activer le provider **Email/Password** dans Authentication > Providers
-- [ ] Désactiver la confirmation par email (optionnel, pour faciliter les tests)
-- [ ] Créer les comptes de test : 1 compte MJ + 2–3 comptes joueurs
-- [ ] Créer un personnage de test par compte joueur dans la DB
-- [ ] Laisser le RLS **désactivé** pour la phase de développement (activer en Phase 5)
+- [ ] **ACTION MANUELLE** — Activer le provider **Email/Password** : Authentication › Providers
+- [ ] **ACTION MANUELLE** — Désactiver la confirmation par email (tests) : Authentication › Email Templates › Confirm email → OFF
+- [ ] **ACTION MANUELLE** — Créer le compte MJ via Authentication › Users › Invite
+- [ ] **ACTION MANUELLE** — Dans la table `profils`, passer `is_mj = true` pour le compte MJ
+- [ ] **ACTION MANUELLE** — Créer 2–3 comptes joueurs test via Authentication › Users › Invite
+- [ ] **ACTION MANUELLE** — Assigner les `user_id` des joueurs dans la table `personnages` (UPDATE)
 
 ---
 
