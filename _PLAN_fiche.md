@@ -49,10 +49,14 @@
 
 ### 0.2 Configuration Supabase Auth
 
-- [ ] **ACTION MANUELLE** — Activer le provider **Email/Password** : Authentication › Providers
-- [ ] **ACTION MANUELLE** — Désactiver la confirmation par email (tests) : Authentication › Email Templates › Confirm email → OFF
-- [ ] **ACTION MANUELLE** — Créer le compte MJ via Authentication › Users › Invite
-- [ ] **ACTION MANUELLE** — Dans la table `profils`, passer `is_mj = true` pour le compte MJ
+- [x] **ACTION MANUELLE** — Activer le provider **Email/Password** : Authentication › Providers
+- [x] **ACTION MANUELLE** — Désactiver la confirmation par email (tests) : Authentication › Providers › Supabase Auth > User Signups > Confirm email → OFF
+- [x] **ACTION MANUELLE** — Authentication › URL Configuration : Site URL : https://reiago.github.io/Campagne-en-Eberron/
+- [x] **ACTION MANUELLE** — Authentication › Redirect URLs → ajouter ces deux entrées (une pour la prod, une pour les tests en local) :
+  - https://reiago.github.io/Campagne-en-Eberron/
+  - http://localhost:8000/
+- [x] **ACTION MANUELLE** — Créer le compte MJ via Authentication › Users › Invite
+- [x] **ACTION MANUELLE** — Dans la table `profils`, passer `is_mj = true` pour le compte MJ
 - [ ] **ACTION MANUELLE** — Créer 2–3 comptes joueurs test via Authentication › Users › Invite
 - [ ] **ACTION MANUELLE** — Assigner les `user_id` des joueurs dans la table `personnages` (UPDATE)
 
