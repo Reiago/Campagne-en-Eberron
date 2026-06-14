@@ -44,8 +44,8 @@
 - [x] Policies RLS de production pré-écrites en commentaire (pour Phase 5)
 - [x] Données de démonstration (3 personnages + caractéristiques + monnaie)
 - [x] Créer `supabase_config.js` — module ES partagé exportant le client Supabase
-- [ ] **ACTION MANUELLE** — Exécuter `supabase_schema.sql` dans l'éditeur SQL Supabase
-- [ ] **ACTION MANUELLE** — Activer **Realtime** sur `personnages` : Database › Replication › Source Tables
+- [x] **ACTION MANUELLE** — Exécuter `supabase_schema.sql` dans l'éditeur SQL Supabase
+- [x] **ACTION MANUELLE** — Activer **Realtime** sur `personnages` : Database › Replication › Source Tables
 
 ### 0.2 Configuration Supabase Auth
 

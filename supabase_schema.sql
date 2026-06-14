@@ -492,9 +492,9 @@ CREATE POLICY "prod_profils" ON profils
 
 -- ══════════════════════════════════════════════════════════════
 -- REALTIME
--- À activer manuellement dans le tableau de bord Supabase :
--- Database › Replication › cocher "personnages" dans Source Tables
 -- ══════════════════════════════════════════════════════════════
+
+ALTER PUBLICATION supabase_realtime ADD TABLE personnages;
 
 
 -- ══════════════════════════════════════════════════════════════
