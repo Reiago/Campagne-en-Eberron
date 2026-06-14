@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Supabase — Eberron Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Config banner ── */
+    .config-banner {
+      background: rgba(139,58,42,0.15);
+      border: 1px solid rgba(139,58,42,0.5);
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 2rem;
+      font-size: 14px;
+      color: #c87a6a;
+    }
+    .config-banner strong { color: #e0907e; display: block; margin-bottom: 0.4rem; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .config-banner code { background: rgba(0,0,0,0.3); border-radius: 2px; padding: 1px 6px; font-size: 12px; }
+
+    /* ── Status badge ── */
+    #status {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+    #status.ok      { background: rgba(60,120,60,0.2); border: 1px solid rgba(60,180,60,0.3); color: #7ec87e; }
+    #status.error   { background: rgba(139,58,42,0.2); border: 1px solid rgba(200,80,60,0.3); color: #c87a6a; }
+    #status.loading { background: rgba(201,168,108,0.1); border: 1px solid rgba(201,168,108,0.25); color: var(--gold-dim); }
+
+    /* ── Form ── */
+    .form-card {
+      background: var(--stone-mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    @media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field.full { grid-column: 1 / -1; }
+    label {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    input, textarea, select {
+      background: var(--stone);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-main);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 15px;
+      padding: 8px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--gold-dim);
+    }
+    textarea { resize: vertical; min-height: 80px; }
+    select option { background: var(--stone); }
+
+    /* ── Buttons ── */
+    .btn-row { display: flex; gap: 10px; justify-content: flex-end; }
+    button {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 9px 20px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 3px;
+      background: transparent;
+      color: var(--gold);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    button:hover { background: rgba(201,168,108,0.12); }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    button.primary { background: rgba(201,168,108,0.15); }
+    button.danger { border-color: rgba(139,58,42,0.6); color: #c87a6a; }
+    button.danger:hover { background: rgba(139,58,42,0.15); }
+
+    /* ── Results table ── */
+    .results-card {
+      background: var(--stone-mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .results-title {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+    }
+    #count { font-size: 13px; color: var(--text-dim); }
+    #table-wrap { overflow-x: auto; }
+    #result-table { margin: 0; }
+    #result-table th:last-child, #result-table td:last-child { text-align: right; }
+    .del-btn {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-width: 1px;
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 2.5rem;
+      color: var(--text-dim);
+      font-style: italic;
+      font-size: 15px;
+    }
+
+    /* ── Notification ── */
+    #notif {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 18px;
+      border-radius: 3px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    #notif.show { opacity: 1; }
+    #notif.success { background: rgba(60,120,60,0.9); color: #b8f0b8; }
+    #notif.fail    { background: rgba(139,58,42,0.9); color: #f0b8b8; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="nav-container"></div>
+
+  <header>
+    <div class="eyebrow">Configuration</div>
+    <h1>Test Supabase</h1>
+    <p class="subtitle">Vérification de la connexion à la base de données <em>Eberron_Project</em></p>
+  </header>
+
+  <!-- Config reminder -->
+  <div class="config-banner" id="config-warning">
+    <strong>Action requise — Configurer les credentials</strong>
+    Remplacez les deux constantes en haut du script de cette page :<br />
+    <code>SUPABASE_URL</code> et <code>SUPABASE_ANON_KEY</code> avec les valeurs
+    disponibles dans <strong>Project Settings › API</strong> de votre tableau de bord Supabase.
+  </div>
+
+  <!-- Connection status -->
+  <span id="status" class="loading">Connexion en cours…</span>
+
+  <!-- Add form -->
+  <div class="section-label">Ajouter un personnage</div>
+  <div class="form-card">
+    <div class="form-grid">
+      <div class="field">
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" placeholder="ex. Kael d'Cannith" />
+      </div>
+      <div class="field">
+        <label for="race">Race</label>
+        <select id="race">
+          <option value="">— Choisir —</option>
+          <option>Changelin</option>
+          <option>Demi-Elfe</option>
+          <option>Demi-Orc</option>
+          <option>Drakeide</option>
+          <option>Elfe</option>
+          <option>Féral</option>
+          <option>Forgelier</option>
+          <option>Gnome</option>
+          <option>Hobbit</option>
+          <option>Humain</option>
+          <option>Kalashtar</option>
+          <option>Nain</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="classe">Classe</label>
+        <input type="text" id="classe" placeholder="ex. Artificier" />
+      </div>
+      <div class="field full">
+        <label for="notes">Notes</label>
+        <textarea id="notes" placeholder="Description du personnage…"></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="primary" id="btn-add" onclick="addPersonnage()">Ajouter</button>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="section-label">Personnages enregistrés</div>
+  <div class="results-card">
+    <div class="results-header">
+      <span class="results-title">Base de données</span>
+      <span id="count">—</span>
+    </div>
+    <div id="table-wrap">
+      <div class="empty-state" id="empty">Chargement…</div>
+      <table id="result-table" style="display:none">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Race</th>
+            <th>Classe</th>
+            <th>Notes</th>
+            <th>Ajouté le</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="ornament">— ⬥ —</div>
+</div>
+
+<div id="notif"></div>
+
+<script type="module">
+  // ── CONFIGURATION ────────────────────────────────────────
+  // Remplacer ces deux valeurs avec celles de Project Settings › API
+  const SUPABASE_URL      = 'https://prbpszazjxomjgrjheuz.supabase.co/rest/v1/';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InByYnBzemF6anhvcmprZ3JqaGV1eiIsInJpZCI6InNvdXJjZV9vYXV0aF9hZjM5ZjY1ZSIsImlhdCI6MTczOTI4MzY2NCwiZXhwIjoyMDUzODU5NjY0fQ.x8q8h4FZp0HJ80xVn2P2m-XaYRr1x7D8zKxbyQl-1N4';
+  // ─────────────────────────────────────────────────────────
+
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const statusEl  = document.getElementById('status');
+  const emptyEl   = document.getElementById('empty');
+  const tableEl   = document.getElementById('result-table');
+  const tbodyEl   = document.getElementById('tbody');
+  const countEl   = document.getElementById('count');
+  const notifEl   = document.getElementById('notif');
+  const btnAdd    = document.getElementById('btn-add');
+  const configBanner = document.getElementById('config-warning');
+
+  // ── Hide config banner if credentials look set ──
+  if (SUPABASE_URL !== 'VOTRE_SUPABASE_URL') {
+    configBanner.style.display = 'none';
+  }
+
+  // ── Notification helper ──
+  function notify(msg, type = 'success') {
+    notifEl.textContent = msg;
+    notifEl.className = `show ${type}`;
+    setTimeout(() => { notifEl.className = ''; }, 2800);
+  }
+
+  // ── Load data ──
+  async function loadPersonnages() {
+    const { data, error } = await supabase
+      .from('personnages')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      statusEl.className = 'error';
+      statusEl.textContent = 'Connexion échouée — ' + error.message;
+      emptyEl.textContent = 'Impossible de charger les données.';
+      return;
+    }
+
+    statusEl.className = 'ok';
+    statusEl.textContent = 'Connecté';
+    countEl.textContent = `${data.length} entrée${data.length !== 1 ? 's' : ''}`;
+
+    if (data.length === 0) {
+      emptyEl.textContent = 'Aucun personnage enregistré.';
+      emptyEl.style.display = '';
+      tableEl.style.display = 'none';
+      return;
+    }
+
+    emptyEl.style.display = 'none';
+    tableEl.style.display = '';
+    tbodyEl.innerHTML = data.map(p => `
+      <tr>
+        <td><strong>${esc(p.nom)}</strong></td>
+        <td>${esc(p.race ?? '—')}</td>
+        <td>${esc(p.classe ?? '—')}</td>
+        <td>${esc(p.notes ?? '—')}</td>
+        <td>${new Date(p.created_at).toLocaleDateString('fr-FR')}</td>
+        <td><button class="btn danger del-btn" onclick="window._del('${p.id}')">Suppr.</button></td>
+      </tr>
+    `).join('');
+  }
+
+  // ── Add ──
+  window.addPersonnage = async function() {
+    const nom    = document.getElementById('nom').value.trim();
+    const race   = document.getElementById('race').value;
+    const classe = document.getElementById('classe').value.trim();
+    const notes  = document.getElementById('notes').value.trim();
+
+    if (!nom) { notify('Le nom est requis.', 'fail'); return; }
+
+    btnAdd.disabled = true;
+    const { error } = await supabase.from('personnages').insert({ nom, race: race || null, classe: classe || null, notes: notes || null });
+    btnAdd.disabled = false;
+
+    if (error) { notify('Erreur : ' + error.message, 'fail'); return; }
+
+    document.getElementById('nom').value    = '';
+    document.getElementById('race').value   = '';
+    document.getElementById('classe').value = '';
+    document.getElementById('notes').value  = '';
+    notify('Personnage ajouté !');
+    loadPersonnages();
+  };
+
+  // ── Delete ──
+  window._del = async function(id) {
+    const { error } = await supabase.from('personnages').delete().eq('id', id);
+    if (error) { notify('Erreur : ' + error.message, 'fail'); return; }
+    notify('Supprimé.');
+    loadPersonnages();
+  };
+
+  // ── Escape helper ──
+  function esc(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ── Init ──
+  loadPersonnages();
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

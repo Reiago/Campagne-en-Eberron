@@ -47,7 +47,7 @@ La fiche se décompose en **12 blocs**, avec plusieurs types d'interactivité à
 ---
 
 ### 💪 BLOC 2 — Caractéristiques (6 stats)
-Pour chacune : **valeur**, **modificateur (calculé)**, **jet de sauvegarde (case à cocher)**
+Pour chacune : **valeur**, **bonus (calculé)**, **jet de sauvegarde (calculé)**
 - Force
 - Intelligence
 - Sagesse
@@ -90,8 +90,7 @@ Pour chacune : **valeur**, **modificateur (calculé)**, **jet de sauvegarde (cas
 | Type de dé (d6/d8/d10…) | Sélecteur |
 | PV de base | Nombre |
 | PV total | Calculé |
-| PV temporaires | Nombre |
-| **Tracker PV actuel** | Numérique interactif (0–131) |
+| PV actuel | Nombre |
 | Repos courts (cases) | Cases à cocher |
 | JDS succès (3 cases) | Cases à cocher |
 | JDS échecs (3 cases) | Cases à cocher |
