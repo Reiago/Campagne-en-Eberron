@@ -6,10 +6,19 @@
 # Objectif - Fiches de personnage pour D&D consultable et modifiable en ligne
 - Hébergement sur Github pages, https://github.com/Reiago/Campagne-en-Eberron
 - Base de donnée sur Supabase, nom de la base 'Eberron_Project'
+	- Une page de test a été configurée 'test_supabase.html' test OK
 - Interface pour PC, Téléphone
 - Les fiches de personnage sont la première pierre du site prévoir un portail pour accéder à d'autre service. Cartes, images, compte rendu etc ...
+- La page index.html doit servir de portail.
+- Pour se connecter à leurs fiches les joueurs devront se connecter avec leur adresse mail et un mot de passe qu'ils choissiront
+	- Le lien fiche de personnage les envois directement sur leur fiche
+- Le maitre du jeu avec son mail et son mot de passe lui devra avoir accés à toutes les fiches de personnage
+	- Le lien fiche de personnage envois le MJ sur une page lui permettant de sélectionner quel personnage il veut afficher
 
 - Les fiches de personnage sont composées de différents blocs ou pages. Le format du téléphone ne permettant pas de tout afficher en même temps. Il faut prévoir un système de navigation intuitif prennant peu de place à l'écran comme un menu burger dépliable par exemple.
+- Sur la ou les pages des fiches de personnages ne pas utiliser la navigation globale du site.
+	- Un menu discret en haut sur toute la largeur doit permettre de switcher entre les Blocs de la fiche de personnage
+- Optimiser pour un affichage sur télélphone en 16:9
 
 ## Les données
 - Supabase sera utilisé pour gérer les données des joueurs, des équipements etc ...
