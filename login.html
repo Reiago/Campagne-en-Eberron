@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion — Eberron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold:         #C9A86C;
+      --gold-light:   #E8D09A;
+      --gold-dim:     #7A6035;
+      --stone:        #1C1A17;
+      --stone-mid:    #252218;
+      --stone-light:  #2E2A21;
+      --stone-pale:   #3A342A;
+      --text-main:    #EDE5D0;
+      --text-muted:   #A8997C;
+      --text-dim:     #6B6050;
+      --red-accent:   #8B3A2A;
+      --border:       rgba(201,168,108,0.18);
+      --border-strong:rgba(201,168,108,0.4);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--stone);
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(201,168,108,0.07) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A86C' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--text-main);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+    }
+
+    .login-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 0.25rem;
+    }
+
+    .login-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .ornament {
+      text-align: center;
+      color: var(--gold-dim);
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      background: var(--stone-light);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-main);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1rem;
+      padding: 0.6rem 0.8rem;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--gold-dim);
+    }
+
+    input[type="email"]::placeholder,
+    input[type="password"]::placeholder {
+      color: var(--text-dim);
+    }
+
+    .btn-login {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      color: var(--gold);
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .btn-login:hover:not(:disabled) {
+      background: rgba(201,168,108,0.1);
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+
+    .btn-login:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .error-msg {
+      display: none;
+      background: rgba(139,58,42,0.2);
+      border: 1px solid rgba(139,58,42,0.5);
+      border-radius: 2px;
+      color: #D4806A;
+      font-size: 0.9rem;
+      padding: 0.6rem 0.8rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .error-msg.visible { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="login-eyebrow">Archives du Khorvaire</div>
+  <h1 class="login-title">Eberron</h1>
+  <p class="login-subtitle">Accès réservé aux aventuriers</p>
+  <div class="ornament">— ⬥ —</div>
+
+  <form id="login-form">
+    <div class="form-group">
+      <label for="email">Identifiant</label>
+      <input type="email" id="email" placeholder="votre@email.com" required autocomplete="email" />
+    </div>
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password" />
+    </div>
+    <button type="submit" class="btn-login" id="btn-submit">Entrer dans les archives</button>
+    <div class="error-msg" id="error-msg"></div>
+  </form>
+</div>
+
+<script type="module">
+  import { login, getCurrentUser, isMJ } from './auth.js';
+
+  // Redirection si déjà connecté
+  (async () => {
+    const user = await getCurrentUser();
+    if (user) {
+      const mj = await isMJ(user);
+      window.location.href = mj ? 'mj.html' : 'fiche.html';
+    }
+  })();
+
+  const form = document.getElementById('login-form');
+  const btn  = document.getElementById('btn-submit');
+  const err  = document.getElementById('error-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    err.classList.remove('visible');
+    btn.disabled = true;
+    btn.textContent = 'Connexion…';
+
+    const email    = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    try {
+      await login(email, password);
+    } catch (error) {
+      err.textContent = error.message === 'Invalid login credentials'
+        ? 'Identifiants incorrects. Vérifiez votre email et mot de passe.'
+        : error.message;
+      err.classList.add('visible');
+      btn.disabled = false;
+      btn.textContent = 'Entrer dans les archives';
+    }
+  });
+</script>
+</body>
+</html>

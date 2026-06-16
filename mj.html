@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maître du Jeu — Eberron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .mj-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .mj-header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .auth-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-logout:hover {
+      border-color: var(--gold-dim);
+      color: var(--gold);
+    }
+
+    .btn-portail {
+      display: inline-block;
+      color: var(--text-muted);
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+
+    .btn-portail:hover { color: var(--gold); }
+    .btn-portail::before { content: '← '; }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .perso-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .perso-card {
+      background: var(--stone-mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .perso-card:hover {
+      border-color: var(--gold-dim);
+      background: var(--stone-light);
+    }
+
+    .perso-nom {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .perso-info {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .perso-niveau {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 0.2rem;
+    }
+
+    .loading {
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 1rem 0;
+    }
+
+    .error-msg {
+      color: #D4806A;
+      padding: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="nav-container"></div>
+
+  <div class="mj-header">
+    <h1>Maître du Jeu</h1>
+    <div class="auth-bar" id="auth-bar"></div>
+  </div>
+
+  <a href="index.html" class="btn-portail">Retour au portail</a>
+
+  <div class="section-label">Personnages</div>
+  <div class="perso-grid" id="perso-grid">
+    <p class="loading">Chargement des personnages…</p>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script type="module">
+  import { requireMJ, logout, getCurrentUser } from './auth.js';
+  import { getAllPersonnages } from './db.js';
+
+  const user = await requireMJ();
+  if (!user) throw new Error('Accès refusé');
+
+  // Auth bar
+  const authBar = document.getElementById('auth-bar');
+  authBar.innerHTML = `
+    <span>${user.email}</span>
+    <button class="btn-logout" id="btn-logout">Déconnexion</button>
+  `;
+  document.getElementById('btn-logout').addEventListener('click', logout);
+
+  // Liste des personnages
+  const grid = document.getElementById('perso-grid');
+  try {
+    const personnages = await getAllPersonnages();
+    if (!personnages.length) {
+      grid.innerHTML = '<p class="loading">Aucun personnage trouvé.</p>';
+    } else {
+      grid.innerHTML = personnages.map(p => `
+        <a class="perso-card" href="fiche.html?id=${p.id}">
+          <div class="perso-nom">${p.nom || '(sans nom)'}</div>
+          <div class="perso-info">${p.classe || '—'}${p.race ? ' · ' + p.race : ''}</div>
+          <div class="perso-niveau">Niveau ${p.niveau ?? '?'}</div>
+        </a>
+      `).join('');
+    }
+  } catch (e) {
+    grid.innerHTML = `<p class="error-msg">Erreur : ${e.message}</p>`;
+  }
+</script>
+</body>
+</html>

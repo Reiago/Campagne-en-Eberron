@@ -13,6 +13,7 @@
 <body>
 <div class="container">
   <div id="nav-container"></div>
+  <div id="auth-bar" style="display:flex;align-items:center;justify-content:flex-end;gap:1rem;font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;min-height:1.5rem;"></div>
 
   <header>
     <div class="eyebrow">Encyclopédie</div>
@@ -41,5 +42,18 @@
   <div class="ornament">— ⬥ —</div>
 </div>
 <script src="nav.js"></script>
+<script type="module">
+  import { requireAuth, logout } from './auth.js';
+
+  const user = await requireAuth('login.html');
+  if (!user) throw new Error();
+
+  const bar = document.getElementById('auth-bar');
+  bar.innerHTML = `
+    <span style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;">${user.email}</span>
+    <button onclick="" style="background:transparent;border:1px solid var(--border);border-radius:2px;color:var(--text-muted);cursor:pointer;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.7rem;" id="btn-logout">Déconnexion</button>
+  `;
+  document.getElementById('btn-logout').addEventListener('click', logout);
+</script>
 </body>
 </html>

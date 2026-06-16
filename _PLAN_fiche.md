@@ -67,19 +67,19 @@
 
 ### 1.1 Fichiers de base
 
-- [ ] Créer `auth.js` — module d'authentification partagé
+- [x] Créer `auth.js` — module d'authentification partagé
   - `login(email, password)` → redirige joueur vers fiche ou MJ vers page sélection
   - `logout()` → retour à `login.html`
   - `getCurrentUser()` → retourne l'utilisateur connecté
   - `isMJ(user)` → vérifie si l'utilisateur est le MJ (par email ou rôle en DB)
   - Chargement automatique de la session Supabase au démarrage
-- [ ] Créer `login.html` — page de connexion
+- [x] Créer `login.html` — page de connexion
   - Champ email + mot de passe
   - Bouton "Se connecter"
   - Message d'erreur si échec
   - Redirection automatique si déjà connecté
   - Style thème Eberron (cohérent avec `style.css`)
-- [ ] Créer `db.js` — module CRUD Supabase partagé
+- [x] Créer `db.js` — module CRUD Supabase partagé
   - `getPersonnage(userId)` → charge la fiche du joueur connecté
   - `updatePersonnage(id, data)` → sauvegarde un champ ou bloc
   - `getArmes(personnageId)`, `updateArme(id, data)`, `addArme(data)`, `deleteArme(id)`
@@ -87,7 +87,7 @@
 
 ### 1.2 Portail (`index.html`)
 
-- [ ] Ajouter un lien **"Fiche de personnage"** dans la navigation principale (`nav.html`)
+- [x] Ajouter un lien **"Fiche de personnage"** dans la navigation principale (`nav.html`)
 - [ ] Protéger `index.html` : rediriger vers `login.html` si non connecté
 - [ ] Afficher le nom du joueur connecté + bouton déconnexion dans la nav
 
