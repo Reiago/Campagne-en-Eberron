@@ -93,11 +93,11 @@
 
 ### 1.3 Page sélection MJ
 
-- [ ] Créer `mj.html` — accessible uniquement au MJ
+- [x] Créer `mj.html` — accessible uniquement au MJ
   - Liste de tous les personnages en DB
   - Clic sur un personnage → ouvre `fiche.html?id=<uuid>`
   - Bouton retour au portail
-- [ ] Redirection : si MJ → `mj.html` ; si joueur → `fiche.html` (sa propre fiche)
+- [x] Redirection : si MJ → `mj.html` ; si joueur → `fiche.html` (sa propre fiche)
 
 ---
 
@@ -105,17 +105,17 @@
 
 ### 2.0 Layout de la fiche (`fiche.html` + `fiche.css`)
 
-- [ ] Créer `fiche.html` avec structure de base
+- [x] Créer `fiche.html` avec structure de base
   - Barre de navigation des blocs (fixe en haut, pleine largeur)
   - Menu burger sur mobile pour les 12 blocs
   - Zone de contenu principale (`<main id="bloc-actif">`)
   - Pas de navigation globale du site sur cette page
-- [ ] Créer `fiche.css` — styles spécifiques à la fiche
+- [x] Créer `fiche.css` — styles spécifiques à la fiche
   - Compatible 16:9 mobile en priorité
   - Thème Eberron (gold / stone) cohérent avec le site
   - Cases à cocher stylisées
   - Boutons de lancer de dés
-- [ ] Créer `fiche.js` — logique principale
+- [x] Créer `fiche.js` — logique principale
   - Chargement de la fiche au démarrage (`getPersonnage`)
   - Système de navigation entre blocs (afficher/masquer les sections)
   - Sauvegarde automatique à chaque modification (debounce ~500ms)
@@ -123,69 +123,69 @@
 
 ### 2.1 Moteur de calcul (`calculs.js`)
 
-- [ ] `modificateur(valeur)` → `Math.floor((valeur - 10) / 2)`
-- [ ] `bonusMaitrise(niveau)` → table des niveaux 1-20
-- [ ] `caCalculee(typeArmure, bonusArmure, modDex, bouclier, magie, autre)`
-- [ ] `pvMax(niveau, typeDe, modCon, pvBase)` → somme par niveau
+- [x] `modificateur(valeur)` → `Math.floor((valeur - 10) / 2)`
+- [x] `bonusMaitrise(niveau)` → table des niveaux 1-20
+- [x] `caCalculee(typeArmure, bonusArmure, modDex, bouclier, magie, autre)`
+- [x] `pvMax(niveau, typeDe, modCon, pvBase)` → somme par niveau
 - [ ] `bonusCompetence(nomCarac, valeurCarac, maitrise, expertise, niveau)`
-- [ ] `perceptionPassive(modSagesse, maitrise, niveau)`
+- [x] `perceptionPassive(modSagesse, maitrise, niveau)`
 - [ ] `ddSorts(bonusMaitrise, modCaracIncantation)`
-- [ ] `bonusAttaqueSorts(bonusMaitrise, modCaracIncantation)`
-- [ ] `bonusToucher(modCarac, maitrise, bonusMagie, special, niveau)`
+- [x] `bonusAttaqueSorts(bonusMaitrise, modCaracIncantation)`
+- [x] `bonusToucher(modCarac, maitrise, bonusMagie, special, niveau)`
 - [ ] `sautLongueur(valeurForce, avecElan)` → formule officielle
 - [ ] `sautHauteur(modForce, avecElan)` → formule officielle
 - [ ] `chargeMax(valeurForce)`
 
 ### 2.2 Système de lancer de dés (`des.js`)
 
-- [ ] `lancerDe(nombreFaces)` → `Math.floor(Math.random() * faces) + 1`
-- [ ] `lancerJet(modificateur, label)` → affiche popup/toast `"1d20 + mod = résultat"`
-- [ ] Composant toast/popup de résultat (discret, disparaît après 3s)
-- [ ] Ajouter un bouton 🎲 sur chaque jet clé de la fiche :
-  - [ ] Jets de caractéristique (×6)
-  - [ ] Jets de sauvegarde (×6)
-  - [ ] Compétences (×18)
+- [x] `lancerDe(nombreFaces)` → `Math.floor(Math.random() * faces) + 1`
+- [x] `lancerJet(modificateur, label)` → affiche popup/toast `"1d20 + mod = résultat"`
+- [x] Composant toast/popup de résultat (discret, disparaît après 3s)
+- [x] Ajouter un bouton 🎲 sur chaque jet clé de la fiche :
+  - [x] Jets de caractéristique (×6)
+  - [x] Jets de sauvegarde (×6)
+  - [x] Compétences (×18)
   - [ ] Attaque par arme (×N)
   - [ ] Initiative
 
 ### 2.3 Bloc 1 — Identité du personnage
 
-- [ ] Afficher et rendre éditable : `nom`, `classe`, `niveau`, `race`, `âge`, `taille`, `poids`, `dieu`, `devise`, `xp`, `alignement`
-- [ ] Sélecteur pour l'alignement (9 valeurs)
-- [ ] Sauvegarde automatique à chaque modification
+- [x] Afficher et rendre éditable : `nom`, `classe`, `niveau`, `race`, `âge`, `taille`, `poids`, `dieu`, `devise`, `xp`, `alignement`
+- [x] Sélecteur pour l'alignement (9 valeurs)
+- [x] Sauvegarde automatique à chaque modification
 
 ### 2.4 Bloc 2 — Caractéristiques
 
-- [ ] Afficher les 6 cases de stat (valeur + modificateur calculé)
-- [ ] Modifier la valeur → recalcul immédiat du modificateur
-- [ ] Afficher le bonus de maîtrise (calculé selon `niveau`)
-- [ ] 6 jets de sauvegarde avec case de maîtrise + valeur calculée + bouton 🎲
-- [ ] Afficher l'Initiative (= mod. Dextérité)
-- [ ] Recalcul en cascade si une stat change (compétences, CA, PV…)
+- [x] Afficher les 6 cases de stat (valeur + modificateur calculé)
+- [x] Modifier la valeur → recalcul immédiat du modificateur
+- [x] Afficher le bonus de maîtrise (calculé selon `niveau`)
+- [x] 6 jets de sauvegarde avec case de maîtrise + valeur calculée + bouton 🎲
+- [x] Afficher l'Initiative (= mod. Dextérité)
+- [x] Recalcul en cascade si une stat change (compétences, CA, PV…)
 
 ### 2.5 Bloc 4 — Classe d'Armure
 
-- [ ] Sélecteur type d'armure (sans / légère / intermédiaire / lourde)
-- [ ] Champs : `bonus_armure`, `bouclier`, `magie`, `autre`
-- [ ] CA totale calculée et mise en avant (grand nombre)
+- [x] Sélecteur type d'armure (sans / légère / intermédiaire / lourde)
+- [x] Champs : `bonus_armure`, `bouclier`, `magie`, `autre`
+- [x] CA totale calculée et mise en avant (grand nombre)
 - [ ] Alerte si armure sans maîtrise (fonctionnalité optionnelle)
 
 ### 2.6 Bloc 5 — Points de Vie & Dés de Vie
 
-- [ ] Sélecteur type de dé (d6 / d8 / d10 / d12)
+- [x] Sélecteur type de dé (d6 / d8 / d10 / d12)
 - [ ] PV max calculé (niveau 1 : max dé + mod Con ; niveaux suivants : somme)
-- [ ] PV actuel : champ numérique modifiable + boutons +/−
-- [ ] Barre de progression PV actuel / PV max (couleur rouge/orange/vert)
-- [ ] PV temporaires : champ numérique distinct
-- [ ] Dés de vie restants : cases à cocher (nombre = niveau du personnage)
-- [ ] Repos court : bouton → lance les dés de vie cochés, récupère PV
-- [ ] Repos long : bouton → remet PV max, récupère la moitié des dés de vie
-- [ ] 3 cases JDS succès + 3 cases JDS échecs
+- [x] PV actuel : champ numérique modifiable + boutons +/−
+- [x] Barre de progression PV actuel / PV max (couleur rouge/orange/vert)
+- [x] PV temporaires : champ numérique distinct
+- [x] Dés de vie restants : cases à cocher (nombre = niveau du personnage)
+- [x] Repos court : bouton → lance les dés de vie cochés, récupère PV
+- [x] Repos long : bouton → remet PV max, récupère la moitié des dés de vie
+- [x] 3 cases JDS succès + 3 cases JDS échecs
 - [ ] Réinitialisation automatique des JDS après stabilisation/soin
 
 ### 2.7 Bloc 6 — Compétences
 
-- [ ] 18 lignes : case maîtrise + case expertise + valeur calculée + bouton 🎲
+- [x] 18 lignes : case maîtrise + case expertise + valeur calculée + bouton 🎲
 - [ ] Valeur = mod. caractéristique + bonus maîtrise (si coché) ou ×2 (si expertise)
 - [ ] Recalcul automatique si les stats changent
 - [ ] Afficher la **Perception passive** (calculée) en bas du bloc
