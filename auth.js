@@ -26,7 +26,6 @@ export async function isMJ(user) {
     .eq('id', user.id)
     .single();
   if (error) console.error('[auth] isMJ — erreur Supabase :', error);
-  console.log('[auth] isMJ — user_id:', user.id, '| data:', data);
   return data?.is_mj ?? false;
 }
 
