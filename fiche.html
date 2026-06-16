@@ -8,63 +8,361 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="fiche.css" />
 </head>
 <body>
-<div class="container">
-  <div id="nav-container"></div>
-  <div id="auth-bar" style="display:flex;align-items:center;justify-content:flex-end;gap:1rem;font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;min-height:1.5rem;"></div>
 
-  <header>
-    <div class="eyebrow">Aventurier</div>
-    <h1 id="perso-nom">Fiche de personnage</h1>
-    <p class="subtitle" id="perso-info">Chargement…</p>
-  </header>
-
-  <div style="text-align:center;padding:3rem 1rem;color:var(--text-muted);">
-    <p style="font-size:1.1rem;font-style:italic;margin-bottom:1rem;">
-      La fiche de personnage est en cours de construction.
-    </p>
-    <p style="font-size:0.9rem;color:var(--text-dim);">Phase 2 — disponible prochainement</p>
+<!-- ── Navigation ── -->
+<div class="fiche-topbar">
+  <div class="fiche-auth-bar">
+    <span id="perso-titre">Fiche de personnage</span>
+    <div style="display:flex;align-items:center;gap:0.75rem;">
+      <span id="perso-user-email" style="font-size:10px;"></span>
+      <button class="btn-deconnexion" id="btn-logout">Déconnexion</button>
+    </div>
   </div>
-
-  <div class="ornament">— ⬥ —</div>
+  <div class="fiche-nav-row" style="position:relative;">
+    <button class="fiche-nav-toggle" id="nav-toggle" aria-label="Menu blocs">☰</button>
+    <div class="fiche-nav-blocs" id="nav-blocs">
+      <button class="fiche-tab active" data-bloc="identite">1. Identité</button>
+      <button class="fiche-tab" data-bloc="carac">2. Carac.</button>
+      <button class="fiche-tab a-venir" data-bloc="deplacements">3. Déplac.</button>
+      <button class="fiche-tab" data-bloc="armure">4. Armure</button>
+      <button class="fiche-tab" data-bloc="pv">5. Points de Vie</button>
+      <button class="fiche-tab" data-bloc="competences">6. Compétences</button>
+      <button class="fiche-tab a-venir" data-bloc="armes">7. Armes</button>
+      <button class="fiche-tab a-venir" data-bloc="equipement">8. Équipement</button>
+      <button class="fiche-tab a-venir" data-bloc="sorts">9. Sorts</button>
+      <button class="fiche-tab a-venir" data-bloc="traits">10. Traits</button>
+      <button class="fiche-tab a-venir" data-bloc="historique">11. Historique</button>
+      <button class="fiche-tab a-venir" data-bloc="notes">12. Notes</button>
+    </div>
+  </div>
 </div>
 
-<script src="nav.js"></script>
-<script type="module">
-  import { requireAuth, logout, isMJ, getCurrentUser } from './auth.js';
-  import { getPersonnage, getPersonnageById } from './db.js';
+<div id="save-indicator"></div>
 
-  const user = await requireAuth('login.html');
-  if (!user) throw new Error();
+<!-- ── Contenu des blocs ── -->
+<main id="fiche-main">
 
-  // Auth bar
-  const bar = document.getElementById('auth-bar');
-  bar.innerHTML = `
-    <span style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;">${user.email}</span>
-    <button style="background:transparent;border:1px solid var(--border);border-radius:2px;color:var(--text-muted);cursor:pointer;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.7rem;" id="btn-logout">Déconnexion</button>
-  `;
-  document.getElementById('btn-logout').addEventListener('click', logout);
+  <!-- ── Bloc 1 : Identité ── -->
+  <section class="fiche-bloc active" id="bloc-identite">
+    <h2 class="bloc-title">Identité du personnage</h2>
+    <div class="fiche-grid-2">
+      <div class="fiche-field" style="grid-column:1/-1;">
+        <label for="id-nom">Nom du personnage</label>
+        <input id="id-nom" type="text" autocomplete="off" />
+      </div>
+      <div class="fiche-field">
+        <label for="id-classe">Classe</label>
+        <input id="id-classe" type="text" autocomplete="off" />
+      </div>
+      <div class="fiche-field">
+        <label for="id-race">Race</label>
+        <input id="id-race" type="text" autocomplete="off" />
+      </div>
+      <div class="fiche-field">
+        <label for="id-niveau">Niveau</label>
+        <input id="id-niveau" type="number" min="1" max="20" />
+      </div>
+      <div class="fiche-field">
+        <label for="id-xp">Points d'expérience</label>
+        <input id="id-xp" type="number" min="0" />
+      </div>
+      <div class="fiche-field">
+        <label for="id-age">Âge</label>
+        <input id="id-age" type="number" min="0" />
+      </div>
+      <div class="fiche-field">
+        <label for="id-taille_cm">Taille (cm)</label>
+        <input id="id-taille_cm" type="number" min="0" />
+      </div>
+      <div class="fiche-field">
+        <label for="id-poids_kg">Poids (kg)</label>
+        <input id="id-poids_kg" type="number" min="0" />
+      </div>
+      <div class="fiche-field">
+        <label for="id-alignement">Alignement</label>
+        <select id="id-alignement">
+          <option value="">— Choisir —</option>
+        </select>
+      </div>
+      <div class="fiche-field">
+        <label for="id-dieu">Dieu / Idole</label>
+        <input id="id-dieu" type="text" autocomplete="off" />
+      </div>
+      <div class="fiche-field" style="grid-column:1/-1;">
+        <label for="id-devise">Devise</label>
+        <input id="id-devise" type="text" autocomplete="off" />
+      </div>
+    </div>
+  </section>
 
-  // Charger le personnage : ?id=<uuid> pour le MJ, sinon fiche du joueur connecté
-  const params = new URLSearchParams(window.location.search);
-  const ficheId = params.get('id');
+  <!-- ── Bloc 2 : Caractéristiques ── -->
+  <section class="fiche-bloc" id="bloc-carac">
+    <h2 class="bloc-title">Caractéristiques</h2>
 
-  try {
-    const perso = ficheId
-      ? await getPersonnageById(ficheId)
-      : await getPersonnage(user.id);
+    <div class="carac-meta">
+      <div class="carac-meta-item">
+        <div class="carac-meta-label">Bonus de maîtrise</div>
+        <div class="carac-meta-val" id="bonus-maitrise">+2</div>
+      </div>
+      <div class="carac-meta-item">
+        <div class="carac-meta-label">Initiative</div>
+        <div class="carac-meta-val" id="initiative-val">+0</div>
+      </div>
+    </div>
 
-    if (perso) {
-      document.getElementById('perso-nom').textContent = perso.nom || 'Personnage sans nom';
-      document.getElementById('perso-info').textContent =
-        [perso.classe, perso.race, perso.niveau ? 'Niveau ' + perso.niveau : null]
-          .filter(Boolean).join(' · ');
-      document.title = (perso.nom || 'Fiche') + ' — Eberron';
-    }
-  } catch {
-    // Pas de personnage trouvé, l'en-tête par défaut reste affiché
-  }
-</script>
+    <div class="carac-grid">
+      <div class="carac-box">
+        <div class="carac-box-label">Force</div>
+        <div class="carac-box-mod" id="mod-force">+0</div>
+        <input class="carac-box-val" id="carac-force" type="number" min="1" max="30" value="10" />
+        <button class="btn-de" id="de-force" title="Jet de Force">🎲</button>
+      </div>
+      <div class="carac-box">
+        <div class="carac-box-label">Dextérité</div>
+        <div class="carac-box-mod" id="mod-dexterite">+0</div>
+        <input class="carac-box-val" id="carac-dexterite" type="number" min="1" max="30" value="10" />
+        <button class="btn-de" id="de-dexterite" title="Jet de Dextérité">🎲</button>
+      </div>
+      <div class="carac-box">
+        <div class="carac-box-label">Constitution</div>
+        <div class="carac-box-mod" id="mod-constitution">+0</div>
+        <input class="carac-box-val" id="carac-constitution" type="number" min="1" max="30" value="10" />
+        <button class="btn-de" id="de-constitution" title="Jet de Constitution">🎲</button>
+      </div>
+      <div class="carac-box">
+        <div class="carac-box-label">Intelligence</div>
+        <div class="carac-box-mod" id="mod-intelligence">+0</div>
+        <input class="carac-box-val" id="carac-intelligence" type="number" min="1" max="30" value="10" />
+        <button class="btn-de" id="de-intelligence" title="Jet d'Intelligence">🎲</button>
+      </div>
+      <div class="carac-box">
+        <div class="carac-box-label">Sagesse</div>
+        <div class="carac-box-mod" id="mod-sagesse">+0</div>
+        <input class="carac-box-val" id="carac-sagesse" type="number" min="1" max="30" value="10" />
+        <button class="btn-de" id="de-sagesse" title="Jet de Sagesse">🎲</button>
+      </div>
+      <div class="carac-box">
+        <div class="carac-box-label">Charisme</div>
+        <div class="carac-box-mod" id="mod-charisme">+0</div>
+        <input class="carac-box-val" id="carac-charisme" type="number" min="1" max="30" value="10" />
+        <button class="btn-de" id="de-charisme" title="Jet de Charisme">🎲</button>
+      </div>
+    </div>
+
+    <h3 class="bloc-subtitle">Jets de sauvegarde</h3>
+    <div class="jds-grid">
+      <div class="jds-row">
+        <input type="checkbox" class="case-maitrise" id="jds-maitrise-force" />
+        <span class="jds-val" id="jds-val-force">+0</span>
+        <span class="jds-label">Force</span>
+        <button class="btn-de" id="jds-de-force">🎲</button>
+      </div>
+      <div class="jds-row">
+        <input type="checkbox" class="case-maitrise" id="jds-maitrise-dexterite" />
+        <span class="jds-val" id="jds-val-dexterite">+0</span>
+        <span class="jds-label">Dextérité</span>
+        <button class="btn-de" id="jds-de-dexterite">🎲</button>
+      </div>
+      <div class="jds-row">
+        <input type="checkbox" class="case-maitrise" id="jds-maitrise-constitution" />
+        <span class="jds-val" id="jds-val-constitution">+0</span>
+        <span class="jds-label">Constitution</span>
+        <button class="btn-de" id="jds-de-constitution">🎲</button>
+      </div>
+      <div class="jds-row">
+        <input type="checkbox" class="case-maitrise" id="jds-maitrise-intelligence" />
+        <span class="jds-val" id="jds-val-intelligence">+0</span>
+        <span class="jds-label">Intelligence</span>
+        <button class="btn-de" id="jds-de-intelligence">🎲</button>
+      </div>
+      <div class="jds-row">
+        <input type="checkbox" class="case-maitrise" id="jds-maitrise-sagesse" />
+        <span class="jds-val" id="jds-val-sagesse">+0</span>
+        <span class="jds-label">Sagesse</span>
+        <button class="btn-de" id="jds-de-sagesse">🎲</button>
+      </div>
+      <div class="jds-row">
+        <input type="checkbox" class="case-maitrise" id="jds-maitrise-charisme" />
+        <span class="jds-val" id="jds-val-charisme">+0</span>
+        <span class="jds-label">Charisme</span>
+        <button class="btn-de" id="jds-de-charisme">🎲</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Bloc 3 : Déplacements (Phase 3) ── -->
+  <section class="fiche-bloc" id="bloc-deplacements">
+    <h2 class="bloc-title">Déplacements &amp; Charge</h2>
+    <div class="bloc-a-venir">Disponible en Phase 3</div>
+  </section>
+
+  <!-- ── Bloc 4 : Armure ── -->
+  <section class="fiche-bloc" id="bloc-armure">
+    <h2 class="bloc-title">Classe d'Armure</h2>
+
+    <div class="ca-display">
+      <div class="ca-display-label">Classe d'Armure</div>
+      <div class="ca-display-val" id="ca-totale">10</div>
+    </div>
+
+    <div class="fiche-grid-2">
+      <div class="fiche-field">
+        <label for="armure-type">Type d'armure</label>
+        <select id="armure-type">
+          <option value="sans">Sans armure (10 + Dex)</option>
+          <option value="legere">Légère (bonus + Dex)</option>
+          <option value="intermediaire">Intermédiaire (bonus + min Dex 2)</option>
+          <option value="lourde">Lourde (bonus, sans Dex)</option>
+        </select>
+      </div>
+      <div class="fiche-field">
+        <label for="armure-bonus_armure">Bonus d'armure</label>
+        <input id="armure-bonus_armure" type="number" min="0" value="0" />
+      </div>
+      <div class="fiche-field">
+        <label for="armure-bonus_armure_magie">Bonus magique</label>
+        <input id="armure-bonus_armure_magie" type="number" min="0" value="0" />
+      </div>
+      <div class="fiche-field">
+        <label for="armure-bonus_armure_autre">Autre bonus</label>
+        <input id="armure-bonus_armure_autre" type="number" value="0" />
+      </div>
+    </div>
+
+    <div class="armure-bouclier-row">
+      <input type="checkbox" class="case-maitrise" id="armure-bouclier" />
+      <label for="armure-bouclier">Bouclier (+2 CA)</label>
+    </div>
+  </section>
+
+  <!-- ── Bloc 5 : Points de Vie ── -->
+  <section class="fiche-bloc" id="bloc-pv">
+    <h2 class="bloc-title">Points de Vie</h2>
+
+    <div class="pv-display">
+      <div class="pv-actuel-wrap">
+        <input class="pv-actuel-input" id="pv-actuel" type="number" min="0" value="0" />
+        <span class="pv-sep">/</span>
+        <div class="pv-max-wrap">
+          <span class="pv-max-label">Max</span>
+          <input class="pv-max-input" id="pv-max" type="number" min="0" value="0" />
+        </div>
+      </div>
+      <div class="pv-btn-group">
+        <button class="btn-pv" id="pv-plus" title="Soigner">+</button>
+        <button class="btn-pv" id="pv-minus" title="Blesser">−</button>
+      </div>
+    </div>
+
+    <div class="pv-bar-wrap">
+      <div class="pv-bar-fill" id="pv-bar-fill" style="width:100%;" data-state="bon"></div>
+    </div>
+
+    <div class="pv-temp-row">
+      <span class="pv-temp-label">PV temporaires</span>
+      <input class="pv-temp-input" id="pv-temporaires" type="number" min="0" value="0" />
+    </div>
+
+    <h3 class="bloc-subtitle">Type de dé de vie</h3>
+    <div class="fiche-field" style="max-width:180px;">
+      <label for="pv-type-de">Dé de vie</label>
+      <select id="pv-type-de">
+        <option value="d6">d6</option>
+        <option value="d8" selected>d8</option>
+        <option value="d10">d10</option>
+        <option value="d12">d12</option>
+      </select>
+    </div>
+
+    <h3 class="bloc-subtitle">Dés de vie restants</h3>
+    <div class="des-de-vie-row">
+      <span class="ddv-label">Dépensés</span>
+      <div id="des-de-vie"></div>
+    </div>
+
+    <h3 class="bloc-subtitle">Jets de sauvegarde contre la mort</h3>
+    <div class="jds-mort-grid">
+      <div class="jds-mort-item">
+        <div class="jds-mort-label">Succès</div>
+        <div class="jds-mort-cases" id="jds-succes"></div>
+      </div>
+      <div class="jds-mort-item">
+        <div class="jds-mort-label">Échecs</div>
+        <div class="jds-mort-cases" id="jds-echecs"></div>
+      </div>
+    </div>
+
+    <div class="repos-row">
+      <button class="btn-repos" id="btn-repos-court">Repos court</button>
+      <button class="btn-repos" id="btn-repos-long">Repos long</button>
+    </div>
+  </section>
+
+  <!-- ── Bloc 6 : Compétences ── -->
+  <section class="fiche-bloc" id="bloc-competences">
+    <h2 class="bloc-title">Compétences</h2>
+
+    <div class="comp-inspiration-row">
+      <input type="checkbox" class="case-maitrise" id="inspiration-cb" />
+      <label for="inspiration-cb">Inspiration</label>
+    </div>
+
+    <table class="competences-table">
+      <thead>
+        <tr>
+          <th title="Maîtrise">M</th>
+          <th title="Expertise">E</th>
+          <th>Compétence</th>
+          <th class="th-center">Bonus</th>
+          <th class="th-center">Dé</th>
+        </tr>
+      </thead>
+      <tbody id="competences-tbody"></tbody>
+    </table>
+
+    <div class="perception-passive-row">
+      <span class="pp-label">Perception passive (Sagesse)</span>
+      <span class="pp-val" id="perception-passive">10</span>
+    </div>
+  </section>
+
+  <!-- ── Blocs Phase 3 ── -->
+  <section class="fiche-bloc" id="bloc-armes">
+    <h2 class="bloc-title">Armes</h2>
+    <div class="bloc-a-venir">Disponible en Phase 3</div>
+  </section>
+
+  <section class="fiche-bloc" id="bloc-equipement">
+    <h2 class="bloc-title">Équipement &amp; Possessions</h2>
+    <div class="bloc-a-venir">Disponible en Phase 3</div>
+  </section>
+
+  <!-- ── Blocs Phase 4 ── -->
+  <section class="fiche-bloc" id="bloc-sorts">
+    <h2 class="bloc-title">Sorts</h2>
+    <div class="bloc-a-venir">Disponible en Phase 4</div>
+  </section>
+
+  <section class="fiche-bloc" id="bloc-traits">
+    <h2 class="bloc-title">Traits &amp; Capacités</h2>
+    <div class="bloc-a-venir">Disponible en Phase 4</div>
+  </section>
+
+  <section class="fiche-bloc" id="bloc-historique">
+    <h2 class="bloc-title">Historique &amp; Personnalité</h2>
+    <div class="bloc-a-venir">Disponible en Phase 4</div>
+  </section>
+
+  <section class="fiche-bloc" id="bloc-notes">
+    <h2 class="bloc-title">Notes</h2>
+    <div class="bloc-a-venir">Disponible en Phase 4</div>
+  </section>
+
+</main>
+
+<script type="module" src="fiche.js"></script>
 </body>
 </html>
