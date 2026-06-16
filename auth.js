@@ -5,7 +5,7 @@ export async function login(email, password) {
   if (error) throw error;
 
   const mj = await isMJ(data.user);
-  window.location.href = mj ? 'mj.html' : 'fiche.html';
+  window.location.href = mj ? 'mj.html' : 'index.html';
 }
 
 export async function logout() {

@@ -88,7 +88,7 @@
 ### 1.2 Portail (`index.html`)
 
 - [x] Ajouter un lien **"Fiche de personnage"** dans la navigation principale (`nav.html`)
-- [ ] Protéger `index.html` : rediriger vers `login.html` si non connecté
+- [x] Protéger `index.html` : rediriger vers `login.html` si non connecté
 - [ ] Afficher le nom du joueur connecté + bouton déconnexion dans la nav
 
 ### 1.3 Page sélection MJ
