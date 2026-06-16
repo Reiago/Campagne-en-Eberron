@@ -5,7 +5,7 @@ export async function login(email, password) {
   if (error) throw error;
 
   const mj = await isMJ(data.user);
-  window.location.href = mj ? 'mj.html' : 'index.html';
+  window.location.href = mj ? 'mj.html' : 'fiche.html';
 }
 
 export async function logout() {
@@ -20,11 +20,13 @@ export async function getCurrentUser() {
 
 export async function isMJ(user) {
   if (!user) return false;
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('profils')
     .select('is_mj')
-    .eq('user_id', user.id)
+    .eq('id', user.id)
     .single();
+  if (error) console.error('[auth] isMJ — erreur Supabase :', error);
+  console.log('[auth] isMJ — user_id:', user.id, '| data:', data);
   return data?.is_mj ?? false;
 }
 

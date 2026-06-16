@@ -264,7 +264,7 @@
         // Rediriger selon le rôle une fois le mot de passe défini
         const user = await getCurrentUser();
         const mj = await isMJ(user);
-        window.location.href = mj ? 'mj.html' : 'index.html';
+        window.location.href = mj ? 'mj.html' : 'fiche.html';
       } catch (error) {
         err.textContent = error.message;
         err.classList.add('visible');
@@ -279,7 +279,7 @@
       const user = await getCurrentUser();
       if (user) {
         const mj = await isMJ(user);
-        window.location.href = mj ? 'mj.html' : 'index.html';
+        window.location.href = mj ? 'mj.html' : 'fiche.html';
       }
     })();
 
