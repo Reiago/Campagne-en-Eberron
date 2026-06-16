@@ -89,7 +89,7 @@
 
 - [x] Ajouter un lien **"Fiche de personnage"** dans la navigation principale (`nav.html`)
 - [x] Protéger `index.html` : rediriger vers `login.html` si non connecté
-- [ ] Afficher le nom du joueur connecté + bouton déconnexion dans la nav
+- [x] Afficher le nom du joueur connecté + bouton déconnexion dans la nav
 
 ### 1.3 Page sélection MJ
 
