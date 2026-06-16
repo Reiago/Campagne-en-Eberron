@@ -57,8 +57,9 @@
   - http://localhost:8000/
 - [x] **ACTION MANUELLE** — Créer le compte MJ via Authentication › Users › Invite
 - [x] **ACTION MANUELLE** — Dans la table `profils`, passer `is_mj = true` pour le compte MJ
-- [ ] **ACTION MANUELLE** — Créer 2–3 comptes joueurs test via Authentication › Users › Invite
-- [ ] **ACTION MANUELLE** — Assigner les `user_id` des joueurs dans la table `personnages` (UPDATE)
+- [x] **ACTION MANUELLE** — Créer 2–3 comptes joueurs test via Authentication › Users › Invite
+- [x] **ACTION MANUELLE** — Assigner les `user_id` des joueurs dans la table `personnages` (UPDATE)
+  - [ ] **PROJET** - Si on souhaite exporter le projet pour d'autres personnes page à créer pour l'insertion du nouveau joueur 
 
 ---
 
