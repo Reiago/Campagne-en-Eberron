@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fiche de personnage — Eberron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+  <div id="nav-container"></div>
+  <div id="auth-bar" style="display:flex;align-items:center;justify-content:flex-end;gap:1rem;font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;min-height:1.5rem;"></div>
+
+  <header>
+    <div class="eyebrow">Aventurier</div>
+    <h1 id="perso-nom">Fiche de personnage</h1>
+    <p class="subtitle" id="perso-info">Chargement…</p>
+  </header>
+
+  <div style="text-align:center;padding:3rem 1rem;color:var(--text-muted);">
+    <p style="font-size:1.1rem;font-style:italic;margin-bottom:1rem;">
+      La fiche de personnage est en cours de construction.
+    </p>
+    <p style="font-size:0.9rem;color:var(--text-dim);">Phase 2 — disponible prochainement</p>
+  </div>
+
+  <div class="ornament">— ⬥ —</div>
+</div>
+
+<script src="nav.js"></script>
+<script type="module">
+  import { requireAuth, logout, isMJ, getCurrentUser } from './auth.js';
+  import { getPersonnage, getPersonnageById } from './db.js';
+
+  const user = await requireAuth('login.html');
+  if (!user) throw new Error();
+
+  // Auth bar
+  const bar = document.getElementById('auth-bar');
+  bar.innerHTML = `
+    <span style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;">${user.email}</span>
+    <button style="background:transparent;border:1px solid var(--border);border-radius:2px;color:var(--text-muted);cursor:pointer;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.7rem;" id="btn-logout">Déconnexion</button>
+  `;
+  document.getElementById('btn-logout').addEventListener('click', logout);
+
+  // Charger le personnage : ?id=<uuid> pour le MJ, sinon fiche du joueur connecté
+  const params = new URLSearchParams(window.location.search);
+  const ficheId = params.get('id');
+
+  try {
+    const perso = ficheId
+      ? await getPersonnageById(ficheId)
+      : await getPersonnage(user.id);
+
+    if (perso) {
+      document.getElementById('perso-nom').textContent = perso.nom || 'Personnage sans nom';
+      document.getElementById('perso-info').textContent =
+        [perso.classe, perso.race, perso.niveau ? 'Niveau ' + perso.niveau : null]
+          .filter(Boolean).join(' · ');
+      document.title = (perso.nom || 'Fiche') + ' — Eberron';
+    }
+  } catch {
+    // Pas de personnage trouvé, l'en-tête par défaut reste affiché
+  }
+</script>
+</body>
+</html>

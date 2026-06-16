@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const links = [
     { href: root + "index.html", label: "Accueil" },
+    { href: root + "fiche.html", label: "Fiche" },
     { href: races + "Nains.html", label: "Nains" },
     { href: races + "Elfe.html", label: "Elfes" },
     { href: races + "Humain.html", label: "Humains" },

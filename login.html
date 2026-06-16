@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion — Eberron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold:         #C9A86C;
+      --gold-light:   #E8D09A;
+      --gold-dim:     #A07B42;
+      --stone:        #1C1A17;
+      --stone-mid:    #252218;
+      --stone-light:  #2E2A21;
+      --stone-pale:   #3A342A;
+      --text-main:    #F5EFDF;
+      --text-muted:   #C9B98B;
+      --text-dim:     #9E9080;
+      --red-accent:   #8B3A2A;
+      --border:       rgba(201,168,108,0.18);
+      --border-strong:rgba(201,168,108,0.4);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--stone);
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(201,168,108,0.07) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A86C' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      color: var(--text-main);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+    }
+
+    .login-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 0.25rem;
+    }
+
+    .login-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .ornament {
+      text-align: center;
+      color: var(--gold-dim);
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      background: var(--stone-light);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-main);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1rem;
+      padding: 0.6rem 0.8rem;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--gold-dim);
+    }
+
+    input[type="email"]::placeholder,
+    input[type="password"]::placeholder {
+      color: var(--text-dim);
+    }
+
+    .btn-login {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      color: var(--gold);
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .btn-login:hover:not(:disabled) {
+      background: rgba(201,168,108,0.1);
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+
+    .btn-login:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .error-msg {
+      display: none;
+      background: rgba(139,58,42,0.2);
+      border: 1px solid rgba(139,58,42,0.5);
+      border-radius: 2px;
+      color: #D4806A;
+      font-size: 0.9rem;
+      padding: 0.6rem 0.8rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .error-msg.visible { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="login-eyebrow">Archives du Khorvaire</div>
+  <h1 class="login-title">Eberron</h1>
+  <p class="login-subtitle">Accès réservé aux aventuriers</p>
+  <div class="ornament">— ⬥ —</div>
+
+  <!-- Formulaire de connexion classique -->
+  <form id="login-form">
+    <div class="form-group">
+      <label for="email">Identifiant</label>
+      <input type="email" id="email" placeholder="votre@email.com" required autocomplete="email" />
+    </div>
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password" />
+    </div>
+    <button type="submit" class="btn-login" id="btn-submit">Entrer dans les archives</button>
+    <div class="error-msg" id="error-msg"></div>
+  </form>
+
+  <!-- Formulaire de choix de mot de passe (première connexion via invitation) -->
+  <form id="set-password-form" style="display:none;">
+    <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.25rem;">
+      Bienvenue ! Choisissez un mot de passe pour accéder à vos archives.
+    </p>
+    <div class="form-group">
+      <label for="new-password">Nouveau mot de passe</label>
+      <input type="password" id="new-password" placeholder="••••••••" required autocomplete="new-password" minlength="8" />
+    </div>
+    <div class="form-group">
+      <label for="confirm-password">Confirmer le mot de passe</label>
+      <input type="password" id="confirm-password" placeholder="••••••••" required autocomplete="new-password" minlength="8" />
+    </div>
+    <button type="submit" class="btn-login" id="btn-set-password">Choisir ce mot de passe</button>
+    <div class="error-msg" id="set-error-msg"></div>
+  </form>
+</div>
+
+<script type="module">
+  import { supabase } from './supabase_config.js';
+  import { login, getCurrentUser, isMJ } from './auth.js';
+
+  // Détecter un token d'invitation ou de récupération dans le hash URL
+  const hash = new URLSearchParams(window.location.hash.slice(1));
+  const urlType  = hash.get('type');
+  const urlError = hash.get('error');
+  const isInvite = urlType === 'invite' || urlType === 'recovery';
+
+  // Lien expiré ou invalide → afficher l'erreur sur le formulaire de connexion
+  if (urlError) {
+    const errEl = document.getElementById('error-msg');
+    errEl.textContent = urlError === 'access_denied'
+      ? 'Le lien d\'invitation a expiré. Demandez au Maître du Jeu de vous renvoyer une invitation.'
+      : hash.get('error_description')?.replace(/\+/g, ' ') ?? 'Lien invalide.';
+    errEl.classList.add('visible');
+    // Nettoyer le hash de l'URL sans recharger la page
+    history.replaceState(null, '', window.location.pathname);
+  }
+
+  if (isInvite) {
+    // Supabase SDK traite automatiquement le token du hash et ouvre une session
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('set-password-form').style.display = 'block';
+    document.querySelector('.login-subtitle').textContent = 'Première connexion — choisissez votre mot de passe';
+
+    const form = document.getElementById('set-password-form');
+    const btn  = document.getElementById('btn-set-password');
+    const err  = document.getElementById('set-error-msg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.classList.remove('visible');
+
+      const pwd1 = document.getElementById('new-password').value;
+      const pwd2 = document.getElementById('confirm-password').value;
+
+      if (pwd1 !== pwd2) {
+        err.textContent = 'Les mots de passe ne correspondent pas.';
+        err.classList.add('visible');
+        return;
+      }
+      if (pwd1.length < 8) {
+        err.textContent = 'Le mot de passe doit contenir au moins 8 caractères.';
+        err.classList.add('visible');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Enregistrement…';
+
+      try {
+        const { error } = await supabase.auth.updateUser({ password: pwd1 });
+        if (error) throw error;
+
+        // Rediriger selon le rôle une fois le mot de passe défini
+        const user = await getCurrentUser();
+        const mj = await isMJ(user);
+        window.location.href = mj ? 'mj.html' : 'fiche.html';
+      } catch (error) {
+        err.textContent = error.message;
+        err.classList.add('visible');
+        btn.disabled = false;
+        btn.textContent = 'Choisir ce mot de passe';
+      }
+    });
+
+  } else {
+    // Connexion classique — rediriger si déjà connecté
+    (async () => {
+      const user = await getCurrentUser();
+      if (user) {
+        const mj = await isMJ(user);
+        window.location.href = mj ? 'mj.html' : 'fiche.html';
+      }
+    })();
+
+    const form = document.getElementById('login-form');
+    const btn  = document.getElementById('btn-submit');
+    const err  = document.getElementById('error-msg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.classList.remove('visible');
+      btn.disabled = true;
+      btn.textContent = 'Connexion…';
+
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        await login(email, password);
+      } catch (error) {
+        err.textContent = error.message === 'Invalid login credentials'
+          ? 'Identifiants incorrects. Vérifiez votre email et mot de passe.'
+          : error.message;
+        err.classList.add('visible');
+        btn.disabled = false;
+        btn.textContent = 'Entrer dans les archives';
+      }
+    });
+  }
+</script>
+</body>
+</html>
