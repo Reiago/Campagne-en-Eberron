@@ -113,29 +113,29 @@
 - [x] Appliquer une classe CSS globale (`mode-jeu` / `mode-edition`) sur `<body>` ou `<main>` pour piloter l'apparence par CSS
 
 **Mode Jeu (lecture + jets de dés)**
-- [ ] Tous les champs éditables (`input`, `select`, `textarea`) deviennent non-éditables (`readonly` / `disabled` / remplacés par du texte brut)
-- [ ] Un clic sur n'importe quelle valeur numérique associée à un jet déclenche directement le jet de dé (modificateur, compétence, JdS, attaque…)
-- [ ] Les boutons 🎲 sont masqués (le clic sur la valeur les remplace)
-- [ ] Les boutons d'action structurelle sont masqués (ajouter/supprimer arme, sort, capacité…)
+- [x] Tous les champs éditables (`input`, `select`, `textarea`) deviennent non-éditables (`readonly` / `disabled` / remplacés par du texte brut)
+- [x] Un clic sur n'importe quelle valeur numérique associée à un jet déclenche directement le jet de dé (modificateur, compétence, JdS, attaque…)
+- [x] Les boutons 🎲 sont masqués (le clic sur la valeur les remplace)
+- [x] Les boutons d'action structurelle sont masqués (ajouter/supprimer arme, sort, capacité…)
 - [ ] Les boutons de repos court / repos long restent accessibles
-- [ ] Visuel distinctif : fond légèrement différent ou bandeau coloré indiquant le mode actif
+- [x] Visuel distinctif : fond légèrement différent ou bandeau coloré indiquant le mode actif
 
 **Mode Édition (saisie libre)**
-- [ ] Comportement actuel : tous les champs sont éditables
-- [ ] Les boutons 🎲 sont affichés à côté des valeurs
-- [ ] Les boutons d'action structurelle sont affichés (ajouter/supprimer…)
-- [ ] Sauvegarde automatique active (debounce)
+- [x] Comportement actuel : tous les champs sont éditables
+- [x] feat. supprimée : Les boutons 🎲 sont affichés à côté des valeurs
+- [x] Les boutons d'action structurelle sont affichés (ajouter/supprimer…)
+- [x] Sauvegarde automatique active (debounce)
 
 **Règle générale — valeurs calculées**
-- [ ] Les champs calculés (modificateurs, CA totale, bonus de maîtrise, perception passive, DD sorts, bonus attaque sorts, bonus toucher…) ne sont **jamais** éditables, quel que soit le mode
-- [ ] Ils sont affichés en lecture seule avec un style visuel distinct (ex. couleur ou fond différent)
-- [ ] En mode jeu, un clic sur une valeur calculée liée à un jet déclenche tout de même le dé
+- [x] Les champs calculés (modificateurs, CA totale, bonus de maîtrise, perception passive, DD sorts, bonus attaque sorts, bonus toucher…) ne sont **jamais** éditables, quel que soit le mode
+- [x] Ils sont affichés en lecture seule avec un style visuel distinct (ex. couleur ou fond différent)
+- [x] En mode jeu, un clic sur une valeur calculée liée à un jet déclenche tout de même le dé
 
 **Implémentation dans `fiche.js`**
-- [ ] Fonction `setMode(mode)` → applique la classe CSS, met à jour le bouton, sauvegarde dans `localStorage`
-- [ ] Fonction `getMode()` → lit `localStorage`, retourne `'jeu'` ou `'edition'`
-- [ ] Au chargement, appeler `setMode(getMode())` pour restaurer le dernier mode
-- [ ] Les gestionnaires de clic sur les valeurs numériques vérifient le mode avant d'agir (jet ou édition)
+- [x] Fonction `setMode(mode)` → applique la classe CSS, met à jour le bouton, sauvegarde dans `localStorage`
+- [x] Fonction `getMode()` → lit `localStorage`, retourne `'jeu'` ou `'edition'`
+- [x] Au chargement, appeler `setMode(getMode())` pour restaurer le dernier mode
+- [x] Les gestionnaires de clic sur les valeurs numériques vérifient le mode avant d'agir (jet ou édition)
 
 ---
 
