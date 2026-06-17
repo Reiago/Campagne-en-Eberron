@@ -107,9 +107,9 @@
 
 > Fonctionnalité transversale : tous les blocs de la fiche doivent respecter ces deux modes.
 
-- [ ] Ajouter un bouton bascule **Mode Jeu / Mode Édition** dans la barre de navigation des blocs (visible en permanence)
-- [ ] Le mode actif est stocké dans `localStorage` (persisté entre sessions)
-- [ ] La fiche démarre en **Mode Jeu** par défaut
+- [x] Ajouter un bouton bascule **Mode Jeu / Mode Édition** dans la barre de navigation des blocs (visible en permanence)
+- [x] Le mode actif est stocké dans `localStorage` (persisté entre sessions)
+- [x] La fiche démarre en **Mode Jeu** par défaut
 - [ ] Appliquer une classe CSS globale (`mode-jeu` / `mode-edition`) sur `<body>` ou `<main>` pour piloter l'apparence par CSS
 
 **Mode Jeu (lecture + jets de dés)**
