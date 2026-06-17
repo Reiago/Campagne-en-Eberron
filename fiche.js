@@ -183,9 +183,6 @@ function initModeJeuClics() {
     if (getMode() !== 'jeu') return;
     lancerJet(modificateur(carac.dexterite ?? 10), 'Initiative');
   });
-  document.getElementById('de-initiative')?.addEventListener('click', () => {
-    lancerJet(modificateur(carac.dexterite ?? 10), 'Initiative');
-  });
 }
 
 // ── Bloc 1 : Identité ──────────────────────────────────────────────────────────
@@ -251,30 +248,18 @@ function remplirCarac() {
       modEl.textContent = fmt(modificateur(val));
       scheduleCaracSave({ [stat]: val });
     });
-
-    // Bouton dé (Mode Édition)
-    document.getElementById('de-' + stat)?.addEventListener('click', () => {
-      lancerJet(modificateur(carac[stat] ?? 10), STAT_LABELS[stat]);
-    });
   });
 
   STATS.forEach(stat => {
     const key   = 'maitrise_jds_' + stat;
     const cb    = document.getElementById('jds-maitrise-' + stat);
     const valEl = document.getElementById('jds-val-' + stat);
-    const btnDe = document.getElementById('jds-de-' + stat);
     if (!cb || !valEl) return;
 
     cb.checked = carac[key] ?? false;
     cb.addEventListener('change', () => {
       scheduleCaracSave({ [key]: cb.checked });
       recalculerModsEtJdS();
-    });
-
-    btnDe?.addEventListener('click', () => {
-      const bm  = bonusMaitrise(perso.niveau ?? 1);
-      const mod = modificateur(carac[stat] ?? 10) + (carac[key] ? bm : 0);
-      lancerJet(mod, 'Sauv. ' + STAT_LABELS[stat]);
     });
   });
 
@@ -521,7 +506,6 @@ function remplirCompetences() {
       <td><input type="checkbox" class="case-maitrise comp-expertise" data-id="${comp.id}" ${comp.expertise ? 'checked' : ''}></td>
       <td>${comp.nom} <span class="comp-carac-label">(${label}.)</span></td>
       <td class="comp-val-cell val-clickable champ-calcule" id="comp-val-${comp.id}">${fmt(val)}</td>
-      <td class="comp-de-cell"><button class="btn-de" data-comp="${comp.nom}" title="Lancer ${comp.nom}">🎲</button></td>
     `;
     tbody.appendChild(tr);
 
@@ -542,13 +526,6 @@ function remplirCompetences() {
       comp.expertise = e.target.checked;
       try { await updateCompetence(comp.id, { expertise: comp.expertise }); recalculerCompetences(); }
       catch (err) { console.error(err); }
-    });
-
-    // Bouton dé (Mode Édition)
-    tr.querySelector('.btn-de').addEventListener('click', () => {
-      const s     = COMP_CARAC[comp.nom];
-      const mBase = modificateur(carac[s] ?? 10);
-      lancerJet(bonusCompetence(mBase, comp.maitrise, comp.expertise, perso.niveau ?? 1), comp.nom);
     });
   });
 
