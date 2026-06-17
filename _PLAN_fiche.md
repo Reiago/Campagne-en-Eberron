@@ -103,10 +103,47 @@
 
 ## Phase 2 — Fiches : Blocs essentiels
 
-### 2.0 Layout de la fiche (`fiche.html` + `fiche.css`)
+### 2.0 Modes d'affichage — Mode Jeu / Mode Édition
+
+> Fonctionnalité transversale : tous les blocs de la fiche doivent respecter ces deux modes.
+
+- [ ] Ajouter un bouton bascule **Mode Jeu / Mode Édition** dans la barre de navigation des blocs (visible en permanence)
+- [ ] Le mode actif est stocké dans `localStorage` (persisté entre sessions)
+- [ ] La fiche démarre en **Mode Jeu** par défaut
+- [ ] Appliquer une classe CSS globale (`mode-jeu` / `mode-edition`) sur `<body>` ou `<main>` pour piloter l'apparence par CSS
+
+**Mode Jeu (lecture + jets de dés)**
+- [ ] Tous les champs éditables (`input`, `select`, `textarea`) deviennent non-éditables (`readonly` / `disabled` / remplacés par du texte brut)
+- [ ] Un clic sur n'importe quelle valeur numérique associée à un jet déclenche directement le jet de dé (modificateur, compétence, JdS, attaque…)
+- [ ] Les boutons 🎲 sont masqués (le clic sur la valeur les remplace)
+- [ ] Les boutons d'action structurelle sont masqués (ajouter/supprimer arme, sort, capacité…)
+- [ ] Les boutons de repos court / repos long restent accessibles
+- [ ] Visuel distinctif : fond légèrement différent ou bandeau coloré indiquant le mode actif
+
+**Mode Édition (saisie libre)**
+- [ ] Comportement actuel : tous les champs sont éditables
+- [ ] Les boutons 🎲 sont affichés à côté des valeurs
+- [ ] Les boutons d'action structurelle sont affichés (ajouter/supprimer…)
+- [ ] Sauvegarde automatique active (debounce)
+
+**Règle générale — valeurs calculées**
+- [ ] Les champs calculés (modificateurs, CA totale, bonus de maîtrise, perception passive, DD sorts, bonus attaque sorts, bonus toucher…) ne sont **jamais** éditables, quel que soit le mode
+- [ ] Ils sont affichés en lecture seule avec un style visuel distinct (ex. couleur ou fond différent)
+- [ ] En mode jeu, un clic sur une valeur calculée liée à un jet déclenche tout de même le dé
+
+**Implémentation dans `fiche.js`**
+- [ ] Fonction `setMode(mode)` → applique la classe CSS, met à jour le bouton, sauvegarde dans `localStorage`
+- [ ] Fonction `getMode()` → lit `localStorage`, retourne `'jeu'` ou `'edition'`
+- [ ] Au chargement, appeler `setMode(getMode())` pour restaurer le dernier mode
+- [ ] Les gestionnaires de clic sur les valeurs numériques vérifient le mode avant d'agir (jet ou édition)
+
+---
+
+### 2.0b Layout de la fiche (`fiche.html` + `fiche.css`)
 
 - [x] Créer `fiche.html` avec structure de base
   - Barre de navigation des blocs (fixe en haut, pleine largeur)
+  - **Bouton bascule Mode Jeu / Mode Édition dans la barre de navigation**
   - Menu burger sur mobile pour les 12 blocs
   - Zone de contenu principale (`<main id="bloc-actif">`)
   - Pas de navigation globale du site sur cette page
@@ -120,6 +157,7 @@
   - Système de navigation entre blocs (afficher/masquer les sections)
   - Sauvegarde automatique à chaque modification (debounce ~500ms)
   - Indicateur visuel "Sauvegarde en cours…" / "Sauvegardé ✓"
+  - **Gestion des modes Jeu / Édition (voir 2.0)**
 
 ### 2.1 Moteur de calcul (`calculs.js`)
 
@@ -147,12 +185,15 @@
   - [x] Compétences (×18)
   - [ ] Attaque par arme (×N)
   - [ ] Initiative
+- [ ] **Mode Jeu** : boutons 🎲 masqués — le clic sur la valeur numérique déclenche directement `lancerJet`
+- [ ] **Mode Édition** : boutons 🎲 visibles, clic sur valeur → édition normale
 
 ### 2.3 Bloc 1 — Identité du personnage
 
 - [x] Afficher et rendre éditable : `nom`, `classe`, `niveau`, `race`, `âge`, `taille`, `poids`, `dieu`, `devise`, `xp`, `alignement`
 - [x] Sélecteur pour l'alignement (9 valeurs)
 - [x] Sauvegarde automatique à chaque modification
+- [ ] **Mode Jeu** : tous les champs en lecture seule
 
 ### 2.4 Bloc 2 — Caractéristiques
 
@@ -162,6 +203,8 @@
 - [x] 6 jets de sauvegarde avec case de maîtrise + valeur calculée + bouton 🎲
 - [x] Afficher l'Initiative (= mod. Dextérité)
 - [x] Recalcul en cascade si une stat change (compétences, CA, PV…)
+- [ ] **Mode Jeu** : valeurs de stat éditables → lecture seule ; modificateurs (calculés) → clic lance le jet de caractéristique ; JdS calculés → clic lance le JdS ; cases de maîtrise JdS non modifiables
+- [ ] **Toujours en lecture seule** : modificateurs, bonus de maîtrise, valeur initiative (calculés)
 
 ### 2.5 Bloc 4 — Classe d'Armure
 
@@ -169,6 +212,8 @@
 - [x] Champs : `bonus_armure`, `bouclier`, `magie`, `autre`
 - [x] CA totale calculée et mise en avant (grand nombre)
 - [ ] Alerte si armure sans maîtrise (fonctionnalité optionnelle)
+- [ ] **Mode Jeu** : champs bonus → lecture seule
+- [ ] **Toujours en lecture seule** : CA totale (calculée)
 
 ### 2.6 Bloc 5 — Points de Vie & Dés de Vie
 
@@ -182,6 +227,8 @@
 - [x] Repos long : bouton → remet PV max, récupère la moitié des dés de vie
 - [x] 3 cases JDS succès + 3 cases JDS échecs
 - [ ] Réinitialisation automatique des JDS après stabilisation/soin
+- [ ] **Mode Jeu** : PV actuel, PV temporaires, dés de vie, JdS restent interactifs (c'est de la gestion en temps réel) ; sélecteur type de dé → lecture seule
+- [ ] **Toujours en lecture seule** : PV max (calculé)
 
 ### 2.7 Bloc 6 — Compétences
 
@@ -190,6 +237,8 @@
 - [ ] Recalcul automatique si les stats changent
 - [ ] Afficher la **Perception passive** (calculée) en bas du bloc
 - [ ] Case **Inspiration** (booléen)
+- [ ] **Mode Jeu** : cases maîtrise/expertise non modifiables ; clic sur la valeur → jet de compétence direct ; boutons 🎲 masqués ; case Inspiration reste cliquable
+- [ ] **Toujours en lecture seule** : valeurs de compétences et perception passive (calculées)
 
 ---
 
@@ -212,6 +261,8 @@
 - [ ] Total dégâts calculé (dé + mod + magie + spécial)
 - [ ] Bouton supprimer une ligne
 - [ ] Sauvegarde en DB (table `armes`)
+- [ ] **Mode Jeu** : champs de saisie → lecture seule ; boutons ajouter/supprimer masqués ; clic sur total toucher → jet d'attaque ; clic sur total dégâts → jet de dégâts
+- [ ] **Toujours en lecture seule** : totaux toucher et dégâts (calculés)
 
 ### 3.3 Bloc 8 — Équipement & Possessions
 
@@ -219,6 +270,7 @@
 - [ ] Section monnaie : PP / PO / PE / PA / PC (champs numériques)
 - [ ] Section objets magiques (nom + description)
 - [ ] Sauvegarde en DB (tables `equipement`, `monnaie`)
+- [ ] **Mode Jeu** : liste objets → lecture seule, boutons ajouter/supprimer masqués ; monnaie reste éditable (gestion en temps réel)
 
 ---
 
@@ -236,6 +288,8 @@
   - [ ] `concentration` (case), `composantes` V/S/M (cases)
   - [ ] `description` (texte long, dépliable)
 - [ ] Sauvegarde en DB (tables `sorts`, `emplacements_sorts`)
+- [ ] **Mode Jeu** : champs sorts → lecture seule ; boutons ajouter/supprimer masqués ; cases emplacements utilisés restent cliquables (gestion en temps réel) ; cases `préparé` restent cliquables
+- [ ] **Toujours en lecture seule** : DD sorts et bonus attaque de sort (calculés)
 
 ### 4.2 Bloc 10 — Traits & Capacités
 
@@ -245,17 +299,20 @@
   - [ ] `nom`, `max`, `utilisé` (champ + cases), `rechargement`, `action`, `description`
   - [ ] Bouton "Utiliser" (−1) + reset au repos
 - [ ] Sauvegarde en DB (table `capacites`)
+- [ ] **Mode Jeu** : zones texte → lecture seule ; boutons ajouter/supprimer capacités masqués ; bouton "Utiliser" et cases utilisations restent actifs
 
 ### 4.3 Bloc 11 — Historique / Personnalité
 
 - [ ] 5 zones texte : `trait 1`, `trait 2`, `idéal`, `lien`, `défaut`
 - [ ] Zone texte : historique (background)
 - [ ] Sauvegarde automatique
+- [ ] **Mode Jeu** : toutes les zones → lecture seule
 
 ### 4.4 Bloc 12 — Notes
 
 - [ ] Zone de texte libre (grande, multi-lignes)
 - [ ] Sauvegarde automatique
+- [ ] **Mode Jeu** : zone notes reste éditable (les notes en cours de session sont une exception justifiée)
 
 ---
 
