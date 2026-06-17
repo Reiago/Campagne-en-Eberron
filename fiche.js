@@ -19,12 +19,12 @@ const ALIGNEMENTS = [
   'Loyal Mauvais', 'Neutre Mauvais', 'Chaotique Mauvais',
 ];
 const COMP_CARAC = {
-  'Acrobaties': 'dexterite', 'Arcanes': 'intelligence', 'Athlétisme': 'force',
-  'Discrétion': 'dexterite', 'Dressage': 'sagesse', 'Escamotage': 'dexterite',
-  'Histoire': 'intelligence', 'Intimidation': 'charisme', 'Investigation': 'intelligence',
-  'Médecine': 'sagesse', 'Nature': 'intelligence', 'Perception': 'sagesse',
-  'Perspicacité': 'sagesse', 'Persuasion': 'charisme', 'Religion': 'intelligence',
-  'Représentation': 'charisme', 'Survie': 'sagesse', 'Tromperie': 'charisme',
+  'acrobaties': 'dexterite', 'arcanes': 'intelligence', 'athlétisme': 'force',
+  'discrétion': 'dexterite', 'dressage': 'sagesse', 'escamotage': 'dexterite',
+  'histoire': 'intelligence', 'intimidation': 'charisme', 'investigation': 'intelligence',
+  'médecine': 'sagesse', 'nature': 'intelligence', 'perception': 'sagesse',
+  'perspicacité': 'sagesse', 'persuasion': 'charisme', 'religion': 'intelligence',
+  'représentation': 'charisme', 'survie': 'sagesse', 'tromperie': 'charisme',
 };
 
 // ── État ───────────────────────────────────────────────────────────────────────
@@ -495,8 +495,8 @@ function remplirCompetences() {
   tbody.innerHTML = '';
 
   competences.forEach(comp => {
-    const stat    = COMP_CARAC[comp.nom];
-    const label   = STAT_LABELS[stat]?.slice(0, 3) ?? '?';
+    const stat    = COMP_CARAC[comp.nom?.toLowerCase()];
+    const caracNom = STAT_LABELS[stat] ?? '?';
     const modBase = modificateur(carac[stat] ?? 10);
     const val     = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
 
@@ -504,7 +504,7 @@ function remplirCompetences() {
     tr.innerHTML = `
       <td><input type="checkbox" class="case-maitrise comp-maitrise" data-id="${comp.id}" ${comp.maitrise ? 'checked' : ''}></td>
       <td><input type="checkbox" class="case-maitrise comp-expertise" data-id="${comp.id}" ${comp.expertise ? 'checked' : ''}></td>
-      <td>${comp.nom} <span class="comp-carac-label">(${label}.)</span></td>
+      <td>${comp.nom} <span class="comp-carac-label">(${caracNom})</span></td>
       <td class="comp-val-cell val-clickable champ-calcule" id="comp-val-${comp.id}">${fmt(val)}</td>
     `;
     tbody.appendChild(tr);
@@ -512,7 +512,7 @@ function remplirCompetences() {
     // Clic sur la valeur calculée → jet en Mode Jeu
     tr.querySelector('.comp-val-cell').addEventListener('click', () => {
       if (getMode() !== 'jeu') return;
-      const s     = COMP_CARAC[comp.nom];
+      const s     = COMP_CARAC[comp.nom?.toLowerCase()];
       const mBase = modificateur(carac[s] ?? 10);
       lancerJet(bonusCompetence(mBase, comp.maitrise, comp.expertise, perso.niveau ?? 1), comp.nom);
     });
@@ -535,7 +535,7 @@ function remplirCompetences() {
 function recalculerCompetences() {
   if (!competences?.length || !carac) return;
   competences.forEach(comp => {
-    const stat    = COMP_CARAC[comp.nom];
+    const stat    = COMP_CARAC[comp.nom?.toLowerCase()];
     const modBase = modificateur(carac[stat] ?? 10);
     const val     = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
     const el      = document.getElementById('comp-val-' + comp.id);
@@ -547,7 +547,7 @@ function recalculerCompetences() {
 function recalculerPerceptionPassive() {
   const el = document.getElementById('perception-passive');
   if (!el || !carac) return;
-  const percComp = competences.find(c => c.nom === 'Perception');
+  const percComp = competences.find(c => c.nom?.toLowerCase() === 'perception');
   const modSag   = modificateur(carac.sagesse ?? 10);
   el.textContent = perceptionPassive(modSag, percComp?.maitrise ?? false, percComp?.expertise ?? false, perso.niveau ?? 1);
 }
