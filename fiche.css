@@ -866,4 +866,15 @@ body.mode-jeu .jds-maitrise {
   pointer-events: none !important;
   opacity: 0.5;
 }
-/* Mais la case Inspiration reste cliquable (déjà géré par #inspiration-cb) */
+
+/* Désactiver tous les <label for="…"> en Mode Jeu (ils déclencheraient sinon
+   le checkbox associé même quand celui-ci est bloqué par pointer-events: none) */
+body.mode-jeu label {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+/* Exception : le label de l'Inspiration reste cliquable */
+body.mode-jeu .comp-inspiration-row label {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
