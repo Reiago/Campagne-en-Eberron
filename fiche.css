@@ -726,3 +726,144 @@ input[type="checkbox"].case-maitrise:checked::after {
 }
 .des-toast.critique .toast-total { color: var(--gold); }
 .des-toast.echec-critique .toast-total { color: #D87060; }
+
+/* ── Mode Jeu / Mode Édition ────────────────────────────────────────────────── */
+
+/* Bouton de bascule de mode */
+.btn-mode {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.65rem;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.btn-mode.actif {
+  color: var(--gold-light);
+  border-color: var(--gold-dim);
+  background: rgba(201,168,108,0.08);
+  box-shadow: 0 0 8px rgba(201,168,108,0.15);
+}
+.btn-mode:hover { color: var(--text-muted); border-color: var(--gold-dim); }
+
+/* Indicateur visuel du mode dans la topbar */
+body.mode-jeu .fiche-topbar { border-bottom-color: var(--gold-dim); }
+body.mode-edition .fiche-topbar { border-bottom-color: rgba(100,160,200,0.4); }
+body.mode-edition .btn-mode { color: rgba(100,180,220,0.85); border-color: rgba(100,160,200,0.5); background: rgba(100,160,200,0.07); }
+
+/* ── Champs toujours en lecture seule (valeurs calculées) ───────────────────── */
+.champ-calcule {
+  display: inline-block;
+  cursor: default;
+  user-select: none;
+}
+
+/* ── Valeurs cliquables en Mode Jeu ─────────────────────────────────────────── */
+.val-clickable { transition: color 0.15s; }
+body.mode-jeu .val-clickable {
+  cursor: pointer;
+}
+body.mode-jeu .val-clickable:hover {
+  color: var(--gold);
+  text-shadow: 0 0 8px rgba(201,168,108,0.4);
+}
+
+/* ── Mode Jeu : désactiver tous les champs éditables ────────────────────────── */
+body.mode-jeu input,
+body.mode-jeu select,
+body.mode-jeu textarea {
+  pointer-events: none !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  color: var(--text-muted) !important;
+  cursor: default !important;
+}
+
+/* En mode jeu, les valeurs de carac prennent l'apparence de texte */
+body.mode-jeu .carac-box-val {
+  color: var(--gold-light) !important;
+  font-weight: 600;
+  width: auto;
+  padding: 0 4px;
+}
+
+/* Réactiver les éléments interactifs du Bloc PV en Mode Jeu */
+body.mode-jeu #pv-actuel,
+body.mode-jeu #pv-temporaires {
+  pointer-events: auto !important;
+  background: var(--stone-mid) !important;
+  border-color: var(--border) !important;
+  color: var(--gold-light) !important;
+  cursor: text !important;
+}
+body.mode-jeu #pv-actuel:focus,
+body.mode-jeu #pv-temporaires:focus {
+  border-color: var(--gold-dim) !important;
+}
+/* Les cases de dés de vie et JdS mort restent cliquables */
+body.mode-jeu #des-de-vie input,
+body.mode-jeu #jds-succes input,
+body.mode-jeu #jds-echecs input {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+/* Inspiration reste cliquable */
+body.mode-jeu #inspiration-cb {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+/* Boutons +/- PV et repos restent accessibles */
+body.mode-jeu .mode-jeu-ok {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* ── Mode Jeu : masquer les boutons 🎲 et les boutons structurels ────────────── */
+body.mode-jeu .btn-de { display: none !important; }
+body.mode-jeu .btn-structurel { display: none !important; }
+
+/* Bouton dé inline (à côté de l'initiative) */
+.btn-de-inline {
+  font-size: 12px;
+  padding: 2px 5px;
+  margin-top: 4px;
+}
+
+/* ── PV max (span calculé, remplace l'input) ────────────────────────────────── */
+.pv-max-val {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0.3rem 0.4rem;
+  min-width: 40px;
+  text-align: center;
+  display: inline-block;
+}
+
+/* ── Mode Jeu : label d'identité discret ────────────────────────────────────── */
+body.mode-jeu .fiche-field label {
+  opacity: 0.6;
+}
+/* En mode jeu, les fiche-field inputs se fondent dans la page */
+body.mode-jeu .fiche-field input,
+body.mode-jeu .fiche-field select,
+body.mode-jeu .fiche-field textarea {
+  padding: 0.2rem 0 !important;
+  font-size: 16px !important;
+  color: var(--text-main) !important;
+}
+
+/* Compétences — cases maîtrise/expertise non interactives en Mode Jeu */
+body.mode-jeu .comp-maitrise,
+body.mode-jeu .comp-expertise,
+body.mode-jeu .jds-maitrise {
+  pointer-events: none !important;
+  opacity: 0.5;
+}
+/* Mais la case Inspiration reste cliquable (déjà géré par #inspiration-cb) */

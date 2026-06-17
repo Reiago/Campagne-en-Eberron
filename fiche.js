@@ -4,7 +4,7 @@ import {
   getCaracteristiques, updateCaracteristiques,
   getCompetences, updateCompetence,
 } from './db.js';
-import { modificateur, bonusMaitrise, caCalculee, bonusCompetence, perceptionPassive } from './calculs.js';
+import { modificateur, bonusMaitrise, caCalculee, bonusCompetence, perceptionPassive, pvMax } from './calculs.js';
 import { lancerJet, lancerDe } from './des.js';
 
 // ── Constantes ─────────────────────────────────────────────────────────────────
@@ -29,6 +29,33 @@ const COMP_CARAC = {
 
 // ── État ───────────────────────────────────────────────────────────────────────
 let perso = null, carac = null, competences = [];
+
+// ── Mode Jeu / Mode Édition ────────────────────────────────────────────────────
+function getMode() {
+  return localStorage.getItem('fiche-mode') || 'jeu';
+}
+
+function setMode(mode) {
+  localStorage.setItem('fiche-mode', mode);
+  document.body.classList.toggle('mode-jeu', mode === 'jeu');
+  document.body.classList.toggle('mode-edition', mode === 'edition');
+  const btn = document.getElementById('btn-mode');
+  if (!btn) return;
+  if (mode === 'jeu') {
+    btn.textContent = '⚔ Mode Jeu';
+    btn.classList.add('actif');
+  } else {
+    btn.textContent = '✏ Mode Édition';
+    btn.classList.remove('actif');
+  }
+}
+
+// Appliquer le mode sauvegardé immédiatement (avant chargement des données)
+setMode(getMode());
+
+document.getElementById('btn-mode')?.addEventListener('click', () => {
+  setMode(getMode() === 'jeu' ? 'edition' : 'jeu');
+});
 
 // ── Auth & chargement ──────────────────────────────────────────────────────────
 const user = await requireAuth('login.html');
@@ -59,6 +86,7 @@ try {
   remplirArmure();
   remplirPV();
   remplirCompetences();
+  initModeJeuClics();
 } catch (err) {
   console.error('[fiche]', err);
   afficherErreur(err.message || 'Impossible de charger la fiche.');
@@ -126,6 +154,38 @@ function recalculerTout() {
   recalculerCompetences();
   recalculerInitiative();
   recalculerBM();
+  recalculerPVMax();
+}
+
+// ── Clics Mode Jeu sur les valeurs calculées ───────────────────────────────────
+function initModeJeuClics() {
+  // Modificateurs → jet de caractéristique
+  STATS.forEach(stat => {
+    document.getElementById('mod-' + stat)?.addEventListener('click', () => {
+      if (getMode() !== 'jeu') return;
+      lancerJet(modificateur(carac[stat] ?? 10), STAT_LABELS[stat]);
+    });
+  });
+
+  // JdS values → jet de sauvegarde
+  STATS.forEach(stat => {
+    document.getElementById('jds-val-' + stat)?.addEventListener('click', () => {
+      if (getMode() !== 'jeu') return;
+      const key = 'maitrise_jds_' + stat;
+      const bm  = bonusMaitrise(perso.niveau ?? 1);
+      const mod = modificateur(carac[stat] ?? 10) + (carac[key] ? bm : 0);
+      lancerJet(mod, 'Sauv. ' + STAT_LABELS[stat]);
+    });
+  });
+
+  // Initiative
+  document.getElementById('initiative-val')?.addEventListener('click', () => {
+    if (getMode() !== 'jeu') return;
+    lancerJet(modificateur(carac.dexterite ?? 10), 'Initiative');
+  });
+  document.getElementById('de-initiative')?.addEventListener('click', () => {
+    lancerJet(modificateur(carac.dexterite ?? 10), 'Initiative');
+  });
 }
 
 // ── Bloc 1 : Identité ──────────────────────────────────────────────────────────
@@ -156,6 +216,7 @@ function remplirIdentite() {
         recalculerBM();
         recalculerModsEtJdS();
         recalculerCompetences();
+        recalculerPVMax();
         remplirDesDeVie();
       }
     });
@@ -191,13 +252,14 @@ function remplirCarac() {
       scheduleCaracSave({ [stat]: val });
     });
 
+    // Bouton dé (Mode Édition)
     document.getElementById('de-' + stat)?.addEventListener('click', () => {
       lancerJet(modificateur(carac[stat] ?? 10), STAT_LABELS[stat]);
     });
   });
 
   STATS.forEach(stat => {
-    const key = 'maitrise_jds_' + stat;
+    const key   = 'maitrise_jds_' + stat;
     const cb    = document.getElementById('jds-maitrise-' + stat);
     const valEl = document.getElementById('jds-val-' + stat);
     const btnDe = document.getElementById('jds-de-' + stat);
@@ -225,7 +287,7 @@ function recalculerModsEtJdS() {
   if (!carac) return;
   const bm = bonusMaitrise(perso.niveau ?? 1);
   STATS.forEach(stat => {
-    const mod = modificateur(carac[stat] ?? 10);
+    const mod    = modificateur(carac[stat] ?? 10);
     const jdsKey = 'maitrise_jds_' + stat;
     const valEl  = document.getElementById('jds-val-' + stat);
     if (valEl) valEl.textContent = fmt(mod + (carac[jdsKey] ? bm : 0));
@@ -298,20 +360,12 @@ function remplirPV() {
   if (!perso) return;
 
   const pvActuelEl = document.getElementById('pv-actuel');
-  const pvMaxEl    = document.getElementById('pv-max');
   const pvTempEl   = document.getElementById('pv-temporaires');
 
   if (pvActuelEl) {
     pvActuelEl.value = perso.pv_actuel ?? 0;
     pvActuelEl.addEventListener('input', () => {
       schedulePersoSave({ pv_actuel: Number(pvActuelEl.value) || 0 });
-      recalculerPVBar();
-    });
-  }
-  if (pvMaxEl) {
-    pvMaxEl.value = perso.pv_max ?? 0;
-    pvMaxEl.addEventListener('input', () => {
-      schedulePersoSave({ pv_max: Number(pvMaxEl.value) || 0 });
       recalculerPVBar();
     });
   }
@@ -334,36 +388,39 @@ function remplirPV() {
   const typeDeSel = document.getElementById('pv-type-de');
   if (typeDeSel) {
     typeDeSel.value = perso.type_de_vie ?? 'd8';
-    typeDeSel.addEventListener('change', () => schedulePersoSave({ type_de_vie: typeDeSel.value }));
+    typeDeSel.addEventListener('change', () => {
+      schedulePersoSave({ type_de_vie: typeDeSel.value });
+      recalculerPVMax();
+    });
   }
 
   remplirDesDeVie();
   remplirJDSMort();
-  recalculerPVBar();
+  recalculerPVMax();
 
   // Repos court : lance les dés de vie dépensés, récupère des PV
   document.getElementById('btn-repos-court')?.addEventListener('click', () => {
-    const typeDe  = parseInt((perso.type_de_vie ?? 'd8').replace('d', ''), 10);
+    const faces   = parseInt((perso.type_de_vie ?? 'd8').replace('d', ''), 10);
     const modCon  = carac ? modificateur(carac.constitution ?? 10) : 0;
     const depenses = perso.des_de_vie_depenses ?? 0;
-    if (depenses === 0) return;
-    let total = 0;
-    for (let i = 0; i < depenses; i++) total += lancerDe(typeDe) + modCon;
-    const nouveauxPV = Math.min(perso.pv_max ?? 0, (perso.pv_actuel ?? 0) + total);
+    if (!depenses) return;
+    let soin = 0;
+    for (let i = 0; i < depenses; i++) soin += Math.max(1, lancerDe(faces) + modCon);
+    const nouveauxPV = Math.min(perso.pv_max ?? 0, (perso.pv_actuel ?? 0) + soin);
     pvActuelEl.value = nouveauxPV;
     schedulePersoSave({ pv_actuel: nouveauxPV, des_de_vie_depenses: 0 });
-    perso.des_de_vie_depenses = 0;
     remplirDesDeVie();
     recalculerPVBar();
   });
 
-  // Repos long : PV max, récupère la moitié des dés de vie
+  // Repos long : PV max, récupère la moitié des dés de vie, réinitialise JDS
   document.getElementById('btn-repos-long')?.addEventListener('click', () => {
     const niveau   = perso.niveau ?? 1;
     const recup    = Math.max(1, Math.floor(niveau / 2));
     const nouveauxDepenses = Math.max(0, (perso.des_de_vie_depenses ?? 0) - recup);
     const pvMaxVal = perso.pv_max ?? 0;
     pvActuelEl.value = pvMaxVal;
+    if (pvTempEl) pvTempEl.value = 0;
     const patch = {
       pv_actuel: pvMaxVal,
       pv_temporaires: 0,
@@ -372,18 +429,27 @@ function remplirPV() {
       jds_echecs: 0,
     };
     schedulePersoSave(patch);
-    perso.des_de_vie_depenses = nouveauxDepenses;
-    perso.pv_temporaires = 0;
-    if (pvTempEl) pvTempEl.value = 0;
     remplirDesDeVie();
     remplirJDSMort();
     recalculerPVBar();
   });
 }
 
+function recalculerPVMax() {
+  if (!perso || !carac) return;
+  const modCon    = modificateur(carac.constitution ?? 10);
+  const nouveauMax = pvMax(perso.niveau ?? 1, perso.type_de_vie ?? 'd8', modCon);
+  const el        = document.getElementById('pv-max');
+  if (el) el.textContent = nouveauMax;
+  if (nouveauMax !== perso.pv_max) {
+    schedulePersoSave({ pv_max: nouveauMax });
+  }
+  recalculerPVBar();
+}
+
 function recalculerPVBar() {
   const pvActuel = Number(document.getElementById('pv-actuel')?.value) || 0;
-  const pvMaxVal = Number(document.getElementById('pv-max')?.value) || 1;
+  const pvMaxVal = Number(document.getElementById('pv-max')?.textContent) || 1;
   const pct = Math.max(0, Math.min(100, (pvActuel / pvMaxVal) * 100));
   const bar = document.getElementById('pv-bar-fill');
   if (!bar) return;
@@ -444,21 +510,28 @@ function remplirCompetences() {
   tbody.innerHTML = '';
 
   competences.forEach(comp => {
-    const stat   = COMP_CARAC[comp.nom];
-    const label  = STAT_LABELS[stat]?.slice(0, 3) ?? '?';
-    const bm     = bonusMaitrise(perso.niveau ?? 1);
+    const stat    = COMP_CARAC[comp.nom];
+    const label   = STAT_LABELS[stat]?.slice(0, 3) ?? '?';
     const modBase = modificateur(carac[stat] ?? 10);
-    const val    = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
+    const val     = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><input type="checkbox" class="case-maitrise comp-maitrise" data-id="${comp.id}" ${comp.maitrise ? 'checked' : ''}></td>
       <td><input type="checkbox" class="case-maitrise comp-expertise" data-id="${comp.id}" ${comp.expertise ? 'checked' : ''}></td>
       <td>${comp.nom} <span class="comp-carac-label">(${label}.)</span></td>
-      <td class="comp-val-cell" id="comp-val-${comp.id}">${fmt(val)}</td>
+      <td class="comp-val-cell val-clickable champ-calcule" id="comp-val-${comp.id}">${fmt(val)}</td>
       <td class="comp-de-cell"><button class="btn-de" data-comp="${comp.nom}" title="Lancer ${comp.nom}">🎲</button></td>
     `;
     tbody.appendChild(tr);
+
+    // Clic sur la valeur calculée → jet en Mode Jeu
+    tr.querySelector('.comp-val-cell').addEventListener('click', () => {
+      if (getMode() !== 'jeu') return;
+      const s     = COMP_CARAC[comp.nom];
+      const mBase = modificateur(carac[s] ?? 10);
+      lancerJet(bonusCompetence(mBase, comp.maitrise, comp.expertise, perso.niveau ?? 1), comp.nom);
+    });
 
     tr.querySelector('.comp-maitrise').addEventListener('change', async e => {
       comp.maitrise = e.target.checked;
@@ -470,11 +543,12 @@ function remplirCompetences() {
       try { await updateCompetence(comp.id, { expertise: comp.expertise }); recalculerCompetences(); }
       catch (err) { console.error(err); }
     });
+
+    // Bouton dé (Mode Édition)
     tr.querySelector('.btn-de').addEventListener('click', () => {
-      const s    = COMP_CARAC[comp.nom];
+      const s     = COMP_CARAC[comp.nom];
       const mBase = modificateur(carac[s] ?? 10);
-      const bonus = bonusCompetence(mBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
-      lancerJet(bonus, comp.nom);
+      lancerJet(bonusCompetence(mBase, comp.maitrise, comp.expertise, perso.niveau ?? 1), comp.nom);
     });
   });
 
@@ -498,8 +572,7 @@ function recalculerPerceptionPassive() {
   if (!el || !carac) return;
   const percComp = competences.find(c => c.nom === 'Perception');
   const modSag   = modificateur(carac.sagesse ?? 10);
-  const pp       = perceptionPassive(modSag, percComp?.maitrise ?? false, percComp?.expertise ?? false, perso.niveau ?? 1);
-  el.textContent = pp;
+  el.textContent = perceptionPassive(modSag, percComp?.maitrise ?? false, percComp?.expertise ?? false, perso.niveau ?? 1);
 }
 
 // ── Utilitaires ────────────────────────────────────────────────────────────────
