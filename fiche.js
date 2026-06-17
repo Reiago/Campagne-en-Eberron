@@ -1,0 +1,513 @@
+import { requireAuth, logout } from './auth.js';
+import {
+  getPersonnage, getPersonnageById, updatePersonnage,
+  getCaracteristiques, updateCaracteristiques,
+  getCompetences, updateCompetence,
+} from './db.js';
+import { modificateur, bonusMaitrise, caCalculee, bonusCompetence, perceptionPassive } from './calculs.js';
+import { lancerJet, lancerDe } from './des.js';
+
+// ── Constantes ─────────────────────────────────────────────────────────────────
+const STATS = ['force', 'dexterite', 'constitution', 'intelligence', 'sagesse', 'charisme'];
+const STAT_LABELS = {
+  force: 'Force', dexterite: 'Dextérité', constitution: 'Constitution',
+  intelligence: 'Intelligence', sagesse: 'Sagesse', charisme: 'Charisme',
+};
+const ALIGNEMENTS = [
+  'Loyal Bon', 'Neutre Bon', 'Chaotique Bon',
+  'Loyal Neutre', 'Vrai Neutre', 'Chaotique Neutre',
+  'Loyal Mauvais', 'Neutre Mauvais', 'Chaotique Mauvais',
+];
+const COMP_CARAC = {
+  'Acrobaties': 'dexterite', 'Arcanes': 'intelligence', 'Athlétisme': 'force',
+  'Discrétion': 'dexterite', 'Dressage': 'sagesse', 'Escamotage': 'dexterite',
+  'Histoire': 'intelligence', 'Intimidation': 'charisme', 'Investigation': 'intelligence',
+  'Médecine': 'sagesse', 'Nature': 'intelligence', 'Perception': 'sagesse',
+  'Perspicacité': 'sagesse', 'Persuasion': 'charisme', 'Religion': 'intelligence',
+  'Représentation': 'charisme', 'Survie': 'sagesse', 'Tromperie': 'charisme',
+};
+
+// ── État ───────────────────────────────────────────────────────────────────────
+let perso = null, carac = null, competences = [];
+
+// ── Auth & chargement ──────────────────────────────────────────────────────────
+const user = await requireAuth('login.html');
+if (!user) throw new Error('Non authentifié');
+
+document.getElementById('perso-user-email').textContent = user.email;
+document.getElementById('btn-logout').addEventListener('click', logout);
+
+const params = new URLSearchParams(window.location.search);
+const ficheId = params.get('id');
+
+try {
+  perso = ficheId ? await getPersonnageById(ficheId) : await getPersonnage(user.id);
+  if (!perso) throw new Error('Aucun personnage trouvé pour ce compte.');
+
+  [carac, competences] = await Promise.all([
+    getCaracteristiques(perso.id),
+    getCompetences(perso.id),
+  ]);
+
+  if (perso.nom) {
+    document.title = perso.nom + ' — Eberron';
+    document.getElementById('perso-titre').textContent = perso.nom;
+  }
+
+  remplirIdentite();
+  remplirCarac();
+  remplirArmure();
+  remplirPV();
+  remplirCompetences();
+} catch (err) {
+  console.error('[fiche]', err);
+  afficherErreur(err.message || 'Impossible de charger la fiche.');
+}
+
+// ── Navigation entre blocs ─────────────────────────────────────────────────────
+document.querySelectorAll('.fiche-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    activerBloc(tab.dataset.bloc);
+    document.getElementById('nav-blocs').classList.remove('open');
+  });
+});
+document.getElementById('nav-toggle').addEventListener('click', () => {
+  document.getElementById('nav-blocs').classList.toggle('open');
+});
+
+function activerBloc(id) {
+  document.querySelectorAll('.fiche-bloc').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.fiche-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('bloc-' + id)?.classList.add('active');
+  document.querySelector(`.fiche-tab[data-bloc="${id}"]`)?.classList.add('active');
+}
+
+// ── Sauvegarde automatique ─────────────────────────────────────────────────────
+const DEBOUNCE_MS = 500;
+let persoTimer = null, caracTimer = null;
+
+function showSave(status) {
+  const el = document.getElementById('save-indicator');
+  if (!el) return;
+  el.dataset.status = status;
+  el.textContent = status === 'saving' ? 'Sauvegarde…' : status === 'ok' ? 'Sauvegardé ✓' : 'Erreur';
+  if (status !== 'saving') {
+    setTimeout(() => { el.dataset.status = ''; el.textContent = ''; }, 2500);
+  }
+}
+
+function schedulePersoSave(patch) {
+  Object.assign(perso, patch);
+  clearTimeout(persoTimer);
+  persoTimer = setTimeout(async () => {
+    showSave('saving');
+    try { await updatePersonnage(perso.id, patch); showSave('ok'); }
+    catch { showSave('error'); }
+  }, DEBOUNCE_MS);
+}
+
+function scheduleCaracSave(patch) {
+  Object.assign(carac, patch);
+  clearTimeout(caracTimer);
+  caracTimer = setTimeout(async () => {
+    showSave('saving');
+    try {
+      await updateCaracteristiques(carac.id, patch);
+      showSave('ok');
+      recalculerTout();
+    } catch { showSave('error'); }
+  }, DEBOUNCE_MS);
+}
+
+// ── Recalcul en cascade ────────────────────────────────────────────────────────
+function recalculerTout() {
+  recalculerModsEtJdS();
+  recalculerArmure();
+  recalculerCompetences();
+  recalculerInitiative();
+  recalculerBM();
+}
+
+// ── Bloc 1 : Identité ──────────────────────────────────────────────────────────
+function remplirIdentite() {
+  const champsTxt = ['nom', 'classe', 'race', 'dieu', 'devise'];
+  const champsNum = ['niveau', 'age', 'taille_cm', 'poids_kg', 'xp'];
+
+  champsTxt.forEach(f => {
+    const el = document.getElementById('id-' + f);
+    if (!el) return;
+    el.value = perso[f] ?? '';
+    el.addEventListener('input', () => {
+      schedulePersoSave({ [f]: el.value });
+      if (f === 'nom') {
+        document.getElementById('perso-titre').textContent = el.value || 'Fiche de personnage';
+        document.title = (el.value || 'Fiche') + ' — Eberron';
+      }
+    });
+  });
+
+  champsNum.forEach(f => {
+    const el = document.getElementById('id-' + f);
+    if (!el) return;
+    el.value = perso[f] ?? '';
+    el.addEventListener('input', () => {
+      schedulePersoSave({ [f]: el.value === '' ? null : Number(el.value) });
+      if (f === 'niveau') {
+        recalculerBM();
+        recalculerModsEtJdS();
+        recalculerCompetences();
+        remplirDesDeVie();
+      }
+    });
+  });
+
+  const sel = document.getElementById('id-alignement');
+  if (sel) {
+    ALIGNEMENTS.forEach(a => {
+      const opt = document.createElement('option');
+      opt.value = a; opt.textContent = a;
+      sel.appendChild(opt);
+    });
+    sel.value = perso.alignement ?? '';
+    sel.addEventListener('change', () => schedulePersoSave({ alignement: sel.value }));
+  }
+}
+
+// ── Bloc 2 : Caractéristiques ──────────────────────────────────────────────────
+function remplirCarac() {
+  if (!carac) return;
+
+  STATS.forEach(stat => {
+    const valInput = document.getElementById('carac-' + stat);
+    const modEl    = document.getElementById('mod-' + stat);
+    if (!valInput || !modEl) return;
+
+    valInput.value = carac[stat] ?? 10;
+    modEl.textContent = fmt(modificateur(carac[stat] ?? 10));
+
+    valInput.addEventListener('input', () => {
+      const val = Number(valInput.value) || 10;
+      modEl.textContent = fmt(modificateur(val));
+      scheduleCaracSave({ [stat]: val });
+    });
+
+    document.getElementById('de-' + stat)?.addEventListener('click', () => {
+      lancerJet(modificateur(carac[stat] ?? 10), STAT_LABELS[stat]);
+    });
+  });
+
+  STATS.forEach(stat => {
+    const key = 'maitrise_jds_' + stat;
+    const cb    = document.getElementById('jds-maitrise-' + stat);
+    const valEl = document.getElementById('jds-val-' + stat);
+    const btnDe = document.getElementById('jds-de-' + stat);
+    if (!cb || !valEl) return;
+
+    cb.checked = carac[key] ?? false;
+    cb.addEventListener('change', () => {
+      scheduleCaracSave({ [key]: cb.checked });
+      recalculerModsEtJdS();
+    });
+
+    btnDe?.addEventListener('click', () => {
+      const bm  = bonusMaitrise(perso.niveau ?? 1);
+      const mod = modificateur(carac[stat] ?? 10) + (carac[key] ? bm : 0);
+      lancerJet(mod, 'Sauv. ' + STAT_LABELS[stat]);
+    });
+  });
+
+  recalculerModsEtJdS();
+  recalculerBM();
+  recalculerInitiative();
+}
+
+function recalculerModsEtJdS() {
+  if (!carac) return;
+  const bm = bonusMaitrise(perso.niveau ?? 1);
+  STATS.forEach(stat => {
+    const mod = modificateur(carac[stat] ?? 10);
+    const jdsKey = 'maitrise_jds_' + stat;
+    const valEl  = document.getElementById('jds-val-' + stat);
+    if (valEl) valEl.textContent = fmt(mod + (carac[jdsKey] ? bm : 0));
+  });
+}
+
+function recalculerBM() {
+  const bm = bonusMaitrise(perso.niveau ?? 1);
+  const el = document.getElementById('bonus-maitrise');
+  if (el) el.textContent = '+' + bm;
+}
+
+function recalculerInitiative() {
+  const el = document.getElementById('initiative-val');
+  if (!el || !carac) return;
+  el.textContent = fmt(modificateur(carac.dexterite ?? 10));
+}
+
+// ── Bloc 4 : Armure ────────────────────────────────────────────────────────────
+function remplirArmure() {
+  if (!perso) return;
+
+  const typeArmure = document.getElementById('armure-type');
+  if (typeArmure) {
+    typeArmure.value = perso.type_armure ?? 'sans';
+    typeArmure.addEventListener('change', () => {
+      schedulePersoSave({ type_armure: typeArmure.value });
+      recalculerArmure();
+    });
+  }
+
+  ['bonus_armure', 'bonus_armure_magie', 'bonus_armure_autre'].forEach(f => {
+    const el = document.getElementById('armure-' + f);
+    if (!el) return;
+    el.value = perso[f] ?? 0;
+    el.addEventListener('input', () => {
+      schedulePersoSave({ [f]: Number(el.value) || 0 });
+      recalculerArmure();
+    });
+  });
+
+  const bouclier = document.getElementById('armure-bouclier');
+  if (bouclier) {
+    bouclier.checked = perso.bouclier ?? false;
+    bouclier.addEventListener('change', () => {
+      schedulePersoSave({ bouclier: bouclier.checked });
+      recalculerArmure();
+    });
+  }
+
+  recalculerArmure();
+}
+
+function recalculerArmure() {
+  if (!perso || !carac) return;
+  const ca = caCalculee(
+    perso.type_armure ?? 'sans',
+    perso.bonus_armure ?? 0,
+    modificateur(carac.dexterite ?? 10),
+    perso.bouclier ?? false,
+    perso.bonus_armure_magie ?? 0,
+    perso.bonus_armure_autre ?? 0,
+  );
+  const el = document.getElementById('ca-totale');
+  if (el) el.textContent = ca;
+}
+
+// ── Bloc 5 : Points de Vie ─────────────────────────────────────────────────────
+function remplirPV() {
+  if (!perso) return;
+
+  const pvActuelEl = document.getElementById('pv-actuel');
+  const pvMaxEl    = document.getElementById('pv-max');
+  const pvTempEl   = document.getElementById('pv-temporaires');
+
+  if (pvActuelEl) {
+    pvActuelEl.value = perso.pv_actuel ?? 0;
+    pvActuelEl.addEventListener('input', () => {
+      schedulePersoSave({ pv_actuel: Number(pvActuelEl.value) || 0 });
+      recalculerPVBar();
+    });
+  }
+  if (pvMaxEl) {
+    pvMaxEl.value = perso.pv_max ?? 0;
+    pvMaxEl.addEventListener('input', () => {
+      schedulePersoSave({ pv_max: Number(pvMaxEl.value) || 0 });
+      recalculerPVBar();
+    });
+  }
+  if (pvTempEl) {
+    pvTempEl.value = perso.pv_temporaires ?? 0;
+    pvTempEl.addEventListener('input', () => schedulePersoSave({ pv_temporaires: Number(pvTempEl.value) || 0 }));
+  }
+
+  document.getElementById('pv-plus')?.addEventListener('click', () => {
+    pvActuelEl.value = Number(pvActuelEl.value) + 1;
+    schedulePersoSave({ pv_actuel: Number(pvActuelEl.value) });
+    recalculerPVBar();
+  });
+  document.getElementById('pv-minus')?.addEventListener('click', () => {
+    pvActuelEl.value = Math.max(0, Number(pvActuelEl.value) - 1);
+    schedulePersoSave({ pv_actuel: Number(pvActuelEl.value) });
+    recalculerPVBar();
+  });
+
+  const typeDeSel = document.getElementById('pv-type-de');
+  if (typeDeSel) {
+    typeDeSel.value = perso.type_de_vie ?? 'd8';
+    typeDeSel.addEventListener('change', () => schedulePersoSave({ type_de_vie: typeDeSel.value }));
+  }
+
+  remplirDesDeVie();
+  remplirJDSMort();
+  recalculerPVBar();
+
+  // Repos court : lance les dés de vie dépensés, récupère des PV
+  document.getElementById('btn-repos-court')?.addEventListener('click', () => {
+    const typeDe  = parseInt((perso.type_de_vie ?? 'd8').replace('d', ''), 10);
+    const modCon  = carac ? modificateur(carac.constitution ?? 10) : 0;
+    const depenses = perso.des_de_vie_depenses ?? 0;
+    if (depenses === 0) return;
+    let total = 0;
+    for (let i = 0; i < depenses; i++) total += lancerDe(typeDe) + modCon;
+    const nouveauxPV = Math.min(perso.pv_max ?? 0, (perso.pv_actuel ?? 0) + total);
+    pvActuelEl.value = nouveauxPV;
+    schedulePersoSave({ pv_actuel: nouveauxPV, des_de_vie_depenses: 0 });
+    perso.des_de_vie_depenses = 0;
+    remplirDesDeVie();
+    recalculerPVBar();
+  });
+
+  // Repos long : PV max, récupère la moitié des dés de vie
+  document.getElementById('btn-repos-long')?.addEventListener('click', () => {
+    const niveau   = perso.niveau ?? 1;
+    const recup    = Math.max(1, Math.floor(niveau / 2));
+    const nouveauxDepenses = Math.max(0, (perso.des_de_vie_depenses ?? 0) - recup);
+    const pvMaxVal = perso.pv_max ?? 0;
+    pvActuelEl.value = pvMaxVal;
+    const patch = {
+      pv_actuel: pvMaxVal,
+      pv_temporaires: 0,
+      des_de_vie_depenses: nouveauxDepenses,
+      jds_succes: 0,
+      jds_echecs: 0,
+    };
+    schedulePersoSave(patch);
+    perso.des_de_vie_depenses = nouveauxDepenses;
+    perso.pv_temporaires = 0;
+    if (pvTempEl) pvTempEl.value = 0;
+    remplirDesDeVie();
+    remplirJDSMort();
+    recalculerPVBar();
+  });
+}
+
+function recalculerPVBar() {
+  const pvActuel = Number(document.getElementById('pv-actuel')?.value) || 0;
+  const pvMaxVal = Number(document.getElementById('pv-max')?.value) || 1;
+  const pct = Math.max(0, Math.min(100, (pvActuel / pvMaxVal) * 100));
+  const bar = document.getElementById('pv-bar-fill');
+  if (!bar) return;
+  bar.style.width = pct + '%';
+  bar.dataset.state = pct > 50 ? 'bon' : pct > 25 ? 'moyen' : 'critique';
+}
+
+function remplirDesDeVie() {
+  const container = document.getElementById('des-de-vie');
+  if (!container || !perso) return;
+  const niveau   = perso.niveau ?? 1;
+  const depenses = perso.des_de_vie_depenses ?? 0;
+  container.innerHTML = '';
+  for (let i = 0; i < niveau; i++) {
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = i < depenses;
+    cb.title = cb.checked ? 'Dé dépensé' : 'Dé disponible';
+    cb.addEventListener('change', () => {
+      const total = container.querySelectorAll('input:checked').length;
+      schedulePersoSave({ des_de_vie_depenses: total });
+    });
+    container.appendChild(cb);
+  }
+}
+
+function remplirJDSMort() {
+  ['succes', 'echecs'].forEach(type => {
+    const container = document.getElementById('jds-' + type);
+    if (!container || !perso) return;
+    const val = perso['jds_' + type] ?? 0;
+    container.innerHTML = '';
+    for (let i = 0; i < 3; i++) {
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = i < val;
+      cb.addEventListener('change', () => {
+        const count = container.querySelectorAll('input:checked').length;
+        schedulePersoSave({ ['jds_' + type]: count });
+      });
+      container.appendChild(cb);
+    }
+  });
+}
+
+// ── Bloc 6 : Compétences ───────────────────────────────────────────────────────
+function remplirCompetences() {
+  if (!competences?.length || !carac) return;
+
+  const insp = document.getElementById('inspiration-cb');
+  if (insp) {
+    insp.checked = perso.inspiration ?? false;
+    insp.addEventListener('change', () => schedulePersoSave({ inspiration: insp.checked }));
+  }
+
+  const tbody = document.getElementById('competences-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  competences.forEach(comp => {
+    const stat   = COMP_CARAC[comp.nom];
+    const label  = STAT_LABELS[stat]?.slice(0, 3) ?? '?';
+    const bm     = bonusMaitrise(perso.niveau ?? 1);
+    const modBase = modificateur(carac[stat] ?? 10);
+    const val    = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="checkbox" class="case-maitrise comp-maitrise" data-id="${comp.id}" ${comp.maitrise ? 'checked' : ''}></td>
+      <td><input type="checkbox" class="case-maitrise comp-expertise" data-id="${comp.id}" ${comp.expertise ? 'checked' : ''}></td>
+      <td>${comp.nom} <span class="comp-carac-label">(${label}.)</span></td>
+      <td class="comp-val-cell" id="comp-val-${comp.id}">${fmt(val)}</td>
+      <td class="comp-de-cell"><button class="btn-de" data-comp="${comp.nom}" title="Lancer ${comp.nom}">🎲</button></td>
+    `;
+    tbody.appendChild(tr);
+
+    tr.querySelector('.comp-maitrise').addEventListener('change', async e => {
+      comp.maitrise = e.target.checked;
+      try { await updateCompetence(comp.id, { maitrise: comp.maitrise }); recalculerCompetences(); }
+      catch (err) { console.error(err); }
+    });
+    tr.querySelector('.comp-expertise').addEventListener('change', async e => {
+      comp.expertise = e.target.checked;
+      try { await updateCompetence(comp.id, { expertise: comp.expertise }); recalculerCompetences(); }
+      catch (err) { console.error(err); }
+    });
+    tr.querySelector('.btn-de').addEventListener('click', () => {
+      const s    = COMP_CARAC[comp.nom];
+      const mBase = modificateur(carac[s] ?? 10);
+      const bonus = bonusCompetence(mBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
+      lancerJet(bonus, comp.nom);
+    });
+  });
+
+  recalculerPerceptionPassive();
+}
+
+function recalculerCompetences() {
+  if (!competences?.length || !carac) return;
+  competences.forEach(comp => {
+    const stat    = COMP_CARAC[comp.nom];
+    const modBase = modificateur(carac[stat] ?? 10);
+    const val     = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
+    const el      = document.getElementById('comp-val-' + comp.id);
+    if (el) el.textContent = fmt(val);
+  });
+  recalculerPerceptionPassive();
+}
+
+function recalculerPerceptionPassive() {
+  const el = document.getElementById('perception-passive');
+  if (!el || !carac) return;
+  const percComp = competences.find(c => c.nom === 'Perception');
+  const modSag   = modificateur(carac.sagesse ?? 10);
+  const pp       = perceptionPassive(modSag, percComp?.maitrise ?? false, percComp?.expertise ?? false, perso.niveau ?? 1);
+  el.textContent = pp;
+}
+
+// ── Utilitaires ────────────────────────────────────────────────────────────────
+function fmt(n) {
+  return n >= 0 ? '+' + n : String(n);
+}
+
+function afficherErreur(msg) {
+  const main = document.getElementById('fiche-main');
+  if (main) main.innerHTML = `<div class="fiche-erreur">${msg}</div>`;
+}

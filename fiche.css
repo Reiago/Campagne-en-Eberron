@@ -1,0 +1,728 @@
+/* ── Fiche de personnage — styles spécifiques ──────────────────────────────── */
+
+/* ── Nav blocs ──────────────────────────────────────────────────────────────── */
+.fiche-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--stone);
+  border-bottom: 1px solid var(--border-strong);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+.fiche-auth-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-dim);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.08em;
+  min-height: 2.2rem;
+}
+
+.fiche-auth-bar #perso-titre {
+  color: var(--gold-light);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.btn-deconnexion {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-deconnexion:hover { color: var(--text-muted); border-color: var(--gold-dim); }
+
+.fiche-nav-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.fiche-nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--gold);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0.6rem 1rem;
+  flex-shrink: 0;
+}
+
+.fiche-nav-blocs {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 2px;
+  padding: 0.4rem 0.75rem;
+  scrollbar-width: none;
+}
+.fiche-nav-blocs::-webkit-scrollbar { display: none; }
+
+.fiche-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.75rem;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.fiche-tab:hover { color: var(--text-muted); border-color: var(--border); }
+.fiche-tab.active {
+  color: var(--gold-light);
+  border-color: var(--gold-dim);
+  background: rgba(201,168,108,0.07);
+}
+.fiche-tab.a-venir { opacity: 0.4; }
+
+/* ── Mobile nav ─────────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .fiche-nav-toggle { display: block; }
+  .fiche-nav-blocs {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--stone-mid);
+    border-bottom: 1px solid var(--border-strong);
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem;
+    z-index: 200;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  }
+  .fiche-nav-blocs.open { display: flex; }
+  .fiche-tab { text-align: left; padding: 0.6rem 0.75rem; border-radius: 2px; }
+}
+
+/* ── Save indicator ─────────────────────────────────────────────────────────── */
+#save-indicator {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 0.4rem 0.8rem;
+  border-radius: 3px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 300;
+}
+#save-indicator[data-status="saving"] {
+  opacity: 1;
+  background: var(--stone-light);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+#save-indicator[data-status="ok"] {
+  opacity: 1;
+  background: rgba(80,140,80,0.2);
+  color: #8DC870;
+  border: 1px solid rgba(80,140,80,0.4);
+}
+#save-indicator[data-status="error"] {
+  opacity: 1;
+  background: rgba(139,58,42,0.25);
+  color: #D87060;
+  border: 1px solid rgba(139,58,42,0.5);
+}
+
+/* ── Main / Blocs ───────────────────────────────────────────────────────────── */
+#fiche-main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 5rem;
+}
+
+.fiche-bloc { display: none; }
+.fiche-bloc.active { display: block; }
+
+.bloc-title {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-strong);
+  padding-bottom: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.bloc-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  color: var(--gold-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin: 1.75rem 0 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.bloc-a-venir {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-dim);
+  font-style: italic;
+  font-size: 15px;
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+}
+
+.fiche-erreur {
+  text-align: center;
+  padding: 3rem;
+  color: #D87060;
+  font-style: italic;
+}
+
+/* ── Champs de formulaire ───────────────────────────────────────────────────── */
+.fiche-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fiche-field label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.fiche-field input,
+.fiche-field select,
+.fiche-field textarea {
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-main);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 15px;
+  padding: 0.45rem 0.65rem;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+.fiche-field input:focus,
+.fiche-field select:focus,
+.fiche-field textarea:focus {
+  outline: none;
+  border-color: var(--gold-dim);
+}
+.fiche-field input[type="number"] { -moz-appearance: textfield; }
+.fiche-field input[type="number"]::-webkit-inner-spin-button { display: none; }
+.fiche-field select option { background: var(--stone-mid); }
+
+/* ── Grille 2 colonnes ──────────────────────────────────────────────────────── */
+.fiche-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 480px) { .fiche-grid-2 { grid-template-columns: 1fr; } }
+.fiche-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+}
+@media (max-width: 560px) { .fiche-grid-3 { grid-template-columns: 1fr 1fr; } }
+
+/* ── Bouton dé ──────────────────────────────────────────────────────────────── */
+.btn-de {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--gold-dim);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 3px 7px;
+  line-height: 1;
+  transition: color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.btn-de:hover { color: var(--gold-light); border-color: var(--gold-dim); }
+
+/* ── Bloc 2 : Caractéristiques ──────────────────────────────────────────────── */
+.carac-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.carac-meta-item {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+  min-width: 120px;
+}
+.carac-meta-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+.carac-meta-val {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.carac-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 480px) { .carac-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.carac-box {
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.carac-box-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.carac-box-mod {
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold-light);
+  min-height: 1.4em;
+}
+.carac-box-val {
+  background: var(--stone-light);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-main);
+  font-size: 17px;
+  padding: 0.3rem;
+  text-align: center;
+  width: 52px;
+}
+.carac-box-val:focus { outline: none; border-color: var(--gold-dim); }
+.carac-box-val::-webkit-inner-spin-button { display: none; }
+
+/* Jets de sauvegarde */
+.jds-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+@media (max-width: 480px) { .jds-grid { grid-template-columns: 1fr; } }
+
+.jds-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.35rem 0.5rem;
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+.jds-val {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  color: var(--gold-light);
+  min-width: 28px;
+  text-align: right;
+}
+.jds-label {
+  font-size: 14px;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+/* Checkbox stylisée */
+input[type="checkbox"].case-maitrise {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+}
+input[type="checkbox"].case-maitrise:checked {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+}
+input[type="checkbox"].case-maitrise:checked::after {
+  content: '';
+  position: absolute;
+  left: 2px; top: 1px;
+  width: 8px; height: 5px;
+  border-left: 2px solid var(--stone);
+  border-bottom: 2px solid var(--stone);
+  transform: rotate(-45deg);
+}
+
+/* ── Bloc 4 : Armure ────────────────────────────────────────────────────────── */
+.ca-display {
+  text-align: center;
+  background: var(--stone-mid);
+  border: 2px solid var(--gold-dim);
+  border-radius: 6px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.ca-display-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 4px;
+}
+.ca-display-val {
+  font-family: 'Cinzel', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.armure-bouclier-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.6rem 0;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.armure-bouclier-row label { cursor: pointer; }
+
+/* ── Bloc 5 : Points de Vie ─────────────────────────────────────────────────── */
+.pv-display {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.pv-actuel-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+.pv-actuel-input {
+  background: var(--stone-mid);
+  border: 2px solid var(--gold-dim);
+  border-radius: 4px;
+  color: var(--gold-light);
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
+  font-weight: 700;
+  padding: 0.4rem 0.5rem;
+  text-align: center;
+  width: 90px;
+}
+.pv-actuel-input:focus { outline: none; border-color: var(--gold); }
+.pv-actuel-input::-webkit-inner-spin-button { display: none; }
+.pv-sep { color: var(--text-dim); font-size: 20px; }
+.pv-max-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.pv-max-label { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
+.pv-max-input {
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-main);
+  font-size: 16px;
+  padding: 0.3rem 0.4rem;
+  text-align: center;
+  width: 60px;
+}
+.pv-max-input:focus { outline: none; border-color: var(--gold-dim); }
+.pv-max-input::-webkit-inner-spin-button { display: none; }
+
+.pv-btn-group { display: flex; flex-direction: column; gap: 4px; }
+.btn-pv {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--gold);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  width: 32px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.btn-pv:hover { background: rgba(201,168,108,0.12); }
+
+.pv-bar-wrap {
+  height: 8px;
+  background: var(--stone-light);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+}
+.pv-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s, background-color 0.3s;
+  background: #5A9A50;
+}
+.pv-bar-fill[data-state="moyen"]   { background: var(--gold-dim); }
+.pv-bar-fill[data-state="critique"] { background: var(--red-accent); }
+
+/* PV temporaires */
+.pv-temp-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.5rem 0;
+}
+.pv-temp-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); flex: 1; }
+.pv-temp-input {
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-main);
+  font-size: 16px;
+  padding: 0.3rem 0.4rem;
+  text-align: center;
+  width: 70px;
+}
+.pv-temp-input:focus { outline: none; border-color: var(--gold-dim); }
+.pv-temp-input::-webkit-inner-spin-button { display: none; }
+
+/* Dés de vie */
+.des-de-vie-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+}
+.ddv-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); flex-shrink: 0; }
+#des-de-vie { display: flex; flex-wrap: wrap; gap: 6px; }
+#des-de-vie input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.15s;
+}
+#des-de-vie input[type="checkbox"]:checked {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+}
+#des-de-vie input[type="checkbox"]:checked::after {
+  content: '✕';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--stone);
+}
+
+/* JdS succès/échecs */
+.jds-mort-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.jds-mort-item { text-align: center; }
+.jds-mort-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.jds-mort-cases { display: flex; justify-content: center; gap: 8px; }
+.jds-mort-cases input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.15s;
+}
+.jds-mort-cases input[type="checkbox"]:checked { background: var(--gold-dim); border-color: var(--gold); }
+
+/* Repos */
+.repos-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.btn-repos {
+  flex: 1;
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.6rem;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-repos:hover { background: rgba(201,168,108,0.1); color: var(--gold-light); }
+
+/* ── Bloc 6 : Compétences ───────────────────────────────────────────────────── */
+.comp-inspiration-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.5rem 0 1rem;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.comp-inspiration-row label { cursor: pointer; }
+
+.competences-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.competences-table th {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: left;
+  padding: 6px 6px;
+  border-bottom: 1px solid var(--border-strong);
+}
+.competences-table th.th-center { text-align: center; }
+.competences-table td {
+  padding: 5px 6px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  vertical-align: middle;
+}
+.competences-table tr:hover td { background: rgba(201,168,108,0.03); }
+.comp-carac-label { font-size: 11px; color: var(--text-dim); font-style: italic; }
+.comp-val-cell {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  color: var(--gold-light);
+  text-align: right;
+  min-width: 36px;
+}
+.comp-de-cell { text-align: center; }
+
+.perception-passive-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.5rem;
+  margin-top: 0.75rem;
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+.pp-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+.pp-val { font-family: 'Cinzel', serif; font-size: 18px; color: var(--gold-light); font-weight: 600; }
+
+/* ── Toast dés ──────────────────────────────────────────────────────────────── */
+.des-toast {
+  position: fixed;
+  bottom: 3.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 500;
+  min-width: 200px;
+  text-align: center;
+}
+.des-toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+.des-toast.critique { border-color: var(--gold); box-shadow: 0 0 16px rgba(201,168,108,0.3); }
+.des-toast.echec-critique { border-color: var(--red-accent); }
+
+.toast-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.toast-detail { font-size: 12px; color: var(--text-muted); }
+.toast-total {
+  font-family: 'Cinzel', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+.des-toast.critique .toast-total { color: var(--gold); }
+.des-toast.echec-critique .toast-total { color: #D87060; }
