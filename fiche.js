@@ -18,14 +18,26 @@ const ALIGNEMENTS = [
   'Loyal Neutre', 'Vrai Neutre', 'Chaotique Neutre',
   'Loyal Mauvais', 'Neutre Mauvais', 'Chaotique Mauvais',
 ];
+// Clés sans accents ni majuscules pour un matching robuste quelle que soit
+// la casse ou la présence d'accents renvoyée par la base de données.
 const COMP_CARAC = {
-  'acrobaties': 'dexterite', 'arcanes': 'intelligence', 'athlétisme': 'force',
-  'discrétion': 'dexterite', 'dressage': 'sagesse', 'escamotage': 'dexterite',
+  'acrobaties': 'dexterite', 'arcanes': 'intelligence', 'athletisme': 'force',
+  'discretion': 'dexterite', 'dressage': 'sagesse', 'escamotage': 'dexterite',
   'histoire': 'intelligence', 'intimidation': 'charisme', 'investigation': 'intelligence',
-  'médecine': 'sagesse', 'nature': 'intelligence', 'perception': 'sagesse',
-  'perspicacité': 'sagesse', 'persuasion': 'charisme', 'religion': 'intelligence',
-  'représentation': 'charisme', 'survie': 'sagesse', 'tromperie': 'charisme',
+  'medecine': 'sagesse', 'nature': 'intelligence', 'perception': 'sagesse',
+  'perspicacite': 'sagesse', 'persuasion': 'charisme', 'religion': 'intelligence',
+  'representation': 'charisme', 'survie': 'sagesse', 'tromperie': 'charisme',
 };
+
+// Supprime accents + met en minuscules pour la recherche dans COMP_CARAC.
+function normaliserNom(str) {
+  return (str ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+
+// Capitalise la première lettre pour l'affichage.
+function capitaliser(str) {
+  return str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
+}
 
 // ── État ───────────────────────────────────────────────────────────────────────
 let perso = null, carac = null, competences = [];
@@ -495,16 +507,17 @@ function remplirCompetences() {
   tbody.innerHTML = '';
 
   competences.forEach(comp => {
-    const stat    = COMP_CARAC[comp.nom?.toLowerCase()];
+    const stat     = COMP_CARAC[normaliserNom(comp.nom)];
     const caracNom = STAT_LABELS[stat] ?? '?';
-    const modBase = modificateur(carac[stat] ?? 10);
-    const val     = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
+    const nomAff   = capitaliser(comp.nom);
+    const modBase  = modificateur(carac[stat] ?? 10);
+    const val      = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><input type="checkbox" class="case-maitrise comp-maitrise" data-id="${comp.id}" ${comp.maitrise ? 'checked' : ''}></td>
       <td><input type="checkbox" class="case-maitrise comp-expertise" data-id="${comp.id}" ${comp.expertise ? 'checked' : ''}></td>
-      <td>${comp.nom} <span class="comp-carac-label">(${caracNom})</span></td>
+      <td>${nomAff} <span class="comp-carac-label">(${caracNom})</span></td>
       <td class="comp-val-cell val-clickable champ-calcule" id="comp-val-${comp.id}">${fmt(val)}</td>
     `;
     tbody.appendChild(tr);
@@ -512,9 +525,9 @@ function remplirCompetences() {
     // Clic sur la valeur calculée → jet en Mode Jeu
     tr.querySelector('.comp-val-cell').addEventListener('click', () => {
       if (getMode() !== 'jeu') return;
-      const s     = COMP_CARAC[comp.nom?.toLowerCase()];
+      const s     = COMP_CARAC[normaliserNom(comp.nom)];
       const mBase = modificateur(carac[s] ?? 10);
-      lancerJet(bonusCompetence(mBase, comp.maitrise, comp.expertise, perso.niveau ?? 1), comp.nom);
+      lancerJet(bonusCompetence(mBase, comp.maitrise, comp.expertise, perso.niveau ?? 1), capitaliser(comp.nom));
     });
 
     tr.querySelector('.comp-maitrise').addEventListener('change', async e => {
@@ -535,7 +548,7 @@ function remplirCompetences() {
 function recalculerCompetences() {
   if (!competences?.length || !carac) return;
   competences.forEach(comp => {
-    const stat    = COMP_CARAC[comp.nom?.toLowerCase()];
+    const stat    = COMP_CARAC[normaliserNom(comp.nom)];
     const modBase = modificateur(carac[stat] ?? 10);
     const val     = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
     const el      = document.getElementById('comp-val-' + comp.id);
@@ -547,7 +560,7 @@ function recalculerCompetences() {
 function recalculerPerceptionPassive() {
   const el = document.getElementById('perception-passive');
   if (!el || !carac) return;
-  const percComp = competences.find(c => c.nom?.toLowerCase() === 'perception');
+  const percComp = competences.find(c => normaliserNom(c.nom) === 'perception');
   const modSag   = modificateur(carac.sagesse ?? 10);
   el.textContent = perceptionPassive(modSag, percComp?.maitrise ?? false, percComp?.expertise ?? false, perso.niveau ?? 1);
 }
