@@ -823,8 +823,9 @@ body.mode-jeu .mode-jeu-ok {
   cursor: pointer !important;
 }
 
-/* ── Mode Jeu : masquer les boutons 🎲 et les boutons structurels ────────────── */
-body.mode-jeu .btn-de { display: none !important; }
+/* ── Boutons 🎲 masqués dans tous les modes (le clic sur les valeurs suffit) ─── */
+.btn-de { display: none !important; }
+/* Boutons structurels (ajouter/supprimer) masqués en Mode Jeu (Phase 3+) */
 body.mode-jeu .btn-structurel { display: none !important; }
 
 /* Bouton dé inline (à côté de l'initiative) */
