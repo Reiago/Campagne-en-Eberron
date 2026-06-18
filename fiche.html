@@ -187,22 +187,37 @@
     <h2 class="bloc-title">Déplacements &amp; Charge</h2>
 
     <h3 class="bloc-subtitle">Vitesses</h3>
-    <div class="fiche-grid-2">
-      <div class="fiche-field">
-        <label for="dep-vitesse_base_m">Vitesse de base (m)</label>
-        <input id="dep-vitesse_base_m" type="number" min="0" step="1.5" placeholder="9" />
+    <div class="dep-vitesses-grid">
+      <div class="dep-vitesse-card">
+        <div class="dep-saut-label">Base</div>
+        <div class="dep-vitesse-val" id="dep-disp-base">— m</div>
+        <div class="fiche-field edition-only dep-vitesse-input-wrap">
+          <input id="dep-vitesse_base_m" type="number" min="0" step="1.5" placeholder="9" />
+        </div>
       </div>
-      <div class="fiche-field">
-        <label for="dep-vitesse_nage_m">Nage (m)</label>
-        <input id="dep-vitesse_nage_m" type="number" min="0" step="1.5" />
+      <div class="dep-vitesse-card">
+        <div class="dep-saut-label">Nage</div>
+        <div class="dep-vitesse-val" id="dep-disp-nage">— m</div>
+        <div class="dep-saut-note" id="dep-note-nage"></div>
+        <div class="fiche-field edition-only dep-vitesse-input-wrap">
+          <input id="dep-vitesse_nage_m" type="number" min="0" step="1.5" placeholder="auto" />
+        </div>
       </div>
-      <div class="fiche-field">
-        <label for="dep-vitesse_escalade_m">Escalade (m)</label>
-        <input id="dep-vitesse_escalade_m" type="number" min="0" step="1.5" />
+      <div class="dep-vitesse-card">
+        <div class="dep-saut-label">Escalade</div>
+        <div class="dep-vitesse-val" id="dep-disp-escalade">— m</div>
+        <div class="dep-saut-note" id="dep-note-escalade"></div>
+        <div class="fiche-field edition-only dep-vitesse-input-wrap">
+          <input id="dep-vitesse_escalade_m" type="number" min="0" step="1.5" placeholder="auto" />
+        </div>
       </div>
-      <div class="fiche-field">
-        <label for="dep-vitesse_vol_m">Vol (m)</label>
-        <input id="dep-vitesse_vol_m" type="number" min="0" step="1.5" />
+      <div class="dep-vitesse-card">
+        <div class="dep-saut-label">Vol</div>
+        <div class="dep-vitesse-val" id="dep-disp-vol">—</div>
+        <div class="dep-saut-note">Capacité requise</div>
+        <div class="fiche-field edition-only dep-vitesse-input-wrap">
+          <input id="dep-vitesse_vol_m" type="number" min="0" step="1.5" placeholder="—" />
+        </div>
       </div>
     </div>
 

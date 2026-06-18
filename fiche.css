@@ -390,13 +390,41 @@ input[type="checkbox"].case-maitrise:checked::after {
   font-weight: 600;
 }
 
+.dep-vitesses-grid,
 .dep-sauts-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
   margin-bottom: 0.5rem;
 }
-@media (max-width: 480px) { .dep-sauts-grid { grid-template-columns: 1fr; } }
+@media (max-width: 480px) {
+  .dep-vitesses-grid,
+  .dep-sauts-grid { grid-template-columns: 1fr; }
+}
+
+.dep-vitesse-card {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.dep-vitesse-val {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1.2;
+  margin: 4px 0;
+}
+
+.dep-vitesse-input-wrap {
+  margin-top: 6px;
+}
+.dep-vitesse-input-wrap input {
+  text-align: center;
+}
 
 .dep-saut-item {
   background: var(--stone-mid);

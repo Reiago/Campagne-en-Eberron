@@ -319,10 +319,50 @@ function remplirDeplacements() {
     el.value = perso[f] ?? '';
     el.addEventListener('input', () => {
       schedulePersoSave({ [f]: el.value === '' ? null : Number(el.value) });
+      recalculerVitesses();
     });
   });
 
   recalculerDeplacements();
+}
+
+function recalculerVitesses() {
+  const base = perso?.vitesse_base_m ?? null;
+  const baseAff = base != null ? base + ' m' : '—';
+
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  set('dep-disp-base', baseAff);
+
+  // Nage : valeur manuelle si saisie, sinon base / 2
+  const nage = perso?.vitesse_nage_m;
+  if (nage != null) {
+    set('dep-disp-nage', nage + ' m');
+    set('dep-note-nage', '');
+  } else if (base != null) {
+    set('dep-disp-nage', (base / 2) + ' m');
+    set('dep-note-nage', 'base ÷ 2');
+  } else {
+    set('dep-disp-nage', '—');
+    set('dep-note-nage', '');
+  }
+
+  // Escalade : même règle que nage
+  const escalade = perso?.vitesse_escalade_m;
+  if (escalade != null) {
+    set('dep-disp-escalade', escalade + ' m');
+    set('dep-note-escalade', '');
+  } else if (base != null) {
+    set('dep-disp-escalade', (base / 2) + ' m');
+    set('dep-note-escalade', 'base ÷ 2');
+  } else {
+    set('dep-disp-escalade', '—');
+    set('dep-note-escalade', '');
+  }
+
+  // Vol : uniquement si valeur saisie
+  const vol = perso?.vitesse_vol_m;
+  set('dep-disp-vol', vol != null ? vol + ' m' : '—');
 }
 
 function recalculerDeplacements() {
@@ -339,6 +379,7 @@ function recalculerDeplacements() {
   set('dep-saut-haut-elan', ftToM(sautHauteur(modForce, true)) + ' m');
   set('dep-saut-haut-sans', ftToM(sautHauteur(modForce, false)) + ' m');
   set('dep-charge-max', chargeMax(valForce) + ' kg');
+  recalculerVitesses();
 }
 
 // ── Bloc 4 : Armure ────────────────────────────────────────────────────────────
