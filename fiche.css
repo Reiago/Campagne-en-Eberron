@@ -793,6 +793,10 @@ body.mode-jeu .btn-pv-sd {
   min-width: 200px;
   text-align: center;
 }
+.des-toast.visible {
+  pointer-events: auto;
+  cursor: pointer;
+}
 .des-toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
 .des-toast.critique { border-color: var(--gold); box-shadow: 0 0 16px rgba(201,168,108,0.3); }
 .des-toast.echec-critique { border-color: var(--red-accent); }
@@ -952,12 +956,20 @@ body.mode-jeu .fiche-field textarea {
   color: var(--text-main) !important;
 }
 
-/* Compétences — cases maîtrise/expertise non interactives en Mode Jeu */
+/* Compétences — cases maîtrise/expertise visibles mais non interactives en Mode Jeu */
 body.mode-jeu .comp-maitrise,
 body.mode-jeu .comp-expertise,
 body.mode-jeu .jds-maitrise {
   pointer-events: none !important;
-  opacity: 0.5;
+  opacity: 0.6;
+  border-color: var(--border-strong) !important;
+  background: transparent !important;
+}
+body.mode-jeu .comp-maitrise:checked,
+body.mode-jeu .comp-expertise:checked,
+body.mode-jeu .jds-maitrise:checked {
+  background: var(--gold-dim) !important;
+  border-color: var(--gold) !important;
 }
 
 /* Désactiver tous les <label for="…"> en Mode Jeu (ils déclencheraient sinon

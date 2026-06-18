@@ -41,10 +41,10 @@ function afficherToast(html, classe) {
     toast = document.createElement('div');
     toast.id = 'des-toast';
     toast.className = 'des-toast';
+    toast.addEventListener('click', () => toast.classList.remove('visible'));
     document.body.appendChild(toast);
   }
   toast.innerHTML = html;
   toast.className = 'des-toast visible' + (classe ? ' ' + classe : '');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('visible'), 4000);
 }

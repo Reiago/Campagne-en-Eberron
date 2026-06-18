@@ -233,12 +233,12 @@
 ### 2.7 Bloc 6 — Compétences
 
 - [x] 18 lignes : case maîtrise + case expertise + valeur calculée + bouton 🎲
-- [ ] Valeur = mod. caractéristique + bonus maîtrise (si coché) ou ×2 (si expertise)
-- [ ] Recalcul automatique si les stats changent
-- [ ] Afficher la **Perception passive** (calculée) en bas du bloc
-- [ ] Case **Inspiration** (booléen)
-- [ ] **Mode Jeu** : cases maîtrise/expertise non modifiables ; clic sur la valeur → jet de compétence direct ; boutons 🎲 masqués ; case Inspiration reste cliquable
-- [ ] **Toujours en lecture seule** : valeurs de compétences et perception passive (calculées)
+- [x] Valeur = mod. caractéristique + bonus maîtrise (si coché) ou ×2 (si expertise)
+- [x] Recalcul automatique si les stats changent
+- [x] Afficher la **Perception passive** (calculée) en bas du bloc
+- [x] Case **Inspiration** (booléen)
+- [x] **Mode Jeu** : cases maîtrise/expertise non modifiables ; clic sur la valeur → jet de compétence direct ; boutons 🎲 masqués ; case Inspiration reste cliquable
+- [x] **Toujours en lecture seule** : valeurs de compétences et perception passive (calculées)
 
 ---
 
@@ -362,3 +362,10 @@
 | `fiche.css` | Styles de la fiche (mobile-first) |
 | `fiche.js` | Logique principale de la fiche |
 | `mj.html` | Page sélection personnage (MJ) |
+
+## Développement futur
+
+- [ ] Possibilité d'avoir des themes différents et de pouvoir switch dans les options du profil de l'utilisateur
+- [ ] Log des lancés de dés
+- [ ] Envois de message au MJ
+- [ ] Sortie papier de la fiche du joueur
