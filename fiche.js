@@ -4,7 +4,7 @@ import {
   getCaracteristiques, updateCaracteristiques,
   getCompetences, updateCompetence,
 } from './db.js';
-import { modificateur, bonusMaitrise, caCalculee, bonusCompetence, perceptionPassive, pvMax } from './calculs.js';
+import { modificateur, bonusMaitrise, caCalculee, bonusCompetence, perceptionPassive, pvMax, sautLongueur, sautHauteur, chargeMax } from './calculs.js';
 import { lancerJet, lancerDe, lancerJetMort } from './des.js';
 
 // ── Constantes ─────────────────────────────────────────────────────────────────
@@ -101,6 +101,7 @@ try {
 
   remplirIdentite();
   remplirCarac();
+  remplirDeplacements();
   remplirArmure();
   remplirPV();
   remplirCompetences();
@@ -170,6 +171,7 @@ function recalculerTout() {
   recalculerInitiative();
   recalculerBM();
   recalculerPVMax();
+  recalculerDeplacements();
 }
 
 // ── Clics Mode Jeu sur les valeurs calculées ───────────────────────────────────
@@ -305,6 +307,38 @@ function recalculerInitiative() {
   const el = document.getElementById('initiative-val');
   if (!el || !carac) return;
   el.textContent = fmt(modificateur(carac.dexterite ?? 10));
+}
+
+// ── Bloc 3 : Déplacements & Charge ────────────────────────────────────────────
+function remplirDeplacements() {
+  if (!perso) return;
+
+  ['vitesse_base_m', 'vitesse_nage_m', 'vitesse_escalade_m', 'vitesse_vol_m'].forEach(f => {
+    const el = document.getElementById('dep-' + f);
+    if (!el) return;
+    el.value = perso[f] ?? '';
+    el.addEventListener('input', () => {
+      schedulePersoSave({ [f]: el.value === '' ? null : Number(el.value) });
+    });
+  });
+
+  recalculerDeplacements();
+}
+
+function recalculerDeplacements() {
+  if (!carac) return;
+  const valForce = carac.force ?? 10;
+  const modForce = modificateur(valForce);
+
+  const ftToM = v => Math.round(v * 0.3 * 10) / 10;
+
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('dep-force-label', valForce);
+  set('dep-saut-long-elan', ftToM(sautLongueur(valForce, true)) + ' m');
+  set('dep-saut-long-sans', ftToM(sautLongueur(valForce, false)) + ' m');
+  set('dep-saut-haut-elan', ftToM(sautHauteur(modForce, true)) + ' m');
+  set('dep-saut-haut-sans', ftToM(sautHauteur(modForce, false)) + ' m');
+  set('dep-charge-max', chargeMax(valForce) + ' kg');
 }
 
 // ── Bloc 4 : Armure ────────────────────────────────────────────────────────────

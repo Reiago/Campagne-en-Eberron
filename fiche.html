@@ -27,7 +27,7 @@
     <div class="fiche-nav-blocs" id="nav-blocs">
       <button class="fiche-tab active" data-bloc="identite">1. Identité</button>
       <button class="fiche-tab" data-bloc="carac">2. Carac.</button>
-      <button class="fiche-tab a-venir" data-bloc="deplacements">3. Déplac.</button>
+      <button class="fiche-tab" data-bloc="deplacements">3. Déplac.</button>
       <button class="fiche-tab" data-bloc="armure">4. Armure</button>
       <button class="fiche-tab" data-bloc="pv">5. Points de Vie</button>
       <button class="fiche-tab" data-bloc="competences">6. Compétences</button>
@@ -182,10 +182,62 @@
     </div>
   </section>
 
-  <!-- ── Bloc 3 : Déplacements (Phase 3) ── -->
+  <!-- ── Bloc 3 : Déplacements & Charge ── -->
   <section class="fiche-bloc" id="bloc-deplacements">
     <h2 class="bloc-title">Déplacements &amp; Charge</h2>
-    <div class="bloc-a-venir">Disponible en Phase 3</div>
+
+    <h3 class="bloc-subtitle">Vitesses</h3>
+    <div class="fiche-grid-2">
+      <div class="fiche-field">
+        <label for="dep-vitesse_base_m">Vitesse de base (m)</label>
+        <input id="dep-vitesse_base_m" type="number" min="0" step="1.5" placeholder="9" />
+      </div>
+      <div class="fiche-field">
+        <label for="dep-vitesse_nage_m">Nage (m)</label>
+        <input id="dep-vitesse_nage_m" type="number" min="0" step="1.5" />
+      </div>
+      <div class="fiche-field">
+        <label for="dep-vitesse_escalade_m">Escalade (m)</label>
+        <input id="dep-vitesse_escalade_m" type="number" min="0" step="1.5" />
+      </div>
+      <div class="fiche-field">
+        <label for="dep-vitesse_vol_m">Vol (m)</label>
+        <input id="dep-vitesse_vol_m" type="number" min="0" step="1.5" />
+      </div>
+    </div>
+
+    <h3 class="bloc-subtitle">Sauts — Force <span id="dep-force-label" class="dep-force-val">10</span></h3>
+    <div class="dep-sauts-grid">
+      <div class="dep-saut-item">
+        <div class="dep-saut-label">Longueur avec élan</div>
+        <div class="dep-saut-val champ-calcule" id="dep-saut-long-elan">3 m</div>
+        <div class="dep-saut-note">Force en pieds</div>
+      </div>
+      <div class="dep-saut-item">
+        <div class="dep-saut-label">Longueur sans élan</div>
+        <div class="dep-saut-val champ-calcule" id="dep-saut-long-sans">1.5 m</div>
+        <div class="dep-saut-note">Force / 2 pieds</div>
+      </div>
+      <div class="dep-saut-item">
+        <div class="dep-saut-label">Hauteur avec élan</div>
+        <div class="dep-saut-val champ-calcule" id="dep-saut-haut-elan">0.9 m</div>
+        <div class="dep-saut-note">3 + mod. Force</div>
+      </div>
+      <div class="dep-saut-item">
+        <div class="dep-saut-label">Hauteur sans élan</div>
+        <div class="dep-saut-val champ-calcule" id="dep-saut-haut-sans">0.5 m</div>
+        <div class="dep-saut-note">(3 + mod. Force) / 2</div>
+      </div>
+    </div>
+
+    <h3 class="bloc-subtitle">Charge</h3>
+    <div class="dep-charge-row">
+      <div class="dep-charge-item">
+        <div class="dep-charge-label">Charge maximale</div>
+        <div class="dep-charge-val champ-calcule" id="dep-charge-max">75 kg</div>
+      </div>
+      <div class="dep-charge-note">Force × 7,5 kg</div>
+    </div>
   </section>
 
   <!-- ── Bloc 4 : Armure ── -->

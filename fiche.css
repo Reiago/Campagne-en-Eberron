@@ -384,6 +384,88 @@ input[type="checkbox"].case-maitrise:checked::after {
   transform: rotate(-45deg);
 }
 
+/* ── Bloc 3 : Déplacements & Charge ────────────────────────────────────────── */
+.dep-force-val {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.dep-sauts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 480px) { .dep-sauts-grid { grid-template-columns: 1fr; } }
+
+.dep-saut-item {
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.dep-saut-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.dep-saut-val {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1.2;
+}
+
+.dep-saut-note {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 3px;
+}
+
+.dep-charge-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.dep-charge-item {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+}
+
+.dep-charge-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.dep-charge-val {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.dep-charge-note {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
 /* ── Bloc 4 : Armure ────────────────────────────────────────────────────────── */
 .ca-display {
   text-align: center;
