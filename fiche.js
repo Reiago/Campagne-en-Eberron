@@ -367,7 +367,12 @@ function remplirPV() {
   if (pvActuelEl) {
     pvActuelEl.value = perso.pv_actuel ?? 0;
     pvActuelEl.addEventListener('input', () => {
-      schedulePersoSave({ pv_actuel: Number(pvActuelEl.value) || 0 });
+      const oldPV = perso.pv_actuel ?? 0;
+      const newPV = Number(pvActuelEl.value) || 0;
+      const patch = { pv_actuel: newPV };
+      if (newPV <= 0 && oldPV > 0) { patch.jds_succes = 0; patch.jds_echecs = 0; }
+      schedulePersoSave(patch);
+      if (newPV <= 0 && oldPV > 0) remplirJDSMort();
       recalculerPVBar();
     });
   }
@@ -382,10 +387,48 @@ function remplirPV() {
     recalculerPVBar();
   });
   document.getElementById('pv-minus')?.addEventListener('click', () => {
+    const oldPV = perso.pv_actuel ?? 0;
     pvActuelEl.value = Math.max(0, Number(pvActuelEl.value) - 1);
-    schedulePersoSave({ pv_actuel: Number(pvActuelEl.value) });
+    const newPV = Number(pvActuelEl.value);
+    const patch = { pv_actuel: newPV };
+    if (newPV <= 0 && oldPV > 0) { patch.jds_succes = 0; patch.jds_echecs = 0; }
+    schedulePersoSave(patch);
+    if (newPV <= 0 && oldPV > 0) remplirJDSMort();
     recalculerPVBar();
   });
+
+  // Soins externes (sort, potion…)
+  const pvSoinInput = document.getElementById('pv-soin-input');
+  const appliqueSoin = () => {
+    const soin = Math.max(0, Number(pvSoinInput?.value) || 0);
+    if (!soin) return;
+    const pvMaxVal   = Number(document.getElementById('pv-max')?.textContent) || 0;
+    const nouveauxPV = Math.min(pvMaxVal, (Number(pvActuelEl?.value) || 0) + soin);
+    pvActuelEl.value = nouveauxPV;
+    schedulePersoSave({ pv_actuel: nouveauxPV });
+    pvSoinInput.value = '';
+    recalculerPVBar();
+  };
+  document.getElementById('btn-pv-soin')?.addEventListener('click', appliqueSoin);
+  pvSoinInput?.addEventListener('keydown', e => { if (e.key === 'Enter') appliqueSoin(); });
+
+  // Dégâts reçus
+  const pvDegatInput = document.getElementById('pv-degat-input');
+  const appliqueDegat = () => {
+    const degats = Math.max(0, Number(pvDegatInput?.value) || 0);
+    if (!degats) return;
+    const oldPV     = Number(pvActuelEl?.value) || 0;
+    const nouveauxPV = Math.max(0, oldPV - degats);
+    pvActuelEl.value = nouveauxPV;
+    const patch = { pv_actuel: nouveauxPV };
+    if (nouveauxPV <= 0 && oldPV > 0) { patch.jds_succes = 0; patch.jds_echecs = 0; }
+    schedulePersoSave(patch);
+    pvDegatInput.value = '';
+    if (nouveauxPV <= 0 && oldPV > 0) remplirJDSMort();
+    recalculerPVBar();
+  };
+  document.getElementById('btn-pv-degat')?.addEventListener('click', appliqueDegat);
+  pvDegatInput?.addEventListener('keydown', e => { if (e.key === 'Enter') appliqueDegat(); });
 
   const typeDeSel = document.getElementById('pv-type-de');
   if (typeDeSel) {
@@ -558,6 +601,7 @@ function recalculerPVBar() {
   if (!bar) return;
   bar.style.width = pct + '%';
   bar.dataset.state = pct > 50 ? 'bon' : pct > 25 ? 'moyen' : 'critique';
+  document.getElementById('jds-mort-section')?.classList.toggle('visible', pvActuel <= 0);
 }
 
 function remplirDesDeVie() {

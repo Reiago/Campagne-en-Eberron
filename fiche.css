@@ -502,6 +502,71 @@ input[type="checkbox"].case-maitrise:checked::after {
 .pv-bar-fill[data-state="moyen"]   { background: var(--gold-dim); }
 .pv-bar-fill[data-state="critique"] { background: var(--red-accent); }
 
+/* Soins / Dégâts externes */
+.pv-soin-degat-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.pv-sd-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pv-sd-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  flex: 1;
+}
+.pv-sd-input {
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-main);
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0.25rem 0.4rem;
+  text-align: center;
+  width: 68px;
+}
+.pv-sd-input:focus { outline: none; border-color: var(--gold-dim); }
+.pv-sd-input::-webkit-inner-spin-button { display: none; }
+.btn-pv-sd {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.85rem;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-soin { color: #5A9A50; border-color: rgba(90,154,80,0.35); }
+.btn-soin:hover { background: rgba(90,154,80,0.15); border-color: rgba(90,154,80,0.6); }
+.btn-degat { color: #D87060; border-color: rgba(216,112,96,0.35); }
+.btn-degat:hover { background: rgba(216,112,96,0.15); border-color: rgba(216,112,96,0.6); }
+
+/* Soin/Dégât — champs actifs en Mode Jeu */
+body.mode-jeu .pv-sd-input {
+  pointer-events: auto !important;
+  cursor: text !important;
+  background: var(--stone-mid) !important;
+  border-color: var(--border) !important;
+  color: var(--text-main) !important;
+}
+body.mode-jeu .pv-sd-input:focus { border-color: var(--gold-dim) !important; }
+body.mode-jeu .btn-pv-sd {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
 /* PV temporaires */
 .pv-temp-row {
   display: flex;
@@ -598,6 +663,10 @@ input[type="checkbox"].case-maitrise:checked::after {
   transition: background 0.15s;
 }
 .jds-mort-cases input[type="checkbox"]:checked { background: var(--gold-dim); border-color: var(--gold); }
+
+/* Section JdS mort — masquée par défaut, visible quand PV ≤ 0 */
+#jds-mort-section { display: none; }
+#jds-mort-section.visible { display: block; }
 
 /* Bouton jet de sauvegarde contre la mort */
 .jds-mort-jet-row {

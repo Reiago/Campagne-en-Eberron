@@ -250,6 +250,19 @@
       <div class="pv-bar-fill" id="pv-bar-fill" style="width:100%;" data-state="bon"></div>
     </div>
 
+    <div class="pv-soin-degat-grid jeu-only">
+      <div class="pv-sd-row">
+        <span class="pv-sd-label">Soins reçus</span>
+        <input type="number" id="pv-soin-input" class="pv-sd-input" min="0" placeholder="0" />
+        <button class="btn-pv-sd btn-soin" id="btn-pv-soin">Soigner</button>
+      </div>
+      <div class="pv-sd-row">
+        <span class="pv-sd-label">Dégâts reçus</span>
+        <input type="number" id="pv-degat-input" class="pv-sd-input" min="0" placeholder="0" />
+        <button class="btn-pv-sd btn-degat" id="btn-pv-degat">Blesser</button>
+      </div>
+    </div>
+
     <div class="pv-temp-row">
       <span class="pv-temp-label">PV temporaires</span>
       <input class="pv-temp-input mode-jeu-ok" id="pv-temporaires" type="number" min="0" value="0" />
@@ -277,19 +290,21 @@
       <div id="des-de-vie"></div>
     </div>
 
-    <h3 class="bloc-subtitle">Jets de sauvegarde contre la mort</h3>
-    <div class="jds-mort-grid">
-      <div class="jds-mort-item">
-        <div class="jds-mort-label">Succès</div>
-        <div class="jds-mort-cases mode-jeu-ok" id="jds-succes"></div>
+    <div id="jds-mort-section">
+      <h3 class="bloc-subtitle">Jets de sauvegarde contre la mort</h3>
+      <div class="jds-mort-grid">
+        <div class="jds-mort-item">
+          <div class="jds-mort-label">Succès</div>
+          <div class="jds-mort-cases mode-jeu-ok" id="jds-succes"></div>
+        </div>
+        <div class="jds-mort-item">
+          <div class="jds-mort-label">Échecs</div>
+          <div class="jds-mort-cases mode-jeu-ok" id="jds-echecs"></div>
+        </div>
       </div>
-      <div class="jds-mort-item">
-        <div class="jds-mort-label">Échecs</div>
-        <div class="jds-mort-cases mode-jeu-ok" id="jds-echecs"></div>
+      <div class="jds-mort-jet-row jeu-only">
+        <button class="btn-jds-jet mode-jeu-ok" id="btn-jds-jet">Lancer le jet de sauvegarde contre la mort</button>
       </div>
-    </div>
-    <div class="jds-mort-jet-row jeu-only">
-      <button class="btn-jds-jet mode-jeu-ok" id="btn-jds-jet">Lancer le jet de sauvegarde contre la mort</button>
     </div>
 
     <div class="repos-row">

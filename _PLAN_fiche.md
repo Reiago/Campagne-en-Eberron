@@ -226,8 +226,8 @@
 - [x] Repos court : bouton → lance les dés de vie cochés, récupère PV
 - [x] Repos long : bouton → remet PV max, récupère la moitié des dés de vie
 - [x] 3 cases JDS succès + 3 cases JDS échecs
-- [ ] Réinitialisation automatique des JDS après stabilisation/soin
-- [ ] **Mode Jeu** : PV actuel, PV temporaires, dés de vie, JdS restent interactifs (c'est de la gestion en temps réel) ; sélecteur type de dé → lecture seule
+- [x] Réinitialisation automatique des JDS après stabilisation/soin
+- [x] **Mode Jeu** : PV actuel, PV temporaires, dés de vie, JdS restent interactifs (c'est de la gestion en temps réel) ; sélecteur type de dé → lecture seule
 - [x] **Toujours en lecture seule** : PV max (calculé)
 
 ### 2.7 Bloc 6 — Compétences
