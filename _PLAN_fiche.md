@@ -184,16 +184,16 @@
   - [x] Jets de sauvegarde (×6)
   - [x] Compétences (×18)
   - [ ] Attaque par arme (×N)
-  - [ ] Initiative
-- [ ] **Mode Jeu** : boutons 🎲 masqués — le clic sur la valeur numérique déclenche directement `lancerJet`
-- [ ] **Mode Édition** : boutons 🎲 visibles, clic sur valeur → édition normale
+  - [x] Initiative
+- [x] **Mode Jeu** : boutons 🎲 masqués — le clic sur la valeur numérique déclenche directement `lancerJet`
+- [x] **Mode Édition** : caduque boutons supprimés : boutons 🎲 visibles, clic sur valeur → édition normale
 
 ### 2.3 Bloc 1 — Identité du personnage
 
 - [x] Afficher et rendre éditable : `nom`, `classe`, `niveau`, `race`, `âge`, `taille`, `poids`, `dieu`, `devise`, `xp`, `alignement`
 - [x] Sélecteur pour l'alignement (9 valeurs)
 - [x] Sauvegarde automatique à chaque modification
-- [ ] **Mode Jeu** : tous les champs en lecture seule
+- [x] **Mode Jeu** : tous les champs en lecture seule
 
 ### 2.4 Bloc 2 — Caractéristiques
 
@@ -203,8 +203,8 @@
 - [x] 6 jets de sauvegarde avec case de maîtrise + valeur calculée + bouton 🎲
 - [x] Afficher l'Initiative (= mod. Dextérité)
 - [x] Recalcul en cascade si une stat change (compétences, CA, PV…)
-- [ ] **Mode Jeu** : valeurs de stat éditables → lecture seule ; modificateurs (calculés) → clic lance le jet de caractéristique ; JdS calculés → clic lance le JdS ; cases de maîtrise JdS non modifiables
-- [ ] **Toujours en lecture seule** : modificateurs, bonus de maîtrise, valeur initiative (calculés)
+- [x] **Mode Jeu** : valeurs de stat éditables → lecture seule ; modificateurs (calculés) → clic lance le jet de caractéristique ; JdS calculés → clic lance le JdS ; cases de maîtrise JdS non modifiables
+- [x] **Toujours en lecture seule** : modificateurs, bonus de maîtrise, valeur initiative (calculés)
 
 ### 2.5 Bloc 4 — Classe d'Armure
 
@@ -212,8 +212,8 @@
 - [x] Champs : `bonus_armure`, `bouclier`, `magie`, `autre`
 - [x] CA totale calculée et mise en avant (grand nombre)
 - [ ] Alerte si armure sans maîtrise (fonctionnalité optionnelle)
-- [ ] **Mode Jeu** : champs bonus → lecture seule
-- [ ] **Toujours en lecture seule** : CA totale (calculée)
+- [x] **Mode Jeu** : champs bonus → lecture seule
+- [x] **Toujours en lecture seule** : CA totale (calculée)
 
 ### 2.6 Bloc 5 — Points de Vie & Dés de Vie
 
