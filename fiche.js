@@ -19,6 +19,10 @@ const ALIGNEMENTS = [
   'Loyal Neutre', 'Vrai Neutre', 'Chaotique Neutre',
   'Loyal Mauvais', 'Neutre Mauvais', 'Chaotique Mauvais',
 ];
+const TYPES_DEGATS = [
+  'Acide', 'Contondant', 'Feu', 'Force', 'Foudre', 'Froid',
+  'Nécrotique', 'Perforant', 'Poison', 'Psychique', 'Radiant', 'Tonnerre', 'Tranchant',
+];
 // Clés sans accents ni majuscules pour un matching robuste quelle que soit
 // la casse ou la présence d'accents renvoyée par la base de données.
 const COMP_CARAC = {
@@ -460,8 +464,11 @@ function renderArmeCard(arme) {
         <input type="text" class="arme-de-input" placeholder="1d6" />
       </div>
       <div class="fiche-field">
-        <label>Type</label>
-        <input type="text" class="arme-type-input" placeholder="tranchant" />
+        <label>Type de dégâts</label>
+        <select class="arme-type-select">
+          <option value="">— Choisir —</option>
+          ${TYPES_DEGATS.map(t => `<option value="${t}">${t}</option>`).join('')}
+        </select>
       </div>
       <div class="fiche-field">
         <label>Bonus magie</label>
@@ -495,7 +502,7 @@ function renderArmeCard(arme) {
   card.querySelector('.arme-carac-select').value = arme.caracteristique ?? 'force';
   card.querySelector('.arme-maitrise-cb').checked = arme.maitrise ?? false;
   card.querySelector('.arme-de-input').value = arme.de_degats ?? '';
-  card.querySelector('.arme-type-input').value = arme.type_degats ?? '';
+  card.querySelector('.arme-type-select').value = arme.type_degats ?? '';
   card.querySelector('.arme-magie-input').value = arme.bonus_magie ?? 0;
   card.querySelector('.arme-bspecial-input').value = arme.bonus_special ?? 0;
   card.querySelector('.arme-bdegats-input').value = arme.bonus_degats_special ?? 0;
@@ -527,7 +534,7 @@ function renderArmeCard(arme) {
     arme.nom = e.target.value;
     scheduleArmeSave();
   });
-  card.querySelector('.arme-type-input').addEventListener('input', e => {
+  card.querySelector('.arme-type-select').addEventListener('change', e => {
     arme.type_degats = e.target.value;
     scheduleArmeSave();
     card.querySelector('.arme-type-note').textContent = e.target.value;
