@@ -688,6 +688,10 @@ function renderEquipementCard(item) {
         <label>Qté</label>
         <input type="number" class="equipement-qty-input" min="1" />
       </div>
+      <div class="fiche-field equipement-poids-field">
+        <label>Poids (kg)</label>
+        <input type="number" class="equipement-poids-input" min="0" step="0.1" />
+      </div>
       <div class="fiche-field equipement-type-field">
         <label>Type</label>
         <select class="equipement-type-select">
@@ -706,6 +710,7 @@ function renderEquipementCard(item) {
 
   card.querySelector('.equipement-nom-input').value = item.nom ?? '';
   card.querySelector('.equipement-qty-input').value = item.quantite ?? 1;
+  card.querySelector('.equipement-poids-input').value = item.poids ?? '';
   card.querySelector('.equipement-type-select').value = item.type ?? 'equipement';
   card.querySelector('.equipement-desc-input').value = item.description ?? '';
 
@@ -715,7 +720,7 @@ function renderEquipementCard(item) {
     itemTimer = setTimeout(async () => {
       showSave('saving');
       try {
-        await updateEquipement(item.id, { nom: item.nom, type: item.type, description: item.description, quantite: item.quantite });
+        await updateEquipement(item.id, { nom: item.nom, type: item.type, description: item.description, quantite: item.quantite, poids: item.poids ?? null });
         showSave('ok');
       } catch { showSave('error'); }
     }, DEBOUNCE_MS);
@@ -727,6 +732,10 @@ function renderEquipementCard(item) {
   });
   card.querySelector('.equipement-qty-input').addEventListener('input', e => {
     item.quantite = Number(e.target.value) || 1;
+    scheduleItemSave();
+  });
+  card.querySelector('.equipement-poids-input').addEventListener('input', e => {
+    item.poids = e.target.value !== '' ? Number(e.target.value) : null;
     scheduleItemSave();
   });
   card.querySelector('.equipement-type-select').addEventListener('change', e => {

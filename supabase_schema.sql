@@ -247,6 +247,7 @@ CREATE TABLE equipement (
   type          text        NOT NULL DEFAULT 'equipement',
   description   text,
   quantite      int         NOT NULL DEFAULT 1,
+  poids         numeric(8,3),
   ordre         int         NOT NULL DEFAULT 0,
   created_at    timestamptz DEFAULT now()
 );

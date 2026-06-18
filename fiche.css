@@ -1586,7 +1586,8 @@ body.mode-jeu .arme-maitrise-cb:checked {
 }
 
 .equipement-nom-field { flex: 1 1 0; min-width: 0; }
-.equipement-qty-field { flex: 0 0 68px; }
+.equipement-qty-field { flex: 0 0 60px; }
+.equipement-poids-field { flex: 0 0 84px; }
 .equipement-type-field { flex: 0 0 130px; }
 
 .equipement-del-btn {
@@ -1634,5 +1635,5 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
 
 @media (max-width: 480px) {
   .equipement-header { flex-wrap: wrap; }
-  .equipement-type-field { flex: 1 1 auto; }
+  .equipement-poids-field, .equipement-type-field { flex: 1 1 auto; }
 }
