@@ -45,6 +45,8 @@ let reposMode        = localStorage.getItem('repos-mode') || 'auto'; // 'auto' |
 let reposDiceCount   = 1;   // nombre de dés à dépenser dans le panneau
 let reposRolls       = [];  // résultats des lancers auto [{roll, gain}, ...]
 let reposPanelOpen   = false;
+const DEBOUNCE_MS = 500;
+let persoTimer = null, caracTimer = null;
 
 // ── Mode Jeu / Mode Édition ────────────────────────────────────────────────────
 function getMode() {
@@ -127,9 +129,6 @@ function activerBloc(id) {
 }
 
 // ── Sauvegarde automatique ─────────────────────────────────────────────────────
-const DEBOUNCE_MS = 500;
-let persoTimer = null, caracTimer = null;
-
 function showSave(status) {
   const el = document.getElementById('save-indicator');
   if (!el) return;
