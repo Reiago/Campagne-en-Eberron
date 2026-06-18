@@ -31,7 +31,7 @@
       <button class="fiche-tab" data-bloc="armure">4. Armure</button>
       <button class="fiche-tab" data-bloc="pv">5. Points de Vie</button>
       <button class="fiche-tab" data-bloc="competences">6. Compétences</button>
-      <button class="fiche-tab a-venir" data-bloc="armes">7. Armes</button>
+      <button class="fiche-tab" data-bloc="armes">7. Armes</button>
       <button class="fiche-tab a-venir" data-bloc="equipement">8. Équipement</button>
       <button class="fiche-tab a-venir" data-bloc="sorts">9. Sorts</button>
       <button class="fiche-tab a-venir" data-bloc="traits">10. Traits</button>
@@ -409,10 +409,13 @@
     </div>
   </section>
 
-  <!-- ── Blocs Phase 3 ── -->
+  <!-- ── Bloc 7 : Armes ── -->
   <section class="fiche-bloc" id="bloc-armes">
     <h2 class="bloc-title">Armes</h2>
-    <div class="bloc-a-venir">Disponible en Phase 3</div>
+    <div id="armes-container"></div>
+    <div class="edition-only armes-footer">
+      <button class="btn-add-arme" id="btn-add-arme">+ Ajouter une arme</button>
+    </div>
   </section>
 
   <section class="fiche-bloc" id="bloc-equipement">

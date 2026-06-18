@@ -251,18 +251,18 @@
   - [x] Saut en longueur avec/sans élan
   - [x] Saut en hauteur avec/sans élan
   - [x] Charge maximum
-- [ ] Section encombrement (optionnel) : poids porté → statut calculé
+- [ ] Section encombrement (optionnel) : poids porté → statut calculé (différé)
 
 ### 3.2 Bloc 7 — Armes
 
-- [ ] Tableau dynamique avec bouton "Ajouter une arme"
-- [ ] Par ligne : `nom`, `caractéristique` (sélecteur For/Dex), `maîtrise` (case), `bonus magie`, `bonus spécial`, `dé de dégâts`, `type de dégâts`
-- [ ] Total toucher calculé + bouton 🎲
-- [ ] Total dégâts calculé (dé + mod + magie + spécial)
-- [ ] Bouton supprimer une ligne
-- [ ] Sauvegarde en DB (table `armes`)
-- [ ] **Mode Jeu** : champs de saisie → lecture seule ; boutons ajouter/supprimer masqués ; clic sur total toucher → jet d'attaque ; clic sur total dégâts → jet de dégâts
-- [ ] **Toujours en lecture seule** : totaux toucher et dégâts (calculés)
+- [x] Tableau dynamique avec bouton "Ajouter une arme"
+- [x] Par ligne : `nom`, `caractéristique` (sélecteur For/Dex), `maîtrise` (case), `bonus magie`, `bonus spécial`, `dé de dégâts`, `type de dégâts`
+- [x] Total toucher calculé + bouton 🎲
+- [x] Total dégâts calculé (dé + mod + magie + spécial)
+- [x] Bouton supprimer une ligne
+- [x] Sauvegarde en DB (table `armes`)
+- [x] **Mode Jeu** : champs de saisie → lecture seule ; boutons ajouter/supprimer masqués ; clic sur total toucher → jet d'attaque ; clic sur total dégâts → jet de dégâts
+- [x] **Toujours en lecture seule** : totaux toucher et dégâts (calculés)
 
 ### 3.3 Bloc 8 — Équipement & Possessions
 

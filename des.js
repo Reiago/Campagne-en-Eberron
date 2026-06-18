@@ -35,6 +35,28 @@ export function lancerJetMort(label) {
   return d20;
 }
 
+export function lancerDegats(de, bonusTotal, label) {
+  const match = /^(\d+)d(\d+)$/i.exec(de);
+  let sommeDes = 0;
+  let deStr = '?';
+  if (match) {
+    const n = parseInt(match[1], 10);
+    const f = parseInt(match[2], 10);
+    const rouleaux = Array.from({ length: n }, () => lancerDe(f));
+    sommeDes = rouleaux.reduce((s, r) => s + r, 0);
+    deStr = rouleaux.length > 1 ? rouleaux.join('+') : String(rouleaux[0]);
+  }
+  const total = sommeDes + bonusTotal;
+  const signe = bonusTotal >= 0 ? '+' : '';
+  afficherToast(
+    `<span class="toast-label">${label}</span>` +
+    `<span class="toast-detail">${de} (${deStr}) ${signe}${bonusTotal}</span>` +
+    `<span class="toast-total">${total}</span>`,
+    ''
+  );
+  return total;
+}
+
 function afficherToast(html, classe) {
   let toast = document.getElementById('des-toast');
   if (!toast) {
