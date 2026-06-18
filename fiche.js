@@ -538,8 +538,13 @@ function recalculerPVBar() {
 function remplirDesDeVie() {
   const container = document.getElementById('des-de-vie');
   if (!container || !perso) return;
-  const niveau   = perso.niveau ?? 1;
-  const depenses = perso.des_de_vie_depenses ?? 0;
+  const niveau      = perso.niveau ?? 1;
+  const depenses    = perso.des_de_vie_depenses ?? 0;
+  const disponibles = Math.max(0, niveau - depenses);
+
+  const countEl = document.getElementById('ddv-count');
+  if (countEl) countEl.textContent = `${disponibles} / ${niveau}`;
+
   container.innerHTML = '';
   for (let i = 0; i < niveau; i++) {
     const cb = document.createElement('input');
@@ -549,6 +554,8 @@ function remplirDesDeVie() {
     cb.addEventListener('change', () => {
       const total = container.querySelectorAll('input:checked').length;
       schedulePersoSave({ des_de_vie_depenses: total });
+      const disp = Math.max(0, niveau - total);
+      if (countEl) countEl.textContent = `${disp} / ${niveau}`;
     });
     container.appendChild(cb);
   }
@@ -610,7 +617,13 @@ function renderReposPanel() {
           <button class="btn-stepper" id="rp-plus" ${reposDiceCount >= disponibles ? 'disabled' : ''}>+</button>
         </div>
       </div>
-      ${reposMode === 'manuel' ? `<p class="repos-manual-note">Lancez vos dés sur la table puis confirmez le nombre de dés dépensés. Mettez à jour vos PV manuellement avec les boutons +/−.</p>` : ''}
+      ${reposMode === 'manuel' ? `
+        <p class="repos-manual-note">Lancez vos dés sur la table, puis indiquez le total de PV récupérés et confirmez.</p>
+        <div class="repos-pv-recup-row">
+          <span class="repos-pv-recup-label">PV récupérés</span>
+          <input type="number" id="rp-pv-input" class="repos-pv-input" min="0" placeholder="0" />
+        </div>
+      ` : ''}
       ${hasRolled ? `
         <div class="repos-roll-results">
           <div class="repos-roll-list">${reposRolls.map(r => `<div>${r.roll} ${modStr} (Con) = <strong>${r.gain} PV</strong></div>`).join('')}</div>
@@ -681,9 +694,16 @@ function renderReposPanel() {
       reposPanelOpen = false;
       panel.setAttribute('hidden', '');
     } else {
-      // Mode manuel : marquer les dés comme dépensés, PV mis à jour manuellement
-      schedulePersoSave({ des_de_vie_depenses: depenses + reposDiceCount });
+      // Mode manuel : appliquer les PV saisis + marquer les dés comme dépensés
+      const pvInput    = panel.querySelector('#rp-pv-input');
+      const pvRecup    = Math.max(0, Number(pvInput?.value) || 0);
+      const pvActuelEl = document.getElementById('pv-actuel');
+      const pvMaxVal   = Number(document.getElementById('pv-max')?.textContent) || 0;
+      const nouveauxPV = Math.min(pvMaxVal, (Number(pvActuelEl?.value) || 0) + pvRecup);
+      if (pvActuelEl) pvActuelEl.value = nouveauxPV;
+      schedulePersoSave({ pv_actuel: nouveauxPV, des_de_vie_depenses: depenses + reposDiceCount });
       remplirDesDeVie();
+      recalculerPVBar();
       reposRolls = [];
       reposPanelOpen = false;
       panel.setAttribute('hidden', '');

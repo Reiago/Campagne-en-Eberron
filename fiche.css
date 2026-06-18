@@ -532,6 +532,14 @@ input[type="checkbox"].case-maitrise:checked::after {
   padding: 0.5rem 0;
 }
 .ddv-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); flex-shrink: 0; }
+.ddv-count {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.05em;
+  margin-left: 0.5rem;
+}
 #des-de-vie { display: flex; flex-wrap: wrap; gap: 6px; }
 #des-de-vie input[type="checkbox"] {
   appearance: none;
@@ -1057,8 +1065,48 @@ body.mode-edition .edition-only { display: block !important; }
 }
 .btn-repos-action.primary:hover { background: rgba(201,168,108,0.14); }
 
-/* Repos panel — rendre tous les boutons interactifs en Mode Jeu */
+/* Repos panel — boutons et saisie accessibles en Mode Jeu */
 body.mode-jeu .repos-panel button {
   pointer-events: auto !important;
   cursor: pointer !important;
 }
+body.mode-jeu .repos-panel input[type="number"] {
+  pointer-events: auto !important;
+  cursor: text !important;
+  background: var(--stone-mid) !important;
+  border-color: var(--border) !important;
+  color: var(--text-main) !important;
+}
+body.mode-jeu .repos-panel input[type="number"]:focus {
+  border-color: var(--gold-dim) !important;
+}
+
+/* Saisie PV récupérés (mode manuel) */
+.repos-pv-recup-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.9rem;
+}
+.repos-pv-recup-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  flex: 1;
+}
+.repos-pv-input {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--gold-light);
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0.3rem 0.4rem;
+  text-align: center;
+  width: 72px;
+}
+.repos-pv-input:focus { outline: none; border-color: var(--gold-dim); }
+.repos-pv-input::-webkit-inner-spin-button { display: none; }

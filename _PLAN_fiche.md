@@ -228,7 +228,7 @@
 - [x] 3 cases JDS succès + 3 cases JDS échecs
 - [ ] Réinitialisation automatique des JDS après stabilisation/soin
 - [ ] **Mode Jeu** : PV actuel, PV temporaires, dés de vie, JdS restent interactifs (c'est de la gestion en temps réel) ; sélecteur type de dé → lecture seule
-- [ ] **Toujours en lecture seule** : PV max (calculé)
+- [x] **Toujours en lecture seule** : PV max (calculé)
 
 ### 2.7 Bloc 6 — Compétences
 
