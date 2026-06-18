@@ -1,50 +1,29 @@
-import { supabase } from './supabase_config.js';
+// AUTH DÉSACTIVÉE — branche dev-no-auth
+// Remplacer DEV_USER_ID par le user_id réel présent dans la table `personnages`
+// pour que getPersonnage(user.id) trouve un personnage sans passer par ?id=
+const DEV_USER_ID = 'dev-placeholder-uuid';
+const DEV_USER = { id: DEV_USER_ID, email: 'dev@eberron.local' };
 
-export async function login(email, password) {
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) throw error;
-
-  const mj = await isMJ(data.user);
-  window.location.href = mj ? 'mj.html' : 'fiche.html';
+export async function login(_email, _password) {
+  window.location.href = 'fiche.html';
 }
 
 export async function logout() {
-  await supabase.auth.signOut();
-  window.location.href = 'login.html';
+  window.location.href = 'index.html';
 }
 
 export async function getCurrentUser() {
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
+  return DEV_USER;
 }
 
-export async function isMJ(user) {
-  if (!user) return false;
-  const { data, error } = await supabase
-    .from('profils')
-    .select('is_mj')
-    .eq('id', user.id)
-    .single();
-  if (error) console.error('[auth] isMJ — erreur Supabase :', error);
-  return data?.is_mj ?? false;
+export async function isMJ(_user) {
+  return true;
 }
 
-export async function requireAuth(redirectTo = 'login.html') {
-  const user = await getCurrentUser();
-  if (!user) {
-    window.location.href = redirectTo;
-    return null;
-  }
-  return user;
+export async function requireAuth(_redirectTo = 'login.html') {
+  return DEV_USER;
 }
 
-export async function requireMJ(redirectTo = 'index.html') {
-  const user = await requireAuth();
-  if (!user) return null;
-  const mj = await isMJ(user);
-  if (!mj) {
-    window.location.href = redirectTo;
-    return null;
-  }
-  return user;
+export async function requireMJ(_redirectTo = 'index.html') {
+  return DEV_USER;
 }
