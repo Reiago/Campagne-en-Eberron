@@ -246,11 +246,11 @@
 
 ### 3.1 Bloc 3 — Déplacements & Charge
 
-- [ ] Champs vitesses : base, nage, escalade, vol
-- [ ] Calculs affichés en lecture seule :
-  - [ ] Saut en longueur avec/sans élan
-  - [ ] Saut en hauteur avec/sans élan
-  - [ ] Charge maximum
+- [x] Champs vitesses : base, nage, escalade, vol
+- [x] Calculs affichés en lecture seule :
+  - [x] Saut en longueur avec/sans élan
+  - [x] Saut en hauteur avec/sans élan
+  - [x] Charge maximum
 - [ ] Section encombrement (optionnel) : poids porté → statut calculé
 
 ### 3.2 Bloc 7 — Armes
