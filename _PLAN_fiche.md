@@ -369,3 +369,6 @@
 - [ ] Log des lancés de dés
 - [ ] Envois de message au MJ
 - [ ] Sortie papier de la fiche du joueur
+- [ ] Importer la liste des objets officiele
+- [ ] Importer la liste des armes officiele
+- [ ] Importer la liste des armures officiele
