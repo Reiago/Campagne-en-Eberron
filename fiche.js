@@ -225,8 +225,9 @@ function remplirIdentite() {
         recalculerBM();
         recalculerModsEtJdS();
         recalculerCompetences();
-        recalculerPVMax();
         remplirDesDeVie();
+        remplirPVNiveaux();
+        recalculerPVMax();
       }
     });
   });
@@ -387,12 +388,14 @@ function remplirPV() {
     typeDeSel.value = perso.type_de_vie ?? 'd8';
     typeDeSel.addEventListener('change', () => {
       schedulePersoSave({ type_de_vie: typeDeSel.value });
+      remplirPVNiveaux();
       recalculerPVMax();
     });
   }
 
   remplirDesDeVie();
   remplirJDSMort();
+  remplirPVNiveaux();
   recalculerPVMax();
 
   // Repos court : lance les dés de vie dépensés, récupère des PV
@@ -434,14 +437,98 @@ function remplirPV() {
 
 function recalculerPVMax() {
   if (!perso || !carac) return;
-  const modCon    = modificateur(carac.constitution ?? 10);
-  const nouveauMax = pvMax(perso.niveau ?? 1, perso.type_de_vie ?? 'd8', modCon);
-  const el        = document.getElementById('pv-max');
-  if (el) el.textContent = nouveauMax;
-  if (nouveauMax !== perso.pv_max) {
-    schedulePersoSave({ pv_max: nouveauMax });
+  const modCon  = modificateur(carac.constitution ?? 10);
+  const faces   = parseInt((perso.type_de_vie ?? 'd8').replace('d', ''), 10);
+  const niveau  = perso.niveau ?? 1;
+  const rolls   = Array.isArray(perso.pv_niveaux_roules) ? perso.pv_niveaux_roules : [];
+  const moyenne = Math.floor(faces / 2) + 1;
+
+  let total = 0;
+  for (let i = 0; i < niveau; i++) {
+    let pvCeNiveau;
+    if (i === 0) {
+      pvCeNiveau = Math.max(1, faces + modCon);
+    } else {
+      const roll = rolls[i];
+      const val  = (roll != null && roll > 0) ? roll : moyenne;
+      pvCeNiveau = Math.max(1, val + modCon);
+    }
+    total += pvCeNiveau;
+    const totalEl = document.getElementById('pv-niveau-total-' + i);
+    if (totalEl) {
+      const roll = rolls[i];
+      const estimated = i > 0 && (roll == null || roll <= 0);
+      totalEl.textContent = (estimated ? '~' : '') + fmt(pvCeNiveau) + ' PV';
+    }
+  }
+
+  const el = document.getElementById('pv-max');
+  if (el) el.textContent = total;
+  if (total !== perso.pv_max) {
+    schedulePersoSave({ pv_max: total });
   }
   recalculerPVBar();
+}
+
+function remplirPVNiveaux() {
+  const container = document.getElementById('pv-niveaux-grid');
+  if (!container || !perso) return;
+  const niveau  = perso.niveau ?? 1;
+  const faces   = parseInt((perso.type_de_vie ?? 'd8').replace('d', ''), 10);
+  const rolls   = Array.isArray(perso.pv_niveaux_roules) ? perso.pv_niveaux_roules : [];
+  const modCon  = carac ? modificateur(carac.constitution ?? 10) : 0;
+  const moyenne = Math.floor(faces / 2) + 1;
+  container.innerHTML = '';
+
+  for (let i = 0; i < niveau; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'pv-niveau-cell';
+
+    const label = document.createElement('div');
+    label.className = 'pv-niveau-label';
+    label.textContent = 'Niv. ' + (i + 1);
+
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.className = 'pv-niveau-input';
+    input.min = 1;
+    input.max = faces;
+
+    if (i === 0) {
+      input.value = faces;
+      input.readOnly = true;
+    } else {
+      const stored = rolls[i];
+      if (stored != null && stored > 0) input.value = stored;
+      else input.placeholder = moyenne;
+      input.addEventListener('input', () => {
+        const val = Number(input.value);
+        const newRolls = Array.isArray(perso.pv_niveaux_roules) ? [...perso.pv_niveaux_roules] : [];
+        newRolls[i] = (val >= 1 && val <= faces) ? val : null;
+        schedulePersoSave({ pv_niveaux_roules: newRolls });
+        recalculerPVMax();
+      });
+    }
+
+    const pvCeNiveau = i === 0
+      ? Math.max(1, faces + modCon)
+      : (() => {
+          const roll = rolls[i];
+          const val  = (roll != null && roll > 0) ? roll : moyenne;
+          return Math.max(1, val + modCon);
+        })();
+    const estimated = i > 0 && (rolls[i] == null || rolls[i] <= 0);
+
+    const totalEl = document.createElement('div');
+    totalEl.className = 'pv-niveau-total';
+    totalEl.id = 'pv-niveau-total-' + i;
+    totalEl.textContent = (estimated ? '~' : '') + fmt(pvCeNiveau) + ' PV';
+
+    cell.appendChild(label);
+    cell.appendChild(input);
+    cell.appendChild(totalEl);
+    container.appendChild(cell);
+  }
 }
 
 function recalculerPVBar() {

@@ -856,3 +856,59 @@ body.mode-jeu .comp-inspiration-row label {
   pointer-events: auto !important;
   cursor: pointer !important;
 }
+
+/* ── Éléments visibles uniquement en Mode Édition ──────────────────────────── */
+.edition-only { display: none !important; }
+body.mode-edition .edition-only { display: block !important; }
+
+/* ── Grille des jets de PV par niveau ───────────────────────────────────────── */
+.pv-niveaux-info {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin: 0 0 0.75rem;
+}
+.pv-niveaux-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 0.5rem;
+}
+.pv-niveau-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.5rem 0.4rem;
+}
+.pv-niveau-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.pv-niveau-input {
+  background: var(--stone-light);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-main);
+  font-size: 16px;
+  padding: 0.25rem;
+  text-align: center;
+  width: 52px;
+}
+.pv-niveau-input:focus { outline: none; border-color: var(--gold-dim); }
+.pv-niveau-input::-webkit-inner-spin-button { display: none; }
+.pv-niveau-input[readonly] {
+  border-color: transparent;
+  background: transparent;
+  color: var(--gold-light);
+  font-weight: 600;
+}
+.pv-niveau-total {
+  font-size: 10px;
+  color: var(--text-dim);
+}
