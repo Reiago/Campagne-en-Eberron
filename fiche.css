@@ -384,6 +384,116 @@ input[type="checkbox"].case-maitrise:checked::after {
   transform: rotate(-45deg);
 }
 
+/* ── Bloc 3 : Déplacements & Charge ────────────────────────────────────────── */
+.dep-force-val {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.dep-vitesses-grid,
+.dep-sauts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 480px) {
+  .dep-vitesses-grid,
+  .dep-sauts-grid { grid-template-columns: 1fr; }
+}
+
+.dep-vitesse-card {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.dep-vitesse-val {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1.2;
+  margin: 4px 0;
+}
+
+.dep-vitesse-input-wrap {
+  margin-top: 6px;
+}
+.dep-vitesse-input-wrap input {
+  text-align: center;
+}
+
+.dep-saut-item {
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.dep-saut-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.dep-saut-val {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1.2;
+}
+
+.dep-saut-note {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 3px;
+}
+
+.dep-charge-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.dep-charge-item {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+}
+
+.dep-charge-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.dep-charge-val {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+
+.dep-charge-note {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
 /* ── Bloc 4 : Armure ────────────────────────────────────────────────────────── */
 .ca-display {
   text-align: center;
@@ -1204,6 +1314,144 @@ body.mode-jeu .repos-panel input[type="number"]:focus {
   border-color: var(--gold-dim) !important;
 }
 
+/* ── Bloc 7 : Armes ──────────────────────────────────────────────────────────── */
+.armes-empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-dim);
+  font-style: italic;
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.arme-card {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.arme-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.arme-nom-field { flex: 1 1 0; min-width: 0; }
+.arme-carac-field { flex: 0 0 110px; }
+
+.arme-maitrise-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding-bottom: 6px;
+}
+
+.arme-del-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0.2rem 0.4rem;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 4px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.arme-del-btn:hover { color: #D87060; border-color: rgba(200,80,60,0.3); }
+
+.arme-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+}
+@media (max-width: 480px) {
+  .arme-details-grid { grid-template-columns: 1fr 1fr; }
+  .arme-carac-field { flex: 1 1 auto; }
+}
+
+.arme-totaux {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+.arme-total-item { text-align: center; }
+
+.arme-total-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 2px;
+}
+
+.arme-total-val {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1.2;
+}
+
+.arme-total-note {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 2px;
+  min-height: 14px;
+}
+
+.armes-footer { margin-top: 0.25rem; }
+
+.btn-add-arme {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--border-strong);
+  border-radius: 4px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.75rem;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.btn-add-arme:hover {
+  color: var(--gold-light);
+  border-color: var(--gold-dim);
+  background: rgba(201,168,108,0.05);
+}
+
+/* Maîtrise checkbox d'arme — non interactive en Mode Jeu */
+body.mode-jeu .arme-maitrise-cb {
+  pointer-events: none !important;
+  opacity: 0.6;
+  border-color: var(--border-strong) !important;
+  background: transparent !important;
+}
+body.mode-jeu .arme-maitrise-cb:checked {
+  background: var(--gold-dim) !important;
+  border-color: var(--gold) !important;
+}
+
 /* Saisie PV récupérés (mode manuel) */
 .repos-pv-recup-row {
   display: flex;
@@ -1233,3 +1481,159 @@ body.mode-jeu .repos-panel input[type="number"]:focus {
 }
 .repos-pv-input:focus { outline: none; border-color: var(--gold-dim); }
 .repos-pv-input::-webkit-inner-spin-button { display: none; }
+
+/* ── Bloc 8 : Équipement & Possessions ─────────────────────────────────────── */
+
+.equipement-section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Monnaie ── */
+.equipement-monnaie-section { margin-bottom: 1.5rem; }
+
+.monnaie-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+@media (max-width: 400px) {
+  .monnaie-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.monnaie-card {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 0.6rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.monnaie-label {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.monnaie-hint {
+  font-size: 9px;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.monnaie-pp .monnaie-label { color: #B8C4D4; }
+.monnaie-po .monnaie-label { color: var(--gold-light); }
+.monnaie-pe .monnaie-label { color: #9BBFB8; }
+.monnaie-pa .monnaie-label { color: #C8C8C8; }
+.monnaie-pc .monnaie-label { color: #C8935A; }
+
+.monnaie-input {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-bright);
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 0.2rem 0.3rem;
+  text-align: center;
+  width: 100%;
+}
+.monnaie-input:focus { outline: none; border-color: var(--gold-dim); }
+.monnaie-input::-webkit-inner-spin-button { display: none; }
+
+/* ── Inventaire ── */
+.equipement-inventaire-section { margin-bottom: 0.5rem; }
+
+.equipement-empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-dim);
+  font-style: italic;
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.equipement-card {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.2s;
+}
+
+.equipement-card[data-type="magique"] {
+  border-color: var(--gold-dim);
+  background: rgba(201, 168, 108, 0.04);
+}
+
+.equipement-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.equipement-nom-field { flex: 1 1 0; min-width: 0; }
+.equipement-qty-field { flex: 0 0 60px; }
+.equipement-poids-field { flex: 0 0 84px; }
+.equipement-type-field { flex: 0 0 130px; }
+
+.equipement-del-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0.2rem 0.4rem;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 4px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.equipement-del-btn:hover { color: #D87060; border-color: rgba(200,80,60,0.3); }
+
+.equipement-desc-field { margin-top: 0.25rem; }
+.equipement-desc-input { resize: vertical; min-height: 48px; }
+
+/* Hide description textarea in mode jeu when empty */
+body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !important; }
+
+.equipement-footer { margin-top: 0.25rem; }
+
+.btn-add-equipement {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--border-strong);
+  border-radius: 4px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.75rem;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.btn-add-equipement:hover {
+  color: var(--gold-light);
+  border-color: var(--gold-dim);
+  background: rgba(201,168,108,0.05);
+}
+
+@media (max-width: 480px) {
+  .equipement-header { flex-wrap: wrap; }
+  .equipement-poids-field, .equipement-type-field { flex: 1 1 auto; }
+}

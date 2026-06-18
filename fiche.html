@@ -27,12 +27,12 @@
     <div class="fiche-nav-blocs" id="nav-blocs">
       <button class="fiche-tab active" data-bloc="identite">1. Identité</button>
       <button class="fiche-tab" data-bloc="carac">2. Carac.</button>
-      <button class="fiche-tab a-venir" data-bloc="deplacements">3. Déplac.</button>
+      <button class="fiche-tab" data-bloc="deplacements">3. Déplac.</button>
       <button class="fiche-tab" data-bloc="armure">4. Armure</button>
       <button class="fiche-tab" data-bloc="pv">5. Points de Vie</button>
       <button class="fiche-tab" data-bloc="competences">6. Compétences</button>
-      <button class="fiche-tab a-venir" data-bloc="armes">7. Armes</button>
-      <button class="fiche-tab a-venir" data-bloc="equipement">8. Équipement</button>
+      <button class="fiche-tab" data-bloc="armes">7. Armes</button>
+      <button class="fiche-tab" data-bloc="equipement">8. Équipement</button>
       <button class="fiche-tab a-venir" data-bloc="sorts">9. Sorts</button>
       <button class="fiche-tab a-venir" data-bloc="traits">10. Traits</button>
       <button class="fiche-tab a-venir" data-bloc="historique">11. Historique</button>
@@ -182,10 +182,77 @@
     </div>
   </section>
 
-  <!-- ── Bloc 3 : Déplacements (Phase 3) ── -->
+  <!-- ── Bloc 3 : Déplacements & Charge ── -->
   <section class="fiche-bloc" id="bloc-deplacements">
     <h2 class="bloc-title">Déplacements &amp; Charge</h2>
-    <div class="bloc-a-venir">Disponible en Phase 3</div>
+
+    <h3 class="bloc-subtitle">Vitesses</h3>
+    <div class="dep-vitesses-grid">
+      <div class="dep-vitesse-card">
+        <div class="dep-saut-label">Base</div>
+        <div class="dep-vitesse-val" id="dep-disp-base">— m</div>
+        <div class="fiche-field edition-only dep-vitesse-input-wrap">
+          <input id="dep-vitesse_base_m" type="number" min="0" step="1.5" placeholder="9" />
+        </div>
+      </div>
+      <div class="dep-vitesse-card">
+        <div class="dep-saut-label">Nage</div>
+        <div class="dep-vitesse-val" id="dep-disp-nage">— m</div>
+        <div class="dep-saut-note" id="dep-note-nage"></div>
+        <div class="fiche-field edition-only dep-vitesse-input-wrap">
+          <input id="dep-vitesse_nage_m" type="number" min="0" step="1.5" placeholder="auto" />
+        </div>
+      </div>
+      <div class="dep-vitesse-card">
+        <div class="dep-saut-label">Escalade</div>
+        <div class="dep-vitesse-val" id="dep-disp-escalade">— m</div>
+        <div class="dep-saut-note" id="dep-note-escalade"></div>
+        <div class="fiche-field edition-only dep-vitesse-input-wrap">
+          <input id="dep-vitesse_escalade_m" type="number" min="0" step="1.5" placeholder="auto" />
+        </div>
+      </div>
+      <div class="dep-vitesse-card">
+        <div class="dep-saut-label">Vol</div>
+        <div class="dep-vitesse-val" id="dep-disp-vol">—</div>
+        <div class="dep-saut-note">Capacité requise</div>
+        <div class="fiche-field edition-only dep-vitesse-input-wrap">
+          <input id="dep-vitesse_vol_m" type="number" min="0" step="1.5" placeholder="—" />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="bloc-subtitle">Sauts — Force <span id="dep-force-label" class="dep-force-val">10</span></h3>
+    <div class="dep-sauts-grid">
+      <div class="dep-saut-item">
+        <div class="dep-saut-label">Longueur avec élan</div>
+        <div class="dep-saut-val champ-calcule" id="dep-saut-long-elan">3 m</div>
+        <div class="dep-saut-note">Force en pieds</div>
+      </div>
+      <div class="dep-saut-item">
+        <div class="dep-saut-label">Longueur sans élan</div>
+        <div class="dep-saut-val champ-calcule" id="dep-saut-long-sans">1.5 m</div>
+        <div class="dep-saut-note">Force / 2 pieds</div>
+      </div>
+      <div class="dep-saut-item">
+        <div class="dep-saut-label">Hauteur avec élan</div>
+        <div class="dep-saut-val champ-calcule" id="dep-saut-haut-elan">0.9 m</div>
+        <div class="dep-saut-note">3 + mod. Force</div>
+      </div>
+      <div class="dep-saut-item">
+        <div class="dep-saut-label">Hauteur sans élan</div>
+        <div class="dep-saut-val champ-calcule" id="dep-saut-haut-sans">0.5 m</div>
+        <div class="dep-saut-note">(3 + mod. Force) / 2</div>
+      </div>
+    </div>
+
+    <h3 class="bloc-subtitle">Charge</h3>
+    <div class="dep-charge-row">
+      <div class="dep-charge-item">
+        <div class="dep-charge-label">Charge maximale</div>
+        <div class="dep-charge-val champ-calcule" id="dep-charge-max">75 kg</div>
+      </div>
+      <div class="dep-charge-note">Force × 7,5 kg</div>
+    </div>
   </section>
 
   <!-- ── Bloc 4 : Armure ── -->
@@ -342,15 +409,58 @@
     </div>
   </section>
 
-  <!-- ── Blocs Phase 3 ── -->
+  <!-- ── Bloc 7 : Armes ── -->
   <section class="fiche-bloc" id="bloc-armes">
     <h2 class="bloc-title">Armes</h2>
-    <div class="bloc-a-venir">Disponible en Phase 3</div>
+    <div id="armes-container"></div>
+    <div class="edition-only armes-footer">
+      <button class="btn-add-arme" id="btn-add-arme">+ Ajouter une arme</button>
+    </div>
   </section>
 
   <section class="fiche-bloc" id="bloc-equipement">
     <h2 class="bloc-title">Équipement &amp; Possessions</h2>
-    <div class="bloc-a-venir">Disponible en Phase 3</div>
+
+    <!-- Monnaie — toujours éditable -->
+    <div class="equipement-monnaie-section">
+      <h3 class="equipement-section-label">Monnaie</h3>
+      <div class="monnaie-grid">
+        <div class="monnaie-card monnaie-pp">
+          <label class="monnaie-label">PP</label>
+          <input type="number" id="monnaie-pp" class="monnaie-input mode-jeu-ok" min="0" value="0" />
+          <span class="monnaie-hint">Platine</span>
+        </div>
+        <div class="monnaie-card monnaie-po">
+          <label class="monnaie-label">PO</label>
+          <input type="number" id="monnaie-po" class="monnaie-input mode-jeu-ok" min="0" value="0" />
+          <span class="monnaie-hint">Or</span>
+        </div>
+        <div class="monnaie-card monnaie-pe">
+          <label class="monnaie-label">PE</label>
+          <input type="number" id="monnaie-pe" class="monnaie-input mode-jeu-ok" min="0" value="0" />
+          <span class="monnaie-hint">Électrum</span>
+        </div>
+        <div class="monnaie-card monnaie-pa">
+          <label class="monnaie-label">PA</label>
+          <input type="number" id="monnaie-pa" class="monnaie-input mode-jeu-ok" min="0" value="0" />
+          <span class="monnaie-hint">Argent</span>
+        </div>
+        <div class="monnaie-card monnaie-pc">
+          <label class="monnaie-label">PC</label>
+          <input type="number" id="monnaie-pc" class="monnaie-input mode-jeu-ok" min="0" value="0" />
+          <span class="monnaie-hint">Cuivre</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inventaire dynamique -->
+    <div class="equipement-inventaire-section">
+      <h3 class="equipement-section-label">Inventaire</h3>
+      <div id="equipement-container"></div>
+      <div class="edition-only equipement-footer">
+        <button class="btn-add-equipement" id="btn-add-equipement">+ Ajouter un objet</button>
+      </div>
+    </div>
   </section>
 
   <!-- ── Blocs Phase 4 ── -->

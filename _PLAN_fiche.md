@@ -246,31 +246,31 @@
 
 ### 3.1 Bloc 3 — Déplacements & Charge
 
-- [ ] Champs vitesses : base, nage, escalade, vol
-- [ ] Calculs affichés en lecture seule :
-  - [ ] Saut en longueur avec/sans élan
-  - [ ] Saut en hauteur avec/sans élan
-  - [ ] Charge maximum
-- [ ] Section encombrement (optionnel) : poids porté → statut calculé
+- [x] Champs vitesses : base, nage, escalade, vol
+- [x] Calculs affichés en lecture seule :
+  - [x] Saut en longueur avec/sans élan
+  - [x] Saut en hauteur avec/sans élan
+  - [x] Charge maximum
+- [ ] Section encombrement (optionnel) : poids porté → statut calculé (différé)
 
 ### 3.2 Bloc 7 — Armes
 
-- [ ] Tableau dynamique avec bouton "Ajouter une arme"
-- [ ] Par ligne : `nom`, `caractéristique` (sélecteur For/Dex), `maîtrise` (case), `bonus magie`, `bonus spécial`, `dé de dégâts`, `type de dégâts`
-- [ ] Total toucher calculé + bouton 🎲
-- [ ] Total dégâts calculé (dé + mod + magie + spécial)
-- [ ] Bouton supprimer une ligne
-- [ ] Sauvegarde en DB (table `armes`)
-- [ ] **Mode Jeu** : champs de saisie → lecture seule ; boutons ajouter/supprimer masqués ; clic sur total toucher → jet d'attaque ; clic sur total dégâts → jet de dégâts
-- [ ] **Toujours en lecture seule** : totaux toucher et dégâts (calculés)
+- [x] Tableau dynamique avec bouton "Ajouter une arme"
+- [x] Par ligne : `nom`, `caractéristique` (sélecteur For/Dex), `maîtrise` (case), `bonus magie`, `bonus spécial`, `dé de dégâts`, `type de dégâts`
+- [x] Total toucher calculé + bouton 🎲
+- [x] Total dégâts calculé (dé + mod + magie + spécial)
+- [x] Bouton supprimer une ligne
+- [x] Sauvegarde en DB (table `armes`)
+- [x] **Mode Jeu** : champs de saisie → lecture seule ; boutons ajouter/supprimer masqués ; clic sur total toucher → jet d'attaque ; clic sur total dégâts → jet de dégâts
+- [x] **Toujours en lecture seule** : totaux toucher et dégâts (calculés)
 
 ### 3.3 Bloc 8 — Équipement & Possessions
 
-- [ ] Liste dynamique d'objets portés (ajout / suppression)
-- [ ] Section monnaie : PP / PO / PE / PA / PC (champs numériques)
-- [ ] Section objets magiques (nom + description)
-- [ ] Sauvegarde en DB (tables `equipement`, `monnaie`)
-- [ ] **Mode Jeu** : liste objets → lecture seule, boutons ajouter/supprimer masqués ; monnaie reste éditable (gestion en temps réel)
+- [x] Liste dynamique d'objets portés (ajout / suppression)
+- [x] Section monnaie : PP / PO / PE / PA / PC (champs numériques)
+- [x] Section objets magiques (nom + description, bordure dorée)
+- [x] Sauvegarde en DB (tables `equipement`, `monnaie`)
+- [x] **Mode Jeu** : liste objets → lecture seule, boutons ajouter/supprimer masqués ; monnaie reste éditable (gestion en temps réel)
 
 ---
 
