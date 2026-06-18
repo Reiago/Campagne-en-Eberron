@@ -599,6 +599,30 @@ input[type="checkbox"].case-maitrise:checked::after {
 }
 .jds-mort-cases input[type="checkbox"]:checked { background: var(--gold-dim); border-color: var(--gold); }
 
+/* Bouton jet de sauvegarde contre la mort */
+.jds-mort-jet-row {
+  margin-top: 0.75rem;
+  text-align: center;
+}
+.btn-jds-jet {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.25rem;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-jds-jet:hover {
+  background: rgba(201,168,108,0.1);
+  color: var(--gold-light);
+  border-color: var(--gold-dim);
+}
+
 /* Repos */
 .repos-row {
   display: flex;
@@ -799,17 +823,31 @@ body.mode-jeu #pv-actuel:focus,
 body.mode-jeu #pv-temporaires:focus {
   border-color: var(--gold-dim) !important;
 }
-/* Les cases de dés de vie et JdS mort restent cliquables */
-body.mode-jeu #des-de-vie input,
-body.mode-jeu #jds-succes input,
-body.mode-jeu #jds-echecs input {
+/* Cases à cocher interactives en Mode Jeu — visibles et cliquables */
+body.mode-jeu #des-de-vie input[type="checkbox"],
+body.mode-jeu #jds-succes input[type="checkbox"],
+body.mode-jeu #jds-echecs input[type="checkbox"] {
   pointer-events: auto !important;
   cursor: pointer !important;
+  border-color: var(--border-strong) !important;
+  background: transparent !important;
 }
-/* Inspiration reste cliquable */
+body.mode-jeu #des-de-vie input[type="checkbox"]:checked,
+body.mode-jeu #jds-succes input[type="checkbox"]:checked,
+body.mode-jeu #jds-echecs input[type="checkbox"]:checked {
+  background: var(--gold-dim) !important;
+  border-color: var(--gold) !important;
+}
+/* Inspiration reste cliquable et visible */
 body.mode-jeu #inspiration-cb {
   pointer-events: auto !important;
   cursor: pointer !important;
+  border-color: var(--border-strong) !important;
+  background: transparent !important;
+}
+body.mode-jeu #inspiration-cb:checked {
+  background: var(--gold-dim) !important;
+  border-color: var(--gold) !important;
 }
 /* Boutons +/- PV et repos restent accessibles */
 body.mode-jeu .mode-jeu-ok {
@@ -868,6 +906,10 @@ body.mode-jeu .comp-inspiration-row label {
 /* ── Éléments visibles uniquement en Mode Édition ──────────────────────────── */
 .edition-only { display: none !important; }
 body.mode-edition .edition-only { display: block !important; }
+
+/* ── Éléments visibles uniquement en Mode Jeu ──────────────────────────────── */
+.jeu-only { display: none !important; }
+body.mode-jeu .jeu-only { display: block !important; }
 
 /* ── Grille des jets de PV par niveau ───────────────────────────────────────── */
 .pv-niveaux-info {

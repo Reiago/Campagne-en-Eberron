@@ -5,7 +5,7 @@ import {
   getCompetences, updateCompetence,
 } from './db.js';
 import { modificateur, bonusMaitrise, caCalculee, bonusCompetence, perceptionPassive, pvMax } from './calculs.js';
-import { lancerJet, lancerDe } from './des.js';
+import { lancerJet, lancerDe, lancerJetMort } from './des.js';
 
 // ── Constantes ─────────────────────────────────────────────────────────────────
 const STATS = ['force', 'dexterite', 'constitution', 'intelligence', 'sagesse', 'charisme'];
@@ -399,6 +399,31 @@ function remplirPV() {
 
   remplirDesDeVie();
   remplirJDSMort();
+
+  // Jet de sauvegarde contre la mort (Mode Jeu uniquement)
+  document.getElementById('btn-jds-jet')?.addEventListener('click', () => {
+    if (getMode() !== 'jeu') return;
+    const d20 = lancerJetMort('Jet de sauvegarde contre la mort');
+    if (d20 === 20) {
+      // Critique : stabilisation immédiate avec 1 PV
+      const pvActuelEl = document.getElementById('pv-actuel');
+      if (pvActuelEl) pvActuelEl.value = 1;
+      schedulePersoSave({ jds_succes: 0, jds_echecs: 0, pv_actuel: 1 });
+      remplirJDSMort();
+      recalculerPVBar();
+    } else if (d20 === 1) {
+      // Échec critique : 2 échecs d'un coup
+      schedulePersoSave({ jds_echecs: Math.min(3, (perso.jds_echecs ?? 0) + 2) });
+      remplirJDSMort();
+    } else if (d20 >= 10) {
+      schedulePersoSave({ jds_succes: Math.min(3, (perso.jds_succes ?? 0) + 1) });
+      remplirJDSMort();
+    } else {
+      schedulePersoSave({ jds_echecs: Math.min(3, (perso.jds_echecs ?? 0) + 1) });
+      remplirJDSMort();
+    }
+  });
+
   remplirPVNiveaux();
   recalculerPVMax();
 

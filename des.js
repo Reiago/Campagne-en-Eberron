@@ -21,6 +21,20 @@ export function lancerJet(modificateur, label) {
   return total;
 }
 
+// Jet de sauvegarde contre la mort (d20 sans modificateur, mention spéciale)
+export function lancerJetMort(label) {
+  const d20 = lancerDe(20);
+  const classe = d20 === 20 ? 'critique' : d20 === 1 ? 'echec-critique' : '';
+  const mention = d20 === 20 ? ' — CRITIQUE !' : d20 === 1 ? ' — Échec critique' : (d20 >= 10 ? ' — Succès' : ' — Échec');
+  afficherToast(
+    `<span class="toast-label">${label}</span>` +
+    `<span class="toast-detail">1d20</span>` +
+    `<span class="toast-total">${d20}${mention}</span>`,
+    classe
+  );
+  return d20;
+}
+
 function afficherToast(html, classe) {
   let toast = document.getElementById('des-toast');
   if (!toast) {
