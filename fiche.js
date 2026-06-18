@@ -4,6 +4,8 @@ import {
   getCaracteristiques, updateCaracteristiques,
   getCompetences, updateCompetence,
   getArmes, addArme, updateArme, deleteArme,
+  getEquipement, addEquipement, updateEquipement, deleteEquipement,
+  getMonnaie, updateMonnaie,
 } from './db.js';
 import { modificateur, bonusMaitrise, caCalculee, bonusCompetence, perceptionPassive, pvMax, sautLongueur, sautHauteur, chargeMax, bonusToucher } from './calculs.js';
 import { lancerJet, lancerDe, lancerJetMort, lancerDegats } from './des.js';
@@ -45,13 +47,13 @@ function capitaliser(str) {
 }
 
 // ── État ───────────────────────────────────────────────────────────────────────
-let perso = null, carac = null, competences = [], armes = [];
+let perso = null, carac = null, competences = [], armes = [], equipement = [], monnaie = null;
 let reposMode        = localStorage.getItem('repos-mode') || 'auto'; // 'auto' | 'manuel'
 let reposDiceCount   = 1;   // nombre de dés à dépenser dans le panneau
 let reposRolls       = [];  // résultats des lancers auto [{roll, gain}, ...]
 let reposPanelOpen   = false;
 const DEBOUNCE_MS = 500;
-let persoTimer = null, caracTimer = null;
+let persoTimer = null, caracTimer = null, monnaieTimer = null;
 
 // ── Mode Jeu / Mode Édition ────────────────────────────────────────────────────
 function getMode() {
@@ -94,10 +96,12 @@ try {
   perso = ficheId ? await getPersonnageById(ficheId) : await getPersonnage(user.id);
   if (!perso) throw new Error('Aucun personnage trouvé pour ce compte.');
 
-  [carac, competences, armes] = await Promise.all([
+  [carac, competences, armes, equipement, monnaie] = await Promise.all([
     getCaracteristiques(perso.id),
     getCompetences(perso.id),
     getArmes(perso.id),
+    getEquipement(perso.id),
+    getMonnaie(perso.id),
   ]);
 
   if (perso.nom) {
@@ -112,6 +116,7 @@ try {
   remplirPV();
   remplirCompetences();
   remplirArmes();
+  remplirEquipement();
   initModeJeuClics();
 } catch (err) {
   console.error('[fiche]', err);
@@ -634,6 +639,149 @@ function recalculerArmes() {
     const card = container.querySelector(`.arme-card[data-id="${arme.id}"]`);
     if (card) recalculerArmeCard(card, arme);
   });
+}
+
+// ── Bloc 8 : Équipement & Possessions ─────────────────────────────────────────
+function remplirEquipement() {
+  const container = document.getElementById('equipement-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (!equipement.length) {
+    const empty = document.createElement('p');
+    empty.className = 'equipement-empty';
+    empty.textContent = 'Aucun objet — ajoutez-en un en Mode Édition.';
+    container.appendChild(empty);
+  } else {
+    equipement.forEach(item => container.appendChild(renderEquipementCard(item)));
+  }
+
+  document.getElementById('btn-add-equipement')?.addEventListener('click', async () => {
+    const newItem = { personnage_id: perso.id, nom: '', type: 'equipement', description: '', quantite: 1 };
+    try {
+      showSave('saving');
+      const created = await addEquipement(newItem);
+      showSave('ok');
+      equipement.push(created);
+      const emptyEl = container.querySelector('.equipement-empty');
+      if (emptyEl) emptyEl.remove();
+      container.appendChild(renderEquipementCard(created));
+    } catch (err) { showSave('error'); console.error(err); }
+  });
+
+  remplirMonnaie();
+}
+
+function renderEquipementCard(item) {
+  const card = document.createElement('div');
+  card.className = 'equipement-card';
+  card.dataset.type = item.type ?? 'equipement';
+  card.classList.toggle('no-desc', !item.description);
+
+  card.innerHTML = `
+    <div class="equipement-header">
+      <div class="fiche-field equipement-nom-field">
+        <label>Objet</label>
+        <input type="text" class="equipement-nom-input" placeholder="Nom de l'objet" />
+      </div>
+      <div class="fiche-field equipement-qty-field">
+        <label>Qté</label>
+        <input type="number" class="equipement-qty-input" min="1" />
+      </div>
+      <div class="fiche-field equipement-type-field">
+        <label>Type</label>
+        <select class="equipement-type-select">
+          <option value="equipement">Équipement</option>
+          <option value="possession">Possession</option>
+          <option value="magique">✦ Magique</option>
+        </select>
+      </div>
+      <button class="btn-structurel equipement-del-btn" title="Supprimer">✕</button>
+    </div>
+    <div class="fiche-field equipement-desc-field">
+      <label>Description</label>
+      <textarea class="equipement-desc-input" rows="2" placeholder="Description (optionnel)"></textarea>
+    </div>
+  `;
+
+  card.querySelector('.equipement-nom-input').value = item.nom ?? '';
+  card.querySelector('.equipement-qty-input').value = item.quantite ?? 1;
+  card.querySelector('.equipement-type-select').value = item.type ?? 'equipement';
+  card.querySelector('.equipement-desc-input').value = item.description ?? '';
+
+  let itemTimer = null;
+  const scheduleItemSave = () => {
+    clearTimeout(itemTimer);
+    itemTimer = setTimeout(async () => {
+      showSave('saving');
+      try {
+        await updateEquipement(item.id, { nom: item.nom, type: item.type, description: item.description, quantite: item.quantite });
+        showSave('ok');
+      } catch { showSave('error'); }
+    }, DEBOUNCE_MS);
+  };
+
+  card.querySelector('.equipement-nom-input').addEventListener('input', e => {
+    item.nom = e.target.value;
+    scheduleItemSave();
+  });
+  card.querySelector('.equipement-qty-input').addEventListener('input', e => {
+    item.quantite = Number(e.target.value) || 1;
+    scheduleItemSave();
+  });
+  card.querySelector('.equipement-type-select').addEventListener('change', e => {
+    item.type = e.target.value;
+    card.dataset.type = e.target.value;
+    scheduleItemSave();
+  });
+  card.querySelector('.equipement-desc-input').addEventListener('input', e => {
+    item.description = e.target.value;
+    card.classList.toggle('no-desc', !e.target.value);
+    scheduleItemSave();
+  });
+
+  card.querySelector('.equipement-del-btn').addEventListener('click', async () => {
+    try {
+      showSave('saving');
+      await deleteEquipement(item.id);
+      showSave('ok');
+      equipement = equipement.filter(i => i.id !== item.id);
+      card.remove();
+      const container = document.getElementById('equipement-container');
+      if (container && !equipement.length) {
+        const empty = document.createElement('p');
+        empty.className = 'equipement-empty';
+        empty.textContent = 'Aucun objet — ajoutez-en un en Mode Édition.';
+        container.appendChild(empty);
+      }
+    } catch (err) { showSave('error'); console.error(err); }
+  });
+
+  return card;
+}
+
+function remplirMonnaie() {
+  if (!monnaie) return;
+  ['pp', 'po', 'pe', 'pa', 'pc'].forEach(key => {
+    const input = document.getElementById('monnaie-' + key);
+    if (!input) return;
+    input.value = monnaie[key] ?? 0;
+    input.addEventListener('change', () => {
+      monnaie[key] = Number(input.value) || 0;
+      scheduleMonnaie();
+    });
+  });
+}
+
+function scheduleMonnaie() {
+  clearTimeout(monnaieTimer);
+  monnaieTimer = setTimeout(async () => {
+    showSave('saving');
+    try {
+      await updateMonnaie(monnaie.id, { pp: monnaie.pp, po: monnaie.po, pe: monnaie.pe, pa: monnaie.pa, pc: monnaie.pc });
+      showSave('ok');
+    } catch { showSave('error'); }
+  }, DEBOUNCE_MS);
 }
 
 // ── Bloc 4 : Armure ────────────────────────────────────────────────────────────

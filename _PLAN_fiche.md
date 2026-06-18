@@ -266,11 +266,11 @@
 
 ### 3.3 Bloc 8 — Équipement & Possessions
 
-- [ ] Liste dynamique d'objets portés (ajout / suppression)
-- [ ] Section monnaie : PP / PO / PE / PA / PC (champs numériques)
-- [ ] Section objets magiques (nom + description)
-- [ ] Sauvegarde en DB (tables `equipement`, `monnaie`)
-- [ ] **Mode Jeu** : liste objets → lecture seule, boutons ajouter/supprimer masqués ; monnaie reste éditable (gestion en temps réel)
+- [x] Liste dynamique d'objets portés (ajout / suppression)
+- [x] Section monnaie : PP / PO / PE / PA / PC (champs numériques)
+- [x] Section objets magiques (nom + description, bordure dorée)
+- [x] Sauvegarde en DB (tables `equipement`, `monnaie`)
+- [x] **Mode Jeu** : liste objets → lecture seule, boutons ajouter/supprimer masqués ; monnaie reste éditable (gestion en temps réel)
 
 ---
 
