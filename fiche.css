@@ -912,3 +912,153 @@ body.mode-edition .edition-only { display: block !important; }
   font-size: 10px;
   color: var(--text-dim);
 }
+
+/* ── Panneau Repos Court ────────────────────────────────────────────────────── */
+.repos-panel {
+  margin-top: 1rem;
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 1rem 1rem 0.75rem;
+}
+.repos-panel-title {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 0.75rem;
+}
+.repos-panel-info {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 0.9rem;
+}
+.repos-mode-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 0.9rem;
+}
+.btn-repos-mode {
+  flex: 1;
+  background: var(--stone-light);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.5rem;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-repos-mode.actif {
+  background: rgba(201,168,108,0.1);
+  border-color: var(--gold-dim);
+  color: var(--gold-light);
+}
+.repos-dice-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.9rem;
+}
+.repos-dice-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  flex: 1;
+}
+.repos-dice-stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-stepper {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 18px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.15s;
+}
+.btn-stepper:hover:not(:disabled) { background: rgba(201,168,108,0.12); }
+.btn-stepper:disabled { opacity: 0.3; cursor: not-allowed; }
+.repos-dice-count {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+  min-width: 28px;
+  text-align: center;
+}
+.repos-manual-note {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-bottom: 0.9rem;
+  line-height: 1.5;
+}
+.repos-roll-results {
+  background: var(--stone-light);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 0.9rem;
+}
+.repos-roll-list {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.repos-roll-total {
+  font-family: 'Cinzel', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--gold-light);
+}
+.repos-panel-actions {
+  display: flex;
+  gap: 0.6rem;
+  padding-top: 0.25rem;
+}
+.btn-repos-action {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.55rem 0.5rem;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-repos-action:hover { color: var(--text-muted); background: rgba(255,255,255,0.03); }
+.btn-repos-action.primary {
+  border-color: var(--gold-dim);
+  color: var(--gold-light);
+  background: rgba(201,168,108,0.07);
+}
+.btn-repos-action.primary:hover { background: rgba(201,168,108,0.14); }
+
+/* Repos panel — rendre tous les boutons interactifs en Mode Jeu */
+body.mode-jeu .repos-panel button {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}

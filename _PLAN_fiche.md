@@ -218,7 +218,7 @@
 ### 2.6 Bloc 5 — Points de Vie & Dés de Vie
 
 - [x] Sélecteur type de dé (d6 / d8 / d10 / d12)
-- [ ] PV max calculé (niveau 1 : max dé + mod Con ; niveaux suivants : somme)
+- [x] PV max calculé (niveau 1 : max dé + mod Con ; niveaux suivants : somme)
 - [x] PV actuel : champ numérique modifiable + boutons +/−
 - [x] Barre de progression PV actuel / PV max (couleur rouge/orange/vert)
 - [x] PV temporaires : champ numérique distinct

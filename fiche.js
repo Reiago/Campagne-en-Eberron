@@ -41,6 +41,10 @@ function capitaliser(str) {
 
 // ── État ───────────────────────────────────────────────────────────────────────
 let perso = null, carac = null, competences = [];
+let reposMode        = localStorage.getItem('repos-mode') || 'auto'; // 'auto' | 'manuel'
+let reposDiceCount   = 1;   // nombre de dés à dépenser dans le panneau
+let reposRolls       = [];  // résultats des lancers auto [{roll, gain}, ...]
+let reposPanelOpen   = false;
 
 // ── Mode Jeu / Mode Édition ────────────────────────────────────────────────────
 function getMode() {
@@ -398,19 +402,9 @@ function remplirPV() {
   remplirPVNiveaux();
   recalculerPVMax();
 
-  // Repos court : lance les dés de vie dépensés, récupère des PV
+  // Repos court : ouvre le panneau interactif
   document.getElementById('btn-repos-court')?.addEventListener('click', () => {
-    const faces   = parseInt((perso.type_de_vie ?? 'd8').replace('d', ''), 10);
-    const modCon  = carac ? modificateur(carac.constitution ?? 10) : 0;
-    const depenses = perso.des_de_vie_depenses ?? 0;
-    if (!depenses) return;
-    let soin = 0;
-    for (let i = 0; i < depenses; i++) soin += Math.max(1, lancerDe(faces) + modCon);
-    const nouveauxPV = Math.min(perso.pv_max ?? 0, (perso.pv_actuel ?? 0) + soin);
-    pvActuelEl.value = nouveauxPV;
-    schedulePersoSave({ pv_actuel: nouveauxPV, des_de_vie_depenses: 0 });
-    remplirDesDeVie();
-    recalculerPVBar();
+    toggleReposPanel();
   });
 
   // Repos long : PV max, récupère la moitié des dés de vie, réinitialise JDS
@@ -558,6 +552,143 @@ function remplirDesDeVie() {
     });
     container.appendChild(cb);
   }
+}
+
+function toggleReposPanel() {
+  const panel = document.getElementById('repos-panel');
+  if (!panel) return;
+  reposPanelOpen = !reposPanelOpen;
+  if (reposPanelOpen) {
+    const disponibles = Math.max(0, (perso?.niveau ?? 1) - (perso?.des_de_vie_depenses ?? 0));
+    reposDiceCount = Math.max(1, Math.min(reposDiceCount, disponibles || 1));
+    reposRolls = [];
+    renderReposPanel();
+    panel.removeAttribute('hidden');
+  } else {
+    reposRolls = [];
+    panel.setAttribute('hidden', '');
+  }
+}
+
+function renderReposPanel() {
+  const panel = document.getElementById('repos-panel');
+  if (!panel || !perso) return;
+
+  const niveau     = perso.niveau ?? 1;
+  const depenses   = perso.des_de_vie_depenses ?? 0;
+  const disponibles = Math.max(0, niveau - depenses);
+  const faces      = parseInt((perso.type_de_vie ?? 'd8').replace('d', ''), 10);
+  const modCon     = carac ? modificateur(carac.constitution ?? 10) : 0;
+
+  if (reposDiceCount > disponibles) reposDiceCount = Math.max(1, disponibles);
+
+  const hasRolled  = reposRolls.length > 0;
+  const totalGain  = hasRolled ? reposRolls.reduce((s, r) => s + r.gain, 0) : 0;
+
+  let confirmerLabel;
+  if (reposMode === 'auto') {
+    confirmerLabel = hasRolled ? `Appliquer (+${totalGain} PV)` : 'Lancer les dés';
+  } else {
+    confirmerLabel = `Confirmer — ${reposDiceCount} dé${reposDiceCount > 1 ? 's' : ''} dépensé${reposDiceCount > 1 ? 's' : ''}`;
+  }
+
+  const modStr = modCon >= 0 ? `+${modCon}` : `${modCon}`;
+
+  panel.innerHTML = `
+    <div class="repos-panel-title">Repos Court</div>
+    ${disponibles > 0 ? `
+      <div class="repos-panel-info">${disponibles} dé${disponibles > 1 ? 's' : ''} disponible${disponibles > 1 ? 's' : ''} sur ${niveau} (${perso.type_de_vie ?? 'd8'})</div>
+      <div class="repos-mode-row">
+        <button class="btn-repos-mode${reposMode === 'auto' ? ' actif' : ''}" id="rp-mode-auto">🎲 Automatique</button>
+        <button class="btn-repos-mode${reposMode === 'manuel' ? ' actif' : ''}" id="rp-mode-manuel">✋ Manuel</button>
+      </div>
+      <div class="repos-dice-row">
+        <div class="repos-dice-label">Dés à dépenser</div>
+        <div class="repos-dice-stepper">
+          <button class="btn-stepper" id="rp-moins" ${reposDiceCount <= 1 ? 'disabled' : ''}>−</button>
+          <div class="repos-dice-count">${reposDiceCount}</div>
+          <button class="btn-stepper" id="rp-plus" ${reposDiceCount >= disponibles ? 'disabled' : ''}>+</button>
+        </div>
+      </div>
+      ${reposMode === 'manuel' ? `<p class="repos-manual-note">Lancez vos dés sur la table puis confirmez le nombre de dés dépensés. Mettez à jour vos PV manuellement avec les boutons +/−.</p>` : ''}
+      ${hasRolled ? `
+        <div class="repos-roll-results">
+          <div class="repos-roll-list">${reposRolls.map(r => `<div>${r.roll} ${modStr} (Con) = <strong>${r.gain} PV</strong></div>`).join('')}</div>
+          <div class="repos-roll-total">Total récupéré : +${totalGain} PV</div>
+        </div>
+      ` : ''}
+    ` : `
+      <div class="repos-panel-info">Aucun dé de vie disponible — effectuez un repos long pour en récupérer.</div>
+    `}
+    <div class="repos-panel-actions">
+      <button class="btn-repos-action" id="rp-annuler">Annuler</button>
+      ${disponibles > 0 ? `<button class="btn-repos-action primary" id="rp-confirmer">${confirmerLabel}</button>` : ''}
+    </div>
+  `;
+
+  // Fermeture
+  panel.querySelector('#rp-annuler').addEventListener('click', () => {
+    reposRolls = [];
+    reposPanelOpen = false;
+    panel.setAttribute('hidden', '');
+  });
+
+  if (disponibles <= 0) return;
+
+  // Bascule de mode
+  panel.querySelector('#rp-mode-auto').addEventListener('click', () => {
+    reposMode = 'auto';
+    localStorage.setItem('repos-mode', 'auto');
+    reposRolls = [];
+    renderReposPanel();
+  });
+  panel.querySelector('#rp-mode-manuel').addEventListener('click', () => {
+    reposMode = 'manuel';
+    localStorage.setItem('repos-mode', 'manuel');
+    reposRolls = [];
+    renderReposPanel();
+  });
+
+  // Sélecteur de dés
+  panel.querySelector('#rp-moins')?.addEventListener('click', () => {
+    if (reposDiceCount > 1) { reposDiceCount--; reposRolls = []; renderReposPanel(); }
+  });
+  panel.querySelector('#rp-plus')?.addEventListener('click', () => {
+    if (reposDiceCount < disponibles) { reposDiceCount++; reposRolls = []; renderReposPanel(); }
+  });
+
+  // Confirmation / lancer
+  panel.querySelector('#rp-confirmer').addEventListener('click', () => {
+    if (reposMode === 'auto' && !hasRolled) {
+      // Lancer les dés
+      reposRolls = [];
+      for (let i = 0; i < reposDiceCount; i++) {
+        const roll = lancerDe(faces);
+        const gain = Math.max(1, roll + modCon);
+        reposRolls.push({ roll, gain });
+      }
+      renderReposPanel();
+    } else if (reposMode === 'auto' && hasRolled) {
+      // Appliquer la guérison
+      const pvActuelEl = document.getElementById('pv-actuel');
+      const pvMaxVal   = Number(document.getElementById('pv-max')?.textContent) || 0;
+      const nouveauxPV = Math.min(pvMaxVal, (Number(pvActuelEl?.value) || 0) + totalGain);
+      if (pvActuelEl) pvActuelEl.value = nouveauxPV;
+      schedulePersoSave({ pv_actuel: nouveauxPV, des_de_vie_depenses: depenses + reposDiceCount });
+      remplirDesDeVie();
+      recalculerPVBar();
+      reposRolls = [];
+      reposPanelOpen = false;
+      panel.setAttribute('hidden', '');
+    } else {
+      // Mode manuel : marquer les dés comme dépensés, PV mis à jour manuellement
+      schedulePersoSave({ des_de_vie_depenses: depenses + reposDiceCount });
+      remplirDesDeVie();
+      reposRolls = [];
+      reposPanelOpen = false;
+      panel.setAttribute('hidden', '');
+    }
+  });
 }
 
 function remplirJDSMort() {
