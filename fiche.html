@@ -10,13 +10,14 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="fiche.css" />
 </head>
-<body>
+<body class="mode-jeu">
 
 <!-- ── Navigation ── -->
 <div class="fiche-topbar">
   <div class="fiche-auth-bar">
     <span id="perso-titre">Fiche de personnage</span>
-    <div style="display:flex;align-items:center;gap:0.75rem;">
+    <div style="display:flex;align-items:center;gap:0.6rem;">
+      <button class="btn-mode actif" id="btn-mode" title="Basculer entre Mode Jeu et Mode Édition">⚔ Mode Jeu</button>
       <span id="perso-user-email" style="font-size:10px;"></span>
       <button class="btn-deconnexion" id="btn-logout">Déconnexion</button>
     </div>
@@ -105,50 +106,44 @@
     <div class="carac-meta">
       <div class="carac-meta-item">
         <div class="carac-meta-label">Bonus de maîtrise</div>
-        <div class="carac-meta-val" id="bonus-maitrise">+2</div>
+        <div class="carac-meta-val champ-calcule" id="bonus-maitrise">+2</div>
       </div>
       <div class="carac-meta-item">
         <div class="carac-meta-label">Initiative</div>
-        <div class="carac-meta-val" id="initiative-val">+0</div>
+        <div class="carac-meta-val champ-calcule val-clickable" id="initiative-val">+0</div>
       </div>
     </div>
 
     <div class="carac-grid">
       <div class="carac-box">
         <div class="carac-box-label">Force</div>
-        <div class="carac-box-mod" id="mod-force">+0</div>
+        <div class="carac-box-mod champ-calcule val-clickable" id="mod-force">+0</div>
         <input class="carac-box-val" id="carac-force" type="number" min="1" max="30" value="10" />
-        <button class="btn-de" id="de-force" title="Jet de Force">🎲</button>
       </div>
       <div class="carac-box">
         <div class="carac-box-label">Dextérité</div>
-        <div class="carac-box-mod" id="mod-dexterite">+0</div>
+        <div class="carac-box-mod champ-calcule val-clickable" id="mod-dexterite">+0</div>
         <input class="carac-box-val" id="carac-dexterite" type="number" min="1" max="30" value="10" />
-        <button class="btn-de" id="de-dexterite" title="Jet de Dextérité">🎲</button>
       </div>
       <div class="carac-box">
         <div class="carac-box-label">Constitution</div>
-        <div class="carac-box-mod" id="mod-constitution">+0</div>
+        <div class="carac-box-mod champ-calcule val-clickable" id="mod-constitution">+0</div>
         <input class="carac-box-val" id="carac-constitution" type="number" min="1" max="30" value="10" />
-        <button class="btn-de" id="de-constitution" title="Jet de Constitution">🎲</button>
       </div>
       <div class="carac-box">
         <div class="carac-box-label">Intelligence</div>
-        <div class="carac-box-mod" id="mod-intelligence">+0</div>
+        <div class="carac-box-mod champ-calcule val-clickable" id="mod-intelligence">+0</div>
         <input class="carac-box-val" id="carac-intelligence" type="number" min="1" max="30" value="10" />
-        <button class="btn-de" id="de-intelligence" title="Jet d'Intelligence">🎲</button>
       </div>
       <div class="carac-box">
         <div class="carac-box-label">Sagesse</div>
-        <div class="carac-box-mod" id="mod-sagesse">+0</div>
+        <div class="carac-box-mod champ-calcule val-clickable" id="mod-sagesse">+0</div>
         <input class="carac-box-val" id="carac-sagesse" type="number" min="1" max="30" value="10" />
-        <button class="btn-de" id="de-sagesse" title="Jet de Sagesse">🎲</button>
       </div>
       <div class="carac-box">
         <div class="carac-box-label">Charisme</div>
-        <div class="carac-box-mod" id="mod-charisme">+0</div>
+        <div class="carac-box-mod champ-calcule val-clickable" id="mod-charisme">+0</div>
         <input class="carac-box-val" id="carac-charisme" type="number" min="1" max="30" value="10" />
-        <button class="btn-de" id="de-charisme" title="Jet de Charisme">🎲</button>
       </div>
     </div>
 
@@ -156,39 +151,33 @@
     <div class="jds-grid">
       <div class="jds-row">
         <input type="checkbox" class="case-maitrise" id="jds-maitrise-force" />
-        <span class="jds-val" id="jds-val-force">+0</span>
+        <span class="jds-val champ-calcule val-clickable" id="jds-val-force">+0</span>
         <span class="jds-label">Force</span>
-        <button class="btn-de" id="jds-de-force">🎲</button>
       </div>
       <div class="jds-row">
         <input type="checkbox" class="case-maitrise" id="jds-maitrise-dexterite" />
-        <span class="jds-val" id="jds-val-dexterite">+0</span>
+        <span class="jds-val champ-calcule val-clickable" id="jds-val-dexterite">+0</span>
         <span class="jds-label">Dextérité</span>
-        <button class="btn-de" id="jds-de-dexterite">🎲</button>
       </div>
       <div class="jds-row">
         <input type="checkbox" class="case-maitrise" id="jds-maitrise-constitution" />
-        <span class="jds-val" id="jds-val-constitution">+0</span>
+        <span class="jds-val champ-calcule val-clickable" id="jds-val-constitution">+0</span>
         <span class="jds-label">Constitution</span>
-        <button class="btn-de" id="jds-de-constitution">🎲</button>
       </div>
       <div class="jds-row">
         <input type="checkbox" class="case-maitrise" id="jds-maitrise-intelligence" />
-        <span class="jds-val" id="jds-val-intelligence">+0</span>
+        <span class="jds-val champ-calcule val-clickable" id="jds-val-intelligence">+0</span>
         <span class="jds-label">Intelligence</span>
-        <button class="btn-de" id="jds-de-intelligence">🎲</button>
       </div>
       <div class="jds-row">
         <input type="checkbox" class="case-maitrise" id="jds-maitrise-sagesse" />
-        <span class="jds-val" id="jds-val-sagesse">+0</span>
+        <span class="jds-val champ-calcule val-clickable" id="jds-val-sagesse">+0</span>
         <span class="jds-label">Sagesse</span>
-        <button class="btn-de" id="jds-de-sagesse">🎲</button>
       </div>
       <div class="jds-row">
         <input type="checkbox" class="case-maitrise" id="jds-maitrise-charisme" />
-        <span class="jds-val" id="jds-val-charisme">+0</span>
+        <span class="jds-val champ-calcule val-clickable" id="jds-val-charisme">+0</span>
         <span class="jds-label">Charisme</span>
-        <button class="btn-de" id="jds-de-charisme">🎲</button>
       </div>
     </div>
   </section>
@@ -204,8 +193,8 @@
     <h2 class="bloc-title">Classe d'Armure</h2>
 
     <div class="ca-display">
-      <div class="ca-display-label">Classe d'Armure</div>
-      <div class="ca-display-val" id="ca-totale">10</div>
+      <div class="ca-display-label">Classe d'Armure totale</div>
+      <div class="ca-display-val champ-calcule" id="ca-totale">10</div>
     </div>
 
     <div class="fiche-grid-2">
@@ -219,7 +208,7 @@
         </select>
       </div>
       <div class="fiche-field">
-        <label for="armure-bonus_armure">Bonus d'armure</label>
+        <label for="armure-bonus_armure">Bonus d'armure de base</label>
         <input id="armure-bonus_armure" type="number" min="0" value="0" />
       </div>
       <div class="fiche-field">
@@ -244,16 +233,16 @@
 
     <div class="pv-display">
       <div class="pv-actuel-wrap">
-        <input class="pv-actuel-input" id="pv-actuel" type="number" min="0" value="0" />
+        <input class="pv-actuel-input mode-jeu-ok" id="pv-actuel" type="number" min="0" value="0" />
         <span class="pv-sep">/</span>
         <div class="pv-max-wrap">
-          <span class="pv-max-label">Max</span>
-          <input class="pv-max-input" id="pv-max" type="number" min="0" value="0" />
+          <span class="pv-max-label">Max (calculé)</span>
+          <span class="champ-calcule pv-max-val" id="pv-max">0</span>
         </div>
       </div>
       <div class="pv-btn-group">
-        <button class="btn-pv" id="pv-plus" title="Soigner">+</button>
-        <button class="btn-pv" id="pv-minus" title="Blesser">−</button>
+        <button class="btn-pv mode-jeu-ok" id="pv-plus" title="Soigner">+</button>
+        <button class="btn-pv mode-jeu-ok" id="pv-minus" title="Blesser">−</button>
       </div>
     </div>
 
@@ -261,9 +250,22 @@
       <div class="pv-bar-fill" id="pv-bar-fill" style="width:100%;" data-state="bon"></div>
     </div>
 
+    <div class="pv-soin-degat-grid jeu-only">
+      <div class="pv-sd-row">
+        <span class="pv-sd-label">Soins reçus</span>
+        <input type="number" id="pv-soin-input" class="pv-sd-input" min="0" placeholder="0" />
+        <button class="btn-pv-sd btn-soin" id="btn-pv-soin">Soigner</button>
+      </div>
+      <div class="pv-sd-row">
+        <span class="pv-sd-label">Dégâts reçus</span>
+        <input type="number" id="pv-degat-input" class="pv-sd-input" min="0" placeholder="0" />
+        <button class="btn-pv-sd btn-degat" id="btn-pv-degat">Blesser</button>
+      </div>
+    </div>
+
     <div class="pv-temp-row">
       <span class="pv-temp-label">PV temporaires</span>
-      <input class="pv-temp-input" id="pv-temporaires" type="number" min="0" value="0" />
+      <input class="pv-temp-input mode-jeu-ok" id="pv-temporaires" type="number" min="0" value="0" />
     </div>
 
     <h3 class="bloc-subtitle">Type de dé de vie</h3>
@@ -277,28 +279,40 @@
       </select>
     </div>
 
-    <h3 class="bloc-subtitle">Dés de vie restants</h3>
+    <div class="edition-only" id="pv-niveaux-container">
+      <h3 class="bloc-subtitle">Jets de PV par niveau</h3>
+      <p class="pv-niveaux-info">Niveau 1 = max du dé (automatique). Niveaux suivants = votre jet réel (1–dé). Les cases vides utilisent la valeur moyenne.</p>
+      <div class="pv-niveaux-grid" id="pv-niveaux-grid"></div>
+    </div>
+
+    <h3 class="bloc-subtitle">Dés de vie restants <span id="ddv-count" class="ddv-count"></span></h3>
     <div class="des-de-vie-row">
-      <span class="ddv-label">Dépensés</span>
       <div id="des-de-vie"></div>
     </div>
 
-    <h3 class="bloc-subtitle">Jets de sauvegarde contre la mort</h3>
-    <div class="jds-mort-grid">
-      <div class="jds-mort-item">
-        <div class="jds-mort-label">Succès</div>
-        <div class="jds-mort-cases" id="jds-succes"></div>
+    <div id="jds-mort-section">
+      <h3 class="bloc-subtitle">Jets de sauvegarde contre la mort</h3>
+      <div class="jds-mort-grid">
+        <div class="jds-mort-item">
+          <div class="jds-mort-label">Succès</div>
+          <div class="jds-mort-cases mode-jeu-ok" id="jds-succes"></div>
+        </div>
+        <div class="jds-mort-item">
+          <div class="jds-mort-label">Échecs</div>
+          <div class="jds-mort-cases mode-jeu-ok" id="jds-echecs"></div>
+        </div>
       </div>
-      <div class="jds-mort-item">
-        <div class="jds-mort-label">Échecs</div>
-        <div class="jds-mort-cases" id="jds-echecs"></div>
+      <div class="jds-mort-jet-row jeu-only">
+        <button class="btn-jds-jet mode-jeu-ok" id="btn-jds-jet">Lancer le jet de sauvegarde contre la mort</button>
       </div>
     </div>
 
     <div class="repos-row">
-      <button class="btn-repos" id="btn-repos-court">Repos court</button>
-      <button class="btn-repos" id="btn-repos-long">Repos long</button>
+      <button class="btn-repos mode-jeu-ok" id="btn-repos-court">Repos court</button>
+      <button class="btn-repos mode-jeu-ok" id="btn-repos-long">Repos long</button>
     </div>
+
+    <div id="repos-panel" class="repos-panel" hidden></div>
   </section>
 
   <!-- ── Bloc 6 : Compétences ── -->
@@ -306,7 +320,7 @@
     <h2 class="bloc-title">Compétences</h2>
 
     <div class="comp-inspiration-row">
-      <input type="checkbox" class="case-maitrise" id="inspiration-cb" />
+      <input type="checkbox" class="case-maitrise mode-jeu-ok" id="inspiration-cb" />
       <label for="inspiration-cb">Inspiration</label>
     </div>
 
@@ -317,7 +331,6 @@
           <th title="Expertise">E</th>
           <th>Compétence</th>
           <th class="th-center">Bonus</th>
-          <th class="th-center">Dé</th>
         </tr>
       </thead>
       <tbody id="competences-tbody"></tbody>
@@ -325,7 +338,7 @@
 
     <div class="perception-passive-row">
       <span class="pp-label">Perception passive (Sagesse)</span>
-      <span class="pp-val" id="perception-passive">10</span>
+      <span class="pp-val champ-calcule" id="perception-passive">10</span>
     </div>
   </section>
 

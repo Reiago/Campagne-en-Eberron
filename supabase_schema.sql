@@ -70,6 +70,9 @@ CREATE TABLE personnages (
   des_de_vie_depenses         int         NOT NULL DEFAULT 0,
   jds_succes                  int         NOT NULL DEFAULT 0 CHECK (jds_succes BETWEEN 0 AND 3),
   jds_echecs                  int         NOT NULL DEFAULT 0 CHECK (jds_echecs BETWEEN 0 AND 3),
+  -- Jets de dé par niveau : tableau JSON [roll_niv1, roll_niv2, ...]
+  -- roll_niv1 = max du dé (calculé auto) ; niveaux suivants = jet réel du joueur (null si non saisi)
+  pv_niveaux_roules           jsonb       NOT NULL DEFAULT '[]',
 
   -- Bloc 6 · Inspiration
   inspiration                 boolean     NOT NULL DEFAULT false,

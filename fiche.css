@@ -251,20 +251,6 @@
 }
 @media (max-width: 560px) { .fiche-grid-3 { grid-template-columns: 1fr 1fr; } }
 
-/* ── Bouton dé ──────────────────────────────────────────────────────────────── */
-.btn-de {
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  color: var(--gold-dim);
-  cursor: pointer;
-  font-size: 14px;
-  padding: 3px 7px;
-  line-height: 1;
-  transition: color 0.15s, border-color 0.15s;
-  flex-shrink: 0;
-}
-.btn-de:hover { color: var(--gold-light); border-color: var(--gold-dim); }
 
 /* ── Bloc 2 : Caractéristiques ──────────────────────────────────────────────── */
 .carac-meta {
@@ -516,6 +502,71 @@ input[type="checkbox"].case-maitrise:checked::after {
 .pv-bar-fill[data-state="moyen"]   { background: var(--gold-dim); }
 .pv-bar-fill[data-state="critique"] { background: var(--red-accent); }
 
+/* Soins / Dégâts externes */
+.pv-soin-degat-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.pv-sd-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pv-sd-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  flex: 1;
+}
+.pv-sd-input {
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-main);
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0.25rem 0.4rem;
+  text-align: center;
+  width: 68px;
+}
+.pv-sd-input:focus { outline: none; border-color: var(--gold-dim); }
+.pv-sd-input::-webkit-inner-spin-button { display: none; }
+.btn-pv-sd {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.85rem;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-soin { color: #5A9A50; border-color: rgba(90,154,80,0.35); }
+.btn-soin:hover { background: rgba(90,154,80,0.15); border-color: rgba(90,154,80,0.6); }
+.btn-degat { color: #D87060; border-color: rgba(216,112,96,0.35); }
+.btn-degat:hover { background: rgba(216,112,96,0.15); border-color: rgba(216,112,96,0.6); }
+
+/* Soin/Dégât — champs actifs en Mode Jeu */
+body.mode-jeu .pv-sd-input {
+  pointer-events: auto !important;
+  cursor: text !important;
+  background: var(--stone-mid) !important;
+  border-color: var(--border) !important;
+  color: var(--text-main) !important;
+}
+body.mode-jeu .pv-sd-input:focus { border-color: var(--gold-dim) !important; }
+body.mode-jeu .btn-pv-sd {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
 /* PV temporaires */
 .pv-temp-row {
   display: flex;
@@ -546,6 +597,14 @@ input[type="checkbox"].case-maitrise:checked::after {
   padding: 0.5rem 0;
 }
 .ddv-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); flex-shrink: 0; }
+.ddv-count {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.05em;
+  margin-left: 0.5rem;
+}
 #des-de-vie { display: flex; flex-wrap: wrap; gap: 6px; }
 #des-de-vie input[type="checkbox"] {
   appearance: none;
@@ -604,6 +663,34 @@ input[type="checkbox"].case-maitrise:checked::after {
   transition: background 0.15s;
 }
 .jds-mort-cases input[type="checkbox"]:checked { background: var(--gold-dim); border-color: var(--gold); }
+
+/* Section JdS mort — masquée par défaut, visible quand PV ≤ 0 */
+#jds-mort-section { display: none; }
+#jds-mort-section.visible { display: block; }
+
+/* Bouton jet de sauvegarde contre la mort */
+.jds-mort-jet-row {
+  margin-top: 0.75rem;
+  text-align: center;
+}
+.btn-jds-jet {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.25rem;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-jds-jet:hover {
+  background: rgba(201,168,108,0.1);
+  color: var(--gold-light);
+  border-color: var(--gold-dim);
+}
 
 /* Repos */
 .repos-row {
@@ -706,6 +793,10 @@ input[type="checkbox"].case-maitrise:checked::after {
   min-width: 200px;
   text-align: center;
 }
+.des-toast.visible {
+  pointer-events: auto;
+  cursor: pointer;
+}
 .des-toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
 .des-toast.critique { border-color: var(--gold); box-shadow: 0 0 16px rgba(201,168,108,0.3); }
 .des-toast.echec-critique { border-color: var(--red-accent); }
@@ -726,3 +817,419 @@ input[type="checkbox"].case-maitrise:checked::after {
 }
 .des-toast.critique .toast-total { color: var(--gold); }
 .des-toast.echec-critique .toast-total { color: #D87060; }
+
+/* ── Mode Jeu / Mode Édition ────────────────────────────────────────────────── */
+
+/* Bouton de bascule de mode */
+.btn-mode {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.65rem;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.btn-mode.actif {
+  color: var(--gold-light);
+  border-color: var(--gold-dim);
+  background: rgba(201,168,108,0.08);
+  box-shadow: 0 0 8px rgba(201,168,108,0.15);
+}
+.btn-mode:hover { color: var(--text-muted); border-color: var(--gold-dim); }
+
+/* Indicateur visuel du mode dans la topbar */
+body.mode-jeu .fiche-topbar { border-bottom-color: var(--gold-dim); }
+body.mode-edition .fiche-topbar { border-bottom-color: rgba(100,160,200,0.4); }
+body.mode-edition .btn-mode { color: rgba(100,180,220,0.85); border-color: rgba(100,160,200,0.5); background: rgba(100,160,200,0.07); }
+
+/* ── Champs toujours en lecture seule (valeurs calculées) ───────────────────── */
+.champ-calcule {
+  display: inline-block;
+  cursor: default;
+  user-select: none;
+}
+
+/* ── Valeurs cliquables en Mode Jeu ─────────────────────────────────────────── */
+.val-clickable { transition: color 0.15s; }
+body.mode-jeu .val-clickable {
+  cursor: pointer;
+}
+body.mode-jeu .val-clickable:hover {
+  color: var(--gold);
+  text-shadow: 0 0 8px rgba(201,168,108,0.4);
+}
+
+/* ── Mode Jeu : désactiver tous les champs éditables ────────────────────────── */
+body.mode-jeu input,
+body.mode-jeu select,
+body.mode-jeu textarea {
+  pointer-events: none !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  color: var(--text-muted) !important;
+  cursor: default !important;
+}
+
+/* En mode jeu, les valeurs de carac prennent l'apparence de texte */
+body.mode-jeu .carac-box-val {
+  color: var(--gold-light) !important;
+  font-weight: 600;
+  width: auto;
+  padding: 0 4px;
+}
+
+/* Réactiver les éléments interactifs du Bloc PV en Mode Jeu */
+body.mode-jeu #pv-actuel,
+body.mode-jeu #pv-temporaires {
+  pointer-events: auto !important;
+  background: var(--stone-mid) !important;
+  border-color: var(--border) !important;
+  color: var(--gold-light) !important;
+  cursor: text !important;
+}
+body.mode-jeu #pv-actuel:focus,
+body.mode-jeu #pv-temporaires:focus {
+  border-color: var(--gold-dim) !important;
+}
+/* Cases à cocher interactives en Mode Jeu — visibles et cliquables */
+body.mode-jeu #des-de-vie input[type="checkbox"],
+body.mode-jeu #jds-succes input[type="checkbox"],
+body.mode-jeu #jds-echecs input[type="checkbox"] {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  border-color: var(--border-strong) !important;
+  background: transparent !important;
+}
+body.mode-jeu #des-de-vie input[type="checkbox"]:checked,
+body.mode-jeu #jds-succes input[type="checkbox"]:checked,
+body.mode-jeu #jds-echecs input[type="checkbox"]:checked {
+  background: var(--gold-dim) !important;
+  border-color: var(--gold) !important;
+}
+/* Inspiration reste cliquable et visible */
+body.mode-jeu #inspiration-cb {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  border-color: var(--border-strong) !important;
+  background: transparent !important;
+}
+body.mode-jeu #inspiration-cb:checked {
+  background: var(--gold-dim) !important;
+  border-color: var(--gold) !important;
+}
+/* Boutons +/- PV et repos restent accessibles */
+body.mode-jeu .mode-jeu-ok {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Boutons structurels (ajouter/supprimer) masqués en Mode Jeu (Phase 3+) */
+body.mode-jeu .btn-structurel { display: none !important; }
+
+/* ── PV max (span calculé, remplace l'input) ────────────────────────────────── */
+.pv-max-val {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0.3rem 0.4rem;
+  min-width: 40px;
+  text-align: center;
+  display: inline-block;
+}
+
+/* ── Mode Jeu : label d'identité discret ────────────────────────────────────── */
+body.mode-jeu .fiche-field label {
+  opacity: 0.6;
+}
+/* En mode jeu, les fiche-field inputs se fondent dans la page */
+body.mode-jeu .fiche-field input,
+body.mode-jeu .fiche-field select,
+body.mode-jeu .fiche-field textarea {
+  padding: 0.2rem 0 !important;
+  font-size: 16px !important;
+  color: var(--text-main) !important;
+}
+
+/* Compétences — cases maîtrise/expertise visibles mais non interactives en Mode Jeu */
+body.mode-jeu .comp-maitrise,
+body.mode-jeu .comp-expertise,
+body.mode-jeu .jds-maitrise {
+  pointer-events: none !important;
+  opacity: 0.6;
+  border-color: var(--border-strong) !important;
+  background: transparent !important;
+}
+body.mode-jeu .comp-maitrise:checked,
+body.mode-jeu .comp-expertise:checked,
+body.mode-jeu .jds-maitrise:checked {
+  background: var(--gold-dim) !important;
+  border-color: var(--gold) !important;
+}
+
+/* Désactiver tous les <label for="…"> en Mode Jeu (ils déclencheraient sinon
+   le checkbox associé même quand celui-ci est bloqué par pointer-events: none) */
+body.mode-jeu label {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+/* Exception : le label de l'Inspiration reste cliquable */
+body.mode-jeu .comp-inspiration-row label {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* ── Éléments visibles uniquement en Mode Édition ──────────────────────────── */
+.edition-only { display: none !important; }
+body.mode-edition .edition-only { display: block !important; }
+
+/* ── Éléments visibles uniquement en Mode Jeu ──────────────────────────────── */
+.jeu-only { display: none !important; }
+body.mode-jeu .jeu-only { display: block !important; }
+
+/* ── Grille des jets de PV par niveau ───────────────────────────────────────── */
+.pv-niveaux-info {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin: 0 0 0.75rem;
+}
+.pv-niveaux-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 0.5rem;
+}
+.pv-niveau-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.5rem 0.4rem;
+}
+.pv-niveau-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.pv-niveau-input {
+  background: var(--stone-light);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-main);
+  font-size: 16px;
+  padding: 0.25rem;
+  text-align: center;
+  width: 52px;
+}
+.pv-niveau-input:focus { outline: none; border-color: var(--gold-dim); }
+.pv-niveau-input::-webkit-inner-spin-button { display: none; }
+.pv-niveau-input[readonly] {
+  border-color: transparent;
+  background: transparent;
+  color: var(--gold-light);
+  font-weight: 600;
+}
+.pv-niveau-total {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+/* ── Panneau Repos Court ────────────────────────────────────────────────────── */
+.repos-panel {
+  margin-top: 1rem;
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 1rem 1rem 0.75rem;
+}
+.repos-panel-title {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 0.75rem;
+}
+.repos-panel-info {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 0.9rem;
+}
+.repos-mode-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 0.9rem;
+}
+.btn-repos-mode {
+  flex: 1;
+  background: var(--stone-light);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.5rem;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-repos-mode.actif {
+  background: rgba(201,168,108,0.1);
+  border-color: var(--gold-dim);
+  color: var(--gold-light);
+}
+.repos-dice-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.9rem;
+}
+.repos-dice-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  flex: 1;
+}
+.repos-dice-stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-stepper {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 18px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.15s;
+}
+.btn-stepper:hover:not(:disabled) { background: rgba(201,168,108,0.12); }
+.btn-stepper:disabled { opacity: 0.3; cursor: not-allowed; }
+.repos-dice-count {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+  min-width: 28px;
+  text-align: center;
+}
+.repos-manual-note {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-bottom: 0.9rem;
+  line-height: 1.5;
+}
+.repos-roll-results {
+  background: var(--stone-light);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 0.9rem;
+}
+.repos-roll-list {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.repos-roll-total {
+  font-family: 'Cinzel', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--gold-light);
+}
+.repos-panel-actions {
+  display: flex;
+  gap: 0.6rem;
+  padding-top: 0.25rem;
+}
+.btn-repos-action {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.55rem 0.5rem;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-repos-action:hover { color: var(--text-muted); background: rgba(255,255,255,0.03); }
+.btn-repos-action.primary {
+  border-color: var(--gold-dim);
+  color: var(--gold-light);
+  background: rgba(201,168,108,0.07);
+}
+.btn-repos-action.primary:hover { background: rgba(201,168,108,0.14); }
+
+/* Repos panel — boutons et saisie accessibles en Mode Jeu */
+body.mode-jeu .repos-panel button {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+body.mode-jeu .repos-panel input[type="number"] {
+  pointer-events: auto !important;
+  cursor: text !important;
+  background: var(--stone-mid) !important;
+  border-color: var(--border) !important;
+  color: var(--text-main) !important;
+}
+body.mode-jeu .repos-panel input[type="number"]:focus {
+  border-color: var(--gold-dim) !important;
+}
+
+/* Saisie PV récupérés (mode manuel) */
+.repos-pv-recup-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.9rem;
+}
+.repos-pv-recup-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  flex: 1;
+}
+.repos-pv-input {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--gold-light);
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0.3rem 0.4rem;
+  text-align: center;
+  width: 72px;
+}
+.repos-pv-input:focus { outline: none; border-color: var(--gold-dim); }
+.repos-pv-input::-webkit-inner-spin-button { display: none; }

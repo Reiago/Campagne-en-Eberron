@@ -107,35 +107,35 @@
 
 > Fonctionnalité transversale : tous les blocs de la fiche doivent respecter ces deux modes.
 
-- [ ] Ajouter un bouton bascule **Mode Jeu / Mode Édition** dans la barre de navigation des blocs (visible en permanence)
-- [ ] Le mode actif est stocké dans `localStorage` (persisté entre sessions)
-- [ ] La fiche démarre en **Mode Jeu** par défaut
-- [ ] Appliquer une classe CSS globale (`mode-jeu` / `mode-edition`) sur `<body>` ou `<main>` pour piloter l'apparence par CSS
+- [x] Ajouter un bouton bascule **Mode Jeu / Mode Édition** dans la barre de navigation des blocs (visible en permanence)
+- [x] Le mode actif est stocké dans `localStorage` (persisté entre sessions)
+- [x] La fiche démarre en **Mode Jeu** par défaut
+- [x] Appliquer une classe CSS globale (`mode-jeu` / `mode-edition`) sur `<body>` ou `<main>` pour piloter l'apparence par CSS
 
 **Mode Jeu (lecture + jets de dés)**
-- [ ] Tous les champs éditables (`input`, `select`, `textarea`) deviennent non-éditables (`readonly` / `disabled` / remplacés par du texte brut)
-- [ ] Un clic sur n'importe quelle valeur numérique associée à un jet déclenche directement le jet de dé (modificateur, compétence, JdS, attaque…)
-- [ ] Les boutons 🎲 sont masqués (le clic sur la valeur les remplace)
-- [ ] Les boutons d'action structurelle sont masqués (ajouter/supprimer arme, sort, capacité…)
+- [x] Tous les champs éditables (`input`, `select`, `textarea`) deviennent non-éditables (`readonly` / `disabled` / remplacés par du texte brut)
+- [x] Un clic sur n'importe quelle valeur numérique associée à un jet déclenche directement le jet de dé (modificateur, compétence, JdS, attaque…)
+- [x] Les boutons 🎲 sont masqués (le clic sur la valeur les remplace)
+- [x] Les boutons d'action structurelle sont masqués (ajouter/supprimer arme, sort, capacité…)
 - [ ] Les boutons de repos court / repos long restent accessibles
-- [ ] Visuel distinctif : fond légèrement différent ou bandeau coloré indiquant le mode actif
+- [x] Visuel distinctif : fond légèrement différent ou bandeau coloré indiquant le mode actif
 
 **Mode Édition (saisie libre)**
-- [ ] Comportement actuel : tous les champs sont éditables
-- [ ] Les boutons 🎲 sont affichés à côté des valeurs
-- [ ] Les boutons d'action structurelle sont affichés (ajouter/supprimer…)
-- [ ] Sauvegarde automatique active (debounce)
+- [x] Comportement actuel : tous les champs sont éditables
+- [x] feat. supprimée : Les boutons 🎲 sont affichés à côté des valeurs
+- [x] Les boutons d'action structurelle sont affichés (ajouter/supprimer…)
+- [x] Sauvegarde automatique active (debounce)
 
 **Règle générale — valeurs calculées**
-- [ ] Les champs calculés (modificateurs, CA totale, bonus de maîtrise, perception passive, DD sorts, bonus attaque sorts, bonus toucher…) ne sont **jamais** éditables, quel que soit le mode
-- [ ] Ils sont affichés en lecture seule avec un style visuel distinct (ex. couleur ou fond différent)
-- [ ] En mode jeu, un clic sur une valeur calculée liée à un jet déclenche tout de même le dé
+- [x] Les champs calculés (modificateurs, CA totale, bonus de maîtrise, perception passive, DD sorts, bonus attaque sorts, bonus toucher…) ne sont **jamais** éditables, quel que soit le mode
+- [x] Ils sont affichés en lecture seule avec un style visuel distinct (ex. couleur ou fond différent)
+- [x] En mode jeu, un clic sur une valeur calculée liée à un jet déclenche tout de même le dé
 
 **Implémentation dans `fiche.js`**
-- [ ] Fonction `setMode(mode)` → applique la classe CSS, met à jour le bouton, sauvegarde dans `localStorage`
-- [ ] Fonction `getMode()` → lit `localStorage`, retourne `'jeu'` ou `'edition'`
-- [ ] Au chargement, appeler `setMode(getMode())` pour restaurer le dernier mode
-- [ ] Les gestionnaires de clic sur les valeurs numériques vérifient le mode avant d'agir (jet ou édition)
+- [x] Fonction `setMode(mode)` → applique la classe CSS, met à jour le bouton, sauvegarde dans `localStorage`
+- [x] Fonction `getMode()` → lit `localStorage`, retourne `'jeu'` ou `'edition'`
+- [x] Au chargement, appeler `setMode(getMode())` pour restaurer le dernier mode
+- [x] Les gestionnaires de clic sur les valeurs numériques vérifient le mode avant d'agir (jet ou édition)
 
 ---
 
@@ -184,16 +184,16 @@
   - [x] Jets de sauvegarde (×6)
   - [x] Compétences (×18)
   - [ ] Attaque par arme (×N)
-  - [ ] Initiative
-- [ ] **Mode Jeu** : boutons 🎲 masqués — le clic sur la valeur numérique déclenche directement `lancerJet`
-- [ ] **Mode Édition** : boutons 🎲 visibles, clic sur valeur → édition normale
+  - [x] Initiative
+- [x] **Mode Jeu** : boutons 🎲 masqués — le clic sur la valeur numérique déclenche directement `lancerJet`
+- [x] **Mode Édition** : caduque boutons supprimés : boutons 🎲 visibles, clic sur valeur → édition normale
 
 ### 2.3 Bloc 1 — Identité du personnage
 
 - [x] Afficher et rendre éditable : `nom`, `classe`, `niveau`, `race`, `âge`, `taille`, `poids`, `dieu`, `devise`, `xp`, `alignement`
 - [x] Sélecteur pour l'alignement (9 valeurs)
 - [x] Sauvegarde automatique à chaque modification
-- [ ] **Mode Jeu** : tous les champs en lecture seule
+- [x] **Mode Jeu** : tous les champs en lecture seule
 
 ### 2.4 Bloc 2 — Caractéristiques
 
@@ -203,8 +203,8 @@
 - [x] 6 jets de sauvegarde avec case de maîtrise + valeur calculée + bouton 🎲
 - [x] Afficher l'Initiative (= mod. Dextérité)
 - [x] Recalcul en cascade si une stat change (compétences, CA, PV…)
-- [ ] **Mode Jeu** : valeurs de stat éditables → lecture seule ; modificateurs (calculés) → clic lance le jet de caractéristique ; JdS calculés → clic lance le JdS ; cases de maîtrise JdS non modifiables
-- [ ] **Toujours en lecture seule** : modificateurs, bonus de maîtrise, valeur initiative (calculés)
+- [x] **Mode Jeu** : valeurs de stat éditables → lecture seule ; modificateurs (calculés) → clic lance le jet de caractéristique ; JdS calculés → clic lance le JdS ; cases de maîtrise JdS non modifiables
+- [x] **Toujours en lecture seule** : modificateurs, bonus de maîtrise, valeur initiative (calculés)
 
 ### 2.5 Bloc 4 — Classe d'Armure
 
@@ -212,13 +212,13 @@
 - [x] Champs : `bonus_armure`, `bouclier`, `magie`, `autre`
 - [x] CA totale calculée et mise en avant (grand nombre)
 - [ ] Alerte si armure sans maîtrise (fonctionnalité optionnelle)
-- [ ] **Mode Jeu** : champs bonus → lecture seule
-- [ ] **Toujours en lecture seule** : CA totale (calculée)
+- [x] **Mode Jeu** : champs bonus → lecture seule
+- [x] **Toujours en lecture seule** : CA totale (calculée)
 
 ### 2.6 Bloc 5 — Points de Vie & Dés de Vie
 
 - [x] Sélecteur type de dé (d6 / d8 / d10 / d12)
-- [ ] PV max calculé (niveau 1 : max dé + mod Con ; niveaux suivants : somme)
+- [x] PV max calculé (niveau 1 : max dé + mod Con ; niveaux suivants : somme)
 - [x] PV actuel : champ numérique modifiable + boutons +/−
 - [x] Barre de progression PV actuel / PV max (couleur rouge/orange/vert)
 - [x] PV temporaires : champ numérique distinct
@@ -226,19 +226,19 @@
 - [x] Repos court : bouton → lance les dés de vie cochés, récupère PV
 - [x] Repos long : bouton → remet PV max, récupère la moitié des dés de vie
 - [x] 3 cases JDS succès + 3 cases JDS échecs
-- [ ] Réinitialisation automatique des JDS après stabilisation/soin
-- [ ] **Mode Jeu** : PV actuel, PV temporaires, dés de vie, JdS restent interactifs (c'est de la gestion en temps réel) ; sélecteur type de dé → lecture seule
-- [ ] **Toujours en lecture seule** : PV max (calculé)
+- [x] Réinitialisation automatique des JDS après stabilisation/soin
+- [x] **Mode Jeu** : PV actuel, PV temporaires, dés de vie, JdS restent interactifs (c'est de la gestion en temps réel) ; sélecteur type de dé → lecture seule
+- [x] **Toujours en lecture seule** : PV max (calculé)
 
 ### 2.7 Bloc 6 — Compétences
 
 - [x] 18 lignes : case maîtrise + case expertise + valeur calculée + bouton 🎲
-- [ ] Valeur = mod. caractéristique + bonus maîtrise (si coché) ou ×2 (si expertise)
-- [ ] Recalcul automatique si les stats changent
-- [ ] Afficher la **Perception passive** (calculée) en bas du bloc
-- [ ] Case **Inspiration** (booléen)
-- [ ] **Mode Jeu** : cases maîtrise/expertise non modifiables ; clic sur la valeur → jet de compétence direct ; boutons 🎲 masqués ; case Inspiration reste cliquable
-- [ ] **Toujours en lecture seule** : valeurs de compétences et perception passive (calculées)
+- [x] Valeur = mod. caractéristique + bonus maîtrise (si coché) ou ×2 (si expertise)
+- [x] Recalcul automatique si les stats changent
+- [x] Afficher la **Perception passive** (calculée) en bas du bloc
+- [x] Case **Inspiration** (booléen)
+- [x] **Mode Jeu** : cases maîtrise/expertise non modifiables ; clic sur la valeur → jet de compétence direct ; boutons 🎲 masqués ; case Inspiration reste cliquable
+- [x] **Toujours en lecture seule** : valeurs de compétences et perception passive (calculées)
 
 ---
 
@@ -362,3 +362,10 @@
 | `fiche.css` | Styles de la fiche (mobile-first) |
 | `fiche.js` | Logique principale de la fiche |
 | `mj.html` | Page sélection personnage (MJ) |
+
+## Développement futur
+
+- [ ] Possibilité d'avoir des themes différents et de pouvoir switch dans les options du profil de l'utilisateur
+- [ ] Log des lancés de dés
+- [ ] Envois de message au MJ
+- [ ] Sortie papier de la fiche du joueur
