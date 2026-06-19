@@ -19,6 +19,16 @@ const STAT_LABELS = {
   force: 'Force', dexterite: 'Dextérité', constitution: 'Constitution',
   intelligence: 'Intelligence', sagesse: 'Sagesse', charisme: 'Charisme',
 };
+// Formate une valeur numérique avec son unité, pour qu'elle reste identifiable
+// une fois affichée sans titre de champ (ex: "25 ans", "1 m 92").
+const UNITE_FORMATTERS = {
+  age: v => `${v} ans`,
+  poids_kg: v => `${v} kg`,
+  taille_cm: v => {
+    if (v < 100) return `${v} cm`;
+    return `${Math.floor(v / 100)} m ${v % 100}`;
+  },
+};
 const ALIGNEMENTS = [
   'Loyal Bon', 'Neutre Bon', 'Chaotique Bon',
   'Loyal Neutre', 'Vrai Neutre', 'Chaotique Neutre',
@@ -233,9 +243,34 @@ function initModeJeuClics() {
 }
 
 // ── Bloc 1 : Identité ──────────────────────────────────────────────────────────
+// Champ texte qui affiche "valeur + unité" au repos, et la valeur brute en édition.
+function bindChampUnite(f) {
+  const el = document.getElementById('id-' + f);
+  if (!el) return;
+  const formatter = UNITE_FORMATTERS[f];
+
+  const afficherFormate = () => {
+    const v = perso[f];
+    el.value = (v === null || v === undefined || v === '') ? '' : formatter(v);
+  };
+  afficherFormate();
+
+  el.addEventListener('focus', () => {
+    el.value = perso[f] ?? '';
+  });
+  el.addEventListener('blur', () => {
+    const raw = el.value.replace(/[^\d]/g, '');
+    const num = raw === '' ? null : Number(raw);
+    perso[f] = num;
+    schedulePersoSave({ [f]: num });
+    afficherFormate();
+  });
+}
+
 function remplirIdentite() {
   const champsTxt = ['nom', 'classe', 'race', 'dieu', 'devise'];
-  const champsNum = ['niveau', 'age', 'taille_cm', 'poids_kg', 'xp'];
+  const champsNum = ['niveau', 'xp'];
+  const champsUnite = ['age', 'taille_cm', 'poids_kg'];
 
   champsTxt.forEach(f => {
     const el = document.getElementById('id-' + f);
@@ -267,6 +302,8 @@ function remplirIdentite() {
       }
     });
   });
+
+  champsUnite.forEach(bindChampUnite);
 
   const sel = document.getElementById('id-alignement');
   if (sel) {

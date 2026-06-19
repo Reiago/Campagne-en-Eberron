@@ -49,52 +49,43 @@
   <!-- ── Bloc 1 : Identité ── -->
   <section class="fiche-bloc active" id="bloc-identite">
     <h2 class="bloc-title">Identité du personnage</h2>
-    <div class="fiche-grid-2">
-      <div class="fiche-field" style="grid-column:1/-1;">
-        <label for="id-nom">Nom du personnage</label>
-        <input id="id-nom" type="text" autocomplete="off" />
+    <div class="id-grid">
+      <div class="id-box id-box-wide">
+        <input id="id-nom" type="text" autocomplete="off" placeholder="Nom du personnage" />
       </div>
-      <div class="fiche-field">
-        <label for="id-classe">Classe</label>
-        <input id="id-classe" type="text" autocomplete="off" />
+      <div class="id-box">
+        <input id="id-classe" type="text" autocomplete="off" placeholder="Classe" />
       </div>
-      <div class="fiche-field">
-        <label for="id-race">Race</label>
-        <input id="id-race" type="text" autocomplete="off" />
+      <div class="id-box">
+        <input id="id-race" type="text" autocomplete="off" placeholder="Race" />
       </div>
-      <div class="fiche-field">
-        <label for="id-niveau">Niveau</label>
+      <div class="id-box">
+        <div class="id-box-label">Niveau</div>
         <input id="id-niveau" type="number" min="1" max="20" />
       </div>
-      <div class="fiche-field">
-        <label for="id-xp">Points d'expérience</label>
+      <div class="id-box">
+        <div class="id-box-label">Expérience</div>
         <input id="id-xp" type="number" min="0" />
       </div>
-      <div class="fiche-field">
-        <label for="id-age">Âge</label>
-        <input id="id-age" type="number" min="0" />
+      <div class="id-box">
+        <input id="id-age" type="text" inputmode="numeric" placeholder="Âge" />
       </div>
-      <div class="fiche-field">
-        <label for="id-taille_cm">Taille (cm)</label>
-        <input id="id-taille_cm" type="number" min="0" />
+      <div class="id-box">
+        <input id="id-taille_cm" type="text" inputmode="numeric" placeholder="Taille" />
       </div>
-      <div class="fiche-field">
-        <label for="id-poids_kg">Poids (kg)</label>
-        <input id="id-poids_kg" type="number" min="0" />
+      <div class="id-box">
+        <input id="id-poids_kg" type="text" inputmode="numeric" placeholder="Poids" />
       </div>
-      <div class="fiche-field">
-        <label for="id-alignement">Alignement</label>
+      <div class="id-box">
         <select id="id-alignement">
-          <option value="">— Choisir —</option>
+          <option value="">Alignement</option>
         </select>
       </div>
-      <div class="fiche-field">
-        <label for="id-dieu">Dieu / Idole</label>
-        <input id="id-dieu" type="text" autocomplete="off" />
+      <div class="id-box">
+        <input id="id-dieu" type="text" autocomplete="off" placeholder="Dieu / Idole" />
       </div>
-      <div class="fiche-field" style="grid-column:1/-1;">
-        <label for="id-devise">Devise</label>
-        <input id="id-devise" type="text" autocomplete="off" />
+      <div class="id-box id-box-wide">
+        <input id="id-devise" type="text" autocomplete="off" placeholder="Devise" />
       </div>
     </div>
   </section>
