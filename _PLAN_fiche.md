@@ -278,18 +278,18 @@
 
 ### 4.1 Bloc 9 — Sorts
 
-- [ ] Sélecteur caractéristique d'incantation
-- [ ] DD des sorts + bonus d'attaque de sort (calculés, affichés en haut)
-- [ ] Pour chaque niveau de sort (0–9) :
-  - [ ] Nombre d'emplacements (champ) + cases utilisés à cocher
-  - [ ] Nombre de sorts préparés (champ)
-- [ ] Tableau de sorts dynamique (ajout / suppression) avec :
-  - [ ] `nom`, `niveau`, `préparé`, `temps d'incantation`, `durée`, `portée`
-  - [ ] `concentration` (case), `composantes` V/S/M (cases)
-  - [ ] `description` (texte long, dépliable)
-- [ ] Sauvegarde en DB (tables `sorts`, `emplacements_sorts`)
-- [ ] **Mode Jeu** : champs sorts → lecture seule ; boutons ajouter/supprimer masqués ; cases emplacements utilisés restent cliquables (gestion en temps réel) ; cases `préparé` restent cliquables
-- [ ] **Toujours en lecture seule** : DD sorts et bonus attaque de sort (calculés)
+- [x] Sélecteur caractéristique d'incantation
+- [x] DD des sorts + bonus d'attaque de sort (calculés, affichés en haut)
+- [x] Pour chaque niveau de sort (0–9) :
+  - [x] Nombre d'emplacements (champ) + cases utilisés à cocher
+  - [x] Nombre de sorts préparés (champ)
+- [x] Tableau de sorts dynamique (ajout / suppression) avec :
+  - [x] `nom`, `niveau`, `préparé`, `temps d'incantation`, `durée`, `portée`
+  - [x] `concentration` (case), `composantes` V/S/M (cases)
+  - [x] `description` (texte long, dépliable)
+- [x] Sauvegarde en DB (tables `sorts`, `emplacements_sorts`)
+- [x] **Mode Jeu** : champs sorts → lecture seule ; boutons ajouter/supprimer masqués ; cases emplacements utilisés restent cliquables (gestion en temps réel) ; cases `préparé` restent cliquables
+- [x] **Toujours en lecture seule** : DD sorts et bonus attaque de sort (calculés)
 
 ### 4.2 Bloc 10 — Traits & Capacités
 
@@ -372,3 +372,4 @@
 - [ ] Importer la liste des objets officiele
 - [ ] Importer la liste des armes officiele
 - [ ] Importer la liste des armures officiele
+- [ ] Equipement, affichage de base n'afficher que le titre et la quantité sur un ligne quand l'utilisateur clic sur la ligne on la déplie pour afficher toute la fiche

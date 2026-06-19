@@ -1637,3 +1637,217 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
   .equipement-header { flex-wrap: wrap; }
   .equipement-poids-field, .equipement-type-field { flex: 1 1 auto; }
 }
+
+/* ── Bloc 9 : Sorts ──────────────────────────────────────────────────────────── */
+
+.sorts-entete {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sorts-carac-field { flex: 1 1 200px; }
+
+.sorts-totaux {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.sorts-total-item { text-align: center; }
+
+.sorts-total-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 2px;
+}
+
+.sorts-total-val {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1.2;
+}
+
+.sorts-emplacements-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+
+.sort-emp-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+}
+
+.sort-emp-niveau {
+  flex: 0 0 96px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.sort-emp-max-field { flex: 0 0 100px; }
+
+.sort-emp-cases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1 1 120px;
+  align-items: center;
+}
+
+.sort-emp-prepares {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.sorts-empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-dim);
+  font-style: italic;
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.sort-card {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.sort-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.sort-nom-field { flex: 1 1 0; min-width: 0; }
+.sort-niveau-field { flex: 0 0 100px; }
+
+.sort-prepare-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding-bottom: 6px;
+}
+
+.sort-del-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0.2rem 0.4rem;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 4px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.sort-del-btn:hover { color: #D87060; border-color: rgba(200,80,60,0.3); }
+
+.sort-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.sort-composantes-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.sort-comp-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.sort-description-wrap summary {
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.sort-description-input { resize: vertical; min-height: 48px; width: 100%; margin-top: 0.4rem; }
+
+/* Hide description block in mode jeu when empty */
+body.mode-jeu .sort-card.no-desc .sort-description-wrap { display: none !important; }
+
+.sorts-footer { margin-top: 0.25rem; }
+
+.btn-add-sort {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--border-strong);
+  border-radius: 4px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.75rem;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.btn-add-sort:hover {
+  color: var(--gold-light);
+  border-color: var(--gold-dim);
+  background: rgba(201,168,108,0.05);
+}
+
+@media (max-width: 480px) {
+  .sort-header { flex-wrap: wrap; }
+  .sort-details-grid { grid-template-columns: 1fr 1fr; }
+  .sort-emp-niveau { flex: 1 1 100%; }
+}
+
+/* Checkboxes that remain interactive in Mode Jeu (emplacements utilisés, sort préparé) */
+body.mode-jeu input[type="checkbox"].mode-jeu-ok {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  border-color: var(--border-strong) !important;
+  background: transparent !important;
+}
+body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
+  background: var(--gold-dim) !important;
+  border-color: var(--gold) !important;
+}

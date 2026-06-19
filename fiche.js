@@ -6,8 +6,10 @@ import {
   getArmes, addArme, updateArme, deleteArme,
   getEquipement, addEquipement, updateEquipement, deleteEquipement,
   getMonnaie, updateMonnaie,
+  getSorts, addSort, updateSort, deleteSort,
+  getEmplacementsSorts, updateEmplacementSorts,
 } from './db.js';
-import { modificateur, bonusMaitrise, caCalculee, bonusCompetence, perceptionPassive, pvMax, sautLongueur, sautHauteur, chargeMax, bonusToucher } from './calculs.js';
+import { modificateur, bonusMaitrise, caCalculee, bonusCompetence, perceptionPassive, pvMax, sautLongueur, sautHauteur, chargeMax, bonusToucher, ddSorts, bonusAttaqueSorts } from './calculs.js';
 import { lancerJet, lancerDe, lancerJetMort, lancerDegats } from './des.js';
 
 // ── Constantes ─────────────────────────────────────────────────────────────────
@@ -35,6 +37,8 @@ const COMP_CARAC = {
   'perspicacite': 'sagesse', 'persuasion': 'charisme', 'religion': 'intelligence',
   'representation': 'charisme', 'survie': 'sagesse', 'tromperie': 'charisme',
 };
+const NIVEAUX_SORTS_LABELS = { 0: 'Sorts mineurs' };
+for (let i = 1; i <= 9; i++) NIVEAUX_SORTS_LABELS[i] = 'Niveau ' + i;
 
 // Supprime accents + met en minuscules pour la recherche dans COMP_CARAC.
 function normaliserNom(str) {
@@ -48,6 +52,8 @@ function capitaliser(str) {
 
 // ── État ───────────────────────────────────────────────────────────────────────
 let perso = null, carac = null, competences = [], armes = [], equipement = [], monnaie = null;
+let sorts = [], emplacementsSorts = [];
+let emplacementTimers = {};
 let reposMode        = localStorage.getItem('repos-mode') || 'auto'; // 'auto' | 'manuel'
 let reposDiceCount   = 1;   // nombre de dés à dépenser dans le panneau
 let reposRolls       = [];  // résultats des lancers auto [{roll, gain}, ...]
@@ -96,12 +102,14 @@ try {
   perso = ficheId ? await getPersonnageById(ficheId) : await getPersonnage(user.id);
   if (!perso) throw new Error('Aucun personnage trouvé pour ce compte.');
 
-  [carac, competences, armes, equipement, monnaie] = await Promise.all([
+  [carac, competences, armes, equipement, monnaie, sorts, emplacementsSorts] = await Promise.all([
     getCaracteristiques(perso.id),
     getCompetences(perso.id),
     getArmes(perso.id),
     getEquipement(perso.id),
     getMonnaie(perso.id),
+    getSorts(perso.id),
+    getEmplacementsSorts(perso.id),
   ]);
 
   if (perso.nom) {
@@ -117,6 +125,7 @@ try {
   remplirCompetences();
   remplirArmes();
   remplirEquipement();
+  remplirSorts();
   initModeJeuClics();
 } catch (err) {
   console.error('[fiche]', err);
@@ -185,6 +194,7 @@ function recalculerTout() {
   recalculerPVMax();
   recalculerDeplacements();
   recalculerArmes();
+  recalculerSortsTotaux();
 }
 
 // ── Clics Mode Jeu sur les valeurs calculées ───────────────────────────────────
@@ -246,6 +256,7 @@ function remplirIdentite() {
         remplirDesDeVie();
         remplirPVNiveaux();
         recalculerPVMax();
+        recalculerSortsTotaux();
       }
     });
   });
@@ -791,6 +802,326 @@ function scheduleMonnaie() {
       showSave('ok');
     } catch { showSave('error'); }
   }, DEBOUNCE_MS);
+}
+
+// ── Bloc 9 : Sorts ─────────────────────────────────────────────────────────────
+function remplirSorts() {
+  if (!perso) return;
+
+  const caracSel = document.getElementById('sorts-carac-incantation');
+  if (caracSel) {
+    caracSel.value = perso.caracteristique_incantation ?? '';
+    caracSel.addEventListener('change', () => {
+      schedulePersoSave({ caracteristique_incantation: caracSel.value || null });
+      recalculerSortsTotaux();
+    });
+  }
+
+  document.getElementById('sorts-attaque')?.addEventListener('click', () => {
+    if (getMode() !== 'jeu' || !carac || !perso?.caracteristique_incantation) return;
+    const bm  = bonusMaitrise(perso.niveau ?? 1);
+    const mod = modificateur(carac[perso.caracteristique_incantation] ?? 10);
+    lancerJet(bonusAttaqueSorts(bm, mod), 'Attaque de sort');
+  });
+
+  remplirEmplacementsSorts();
+  remplirSortsListe();
+  recalculerSortsTotaux();
+}
+
+function recalculerSortsTotaux() {
+  const ddEl  = document.getElementById('sorts-dd');
+  const atkEl = document.getElementById('sorts-attaque');
+  if (!ddEl || !atkEl || !perso) return;
+  const carIncant = perso.caracteristique_incantation;
+  if (!carac || !carIncant) {
+    ddEl.textContent = '—';
+    atkEl.textContent = '—';
+    return;
+  }
+  const bm  = bonusMaitrise(perso.niveau ?? 1);
+  const mod = modificateur(carac[carIncant] ?? 10);
+  ddEl.textContent = ddSorts(bm, mod);
+  atkEl.textContent = fmt(bonusAttaqueSorts(bm, mod));
+}
+
+function remplirEmplacementsSorts() {
+  const grid = document.getElementById('sorts-emplacements-grid');
+  if (!grid || !emplacementsSorts) return;
+  grid.innerHTML = '';
+  emplacementsSorts
+    .slice()
+    .sort((a, b) => a.niveau_sort - b.niveau_sort)
+    .forEach(emp => grid.appendChild(renderEmplacementRow(emp)));
+  recalculerSortsPrepares();
+}
+
+function renderEmplacementRow(emp) {
+  const row = document.createElement('div');
+  row.className = 'sort-emp-row';
+  row.dataset.niveau = emp.niveau_sort;
+
+  row.innerHTML = `
+    <div class="sort-emp-niveau">${NIVEAUX_SORTS_LABELS[emp.niveau_sort]}</div>
+    <div class="fiche-field sort-emp-max-field">
+      <label>Emplacements</label>
+      <input type="number" class="sort-emp-max-input" min="0" />
+    </div>
+    <div class="sort-emp-cases" id="sort-emp-cases-${emp.niveau_sort}"></div>
+    <div class="sort-emp-prepares champ-calcule" id="sort-emp-prepares-${emp.niveau_sort}">0 préparé(s)</div>
+  `;
+
+  const maxInput = row.querySelector('.sort-emp-max-input');
+  maxInput.value = emp.max_emplacements ?? 0;
+  maxInput.addEventListener('input', () => {
+    emp.max_emplacements = Math.max(0, Number(maxInput.value) || 0);
+    if ((emp.emplacements_utilises ?? 0) > emp.max_emplacements) emp.emplacements_utilises = emp.max_emplacements;
+    scheduleEmplacementSave(emp);
+    renderEmplacementCases(row, emp);
+  });
+
+  renderEmplacementCases(row, emp);
+  return row;
+}
+
+function renderEmplacementCases(row, emp) {
+  const container = row.querySelector('.sort-emp-cases');
+  if (!container) return;
+  container.innerHTML = '';
+  const max = emp.max_emplacements ?? 0;
+  for (let i = 0; i < max; i++) {
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.className = 'sort-emp-used-cb case-maitrise mode-jeu-ok';
+    cb.checked = i < (emp.emplacements_utilises ?? 0);
+    cb.title = cb.checked ? 'Emplacement utilisé' : 'Emplacement disponible';
+    cb.addEventListener('change', () => {
+      emp.emplacements_utilises = container.querySelectorAll('input:checked').length;
+      scheduleEmplacementSave(emp);
+    });
+    container.appendChild(cb);
+  }
+}
+
+function scheduleEmplacementSave(emp) {
+  clearTimeout(emplacementTimers[emp.id]);
+  emplacementTimers[emp.id] = setTimeout(async () => {
+    showSave('saving');
+    try {
+      await updateEmplacementSorts(emp.id, {
+        max_emplacements: emp.max_emplacements,
+        emplacements_utilises: emp.emplacements_utilises,
+      });
+      showSave('ok');
+    } catch { showSave('error'); }
+  }, DEBOUNCE_MS);
+}
+
+function recalculerSortsPrepares() {
+  for (let niveau = 0; niveau <= 9; niveau++) {
+    const count = sorts.filter(s => s.niveau_sort === niveau && s.prepare).length;
+    const el = document.getElementById('sort-emp-prepares-' + niveau);
+    if (el) el.textContent = count + ' préparé(s)';
+  }
+}
+
+function remplirSortsListe() {
+  const container = document.getElementById('sorts-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (!sorts.length) {
+    const empty = document.createElement('p');
+    empty.className = 'sorts-empty';
+    empty.textContent = 'Aucun sort — ajoutez-en un en Mode Édition.';
+    container.appendChild(empty);
+  } else {
+    sorts.forEach(sort => container.appendChild(renderSortCard(sort)));
+  }
+
+  document.getElementById('btn-add-sort')?.addEventListener('click', async () => {
+    const newSort = {
+      personnage_id: perso.id,
+      nom: '',
+      niveau_sort: 0,
+      prepare: false,
+      temps_incantation: '',
+      duree: '',
+      portee: '',
+      concentration: false,
+      composante_v: false,
+      composante_s: false,
+      composante_m: false,
+      description: '',
+    };
+    try {
+      showSave('saving');
+      const created = await addSort(newSort);
+      showSave('ok');
+      sorts.push(created);
+      const emptyEl = container.querySelector('.sorts-empty');
+      if (emptyEl) emptyEl.remove();
+      container.appendChild(renderSortCard(created));
+      recalculerSortsPrepares();
+    } catch (err) { showSave('error'); console.error(err); }
+  });
+}
+
+function renderSortCard(sort) {
+  const card = document.createElement('div');
+  card.className = 'sort-card';
+  card.dataset.id = sort.id;
+  card.classList.toggle('no-desc', !sort.description);
+
+  const pId = 'sort-p-' + sort.id;
+
+  card.innerHTML = `
+    <div class="sort-header">
+      <div class="fiche-field sort-nom-field">
+        <label>Nom</label>
+        <input type="text" class="sort-nom-input" placeholder="Boule de feu" />
+      </div>
+      <div class="fiche-field sort-niveau-field">
+        <label>Niveau</label>
+        <select class="sort-niveau-select">
+          ${Object.entries(NIVEAUX_SORTS_LABELS).map(([n, l]) => `<option value="${n}">${n === '0' ? 'Mineur' : n}</option>`).join('')}
+        </select>
+      </div>
+      <div class="sort-prepare-wrap">
+        <input type="checkbox" class="sort-prepare-cb case-maitrise mode-jeu-ok" id="${pId}" />
+        <label for="${pId}">Préparé</label>
+      </div>
+      <button class="btn-structurel sort-del-btn" title="Supprimer ce sort">✕</button>
+    </div>
+    <div class="sort-details-grid">
+      <div class="fiche-field">
+        <label>Temps d'incantation</label>
+        <input type="text" class="sort-temps-input" placeholder="1 action" />
+      </div>
+      <div class="fiche-field">
+        <label>Durée</label>
+        <input type="text" class="sort-duree-input" placeholder="Instantanée" />
+      </div>
+      <div class="fiche-field">
+        <label>Portée</label>
+        <input type="text" class="sort-portee-input" placeholder="18 m" />
+      </div>
+    </div>
+    <div class="sort-composantes-row">
+      <label class="sort-comp-wrap"><input type="checkbox" class="sort-concentration-cb case-maitrise" /> Concentration</label>
+      <label class="sort-comp-wrap"><input type="checkbox" class="sort-comp-v-cb case-maitrise" /> V</label>
+      <label class="sort-comp-wrap"><input type="checkbox" class="sort-comp-s-cb case-maitrise" /> S</label>
+      <label class="sort-comp-wrap"><input type="checkbox" class="sort-comp-m-cb case-maitrise" /> M</label>
+    </div>
+    <details class="sort-description-wrap">
+      <summary>Description</summary>
+      <textarea class="sort-description-input" rows="3" placeholder="Description du sort…"></textarea>
+    </details>
+  `;
+
+  card.querySelector('.sort-nom-input').value = sort.nom ?? '';
+  card.querySelector('.sort-niveau-select').value = String(sort.niveau_sort ?? 0);
+  card.querySelector('.sort-prepare-cb').checked = sort.prepare ?? false;
+  card.querySelector('.sort-temps-input').value = sort.temps_incantation ?? '';
+  card.querySelector('.sort-duree-input').value = sort.duree ?? '';
+  card.querySelector('.sort-portee-input').value = sort.portee ?? '';
+  card.querySelector('.sort-concentration-cb').checked = sort.concentration ?? false;
+  card.querySelector('.sort-comp-v-cb').checked = sort.composante_v ?? false;
+  card.querySelector('.sort-comp-s-cb').checked = sort.composante_s ?? false;
+  card.querySelector('.sort-comp-m-cb').checked = sort.composante_m ?? false;
+  card.querySelector('.sort-description-input').value = sort.description ?? '';
+
+  let sortTimer = null;
+  const scheduleSortSave = () => {
+    clearTimeout(sortTimer);
+    sortTimer = setTimeout(async () => {
+      showSave('saving');
+      try {
+        await updateSort(sort.id, {
+          nom: sort.nom,
+          niveau_sort: sort.niveau_sort,
+          prepare: sort.prepare,
+          temps_incantation: sort.temps_incantation,
+          duree: sort.duree,
+          portee: sort.portee,
+          concentration: sort.concentration,
+          composante_v: sort.composante_v,
+          composante_s: sort.composante_s,
+          composante_m: sort.composante_m,
+          description: sort.description,
+        });
+        showSave('ok');
+      } catch { showSave('error'); }
+    }, DEBOUNCE_MS);
+  };
+
+  card.querySelector('.sort-nom-input').addEventListener('input', e => {
+    sort.nom = e.target.value;
+    scheduleSortSave();
+  });
+  card.querySelector('.sort-niveau-select').addEventListener('change', e => {
+    sort.niveau_sort = Number(e.target.value);
+    scheduleSortSave();
+    recalculerSortsPrepares();
+  });
+  card.querySelector('.sort-prepare-cb').addEventListener('change', e => {
+    sort.prepare = e.target.checked;
+    scheduleSortSave();
+    recalculerSortsPrepares();
+  });
+  card.querySelector('.sort-temps-input').addEventListener('input', e => {
+    sort.temps_incantation = e.target.value;
+    scheduleSortSave();
+  });
+  card.querySelector('.sort-duree-input').addEventListener('input', e => {
+    sort.duree = e.target.value;
+    scheduleSortSave();
+  });
+  card.querySelector('.sort-portee-input').addEventListener('input', e => {
+    sort.portee = e.target.value;
+    scheduleSortSave();
+  });
+  card.querySelector('.sort-concentration-cb').addEventListener('change', e => {
+    sort.concentration = e.target.checked;
+    scheduleSortSave();
+  });
+  card.querySelector('.sort-comp-v-cb').addEventListener('change', e => {
+    sort.composante_v = e.target.checked;
+    scheduleSortSave();
+  });
+  card.querySelector('.sort-comp-s-cb').addEventListener('change', e => {
+    sort.composante_s = e.target.checked;
+    scheduleSortSave();
+  });
+  card.querySelector('.sort-comp-m-cb').addEventListener('change', e => {
+    sort.composante_m = e.target.checked;
+    scheduleSortSave();
+  });
+  card.querySelector('.sort-description-input').addEventListener('input', e => {
+    sort.description = e.target.value;
+    card.classList.toggle('no-desc', !e.target.value);
+    scheduleSortSave();
+  });
+
+  card.querySelector('.sort-del-btn').addEventListener('click', async () => {
+    try {
+      showSave('saving');
+      await deleteSort(sort.id);
+      showSave('ok');
+      sorts = sorts.filter(s => s.id !== sort.id);
+      card.remove();
+      recalculerSortsPrepares();
+      const container = document.getElementById('sorts-container');
+      if (container && !sorts.length) {
+        const empty = document.createElement('p');
+        empty.className = 'sorts-empty';
+        empty.textContent = 'Aucun sort — ajoutez-en un en Mode Édition.';
+        container.appendChild(empty);
+      }
+    } catch (err) { showSave('error'); console.error(err); }
+  });
+
+  return card;
 }
 
 // ── Bloc 4 : Armure ────────────────────────────────────────────────────────────
