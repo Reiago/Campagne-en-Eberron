@@ -63,6 +63,69 @@ nav.main-nav a:hover {
   color: var(--gold-light);
 }
 
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.nav-dropdown-toggle::after {
+  content: '▾';
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 9px;
+  transition: transform 0.2s;
+}
+
+.nav-dropdown.open .nav-dropdown-toggle::after {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-toggle:hover,
+.nav-dropdown.open .nav-dropdown-toggle {
+  color: var(--gold-light);
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.6rem 0;
+  min-width: 160px;
+  flex-direction: column;
+  z-index: 10;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: flex;
+}
+
+.nav-dropdown-menu a {
+  padding: 0.45rem 1rem;
+  white-space: nowrap;
+}
+
+.nav-dropdown-menu a:hover {
+  background: rgba(201,168,108,0.07);
+}
+
 /* ── Header ── */
 header {
   text-align: center;
