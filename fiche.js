@@ -131,6 +131,8 @@ try {
   remplirEquipement();
   remplirSorts();
   remplirTraits();
+  remplirHistorique();
+  remplirNotes();
   initModeJeuClics();
 } catch (err) {
   console.error('[fiche]', err);
@@ -1141,6 +1143,27 @@ function remplirTraits() {
   });
 
   remplirCapacites();
+}
+
+// ── Bloc 11 : Historique / Personnalité ────────────────────────────────────────
+function remplirHistorique() {
+  if (!perso) return;
+
+  ['trait_personnalite_1', 'trait_personnalite_2', 'ideal', 'lien', 'defaut', 'historique_background'].forEach(f => {
+    const el = document.getElementById('histo-' + f);
+    if (!el) return;
+    el.value = perso[f] ?? '';
+    el.addEventListener('input', () => schedulePersoSave({ [f]: el.value }));
+  });
+}
+
+// ── Bloc 12 : Notes ─────────────────────────────────────────────────────────────
+function remplirNotes() {
+  if (!perso) return;
+  const el = document.getElementById('notes-notes');
+  if (!el) return;
+  el.value = perso.notes ?? '';
+  el.addEventListener('input', () => schedulePersoSave({ notes: el.value }));
 }
 
 function remplirCapacites() {
