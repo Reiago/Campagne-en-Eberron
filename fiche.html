@@ -33,7 +33,7 @@
       <button class="fiche-tab" data-bloc="competences">6. Compétences</button>
       <button class="fiche-tab" data-bloc="armes">7. Armes</button>
       <button class="fiche-tab" data-bloc="equipement">8. Équipement</button>
-      <button class="fiche-tab a-venir" data-bloc="sorts">9. Sorts</button>
+      <button class="fiche-tab" data-bloc="sorts">9. Sorts</button>
       <button class="fiche-tab a-venir" data-bloc="traits">10. Traits</button>
       <button class="fiche-tab a-venir" data-bloc="historique">11. Historique</button>
       <button class="fiche-tab a-venir" data-bloc="notes">12. Notes</button>
@@ -463,10 +463,38 @@
     </div>
   </section>
 
-  <!-- ── Blocs Phase 4 ── -->
+  <!-- ── Bloc 9 : Sorts ── -->
   <section class="fiche-bloc" id="bloc-sorts">
     <h2 class="bloc-title">Sorts</h2>
-    <div class="bloc-a-venir">Disponible en Phase 4</div>
+
+    <div class="sorts-entete">
+      <div class="fiche-field sorts-carac-field">
+        <label>Caractéristique d'incantation</label>
+        <select id="sorts-carac-incantation">
+          <option value="">— Aucune —</option>
+          <option value="intelligence">Intelligence</option>
+          <option value="sagesse">Sagesse</option>
+          <option value="charisme">Charisme</option>
+        </select>
+      </div>
+      <div class="sorts-totaux">
+        <div class="sorts-total-item">
+          <div class="sorts-total-label">DD des sorts</div>
+          <div class="sorts-total-val champ-calcule" id="sorts-dd">—</div>
+        </div>
+        <div class="sorts-total-item">
+          <div class="sorts-total-label">Attaque de sort</div>
+          <div class="sorts-total-val champ-calcule val-clickable" id="sorts-attaque">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sorts-emplacements-grid" id="sorts-emplacements-grid"></div>
+
+    <div id="sorts-container"></div>
+    <div class="edition-only sorts-footer">
+      <button class="btn-add-sort" id="btn-add-sort">+ Ajouter un sort</button>
+    </div>
   </section>
 
   <section class="fiche-bloc" id="bloc-traits">
