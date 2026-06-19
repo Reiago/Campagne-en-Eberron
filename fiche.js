@@ -8,6 +8,7 @@ import {
   getMonnaie, updateMonnaie,
   getSorts, addSort, updateSort, deleteSort,
   getEmplacementsSorts, updateEmplacementSorts,
+  getCapacites, addCapacite, updateCapacite, deleteCapacite,
 } from './db.js';
 import { modificateur, bonusMaitrise, caCalculee, bonusCompetence, perceptionPassive, pvMax, sautLongueur, sautHauteur, chargeMax, bonusToucher, ddSorts, bonusAttaqueSorts } from './calculs.js';
 import { lancerJet, lancerDe, lancerJetMort, lancerDegats } from './des.js';
@@ -39,6 +40,8 @@ const COMP_CARAC = {
 };
 const NIVEAUX_SORTS_LABELS = { 0: 'Sorts mineurs' };
 for (let i = 1; i <= 9; i++) NIVEAUX_SORTS_LABELS[i] = 'Niveau ' + i;
+const RECHARGEMENTS = { court: 'Repos court', long: 'Repos long', aube: "À l'aube", jamais: 'Jamais' };
+const ACTIONS_REQUISES = ['Action', 'Action bonus', 'Réaction', 'Libre'];
 
 // Supprime accents + met en minuscules pour la recherche dans COMP_CARAC.
 function normaliserNom(str) {
@@ -52,7 +55,7 @@ function capitaliser(str) {
 
 // ── État ───────────────────────────────────────────────────────────────────────
 let perso = null, carac = null, competences = [], armes = [], equipement = [], monnaie = null;
-let sorts = [], emplacementsSorts = [];
+let sorts = [], emplacementsSorts = [], capacites = [];
 let emplacementTimers = {};
 let reposMode        = localStorage.getItem('repos-mode') || 'auto'; // 'auto' | 'manuel'
 let reposDiceCount   = 1;   // nombre de dés à dépenser dans le panneau
@@ -102,7 +105,7 @@ try {
   perso = ficheId ? await getPersonnageById(ficheId) : await getPersonnage(user.id);
   if (!perso) throw new Error('Aucun personnage trouvé pour ce compte.');
 
-  [carac, competences, armes, equipement, monnaie, sorts, emplacementsSorts] = await Promise.all([
+  [carac, competences, armes, equipement, monnaie, sorts, emplacementsSorts, capacites] = await Promise.all([
     getCaracteristiques(perso.id),
     getCompetences(perso.id),
     getArmes(perso.id),
@@ -110,6 +113,7 @@ try {
     getMonnaie(perso.id),
     getSorts(perso.id),
     getEmplacementsSorts(perso.id),
+    getCapacites(perso.id),
   ]);
 
   if (perso.nom) {
@@ -126,6 +130,7 @@ try {
   remplirArmes();
   remplirEquipement();
   remplirSorts();
+  remplirTraits();
   initModeJeuClics();
 } catch (err) {
   console.error('[fiche]', err);
@@ -1124,6 +1129,226 @@ function renderSortCard(sort) {
   return card;
 }
 
+// ── Bloc 10 : Traits & Capacités ──────────────────────────────────────────────
+function remplirTraits() {
+  if (!perso) return;
+
+  ['traits_raciaux', 'capacites_classe', 'maitrises_langues'].forEach(f => {
+    const el = document.getElementById('traits-' + f);
+    if (!el) return;
+    el.value = perso[f] ?? '';
+    el.addEventListener('input', () => schedulePersoSave({ [f]: el.value }));
+  });
+
+  remplirCapacites();
+}
+
+function remplirCapacites() {
+  const container = document.getElementById('capacites-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (!capacites.length) {
+    const empty = document.createElement('p');
+    empty.className = 'capacites-empty';
+    empty.textContent = 'Aucune capacité — ajoutez-en une en Mode Édition.';
+    container.appendChild(empty);
+  } else {
+    capacites.forEach(cap => container.appendChild(renderCapaciteCard(cap)));
+  }
+
+  document.getElementById('btn-add-capacite')?.addEventListener('click', async () => {
+    const newCapacite = {
+      personnage_id: perso.id,
+      nom: '',
+      max_utilisations: 1,
+      utilisations_actuelles: 0,
+      rechargement: 'long',
+      action_requise: '',
+      description: '',
+    };
+    try {
+      showSave('saving');
+      const created = await addCapacite(newCapacite);
+      showSave('ok');
+      capacites.push(created);
+      const emptyEl = container.querySelector('.capacites-empty');
+      if (emptyEl) emptyEl.remove();
+      container.appendChild(renderCapaciteCard(created));
+    } catch (err) { showSave('error'); console.error(err); }
+  });
+}
+
+function renderCapaciteCard(cap) {
+  const card = document.createElement('div');
+  card.className = 'capacite-card';
+  card.dataset.id = cap.id;
+  card.classList.toggle('no-desc', !cap.description);
+
+  card.innerHTML = `
+    <div class="capacite-header">
+      <div class="fiche-field capacite-nom-field">
+        <label>Nom</label>
+        <input type="text" class="capacite-nom-input" placeholder="Rage" />
+      </div>
+      <div class="fiche-field capacite-max-field">
+        <label>Max</label>
+        <input type="number" class="capacite-max-input" min="0" />
+      </div>
+      <div class="fiche-field capacite-rechargement-field">
+        <label>Rechargement</label>
+        <select class="capacite-rechargement-select">
+          ${Object.entries(RECHARGEMENTS).map(([v, l]) => `<option value="${v}">${l}</option>`).join('')}
+        </select>
+      </div>
+      <div class="fiche-field capacite-action-field">
+        <label>Action</label>
+        <select class="capacite-action-select">
+          <option value="">— Aucune —</option>
+          ${ACTIONS_REQUISES.map(a => `<option value="${a}">${a}</option>`).join('')}
+        </select>
+      </div>
+      <button class="btn-structurel capacite-del-btn" title="Supprimer cette capacité">✕</button>
+    </div>
+    <div class="capacite-usage-row">
+      <span class="capacite-usage-label">Utilisations</span>
+      <div class="capacite-cases"></div>
+      <button class="btn-capacite-utiliser mode-jeu-ok">Utiliser (−1)</button>
+    </div>
+    <details class="capacite-description-wrap">
+      <summary>Description</summary>
+      <textarea class="capacite-description-input" rows="3" placeholder="Description de la capacité…"></textarea>
+    </details>
+  `;
+
+  card.querySelector('.capacite-nom-input').value = cap.nom ?? '';
+  card.querySelector('.capacite-max-input').value = cap.max_utilisations ?? 1;
+  card.querySelector('.capacite-rechargement-select').value = cap.rechargement ?? 'long';
+  card.querySelector('.capacite-action-select').value = cap.action_requise ?? '';
+  card.querySelector('.capacite-description-input').value = cap.description ?? '';
+
+  let capaciteTimer = null;
+  const scheduleCapaciteSave = () => {
+    clearTimeout(capaciteTimer);
+    capaciteTimer = setTimeout(async () => {
+      showSave('saving');
+      try {
+        await updateCapacite(cap.id, {
+          nom: cap.nom,
+          max_utilisations: cap.max_utilisations,
+          utilisations_actuelles: cap.utilisations_actuelles,
+          rechargement: cap.rechargement,
+          action_requise: cap.action_requise || null,
+          description: cap.description,
+        });
+        showSave('ok');
+      } catch { showSave('error'); }
+    }, DEBOUNCE_MS);
+  };
+
+  card.querySelector('.capacite-nom-input').addEventListener('input', e => {
+    cap.nom = e.target.value;
+    scheduleCapaciteSave();
+  });
+  card.querySelector('.capacite-max-input').addEventListener('input', e => {
+    cap.max_utilisations = Math.max(0, Number(e.target.value) || 0);
+    if ((cap.utilisations_actuelles ?? 0) > cap.max_utilisations) cap.utilisations_actuelles = cap.max_utilisations;
+    scheduleCapaciteSave();
+    renderCapaciteCases(card, cap);
+  });
+  card.querySelector('.capacite-rechargement-select').addEventListener('change', e => {
+    cap.rechargement = e.target.value;
+    scheduleCapaciteSave();
+  });
+  card.querySelector('.capacite-action-select').addEventListener('change', e => {
+    cap.action_requise = e.target.value;
+    scheduleCapaciteSave();
+  });
+  card.querySelector('.capacite-description-input').addEventListener('input', e => {
+    cap.description = e.target.value;
+    card.classList.toggle('no-desc', !e.target.value);
+    scheduleCapaciteSave();
+  });
+
+  card.querySelector('.btn-capacite-utiliser').addEventListener('click', () => {
+    cap.utilisations_actuelles = Math.min(cap.max_utilisations ?? 0, (cap.utilisations_actuelles ?? 0) + 1);
+    scheduleCapaciteSave();
+    renderCapaciteCases(card, cap);
+  });
+
+  card.querySelector('.capacite-del-btn').addEventListener('click', async () => {
+    try {
+      showSave('saving');
+      await deleteCapacite(cap.id);
+      showSave('ok');
+      capacites = capacites.filter(c => c.id !== cap.id);
+      card.remove();
+      const container = document.getElementById('capacites-container');
+      if (container && !capacites.length) {
+        const empty = document.createElement('p');
+        empty.className = 'capacites-empty';
+        empty.textContent = 'Aucune capacité — ajoutez-en une en Mode Édition.';
+        container.appendChild(empty);
+      }
+    } catch (err) { showSave('error'); console.error(err); }
+  });
+
+  renderCapaciteCases(card, cap);
+  return card;
+}
+
+function renderCapaciteCases(card, cap) {
+  const container = card.querySelector('.capacite-cases');
+  const btnUtiliser = card.querySelector('.btn-capacite-utiliser');
+  if (!container) return;
+  container.innerHTML = '';
+  const max = cap.max_utilisations ?? 0;
+  for (let i = 0; i < max; i++) {
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.className = 'capacite-used-cb case-maitrise mode-jeu-ok';
+    cb.checked = i < (cap.utilisations_actuelles ?? 0);
+    cb.title = cb.checked ? 'Utilisation dépensée' : 'Utilisation disponible';
+    cb.addEventListener('change', () => {
+      cap.utilisations_actuelles = container.querySelectorAll('input:checked').length;
+      scheduleCapaciteSaveExterne(cap);
+      renderCapaciteCases(card, cap);
+    });
+    container.appendChild(cb);
+  }
+  if (btnUtiliser) btnUtiliser.disabled = max <= 0 || (cap.utilisations_actuelles ?? 0) >= max;
+}
+
+const capaciteSaveTimers = {};
+function scheduleCapaciteSaveExterne(cap) {
+  clearTimeout(capaciteSaveTimers[cap.id]);
+  capaciteSaveTimers[cap.id] = setTimeout(async () => {
+    showSave('saving');
+    try {
+      await updateCapacite(cap.id, { utilisations_actuelles: cap.utilisations_actuelles });
+      showSave('ok');
+    } catch { showSave('error'); }
+  }, DEBOUNCE_MS);
+}
+
+// Réinitialise les capacités dont le rechargement correspond au type de repos pris.
+function resetCapacitesRepos(types) {
+  let changed = false;
+  capacites.forEach(cap => {
+    if (types.includes(cap.rechargement) && (cap.utilisations_actuelles ?? 0) !== 0) {
+      cap.utilisations_actuelles = 0;
+      scheduleCapaciteSaveExterne(cap);
+      changed = true;
+    }
+  });
+  if (changed) {
+    document.querySelectorAll('.capacite-card').forEach(card => {
+      const cap = capacites.find(c => c.id === card.dataset.id);
+      if (cap) renderCapaciteCases(card, cap);
+    });
+  }
+}
+
 // ── Bloc 4 : Armure ────────────────────────────────────────────────────────────
 function remplirArmure() {
   if (!perso) return;
@@ -1310,6 +1535,7 @@ function remplirPV() {
     remplirDesDeVie();
     remplirJDSMort();
     recalculerPVBar();
+    resetCapacitesRepos(['court', 'long', 'aube']);
   });
 }
 
@@ -1575,6 +1801,7 @@ function renderReposPanel() {
       schedulePersoSave({ pv_actuel: nouveauxPV, des_de_vie_depenses: depenses + reposDiceCount });
       remplirDesDeVie();
       recalculerPVBar();
+      resetCapacitesRepos(['court']);
       reposRolls = [];
       reposPanelOpen = false;
       panel.setAttribute('hidden', '');
@@ -1589,6 +1816,7 @@ function renderReposPanel() {
       schedulePersoSave({ pv_actuel: nouveauxPV, des_de_vie_depenses: depenses + reposDiceCount });
       remplirDesDeVie();
       recalculerPVBar();
+      resetCapacitesRepos(['court']);
       reposRolls = [];
       reposPanelOpen = false;
       panel.setAttribute('hidden', '');

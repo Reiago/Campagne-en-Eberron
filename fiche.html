@@ -34,7 +34,7 @@
       <button class="fiche-tab" data-bloc="armes">7. Armes</button>
       <button class="fiche-tab" data-bloc="equipement">8. Équipement</button>
       <button class="fiche-tab" data-bloc="sorts">9. Sorts</button>
-      <button class="fiche-tab a-venir" data-bloc="traits">10. Traits</button>
+      <button class="fiche-tab" data-bloc="traits">10. Traits</button>
       <button class="fiche-tab a-venir" data-bloc="historique">11. Historique</button>
       <button class="fiche-tab a-venir" data-bloc="notes">12. Notes</button>
     </div>
@@ -497,9 +497,28 @@
     </div>
   </section>
 
+  <!-- ── Bloc 10 : Traits & Capacités ── -->
   <section class="fiche-bloc" id="bloc-traits">
     <h2 class="bloc-title">Traits &amp; Capacités</h2>
-    <div class="bloc-a-venir">Disponible en Phase 4</div>
+
+    <div class="fiche-field" style="grid-column:1/-1;">
+      <label for="traits-traits_raciaux">Traits raciaux</label>
+      <textarea id="traits-traits_raciaux" rows="4" placeholder="Vision dans le noir, Résistance…"></textarea>
+    </div>
+    <div class="fiche-field" style="grid-column:1/-1; margin-top:0.6rem;">
+      <label for="traits-capacites_classe">Capacités de classe</label>
+      <textarea id="traits-capacites_classe" rows="4" placeholder="Style de combat, Voie martiale…"></textarea>
+    </div>
+    <div class="fiche-field" style="grid-column:1/-1; margin-top:0.6rem;">
+      <label for="traits-maitrises_langues">Maîtrises &amp; langues</label>
+      <textarea id="traits-maitrises_langues" rows="3" placeholder="Outils de forgeron, Commun, Nain…"></textarea>
+    </div>
+
+    <h3 class="bloc-subtitle">Capacités à utilisations limitées</h3>
+    <div id="capacites-container"></div>
+    <div class="edition-only capacites-footer">
+      <button class="btn-add-capacite" id="btn-add-capacite">+ Ajouter une capacité</button>
+    </div>
   </section>
 
   <section class="fiche-bloc" id="bloc-historique">

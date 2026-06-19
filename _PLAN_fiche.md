@@ -293,13 +293,13 @@
 
 ### 4.2 Bloc 10 — Traits & Capacités
 
-- [ ] Zone texte : traits raciaux / capacités de classe
-- [ ] Zone texte : maîtrises & langues
-- [ ] Tableau dynamique des capacités à utilisations limitées :
-  - [ ] `nom`, `max`, `utilisé` (champ + cases), `rechargement`, `action`, `description`
-  - [ ] Bouton "Utiliser" (−1) + reset au repos
-- [ ] Sauvegarde en DB (table `capacites`)
-- [ ] **Mode Jeu** : zones texte → lecture seule ; boutons ajouter/supprimer capacités masqués ; bouton "Utiliser" et cases utilisations restent actifs
+- [x] Zone texte : traits raciaux / capacités de classe
+- [x] Zone texte : maîtrises & langues
+- [x] Tableau dynamique des capacités à utilisations limitées :
+  - [x] `nom`, `max`, `utilisé` (champ + cases), `rechargement`, `action`, `description`
+  - [x] Bouton "Utiliser" (−1) + reset au repos
+- [x] Sauvegarde en DB (table `capacites`)
+- [x] **Mode Jeu** : zones texte → lecture seule ; boutons ajouter/supprimer capacités masqués ; bouton "Utiliser" et cases utilisations restent actifs
 
 ### 4.3 Bloc 11 — Historique / Personnalité
 
