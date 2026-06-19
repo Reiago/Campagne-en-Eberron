@@ -38,4 +38,18 @@ document.addEventListener("DOMContentLoaded", function() {
   if (container) {
     container.innerHTML = navHTML;
   }
+
+  import("./" + root + "auth.js").then(function(auth) {
+    return auth.getCurrentUser().then(function(user) {
+      return auth.isMJ(user);
+    });
+  }).then(function(userIsMJ) {
+    if (!userIsMJ || !container) return;
+    const nav = container.querySelector(".main-nav");
+    if (!nav || nav.querySelector('a[href="' + root + 'mj.html"]')) return;
+    const link = document.createElement("a");
+    link.href = root + "mj.html";
+    link.textContent = "Maître du Jeu";
+    nav.appendChild(link);
+  }).catch(function() {});
 });
