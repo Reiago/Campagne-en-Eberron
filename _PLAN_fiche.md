@@ -303,16 +303,16 @@
 
 ### 4.3 Bloc 11 — Historique / Personnalité
 
-- [ ] 5 zones texte : `trait 1`, `trait 2`, `idéal`, `lien`, `défaut`
-- [ ] Zone texte : historique (background)
-- [ ] Sauvegarde automatique
-- [ ] **Mode Jeu** : toutes les zones → lecture seule
+- [x] 5 zones texte : `trait 1`, `trait 2`, `idéal`, `lien`, `défaut`
+- [x] Zone texte : historique (background)
+- [x] Sauvegarde automatique
+- [x] **Mode Jeu** : toutes les zones → lecture seule
 
 ### 4.4 Bloc 12 — Notes
 
-- [ ] Zone de texte libre (grande, multi-lignes)
-- [ ] Sauvegarde automatique
-- [ ] **Mode Jeu** : zone notes reste éditable (les notes en cours de session sont une exception justifiée)
+- [x] Zone de texte libre (grande, multi-lignes)
+- [x] Sauvegarde automatique
+- [x] **Mode Jeu** : zone notes reste éditable (les notes en cours de session sont une exception justifiée)
 
 ---
 

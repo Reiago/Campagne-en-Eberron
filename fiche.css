@@ -1038,6 +1038,18 @@ body.mode-jeu .mode-jeu-ok {
   cursor: pointer !important;
 }
 
+/* Notes de session : restent éditables en Mode Jeu */
+body.mode-jeu #notes-notes {
+  pointer-events: auto !important;
+  background: var(--stone-mid) !important;
+  border-color: var(--border) !important;
+  color: var(--gold-light) !important;
+  cursor: text !important;
+}
+body.mode-jeu #notes-notes:focus {
+  border-color: var(--gold-dim) !important;
+}
+
 /* Boutons structurels (ajouter/supprimer) masqués en Mode Jeu (Phase 3+) */
 body.mode-jeu .btn-structurel { display: none !important; }
 

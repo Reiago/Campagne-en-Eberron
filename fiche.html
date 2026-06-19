@@ -35,8 +35,8 @@
       <button class="fiche-tab" data-bloc="equipement">8. Équipement</button>
       <button class="fiche-tab" data-bloc="sorts">9. Sorts</button>
       <button class="fiche-tab" data-bloc="traits">10. Traits</button>
-      <button class="fiche-tab a-venir" data-bloc="historique">11. Historique</button>
-      <button class="fiche-tab a-venir" data-bloc="notes">12. Notes</button>
+      <button class="fiche-tab" data-bloc="historique">11. Historique</button>
+      <button class="fiche-tab" data-bloc="notes">12. Notes</button>
     </div>
   </div>
 </div>
@@ -523,12 +523,39 @@
 
   <section class="fiche-bloc" id="bloc-historique">
     <h2 class="bloc-title">Historique &amp; Personnalité</h2>
-    <div class="bloc-a-venir">Disponible en Phase 4</div>
+
+    <div class="fiche-field" style="grid-column:1/-1;">
+      <label for="histo-trait_personnalite_1">Trait de personnalité 1</label>
+      <textarea id="histo-trait_personnalite_1" rows="2" placeholder="Je suis toujours…"></textarea>
+    </div>
+    <div class="fiche-field" style="grid-column:1/-1; margin-top:0.6rem;">
+      <label for="histo-trait_personnalite_2">Trait de personnalité 2</label>
+      <textarea id="histo-trait_personnalite_2" rows="2" placeholder="Je ne supporte pas…"></textarea>
+    </div>
+    <div class="fiche-field" style="grid-column:1/-1; margin-top:0.6rem;">
+      <label for="histo-ideal">Idéal</label>
+      <textarea id="histo-ideal" rows="2" placeholder="La liberté, la justice…"></textarea>
+    </div>
+    <div class="fiche-field" style="grid-column:1/-1; margin-top:0.6rem;">
+      <label for="histo-lien">Lien</label>
+      <textarea id="histo-lien" rows="2" placeholder="Ma famille, mon mentor…"></textarea>
+    </div>
+    <div class="fiche-field" style="grid-column:1/-1; margin-top:0.6rem;">
+      <label for="histo-defaut">Défaut</label>
+      <textarea id="histo-defaut" rows="2" placeholder="Mon plus grand défaut est…"></textarea>
+    </div>
+    <div class="fiche-field" style="grid-column:1/-1; margin-top:0.6rem;">
+      <label for="histo-historique_background">Historique (background)</label>
+      <textarea id="histo-historique_background" rows="8" placeholder="L'histoire de votre personnage…"></textarea>
+    </div>
   </section>
 
   <section class="fiche-bloc" id="bloc-notes">
     <h2 class="bloc-title">Notes</h2>
-    <div class="bloc-a-venir">Disponible en Phase 4</div>
+    <div class="fiche-field" style="grid-column:1/-1;">
+      <label for="notes-notes">Notes de session</label>
+      <textarea id="notes-notes" class="mode-jeu-ok" rows="16" placeholder="Notes libres, événements de session, rappels…"></textarea>
+    </div>
   </section>
 
 </main>
