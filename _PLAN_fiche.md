@@ -373,3 +373,4 @@
 - [ ] Importer la liste des armes officiele
 - [ ] Importer la liste des armures officiele
 - [ ] Equipement, affichage de base n'afficher que le titre et la quantité sur un ligne quand l'utilisateur clic sur la ligne on la déplie pour afficher toute la fiche
+- [ ] Equipement, ajouter la cararctérisque Emplacement : désignant ou se trouve l'objet actuellement, liste déroulante avec une liste de lieu éditable. Cela peut etre un lien plus ou moins précis : Maison de Thor, Ceinture de Jacob, Main droite de Jacob ...
