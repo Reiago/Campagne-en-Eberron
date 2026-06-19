@@ -1594,7 +1594,7 @@ body.mode-jeu .arme-maitrise-cb:checked {
   letter-spacing: 0.08em;
 }
 .monnaie-hint {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--text-dim);
   font-style: italic;
 }
