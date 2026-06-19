@@ -678,8 +678,8 @@ function recalculerArmeCard(card, arme) {
   const de = arme.de_degats || '1d6';
   const bonusStr = bonusDeg >= 0 ? '+' + bonusDeg : String(bonusDeg);
 
-  const toucherEl = document.getElementById('arme-toucher-' + arme.id);
-  const degatsEl = document.getElementById('arme-degats-' + arme.id);
+  const toucherEl = card.querySelector('#arme-toucher-' + arme.id);
+  const degatsEl = card.querySelector('#arme-degats-' + arme.id);
   if (toucherEl) toucherEl.textContent = fmt(toucher);
   if (degatsEl) degatsEl.textContent = de + bonusStr;
 
