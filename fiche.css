@@ -14,6 +14,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 780px;
+  margin: 0 auto;
   padding: 0.5rem 1rem;
   border-bottom: 1px solid var(--border);
   font-size: 11px;
@@ -47,8 +49,11 @@
 
 .fiche-nav-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0;
+  max-width: 780px;
+  margin: 0 auto;
 }
 
 .fiche-nav-toggle {
@@ -68,14 +73,12 @@
 }
 
 .fiche-nav-blocs {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  flex: 1 1 100%;
   gap: 2px;
   padding: 0.4rem 0.75rem;
-  scrollbar-width: none;
 }
-.fiche-nav-blocs::-webkit-scrollbar { display: none; }
 
 .fiche-tab {
   background: transparent;
@@ -87,8 +90,11 @@
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.4rem 0.75rem;
+  padding: 0.4rem 0.5rem;
+  text-align: center;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
 .fiche-tab:hover { color: var(--text-muted); border-color: var(--border); }
