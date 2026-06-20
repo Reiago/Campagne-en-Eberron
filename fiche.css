@@ -297,6 +297,13 @@
   text-align: left;
 }
 
+.id-box-inline {
+  flex-direction: row;
+  gap: 0.4rem;
+}
+.id-box-inline .id-box-label { white-space: nowrap; }
+.id-box-inline input { width: auto; flex: 0 1 auto; }
+
 .id-box-label {
   font-family: 'Cinzel', serif;
   font-size: 9px;
@@ -313,6 +320,8 @@
   color: var(--text-main);
   font-family: 'Crimson Pro', Georgia, serif;
   font-size: 15px;
+  line-height: 16px;
+  height: 16px;
   padding: 0;
   width: 100%;
   text-align: center;
