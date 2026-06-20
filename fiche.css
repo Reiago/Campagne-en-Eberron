@@ -32,6 +32,32 @@
   text-transform: uppercase;
 }
 
+.fiche-auth-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.btn-gear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+.btn-gear:hover {
+  color: var(--gold-light);
+  border-color: var(--gold-dim);
+  background: rgba(201,168,108,0.08);
+}
+
 .btn-deconnexion {
   background: transparent;
   border: 1px solid var(--border-strong);
@@ -65,11 +91,6 @@
   cursor: pointer;
   padding: 0.6rem 1rem;
   flex-shrink: 0;
-}
-
-.fiche-nav-row .btn-mode {
-  flex-shrink: 0;
-  margin: 0 0.5rem;
 }
 
 .fiche-nav-blocs {
@@ -161,11 +182,14 @@
 }
 
 /* ── Main / Blocs ───────────────────────────────────────────────────────────── */
-#fiche-main {
+#fiche-main,
+#parametres-main {
   max-width: 780px;
   margin: 0 auto;
   padding: 1.5rem 1rem 5rem;
 }
+
+#parametres-main .fiche-bloc { margin-bottom: 2rem; }
 
 .fiche-bloc { display: none; }
 .fiche-bloc.active { display: block; }

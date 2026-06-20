@@ -15,15 +15,14 @@
 <!-- ── Navigation ── -->
 <div class="fiche-topbar">
   <div class="fiche-auth-bar">
-    <span id="perso-titre">Fiche de personnage</span>
-    <div style="display:flex;align-items:center;gap:0.6rem;">
-      <span id="perso-user-email" style="font-size:10px;"></span>
-      <button class="btn-deconnexion" id="btn-logout">Déconnexion</button>
+    <div class="fiche-auth-left">
+      <a class="btn-gear" href="parametres.html" title="Paramètres &amp; profil">⚙</a>
+      <span id="perso-titre">Fiche de personnage</span>
     </div>
+    <button class="btn-mode actif" id="btn-mode" title="Basculer entre Mode Jeu et Mode Édition">⚔ Mode Jeu</button>
   </div>
   <div class="fiche-nav-row" style="position:relative;">
     <button class="fiche-nav-toggle" id="nav-toggle" aria-label="Menu blocs">☰</button>
-    <button class="btn-mode actif" id="btn-mode" title="Basculer entre Mode Jeu et Mode Édition">⚔ Mode Jeu</button>
     <div class="fiche-nav-blocs" id="nav-blocs">
       <button class="fiche-tab active" data-bloc="identite">1. Identité</button>
       <button class="fiche-tab" data-bloc="carac">2. Carac.</button>

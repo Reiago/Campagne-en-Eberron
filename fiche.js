@@ -1,4 +1,4 @@
-import { requireAuth, logout } from './auth.js';
+import { requireAuth } from './auth.js';
 import {
   getPersonnage, getPersonnageById, updatePersonnage,
   getCaracteristiques, updateCaracteristiques,
@@ -105,11 +105,11 @@ document.getElementById('btn-mode')?.addEventListener('click', () => {
 const user = await requireAuth('login.html');
 if (!user) throw new Error('Non authentifié');
 
-document.getElementById('perso-user-email').textContent = user.email;
-document.getElementById('btn-logout').addEventListener('click', logout);
-
 const params = new URLSearchParams(window.location.search);
 const ficheId = params.get('id');
+
+const gearLink = document.querySelector('.btn-gear');
+if (gearLink && ficheId) gearLink.href = 'parametres.html?id=' + encodeURIComponent(ficheId);
 
 try {
   perso = ficheId ? await getPersonnageById(ficheId) : await getPersonnage(user.id);
