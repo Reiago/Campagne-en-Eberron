@@ -285,9 +285,17 @@
   padding: 0.55rem 0.75rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   gap: 2px;
 }
-.id-box-wide { grid-column: 1 / -1; }
+.id-box-wide {
+  grid-column: 1 / -1;
+  justify-content: flex-start;
+  align-items: stretch;
+  text-align: left;
+}
 
 .id-box-label {
   font-family: 'Cinzel', serif;
@@ -307,6 +315,11 @@
   font-size: 15px;
   padding: 0;
   width: 100%;
+  text-align: center;
+}
+.id-box-wide input,
+.id-box-wide select {
+  text-align: left;
 }
 .id-box input:focus,
 .id-box select:focus { outline: none; }
