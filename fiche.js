@@ -1,4 +1,4 @@
-import { requireAuth, logout } from './auth.js';
+import { requireAuth } from './auth.js';
 import {
   getPersonnage, getPersonnageById, updatePersonnage,
   getCaracteristiques, updateCaracteristiques,
@@ -18,6 +18,16 @@ const STATS = ['force', 'dexterite', 'constitution', 'intelligence', 'sagesse', 
 const STAT_LABELS = {
   force: 'Force', dexterite: 'Dextérité', constitution: 'Constitution',
   intelligence: 'Intelligence', sagesse: 'Sagesse', charisme: 'Charisme',
+};
+// Formate une valeur numérique avec son unité, pour qu'elle reste identifiable
+// une fois affichée sans titre de champ (ex: "25 ans", "1 m 92").
+const UNITE_FORMATTERS = {
+  age: v => `${v} ans`,
+  poids_kg: v => `${v} kg`,
+  taille_cm: v => {
+    if (v < 100) return `${v} cm`;
+    return `${Math.floor(v / 100)} m ${v % 100}`;
+  },
 };
 const ALIGNEMENTS = [
   'Loyal Bon', 'Neutre Bon', 'Chaotique Bon',
@@ -95,11 +105,11 @@ document.getElementById('btn-mode')?.addEventListener('click', () => {
 const user = await requireAuth('login.html');
 if (!user) throw new Error('Non authentifié');
 
-document.getElementById('perso-user-email').textContent = user.email;
-document.getElementById('btn-logout').addEventListener('click', logout);
-
 const params = new URLSearchParams(window.location.search);
 const ficheId = params.get('id');
+
+const gearLink = document.querySelector('.btn-gear');
+if (gearLink && ficheId) gearLink.href = 'parametres.html?id=' + encodeURIComponent(ficheId);
 
 try {
   perso = ficheId ? await getPersonnageById(ficheId) : await getPersonnage(user.id);
@@ -233,9 +243,34 @@ function initModeJeuClics() {
 }
 
 // ── Bloc 1 : Identité ──────────────────────────────────────────────────────────
+// Champ texte qui affiche "valeur + unité" au repos, et la valeur brute en édition.
+function bindChampUnite(f) {
+  const el = document.getElementById('id-' + f);
+  if (!el) return;
+  const formatter = UNITE_FORMATTERS[f];
+
+  const afficherFormate = () => {
+    const v = perso[f];
+    el.value = (v === null || v === undefined || v === '') ? '' : formatter(v);
+  };
+  afficherFormate();
+
+  el.addEventListener('focus', () => {
+    el.value = perso[f] ?? '';
+  });
+  el.addEventListener('blur', () => {
+    const raw = el.value.replace(/[^\d]/g, '');
+    const num = raw === '' ? null : Number(raw);
+    perso[f] = num;
+    schedulePersoSave({ [f]: num });
+    afficherFormate();
+  });
+}
+
 function remplirIdentite() {
   const champsTxt = ['nom', 'classe', 'race', 'dieu', 'devise'];
-  const champsNum = ['niveau', 'age', 'taille_cm', 'poids_kg', 'xp'];
+  const champsNum = ['niveau', 'xp'];
+  const champsUnite = ['age', 'taille_cm', 'poids_kg'];
 
   champsTxt.forEach(f => {
     const el = document.getElementById('id-' + f);
@@ -267,6 +302,8 @@ function remplirIdentite() {
       }
     });
   });
+
+  champsUnite.forEach(bindChampUnite);
 
   const sel = document.getElementById('id-alignement');
   if (sel) {
@@ -641,8 +678,8 @@ function recalculerArmeCard(card, arme) {
   const de = arme.de_degats || '1d6';
   const bonusStr = bonusDeg >= 0 ? '+' + bonusDeg : String(bonusDeg);
 
-  const toucherEl = document.getElementById('arme-toucher-' + arme.id);
-  const degatsEl = document.getElementById('arme-degats-' + arme.id);
+  const toucherEl = card.querySelector('#arme-toucher-' + arme.id);
+  const degatsEl = card.querySelector('#arme-degats-' + arme.id);
   if (toucherEl) toucherEl.textContent = fmt(toucher);
   if (degatsEl) degatsEl.textContent = de + bonusStr;
 
