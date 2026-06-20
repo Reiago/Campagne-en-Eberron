@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    try {
+      var t = localStorage.getItem('eberron-theme');
+      if (t && t !== 'eberron-gold') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
   <title>Fiche de personnage — Eberron</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

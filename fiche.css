@@ -1640,6 +1640,11 @@ body.mode-jeu .arme-maitrise-cb:checked {
 .monnaie-pa .monnaie-label { color: #C8C8C8; }
 .monnaie-pc .monnaie-label { color: #C8935A; }
 
+:root[data-theme="light"] .monnaie-pp .monnaie-label { color: #5C6B7A; }
+:root[data-theme="light"] .monnaie-pe .monnaie-label { color: #3F7268; }
+:root[data-theme="light"] .monnaie-pa .monnaie-label { color: #6B6B6B; }
+:root[data-theme="light"] .monnaie-pc .monnaie-label { color: #8C5E2E; }
+
 .monnaie-input {
   background: transparent;
   border: 1px solid var(--border-strong);

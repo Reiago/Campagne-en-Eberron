@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    try {
+      var t = localStorage.getItem('eberron-theme');
+      if (t && t !== 'eberron-gold') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
   <title>Paramètres — Eberron</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -36,11 +42,8 @@
     <h2 class="bloc-title">Apparence</h2>
     <div class="fiche-field" style="max-width:260px;">
       <label for="param-theme">Thème</label>
-      <select id="param-theme" disabled>
-        <option value="sombre">Sombre (par défaut)</option>
-      </select>
+      <select id="param-theme"></select>
     </div>
-    <p class="bloc-a-venir" style="padding:1.5rem; margin-top:0.75rem;">D'autres thèmes arriveront bientôt.</p>
   </section>
 
   <section class="fiche-bloc active">
