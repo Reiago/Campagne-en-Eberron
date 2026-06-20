@@ -299,10 +299,11 @@
 
 .id-box-inline {
   flex-direction: row;
+  justify-content: flex-start;
   gap: 0.4rem;
 }
-.id-box-inline .id-box-label { white-space: nowrap; }
-.id-box-inline input { width: auto; flex: 0 1 auto; }
+.id-box-inline .id-box-label { width: 70px; flex-shrink: 0; white-space: nowrap; }
+.id-box-inline input { width: auto; flex: 1 1 auto; text-align: left; }
 
 .id-box-label {
   font-family: 'Cinzel', serif;
