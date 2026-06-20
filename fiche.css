@@ -361,6 +361,83 @@
   opacity: 1;
 }
 
+/* ── Bloc 1 : Identité (boîtes dorées, style aligné sur Carac) ──────────────── */
+.id-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+@media (max-width: 480px) { .id-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.id-box {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.55rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+}
+.id-box-wide {
+  grid-column: 1 / -1;
+  justify-content: flex-start;
+  align-items: stretch;
+  text-align: left;
+}
+
+.id-box-inline {
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 0.4rem;
+}
+.id-box-inline .id-box-label { width: 70px; flex-shrink: 0; white-space: nowrap; }
+.id-box-inline input { width: auto; flex: 1 1 auto; text-align: left; }
+
+.id-box-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.id-box input,
+.id-box select {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  color: var(--text-main);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 15px;
+  line-height: 16px;
+  height: 16px;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+}
+.id-box-wide input,
+.id-box-wide select {
+  text-align: left;
+}
+.id-box input:focus,
+.id-box select:focus { outline: none; }
+.id-box input[type="number"] { -moz-appearance: textfield; }
+.id-box input[type="number"]::-webkit-inner-spin-button { display: none; }
+.id-box select option { background: var(--stone-mid); }
+
+/* Le placeholder reprend l'apparence d'un titre de champ tant qu'aucune valeur n'est saisie */
+.id-box input::placeholder {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  opacity: 1;
+}
+
 /* ── Grille 2 colonnes ──────────────────────────────────────────────────────── */
 .fiche-grid-2 {
   display: grid;

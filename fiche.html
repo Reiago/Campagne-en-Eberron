@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    try {
+      var t = localStorage.getItem('eberron-theme');
+      if (t && t !== 'eberron-gold') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
   <title>Fiche de personnage — Eberron</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,12 +21,11 @@
 <!-- ── Navigation ── -->
 <div class="fiche-topbar">
   <div class="fiche-auth-bar">
-    <span id="perso-titre">Fiche de personnage</span>
-    <div style="display:flex;align-items:center;gap:0.6rem;">
-      <button class="btn-mode actif" id="btn-mode" title="Basculer entre Mode Jeu et Mode Édition">⚔ Mode Jeu</button>
-      <span id="perso-user-email" style="font-size:10px;"></span>
-      <button class="btn-deconnexion" id="btn-logout">Déconnexion</button>
+    <div class="fiche-auth-left">
+      <a class="btn-gear" href="parametres.html" title="Paramètres &amp; profil">⚙</a>
+      <span id="perso-titre">Fiche de personnage</span>
     </div>
+    <button class="btn-mode actif" id="btn-mode" title="Basculer entre Mode Jeu et Mode Édition">⚔ Mode Jeu</button>
   </div>
   <div class="fiche-nav-row" style="position:relative;">
     <button class="fiche-nav-toggle" id="nav-toggle" aria-label="Menu blocs">☰</button>
@@ -49,52 +54,43 @@
   <!-- ── Bloc 1 : Identité ── -->
   <section class="fiche-bloc active" id="bloc-identite">
     <h2 class="bloc-title">Identité du personnage</h2>
-    <div class="fiche-grid-2">
-      <div class="fiche-field" style="grid-column:1/-1;">
-        <label for="id-nom">Nom du personnage</label>
-        <input id="id-nom" type="text" autocomplete="off" />
+    <div class="id-grid">
+      <div class="id-box id-box-wide">
+        <input id="id-nom" type="text" autocomplete="off" placeholder="Nom du personnage" />
       </div>
-      <div class="fiche-field">
-        <label for="id-classe">Classe</label>
-        <input id="id-classe" type="text" autocomplete="off" />
+      <div class="id-box">
+        <input id="id-classe" type="text" autocomplete="off" placeholder="Classe" />
       </div>
-      <div class="fiche-field">
-        <label for="id-race">Race</label>
-        <input id="id-race" type="text" autocomplete="off" />
-      </div>
-      <div class="fiche-field">
-        <label for="id-niveau">Niveau</label>
+      <div class="id-box id-box-inline">
+        <div class="id-box-label">Niveau</div>
         <input id="id-niveau" type="number" min="1" max="20" />
       </div>
-      <div class="fiche-field">
-        <label for="id-xp">Points d'expérience</label>
+      <div class="id-box">
+        <input id="id-age" type="text" inputmode="numeric" placeholder="Âge" />
+      </div>
+      <div class="id-box">
+        <input id="id-race" type="text" autocomplete="off" placeholder="Race" />
+      </div>
+      <div class="id-box id-box-inline">
+        <div class="id-box-label">Expérience</div>
         <input id="id-xp" type="number" min="0" />
       </div>
-      <div class="fiche-field">
-        <label for="id-age">Âge</label>
-        <input id="id-age" type="number" min="0" />
+      <div class="id-box">
+        <input id="id-taille_cm" type="text" inputmode="numeric" placeholder="Taille" />
       </div>
-      <div class="fiche-field">
-        <label for="id-taille_cm">Taille (cm)</label>
-        <input id="id-taille_cm" type="number" min="0" />
-      </div>
-      <div class="fiche-field">
-        <label for="id-poids_kg">Poids (kg)</label>
-        <input id="id-poids_kg" type="number" min="0" />
-      </div>
-      <div class="fiche-field">
-        <label for="id-alignement">Alignement</label>
+      <div class="id-box">
         <select id="id-alignement">
-          <option value="">— Choisir —</option>
+          <option value="">Alignement</option>
         </select>
       </div>
-      <div class="fiche-field">
-        <label for="id-dieu">Dieu / Idole</label>
-        <input id="id-dieu" type="text" autocomplete="off" />
+      <div class="id-box">
+        <input id="id-dieu" type="text" autocomplete="off" placeholder="Dieu / Idole" />
       </div>
-      <div class="fiche-field" style="grid-column:1/-1;">
-        <label for="id-devise">Devise</label>
-        <input id="id-devise" type="text" autocomplete="off" />
+      <div class="id-box">
+        <input id="id-poids_kg" type="text" inputmode="numeric" placeholder="Poids" />
+      </div>
+      <div class="id-box id-box-wide">
+        <input id="id-devise" type="text" autocomplete="off" placeholder="Devise" />
       </div>
     </div>
   </section>

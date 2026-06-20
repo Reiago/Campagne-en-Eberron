@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    try {
+      var t = localStorage.getItem('eberron-theme');
+      if (t && t !== 'eberron-gold') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
+  <title>Paramètres — Eberron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="fiche.css" />
+</head>
+<body>
+
+<div class="fiche-topbar">
+  <div class="fiche-auth-bar">
+    <div class="fiche-auth-left">
+      <a class="btn-gear" href="fiche.html" title="Retour à la fiche">←</a>
+      <span>Paramètres</span>
+    </div>
+  </div>
+</div>
+
+<main id="parametres-main">
+  <section class="fiche-bloc active">
+    <h2 class="bloc-title">Profil</h2>
+    <div class="id-grid">
+      <div class="id-box id-box-wide">
+        <div class="id-box-label">Compte</div>
+        <span id="param-user-email">—</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="fiche-bloc active">
+    <h2 class="bloc-title">Apparence</h2>
+    <div class="fiche-field" style="max-width:260px;">
+      <label for="param-theme">Thème</label>
+      <select id="param-theme"></select>
+    </div>
+  </section>
+
+  <section class="fiche-bloc active">
+    <h2 class="bloc-title">Compte</h2>
+    <button class="btn-deconnexion" id="btn-logout">Déconnexion</button>
+  </section>
+</main>
+
+<script type="module" src="parametres.js"></script>
+</body>
+</html>

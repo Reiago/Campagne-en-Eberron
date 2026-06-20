@@ -1,4 +1,5 @@
 
+/* ── Thème "Eberron Gold (dark)" — par défaut ──────────────────────────────── */
 :root {
   --gold:       #C9A86C;
   --gold-light: #E8D09A;
@@ -13,6 +14,23 @@
   --red-accent: #8B3A2A;
   --border:     rgba(201,168,108,0.18);
   --border-strong: rgba(201,168,108,0.4);
+}
+
+/* ── Thème "Lumière de Sharn (light)" ───────────────────────────────────────── */
+:root[data-theme="light"] {
+  --gold:       #9C7A33;
+  --gold-light: #7A5A1E;
+  --gold-dim:   #B89A5E;
+  --stone:      #F3ECDD;
+  --stone-mid:  #E8DCC0;
+  --stone-light:#FBF7EC;
+  --stone-pale: #DDD2B5;
+  --text-main:  #2B2014;
+  --text-muted: #5C4A30;
+  --text-dim:   #8C7A5C;
+  --red-accent: #8B3A2A;
+  --border:     rgba(122,90,30,0.25);
+  --border-strong: rgba(122,90,30,0.5);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
