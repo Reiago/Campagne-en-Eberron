@@ -5,6 +5,8 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  max-width: 780px;
+  margin: 0 auto;
   background: var(--stone);
   border-bottom: 1px solid var(--border-strong);
   box-shadow: 0 2px 12px rgba(0,0,0,0.5);
@@ -30,6 +32,32 @@
   text-transform: uppercase;
 }
 
+.fiche-auth-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.btn-gear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+.btn-gear:hover {
+  color: var(--gold-light);
+  border-color: var(--gold-dim);
+  background: rgba(201,168,108,0.08);
+}
+
 .btn-deconnexion {
   background: transparent;
   border: 1px solid var(--border-strong);
@@ -47,6 +75,7 @@
 
 .fiche-nav-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0;
 }
@@ -63,14 +92,12 @@
 }
 
 .fiche-nav-blocs {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  flex: 1 1 100%;
   gap: 2px;
   padding: 0.4rem 0.75rem;
-  scrollbar-width: none;
 }
-.fiche-nav-blocs::-webkit-scrollbar { display: none; }
 
 .fiche-tab {
   background: transparent;
@@ -82,8 +109,11 @@
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.4rem 0.75rem;
+  padding: 0.4rem 0.5rem;
+  text-align: center;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
 .fiche-tab:hover { color: var(--text-muted); border-color: var(--border); }
@@ -150,11 +180,14 @@
 }
 
 /* ── Main / Blocs ───────────────────────────────────────────────────────────── */
-#fiche-main {
+#fiche-main,
+#parametres-main {
   max-width: 780px;
   margin: 0 auto;
   padding: 1.5rem 1rem 5rem;
 }
+
+#parametres-main .fiche-bloc { margin-bottom: 2rem; }
 
 .fiche-bloc { display: none; }
 .fiche-bloc.active { display: block; }
@@ -236,6 +269,97 @@
 .fiche-field input[type="number"] { -moz-appearance: textfield; }
 .fiche-field input[type="number"]::-webkit-inner-spin-button { display: none; }
 .fiche-field select option { background: var(--stone-mid); }
+
+/* ── Bloc 1 : Identité (boîtes dorées, style aligné sur Carac) ──────────────── */
+.id-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+@media (max-width: 480px) {
+  .id-grid { grid-template-columns: repeat(2, 1fr); }
+  /* Ordre spécifique mobile (2 colonnes) : Classe, Race, Niveau, Expérience,
+     Alignement, Dieu/Idole, Poids, Taille, Âge — Nom et Devise restent en tête/fin. */
+  .id-grid > *:nth-child(2)  { order: 1; }  /* Classe */
+  .id-grid > *:nth-child(5)  { order: 2; }  /* Race */
+  .id-grid > *:nth-child(3)  { order: 3; }  /* Niveau */
+  .id-grid > *:nth-child(6)  { order: 4; }  /* Expérience */
+  .id-grid > *:nth-child(8)  { order: 5; }  /* Alignement */
+  .id-grid > *:nth-child(9)  { order: 6; }  /* Dieu / Idole */
+  .id-grid > *:nth-child(10) { order: 7; }  /* Poids */
+  .id-grid > *:nth-child(7)  { order: 8; }  /* Taille */
+  .id-grid > *:nth-child(4)  { order: 9; }  /* Âge */
+  .id-grid > *:nth-child(11) { order: 10; } /* Devise */
+}
+
+.id-box {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.55rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+}
+.id-box-wide {
+  grid-column: 1 / -1;
+  justify-content: flex-start;
+  align-items: stretch;
+  text-align: left;
+}
+
+.id-box-inline {
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 0.4rem;
+}
+.id-box-inline .id-box-label { width: 70px; flex-shrink: 0; white-space: nowrap; }
+.id-box-inline input { width: auto; flex: 1 1 auto; text-align: left; }
+
+.id-box-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.id-box input,
+.id-box select {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  color: var(--text-main);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 15px;
+  line-height: 16px;
+  height: 16px;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+}
+.id-box-wide input,
+.id-box-wide select {
+  text-align: left;
+}
+.id-box input:focus,
+.id-box select:focus { outline: none; }
+.id-box input[type="number"] { -moz-appearance: textfield; }
+.id-box input[type="number"]::-webkit-inner-spin-button { display: none; }
+.id-box select option { background: var(--stone-mid); }
+
+/* Le placeholder reprend l'apparence d'un titre de champ tant qu'aucune valeur n'est saisie */
+.id-box input::placeholder {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  opacity: 1;
+}
 
 /* ── Grille 2 colonnes ──────────────────────────────────────────────────────── */
 .fiche-grid-2 {
@@ -1077,6 +1201,9 @@ body.mode-jeu .fiche-field textarea {
   font-size: 16px !important;
   color: var(--text-main) !important;
 }
+body.mode-jeu .id-box-label {
+  opacity: 0.6;
+}
 
 /* Compétences — cases maîtrise/expertise visibles mais non interactives en Mode Jeu */
 body.mode-jeu .comp-maitrise,
@@ -1537,7 +1664,7 @@ body.mode-jeu .arme-maitrise-cb:checked {
   letter-spacing: 0.08em;
 }
 .monnaie-hint {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--text-dim);
   font-style: italic;
 }
@@ -1547,6 +1674,11 @@ body.mode-jeu .arme-maitrise-cb:checked {
 .monnaie-pe .monnaie-label { color: #9BBFB8; }
 .monnaie-pa .monnaie-label { color: #C8C8C8; }
 .monnaie-pc .monnaie-label { color: #C8935A; }
+
+:root[data-theme="light"] .monnaie-pp .monnaie-label { color: #5C6B7A; }
+:root[data-theme="light"] .monnaie-pe .monnaie-label { color: #3F7268; }
+:root[data-theme="light"] .monnaie-pa .monnaie-label { color: #6B6B6B; }
+:root[data-theme="light"] .monnaie-pc .monnaie-label { color: #8C5E2E; }
 
 .monnaie-input {
   background: transparent;
