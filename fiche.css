@@ -508,6 +508,15 @@
   text-transform: uppercase;
   color: var(--text-dim);
 }
+.carac-box-roll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  border-radius: 3px;
+  transition: background 0.15s;
+}
 .carac-box-mod {
   font-family: 'Cinzel', serif;
   font-size: 20px;
@@ -1199,6 +1208,16 @@ body.mode-jeu .carac-box-val {
   font-weight: 600;
   width: auto;
   padding: 0 4px;
+}
+
+/* Zones cliquables pour lancer les dés en Mode Jeu */
+body.mode-jeu .carac-box-roll,
+body.mode-jeu .carac-box-jds {
+  cursor: pointer;
+}
+body.mode-jeu .carac-box-roll:hover,
+body.mode-jeu .carac-box-jds:hover {
+  background: rgba(201,168,108,0.1);
 }
 
 /* Réactiver les éléments interactifs du Bloc PV en Mode Jeu */

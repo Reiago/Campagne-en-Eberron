@@ -216,17 +216,17 @@ function recalculerTout() {
 
 // ── Clics Mode Jeu sur les valeurs calculées ───────────────────────────────────
 function initModeJeuClics() {
-  // Modificateurs → jet de caractéristique
+  // Zone valeur + modificateur → jet de caractéristique
   STATS.forEach(stat => {
-    document.getElementById('mod-' + stat)?.addEventListener('click', () => {
+    document.getElementById('roll-' + stat)?.addEventListener('click', () => {
       if (getMode() !== 'jeu') return;
       lancerJet(modificateur(carac[stat] ?? 10), STAT_LABELS[stat]);
     });
   });
 
-  // JdS values → jet de sauvegarde
+  // Ligne jet de sauvegarde → jet de sauvegarde
   STATS.forEach(stat => {
-    document.getElementById('jds-val-' + stat)?.addEventListener('click', () => {
+    document.getElementById('carac-' + stat)?.closest('.carac-box')?.querySelector('.carac-box-jds')?.addEventListener('click', () => {
       if (getMode() !== 'jeu') return;
       const key = 'maitrise_jds_' + stat;
       const bm  = bonusMaitrise(perso.niveau ?? 1);
