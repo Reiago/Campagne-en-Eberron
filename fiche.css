@@ -1051,7 +1051,7 @@ body.mode-jeu .btn-pv-sd {
   padding: 6px 6px;
   border-bottom: 1px solid var(--border-strong);
 }
-.competences-table th.th-center { text-align: center; }
+.competences-table th.th-center { text-align: right; }
 .competences-table td {
   padding: 5px 6px;
   border-bottom: 1px solid var(--border);
