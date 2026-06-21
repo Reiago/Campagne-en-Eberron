@@ -1229,6 +1229,15 @@ body.mode-jeu #jds-echecs input[type="checkbox"]:checked {
   background: var(--gold-dim) !important;
   border-color: var(--gold) !important;
 }
+/* Cases de maîtrise (compétences, JdS) : non cliquables mais visibles en Mode Jeu */
+body.mode-jeu input[type="checkbox"].case-maitrise {
+  border-color: var(--border-strong) !important;
+  background: transparent !important;
+}
+body.mode-jeu input[type="checkbox"].case-maitrise:checked {
+  background: var(--gold-dim) !important;
+  border-color: var(--gold) !important;
+}
 /* Inspiration reste cliquable et visible */
 body.mode-jeu #inspiration-cb {
   pointer-events: auto !important;
