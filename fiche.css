@@ -558,7 +558,7 @@
   text-align: right;
 }
 .jds-tag {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -742,7 +742,7 @@ input[type="checkbox"].case-maitrise:checked::after {
   white-space: nowrap;
 }
 .armure-bouclier-tag {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -764,7 +764,7 @@ input[type="checkbox"].armure-bouclier-cb:checked::after {
 }
 .armure-bouclier-bonus {
   display: none;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 16px;
   font-weight: 700;
   color: var(--gold-light);
@@ -1117,7 +1117,7 @@ body.mode-jeu .btn-pv-sd {
 .comp-carac-label { font-size: 11px; color: var(--text-dim); font-style: italic; }
 td.comp-val-cell {
   display: table-cell;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 14px;
   color: var(--gold-light);
   text-align: right;
