@@ -1060,7 +1060,8 @@ body.mode-jeu .btn-pv-sd {
 }
 .competences-table tr:hover td { background: rgba(201,168,108,0.03); }
 .comp-carac-label { font-size: 11px; color: var(--text-dim); font-style: italic; }
-.comp-val-cell {
+td.comp-val-cell {
+  display: table-cell;
   font-family: 'Cinzel', serif;
   font-size: 14px;
   color: var(--gold-light);
@@ -1171,6 +1172,14 @@ body.mode-jeu .val-clickable {
   cursor: pointer;
 }
 body.mode-jeu .val-clickable:hover {
+  color: var(--gold);
+  text-shadow: 0 0 8px rgba(201,168,108,0.4);
+}
+
+/* ── Lignes de compétences cliquables en Mode Jeu ───────────────────────────── */
+body.mode-jeu .comp-row { cursor: pointer; }
+body.mode-jeu .comp-row:hover td { background: rgba(201,168,108,0.08); }
+body.mode-jeu .comp-row:hover .comp-val-cell {
   color: var(--gold);
   text-shadow: 0 0 8px rgba(201,168,108,0.4);
 }

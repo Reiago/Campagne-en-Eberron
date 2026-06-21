@@ -1925,17 +1925,19 @@ function remplirCompetences() {
     const val      = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
 
     const tr = document.createElement('tr');
+    tr.className = 'comp-row';
     tr.innerHTML = `
       <td><input type="checkbox" class="case-maitrise comp-maitrise" data-id="${comp.id}" ${comp.maitrise ? 'checked' : ''}></td>
       <td><input type="checkbox" class="case-maitrise comp-expertise" data-id="${comp.id}" ${comp.expertise ? 'checked' : ''}></td>
       <td>${nomAff} <span class="comp-carac-label">(${caracNom})</span></td>
-      <td class="comp-val-cell val-clickable champ-calcule" id="comp-val-${comp.id}">${fmt(val)}</td>
+      <td class="comp-val-cell champ-calcule" id="comp-val-${comp.id}">${fmt(val)}</td>
     `;
     tbody.appendChild(tr);
 
-    // Clic sur la valeur calculée → jet en Mode Jeu
-    tr.querySelector('.comp-val-cell').addEventListener('click', () => {
+    // Clic sur la ligne → jet en Mode Jeu (sauf sur les cases à cocher)
+    tr.addEventListener('click', e => {
       if (getMode() !== 'jeu') return;
+      if (e.target.closest('.case-maitrise')) return;
       const s     = COMP_CARAC[normaliserNom(comp.nom)];
       const mBase = modificateur(carac[s] ?? 10);
       lancerJet(bonusCompetence(mBase, comp.maitrise, comp.expertise, perso.niveau ?? 1), capitaliser(comp.nom));
