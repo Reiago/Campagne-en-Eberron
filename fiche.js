@@ -236,7 +236,7 @@ function initModeJeuClics() {
   });
 
   // Initiative
-  document.getElementById('initiative-val')?.addEventListener('click', () => {
+  document.getElementById('roll-initiative')?.addEventListener('click', () => {
     if (getMode() !== 'jeu') return;
     lancerJet(modificateur(carac.dexterite ?? 10), 'Initiative');
   });

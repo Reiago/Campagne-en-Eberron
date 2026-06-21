@@ -1212,11 +1212,13 @@ body.mode-jeu .carac-box-val {
 
 /* Zones cliquables pour lancer les dés en Mode Jeu */
 body.mode-jeu .carac-box-roll,
-body.mode-jeu .carac-box-jds {
+body.mode-jeu .carac-box-jds,
+body.mode-jeu .carac-meta-roll {
   cursor: pointer;
 }
 body.mode-jeu .carac-box-roll:hover,
-body.mode-jeu .carac-box-jds:hover {
+body.mode-jeu .carac-box-jds:hover,
+body.mode-jeu .carac-meta-roll:hover {
   background: rgba(201,168,108,0.1);
 }
 
