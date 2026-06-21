@@ -266,10 +266,14 @@
     <div class="ca-display">
       <div class="ca-display-label">Classe d'Armure totale</div>
       <div class="ca-display-val champ-calcule" id="ca-totale">10</div>
+      <div class="armure-bouclier-row">
+        <input type="checkbox" class="case-maitrise" id="armure-bouclier" />
+        <label for="armure-bouclier" title="Bouclier (+2 CA)">+2</label>
+      </div>
     </div>
 
     <div class="fiche-grid-2">
-      <div class="fiche-field">
+      <div class="fiche-field armure-field">
         <label for="armure-type">Type d'armure</label>
         <select id="armure-type">
           <option value="sans">Sans armure (10 + Dex)</option>
@@ -278,23 +282,18 @@
           <option value="lourde">Lourde (bonus, sans Dex)</option>
         </select>
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field armure-field">
         <label for="armure-bonus_armure">Bonus d'armure de base</label>
         <input id="armure-bonus_armure" type="number" min="0" value="0" />
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field armure-field">
         <label for="armure-bonus_armure_magie">Bonus magique</label>
         <input id="armure-bonus_armure_magie" type="number" min="0" value="0" />
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field armure-field">
         <label for="armure-bonus_armure_autre">Autre bonus</label>
         <input id="armure-bonus_armure_autre" type="number" value="0" />
       </div>
-    </div>
-
-    <div class="armure-bouclier-row">
-      <input type="checkbox" class="case-maitrise" id="armure-bouclier" />
-      <label for="armure-bouclier">Bouclier (+2 CA)</label>
     </div>
   </section>
 
