@@ -117,7 +117,7 @@
 - [x] Un clic sur n'importe quelle valeur numérique associée à un jet déclenche directement le jet de dé (modificateur, compétence, JdS, attaque…)
 - [x] Les boutons 🎲 sont masqués (le clic sur la valeur les remplace)
 - [x] Les boutons d'action structurelle sont masqués (ajouter/supprimer arme, sort, capacité…)
-- [ ] Les boutons de repos court / repos long restent accessibles
+- [x] Les boutons de repos court / repos long restent accessibles
 - [x] Visuel distinctif : fond légèrement différent ou bandeau coloré indiquant le mode actif
 
 **Mode Édition (saisie libre)**
@@ -165,14 +165,14 @@
 - [x] `bonusMaitrise(niveau)` → table des niveaux 1-20
 - [x] `caCalculee(typeArmure, bonusArmure, modDex, bouclier, magie, autre)`
 - [x] `pvMax(niveau, typeDe, modCon, pvBase)` → somme par niveau
-- [ ] `bonusCompetence(nomCarac, valeurCarac, maitrise, expertise, niveau)`
+- [x] `bonusCompetence(nomCarac, valeurCarac, maitrise, expertise, niveau)`
 - [x] `perceptionPassive(modSagesse, maitrise, niveau)`
 - [ ] `ddSorts(bonusMaitrise, modCaracIncantation)`
 - [x] `bonusAttaqueSorts(bonusMaitrise, modCaracIncantation)`
 - [x] `bonusToucher(modCarac, maitrise, bonusMagie, special, niveau)`
-- [ ] `sautLongueur(valeurForce, avecElan)` → formule officielle
-- [ ] `sautHauteur(modForce, avecElan)` → formule officielle
-- [ ] `chargeMax(valeurForce)`
+- [x] `sautLongueur(valeurForce, avecElan)` → formule officielle
+- [x] `sautHauteur(modForce, avecElan)` → formule officielle
+- [x] `chargeMax(valeurForce)`
 
 ### 2.2 Système de lancer de dés (`des.js`)
 
@@ -183,7 +183,7 @@
   - [x] Jets de caractéristique (×6)
   - [x] Jets de sauvegarde (×6)
   - [x] Compétences (×18)
-  - [ ] Attaque par arme (×N)
+  - [x] Attaque par arme (×N)
   - [x] Initiative
 - [x] **Mode Jeu** : boutons 🎲 masqués — le clic sur la valeur numérique déclenche directement `lancerJet`
 - [x] **Mode Édition** : caduque boutons supprimés : boutons 🎲 visibles, clic sur valeur → édition normale

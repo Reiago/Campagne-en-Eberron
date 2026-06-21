@@ -735,17 +735,42 @@ input[type="checkbox"].case-maitrise:checked::after {
   right: 1rem;
   transform: translateY(-50%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
   white-space: nowrap;
 }
-.armure-bouclier-row label {
+.armure-bouclier-tag {
   font-family: 'Cinzel', serif;
-  font-size: 13px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+.armure-bouclier-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+input[type="checkbox"].armure-bouclier-cb {
+  width: 22px;
+  height: 22px;
+}
+input[type="checkbox"].armure-bouclier-cb:checked::after {
+  left: 4px; top: 3px;
+  width: 12px; height: 7px;
+}
+.armure-bouclier-bonus {
+  display: none;
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
   font-weight: 700;
   color: var(--gold-light);
-  cursor: pointer;
+}
+input.armure-bouclier-cb:checked ~ .armure-bouclier-bonus {
+  display: inline;
 }
 
 /* Champs d'armure : boîtes alignées sur le style des autres blocs */

@@ -1446,16 +1446,44 @@ function remplirArmure() {
 
 function recalculerArmure() {
   if (!perso || !carac) return;
-  const ca = caCalculee(
-    perso.type_armure ?? 'sans',
-    perso.bonus_armure ?? 0,
-    modificateur(carac.dexterite ?? 10),
-    perso.bouclier ?? false,
-    perso.bonus_armure_magie ?? 0,
-    perso.bonus_armure_autre ?? 0,
-  );
+  const typeArmure = perso.type_armure ?? 'sans';
+  const bonusArmure = perso.bonus_armure ?? 0;
+  const modDex = modificateur(carac.dexterite ?? 10);
+  const bouclier = perso.bouclier ?? false;
+  const magie = perso.bonus_armure_magie ?? 0;
+  const autre = perso.bonus_armure_autre ?? 0;
+  const ca = caCalculee(typeArmure, bonusArmure, modDex, bouclier, magie, autre);
   const el = document.getElementById('ca-totale');
-  if (el) el.textContent = ca;
+  if (el) {
+    el.textContent = ca;
+    el.title = detailArmureCA(typeArmure, bonusArmure, modDex, bouclier, magie, autre, ca);
+  }
+}
+
+// Détail du calcul de la CA totale, affiché en info-bulle
+function detailArmureCA(typeArmure, bonusArmure, modDex, bouclier, magie, autre, total) {
+  const lignes = [];
+  switch (typeArmure) {
+    case 'legere':
+      lignes.push(`Armure légère : ${bonusArmure}`);
+      lignes.push(`Modificateur de Dextérité : ${fmt(modDex)}`);
+      break;
+    case 'intermediaire':
+      lignes.push(`Armure intermédiaire : ${bonusArmure}`);
+      lignes.push(`Modificateur de Dextérité (max +2) : ${fmt(Math.min(modDex, 2))}`);
+      break;
+    case 'lourde':
+      lignes.push(`Armure lourde : ${bonusArmure}`);
+      break;
+    default:
+      lignes.push(`Sans armure : 10`);
+      lignes.push(`Modificateur de Dextérité : ${fmt(modDex)}`);
+  }
+  if (bouclier) lignes.push('Bouclier : +2');
+  if (magie) lignes.push(`Bonus magique : ${fmt(magie)}`);
+  if (autre) lignes.push(`Autre bonus : ${fmt(autre)}`);
+  lignes.push(`Total : ${total}`);
+  return lignes.join('\n');
 }
 
 // ── Bloc 5 : Points de Vie ─────────────────────────────────────────────────────
