@@ -11,3 +11,8 @@ Quand une modification du fichier `supabase_schema.sql` ajoute ou change une col
     ADD COLUMN nouvelle_colonne jsonb NOT NULL DEFAULT '[]';
   ```
 - Ne pas supposer que l'utilisateur a vu la note dans le schéma SQL — le signaler clairement dans la réponse en texte.
+
+## Test des modification de la fiche de personnage
+
+- Utilise la fiche suivante pour visualiser les modifications :
+fiche.html?id=4e43894d-731a-4ec7-babc-22ce9c49e34a

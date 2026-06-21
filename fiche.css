@@ -508,6 +508,15 @@
   text-transform: uppercase;
   color: var(--text-dim);
 }
+.carac-box-roll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  border-radius: 3px;
+  transition: background 0.15s;
+}
 .carac-box-mod {
   font-family: var(--font-heading);
   font-size: 20px;
@@ -528,34 +537,32 @@
 .carac-box-val:focus { outline: none; border-color: var(--gold-dim); }
 .carac-box-val::-webkit-inner-spin-button { display: none; }
 
-/* Jets de sauvegarde */
-.jds-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.4rem;
-}
-@media (max-width: 480px) { .jds-grid { grid-template-columns: 1fr; } }
-
-.jds-row {
+/* Jet de sauvegarde — intégré à la carte de caractéristique */
+.carac-box-jds {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 0.35rem 0.5rem;
-  background: var(--stone-mid);
+  gap: 6px;
+  margin-top: 2px;
+  padding: 0.3rem 0.5rem;
+  background: var(--stone-light);
   border: 1px solid var(--border);
   border-radius: 3px;
+  width: 100%;
+  justify-content: center;
 }
 .jds-val {
   font-family: var(--font-heading);
   font-size: 14px;
   color: var(--gold-light);
-  min-width: 28px;
+  min-width: 24px;
   text-align: right;
 }
-.jds-label {
-  font-size: 14px;
-  color: var(--text-muted);
-  flex: 1;
+.jds-tag {
+  font-family: var(--font-heading);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
 }
 
 /* Checkbox stylisée */
@@ -697,6 +704,7 @@ input[type="checkbox"].case-maitrise:checked::after {
 
 /* ── Bloc 4 : Armure ────────────────────────────────────────────────────────── */
 .ca-display {
+  position: relative;
   text-align: center;
   background: var(--stone-mid);
   border: 2px solid var(--gold-dim);
@@ -720,20 +728,73 @@ input[type="checkbox"].case-maitrise:checked::after {
   line-height: 1;
 }
 
+/* Bouclier : case compacte accolée à droite de la CA totale */
 .armure-bouclier-row {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.armure-bouclier-tag {
+  font-family: var(--font-heading);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+.armure-bouclier-control {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0.6rem 0;
-  font-size: 14px;
-  color: var(--text-muted);
+  gap: 6px;
 }
-.armure-bouclier-row label { cursor: pointer; }
+input[type="checkbox"].armure-bouclier-cb {
+  width: 22px;
+  height: 22px;
+}
+input[type="checkbox"].armure-bouclier-cb:checked::after {
+  left: 4px; top: 3px;
+  width: 12px; height: 7px;
+}
+.armure-bouclier-bonus {
+  display: none;
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+input.armure-bouclier-cb:checked ~ .armure-bouclier-bonus {
+  display: inline;
+}
+
+/* Champs d'armure : boîtes alignées sur le style des autres blocs */
+.armure-field {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.55rem 0.75rem;
+}
+.armure-field input,
+.armure-field select {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0.2rem 0;
+}
+.armure-field input:focus,
+.armure-field select:focus { outline: none; }
 
 /* ── Bloc 5 : Points de Vie ─────────────────────────────────────────────────── */
 .pv-display {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
   margin-bottom: 1rem;
 }
@@ -778,60 +839,46 @@ input[type="checkbox"].case-maitrise:checked::after {
 .pv-max-input:focus { outline: none; border-color: var(--gold-dim); }
 .pv-max-input::-webkit-inner-spin-button { display: none; }
 
-.pv-btn-group { display: flex; flex-direction: column; gap: 4px; }
-.btn-pv {
-  background: var(--stone-light);
-  border: 1px solid var(--border-strong);
-  border-radius: 3px;
-  color: var(--gold);
-  cursor: pointer;
-  font-family: var(--font-heading);
-  font-size: 16px;
-  width: 32px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s;
-}
-.btn-pv:hover { background: rgba(201,168,108,0.12); }
-
 .pv-bar-wrap {
-  height: 8px;
+  height: 18px;
   background: var(--stone-light);
-  border-radius: 4px;
+  border-radius: 5px;
   overflow: hidden;
   margin-bottom: 1rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-strong);
+  padding: 2px;
 }
-.pv-bar-fill {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 0.3s, background-color 0.3s;
-  background: #5A9A50;
-}
-.pv-bar-fill[data-state="moyen"]   { background: var(--gold-dim); }
-.pv-bar-fill[data-state="critique"] { background: var(--red-accent); }
-
-/* Soins / Dégâts externes */
-.pv-soin-degat-grid {
+.pv-bar-blocks {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  align-items: stretch;
+  gap: 2px;
+  height: 100%;
 }
+.pv-bar-bloc {
+  flex: 1;
+  background: var(--stone-mid);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.pv-bar-bloc-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--green-accent);
+  transition: width 0.3s, background-color 0.3s;
+}
+.pv-bar-blocks[data-state="moyen"]    .pv-bar-bloc-fill { background: var(--gold-dim); }
+.pv-bar-blocks[data-state="critique"] .pv-bar-bloc-fill { background: var(--red-accent); }
+
+/* Soins / Dégâts externes — déplacés au-dessus de la barre de PV */
+.pv-soin-degat-row {
+  display: flex;
+  gap: 0.6rem;
+}
+body.mode-jeu .pv-soin-degat-row.jeu-only { display: flex !important; }
 .pv-sd-row {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-.pv-sd-label {
-  font-family: var(--font-heading);
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  flex: 1;
 }
 .pv-sd-input {
   background: var(--stone-mid);
@@ -859,10 +906,10 @@ input[type="checkbox"].case-maitrise:checked::after {
   padding: 0.45rem 0.85rem;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.btn-soin { color: #5A9A50; border-color: rgba(90,154,80,0.35); }
-.btn-soin:hover { background: rgba(90,154,80,0.15); border-color: rgba(90,154,80,0.6); }
-.btn-degat { color: #D87060; border-color: rgba(216,112,96,0.35); }
-.btn-degat:hover { background: rgba(216,112,96,0.15); border-color: rgba(216,112,96,0.6); }
+.btn-soin { color: var(--green-accent); border-color: color-mix(in srgb, var(--green-accent) 45%, transparent); }
+.btn-soin:hover { background: color-mix(in srgb, var(--green-accent) 15%, transparent); border-color: var(--green-accent); }
+.btn-degat { color: var(--red-accent); border-color: color-mix(in srgb, var(--red-accent) 45%, transparent); }
+.btn-degat:hover { background: color-mix(in srgb, var(--red-accent) 15%, transparent); border-color: var(--red-accent); }
 
 /* Soin/Dégât — champs actifs en Mode Jeu */
 body.mode-jeu .pv-sd-input {
@@ -898,6 +945,14 @@ body.mode-jeu .btn-pv-sd {
 }
 .pv-temp-input:focus { outline: none; border-color: var(--gold-dim); }
 .pv-temp-input::-webkit-inner-spin-button { display: none; }
+
+/* Dés de vie restants + Type de dé de vie, côte à côte */
+.pv-de-vie-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.pv-de-vie-col { flex: 1; min-width: 160px; }
 
 /* Dés de vie */
 .des-de-vie-row {
@@ -1051,7 +1106,7 @@ body.mode-jeu .btn-pv-sd {
   padding: 6px 6px;
   border-bottom: 1px solid var(--border-strong);
 }
-.competences-table th.th-center { text-align: center; }
+.competences-table th.th-center { text-align: right; }
 .competences-table td {
   padding: 5px 6px;
   border-bottom: 1px solid var(--border);
@@ -1060,7 +1115,8 @@ body.mode-jeu .btn-pv-sd {
 }
 .competences-table tr:hover td { background: rgba(201,168,108,0.03); }
 .comp-carac-label { font-size: 11px; color: var(--text-dim); font-style: italic; }
-.comp-val-cell {
+td.comp-val-cell {
+  display: table-cell;
   font-family: var(--font-heading);
   font-size: 14px;
   color: var(--gold-light);
@@ -1175,6 +1231,14 @@ body.mode-jeu .val-clickable:hover {
   text-shadow: 0 0 8px rgba(201,168,108,0.4);
 }
 
+/* ── Lignes de compétences cliquables en Mode Jeu ───────────────────────────── */
+body.mode-jeu .comp-row { cursor: pointer; }
+body.mode-jeu .comp-row:hover td { background: rgba(201,168,108,0.08); }
+body.mode-jeu .comp-row:hover .comp-val-cell {
+  color: var(--gold);
+  text-shadow: 0 0 8px rgba(201,168,108,0.4);
+}
+
 /* ── Mode Jeu : désactiver tous les champs éditables ────────────────────────── */
 body.mode-jeu input,
 body.mode-jeu select,
@@ -1192,6 +1256,18 @@ body.mode-jeu .carac-box-val {
   font-weight: 600;
   width: auto;
   padding: 0 4px;
+}
+
+/* Zones cliquables pour lancer les dés en Mode Jeu */
+body.mode-jeu .carac-box-roll,
+body.mode-jeu .carac-box-jds,
+body.mode-jeu .carac-meta-roll {
+  cursor: pointer;
+}
+body.mode-jeu .carac-box-roll:hover,
+body.mode-jeu .carac-box-jds:hover,
+body.mode-jeu .carac-meta-roll:hover {
+  background: rgba(201,168,108,0.1);
 }
 
 /* Réactiver les éléments interactifs du Bloc PV en Mode Jeu */
@@ -1219,6 +1295,15 @@ body.mode-jeu #jds-echecs input[type="checkbox"] {
 body.mode-jeu #des-de-vie input[type="checkbox"]:checked,
 body.mode-jeu #jds-succes input[type="checkbox"]:checked,
 body.mode-jeu #jds-echecs input[type="checkbox"]:checked {
+  background: var(--gold-dim) !important;
+  border-color: var(--gold) !important;
+}
+/* Cases de maîtrise (compétences, JdS) : non cliquables mais visibles en Mode Jeu */
+body.mode-jeu input[type="checkbox"].case-maitrise {
+  border-color: var(--border-strong) !important;
+  background: transparent !important;
+}
+body.mode-jeu input[type="checkbox"].case-maitrise:checked {
   background: var(--gold-dim) !important;
   border-color: var(--gold) !important;
 }

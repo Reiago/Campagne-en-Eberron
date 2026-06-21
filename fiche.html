@@ -104,7 +104,7 @@
         <div class="carac-meta-label">Bonus de maîtrise</div>
         <div class="carac-meta-val champ-calcule" id="bonus-maitrise">+2</div>
       </div>
-      <div class="carac-meta-item">
+      <div class="carac-meta-item carac-meta-roll" id="roll-initiative">
         <div class="carac-meta-label">Initiative</div>
         <div class="carac-meta-val champ-calcule val-clickable" id="initiative-val">+0</div>
       </div>
@@ -113,67 +113,75 @@
     <div class="carac-grid">
       <div class="carac-box">
         <div class="carac-box-label">Force</div>
-        <div class="carac-box-mod champ-calcule val-clickable" id="mod-force">+0</div>
-        <input class="carac-box-val" id="carac-force" type="number" min="1" max="30" value="10" />
+        <div class="carac-box-roll" id="roll-force">
+          <input class="carac-box-val" id="carac-force" type="number" min="1" max="30" value="10" />
+          <div class="carac-box-mod champ-calcule val-clickable" id="mod-force">+0</div>
+        </div>
+        <div class="carac-box-jds">
+          <input type="checkbox" class="case-maitrise" id="jds-maitrise-force" />
+          <span class="jds-val champ-calcule val-clickable" id="jds-val-force">+0</span>
+          <span class="jds-tag">Sauv.</span>
+        </div>
       </div>
       <div class="carac-box">
         <div class="carac-box-label">Dextérité</div>
-        <div class="carac-box-mod champ-calcule val-clickable" id="mod-dexterite">+0</div>
-        <input class="carac-box-val" id="carac-dexterite" type="number" min="1" max="30" value="10" />
+        <div class="carac-box-roll" id="roll-dexterite">
+          <input class="carac-box-val" id="carac-dexterite" type="number" min="1" max="30" value="10" />
+          <div class="carac-box-mod champ-calcule val-clickable" id="mod-dexterite">+0</div>
+        </div>
+        <div class="carac-box-jds">
+          <input type="checkbox" class="case-maitrise" id="jds-maitrise-dexterite" />
+          <span class="jds-val champ-calcule val-clickable" id="jds-val-dexterite">+0</span>
+          <span class="jds-tag">Sauv.</span>
+        </div>
       </div>
       <div class="carac-box">
         <div class="carac-box-label">Constitution</div>
-        <div class="carac-box-mod champ-calcule val-clickable" id="mod-constitution">+0</div>
-        <input class="carac-box-val" id="carac-constitution" type="number" min="1" max="30" value="10" />
+        <div class="carac-box-roll" id="roll-constitution">
+          <input class="carac-box-val" id="carac-constitution" type="number" min="1" max="30" value="10" />
+          <div class="carac-box-mod champ-calcule val-clickable" id="mod-constitution">+0</div>
+        </div>
+        <div class="carac-box-jds">
+          <input type="checkbox" class="case-maitrise" id="jds-maitrise-constitution" />
+          <span class="jds-val champ-calcule val-clickable" id="jds-val-constitution">+0</span>
+          <span class="jds-tag">Sauv.</span>
+        </div>
       </div>
       <div class="carac-box">
         <div class="carac-box-label">Intelligence</div>
-        <div class="carac-box-mod champ-calcule val-clickable" id="mod-intelligence">+0</div>
-        <input class="carac-box-val" id="carac-intelligence" type="number" min="1" max="30" value="10" />
+        <div class="carac-box-roll" id="roll-intelligence">
+          <input class="carac-box-val" id="carac-intelligence" type="number" min="1" max="30" value="10" />
+          <div class="carac-box-mod champ-calcule val-clickable" id="mod-intelligence">+0</div>
+        </div>
+        <div class="carac-box-jds">
+          <input type="checkbox" class="case-maitrise" id="jds-maitrise-intelligence" />
+          <span class="jds-val champ-calcule val-clickable" id="jds-val-intelligence">+0</span>
+          <span class="jds-tag">Sauv.</span>
+        </div>
       </div>
       <div class="carac-box">
         <div class="carac-box-label">Sagesse</div>
-        <div class="carac-box-mod champ-calcule val-clickable" id="mod-sagesse">+0</div>
-        <input class="carac-box-val" id="carac-sagesse" type="number" min="1" max="30" value="10" />
+        <div class="carac-box-roll" id="roll-sagesse">
+          <input class="carac-box-val" id="carac-sagesse" type="number" min="1" max="30" value="10" />
+          <div class="carac-box-mod champ-calcule val-clickable" id="mod-sagesse">+0</div>
+        </div>
+        <div class="carac-box-jds">
+          <input type="checkbox" class="case-maitrise" id="jds-maitrise-sagesse" />
+          <span class="jds-val champ-calcule val-clickable" id="jds-val-sagesse">+0</span>
+          <span class="jds-tag">Sauv.</span>
+        </div>
       </div>
       <div class="carac-box">
         <div class="carac-box-label">Charisme</div>
-        <div class="carac-box-mod champ-calcule val-clickable" id="mod-charisme">+0</div>
-        <input class="carac-box-val" id="carac-charisme" type="number" min="1" max="30" value="10" />
-      </div>
-    </div>
-
-    <h3 class="bloc-subtitle">Jets de sauvegarde</h3>
-    <div class="jds-grid">
-      <div class="jds-row">
-        <input type="checkbox" class="case-maitrise" id="jds-maitrise-force" />
-        <span class="jds-val champ-calcule val-clickable" id="jds-val-force">+0</span>
-        <span class="jds-label">Force</span>
-      </div>
-      <div class="jds-row">
-        <input type="checkbox" class="case-maitrise" id="jds-maitrise-dexterite" />
-        <span class="jds-val champ-calcule val-clickable" id="jds-val-dexterite">+0</span>
-        <span class="jds-label">Dextérité</span>
-      </div>
-      <div class="jds-row">
-        <input type="checkbox" class="case-maitrise" id="jds-maitrise-constitution" />
-        <span class="jds-val champ-calcule val-clickable" id="jds-val-constitution">+0</span>
-        <span class="jds-label">Constitution</span>
-      </div>
-      <div class="jds-row">
-        <input type="checkbox" class="case-maitrise" id="jds-maitrise-intelligence" />
-        <span class="jds-val champ-calcule val-clickable" id="jds-val-intelligence">+0</span>
-        <span class="jds-label">Intelligence</span>
-      </div>
-      <div class="jds-row">
-        <input type="checkbox" class="case-maitrise" id="jds-maitrise-sagesse" />
-        <span class="jds-val champ-calcule val-clickable" id="jds-val-sagesse">+0</span>
-        <span class="jds-label">Sagesse</span>
-      </div>
-      <div class="jds-row">
-        <input type="checkbox" class="case-maitrise" id="jds-maitrise-charisme" />
-        <span class="jds-val champ-calcule val-clickable" id="jds-val-charisme">+0</span>
-        <span class="jds-label">Charisme</span>
+        <div class="carac-box-roll" id="roll-charisme">
+          <input class="carac-box-val" id="carac-charisme" type="number" min="1" max="30" value="10" />
+          <div class="carac-box-mod champ-calcule val-clickable" id="mod-charisme">+0</div>
+        </div>
+        <div class="carac-box-jds">
+          <input type="checkbox" class="case-maitrise" id="jds-maitrise-charisme" />
+          <span class="jds-val champ-calcule val-clickable" id="jds-val-charisme">+0</span>
+          <span class="jds-tag">Sauv.</span>
+        </div>
       </div>
     </div>
   </section>
@@ -258,10 +266,17 @@
     <div class="ca-display">
       <div class="ca-display-label">Classe d'Armure totale</div>
       <div class="ca-display-val champ-calcule" id="ca-totale">10</div>
+      <div class="armure-bouclier-row">
+        <label for="armure-bouclier" class="armure-bouclier-tag">Bouclier</label>
+        <div class="armure-bouclier-control">
+          <input type="checkbox" class="case-maitrise armure-bouclier-cb" id="armure-bouclier" />
+          <span class="armure-bouclier-bonus">+2</span>
+        </div>
+      </div>
     </div>
 
     <div class="fiche-grid-2">
-      <div class="fiche-field">
+      <div class="fiche-field armure-field">
         <label for="armure-type">Type d'armure</label>
         <select id="armure-type">
           <option value="sans">Sans armure (10 + Dex)</option>
@@ -270,23 +285,18 @@
           <option value="lourde">Lourde (bonus, sans Dex)</option>
         </select>
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field armure-field">
         <label for="armure-bonus_armure">Bonus d'armure de base</label>
         <input id="armure-bonus_armure" type="number" min="0" value="0" />
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field armure-field">
         <label for="armure-bonus_armure_magie">Bonus magique</label>
         <input id="armure-bonus_armure_magie" type="number" min="0" value="0" />
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field armure-field">
         <label for="armure-bonus_armure_autre">Autre bonus</label>
         <input id="armure-bonus_armure_autre" type="number" value="0" />
       </div>
-    </div>
-
-    <div class="armure-bouclier-row">
-      <input type="checkbox" class="case-maitrise" id="armure-bouclier" />
-      <label for="armure-bouclier">Bouclier (+2 CA)</label>
     </div>
   </section>
 
@@ -303,27 +313,20 @@
           <span class="champ-calcule pv-max-val" id="pv-max">0</span>
         </div>
       </div>
-      <div class="pv-btn-group">
-        <button class="btn-pv mode-jeu-ok" id="pv-plus" title="Soigner">+</button>
-        <button class="btn-pv mode-jeu-ok" id="pv-minus" title="Blesser">−</button>
+      <div class="pv-soin-degat-row jeu-only">
+        <div class="pv-sd-row">
+          <input type="number" id="pv-soin-input" class="pv-sd-input" min="1" value="1" />
+          <button class="btn-pv-sd btn-soin" id="btn-pv-soin">Soin</button>
+        </div>
+        <div class="pv-sd-row">
+          <input type="number" id="pv-degat-input" class="pv-sd-input" min="1" value="1" />
+          <button class="btn-pv-sd btn-degat" id="btn-pv-degat">Blessure</button>
+        </div>
       </div>
     </div>
 
     <div class="pv-bar-wrap">
-      <div class="pv-bar-fill" id="pv-bar-fill" style="width:100%;" data-state="bon"></div>
-    </div>
-
-    <div class="pv-soin-degat-grid jeu-only">
-      <div class="pv-sd-row">
-        <span class="pv-sd-label">Soins reçus</span>
-        <input type="number" id="pv-soin-input" class="pv-sd-input" min="0" placeholder="0" />
-        <button class="btn-pv-sd btn-soin" id="btn-pv-soin">Soigner</button>
-      </div>
-      <div class="pv-sd-row">
-        <span class="pv-sd-label">Dégâts reçus</span>
-        <input type="number" id="pv-degat-input" class="pv-sd-input" min="0" placeholder="0" />
-        <button class="btn-pv-sd btn-degat" id="btn-pv-degat">Blesser</button>
-      </div>
+      <div class="pv-bar-blocks" id="pv-bar-blocks" data-state="bon"></div>
     </div>
 
     <div class="pv-temp-row">
@@ -331,26 +334,31 @@
       <input class="pv-temp-input mode-jeu-ok" id="pv-temporaires" type="number" min="0" value="0" />
     </div>
 
-    <h3 class="bloc-subtitle">Type de dé de vie</h3>
-    <div class="fiche-field" style="max-width:180px;">
-      <label for="pv-type-de">Dé de vie</label>
-      <select id="pv-type-de">
-        <option value="d6">d6</option>
-        <option value="d8" selected>d8</option>
-        <option value="d10">d10</option>
-        <option value="d12">d12</option>
-      </select>
+    <div class="pv-de-vie-row">
+      <div class="pv-de-vie-col">
+        <h3 class="bloc-subtitle">Dés de vie restants <span id="ddv-count" class="ddv-count"></span></h3>
+        <div class="des-de-vie-row">
+          <div id="des-de-vie"></div>
+        </div>
+      </div>
+      <div class="pv-de-vie-col">
+        <h3 class="bloc-subtitle">Type de dé de vie</h3>
+        <div class="fiche-field" style="max-width:180px;">
+          <label for="pv-type-de">Dé de vie</label>
+          <select id="pv-type-de">
+            <option value="d6">d6</option>
+            <option value="d8" selected>d8</option>
+            <option value="d10">d10</option>
+            <option value="d12">d12</option>
+          </select>
+        </div>
+      </div>
     </div>
 
     <div class="edition-only" id="pv-niveaux-container">
       <h3 class="bloc-subtitle">Jets de PV par niveau</h3>
       <p class="pv-niveaux-info">Niveau 1 = max du dé (automatique). Niveaux suivants = votre jet réel (1–dé). Les cases vides utilisent la valeur moyenne.</p>
       <div class="pv-niveaux-grid" id="pv-niveaux-grid"></div>
-    </div>
-
-    <h3 class="bloc-subtitle">Dés de vie restants <span id="ddv-count" class="ddv-count"></span></h3>
-    <div class="des-de-vie-row">
-      <div id="des-de-vie"></div>
     </div>
 
     <div id="jds-mort-section">

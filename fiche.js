@@ -255,17 +255,17 @@ function recalculerTout() {
 
 // ── Clics Mode Jeu sur les valeurs calculées ───────────────────────────────────
 function initModeJeuClics() {
-  // Modificateurs → jet de caractéristique
+  // Zone valeur + modificateur → jet de caractéristique
   STATS.forEach(stat => {
-    document.getElementById('mod-' + stat)?.addEventListener('click', () => {
+    document.getElementById('roll-' + stat)?.addEventListener('click', () => {
       if (getMode() !== 'jeu') return;
       lancerJet(modificateur(carac[stat] ?? 10), STAT_LABELS[stat]);
     });
   });
 
-  // JdS values → jet de sauvegarde
+  // Ligne jet de sauvegarde → jet de sauvegarde
   STATS.forEach(stat => {
-    document.getElementById('jds-val-' + stat)?.addEventListener('click', () => {
+    document.getElementById('carac-' + stat)?.closest('.carac-box')?.querySelector('.carac-box-jds')?.addEventListener('click', () => {
       if (getMode() !== 'jeu') return;
       const key = 'maitrise_jds_' + stat;
       const bm  = bonusMaitrise(perso.niveau ?? 1);
@@ -275,7 +275,7 @@ function initModeJeuClics() {
   });
 
   // Initiative
-  document.getElementById('initiative-val')?.addEventListener('click', () => {
+  document.getElementById('roll-initiative')?.addEventListener('click', () => {
     if (getMode() !== 'jeu') return;
     lancerJet(modificateur(carac.dexterite ?? 10), 'Initiative');
   });
@@ -1485,16 +1485,44 @@ function remplirArmure() {
 
 function recalculerArmure() {
   if (!perso || !carac) return;
-  const ca = caCalculee(
-    perso.type_armure ?? 'sans',
-    perso.bonus_armure ?? 0,
-    modificateur(carac.dexterite ?? 10),
-    perso.bouclier ?? false,
-    perso.bonus_armure_magie ?? 0,
-    perso.bonus_armure_autre ?? 0,
-  );
+  const typeArmure = perso.type_armure ?? 'sans';
+  const bonusArmure = perso.bonus_armure ?? 0;
+  const modDex = modificateur(carac.dexterite ?? 10);
+  const bouclier = perso.bouclier ?? false;
+  const magie = perso.bonus_armure_magie ?? 0;
+  const autre = perso.bonus_armure_autre ?? 0;
+  const ca = caCalculee(typeArmure, bonusArmure, modDex, bouclier, magie, autre);
   const el = document.getElementById('ca-totale');
-  if (el) el.textContent = ca;
+  if (el) {
+    el.textContent = ca;
+    el.title = detailArmureCA(typeArmure, bonusArmure, modDex, bouclier, magie, autre, ca);
+  }
+}
+
+// Détail du calcul de la CA totale, affiché en info-bulle
+function detailArmureCA(typeArmure, bonusArmure, modDex, bouclier, magie, autre, total) {
+  const lignes = [];
+  switch (typeArmure) {
+    case 'legere':
+      lignes.push(`Armure légère : ${bonusArmure}`);
+      lignes.push(`Modificateur de Dextérité : ${fmt(modDex)}`);
+      break;
+    case 'intermediaire':
+      lignes.push(`Armure intermédiaire : ${bonusArmure}`);
+      lignes.push(`Modificateur de Dextérité (max +2) : ${fmt(Math.min(modDex, 2))}`);
+      break;
+    case 'lourde':
+      lignes.push(`Armure lourde : ${bonusArmure}`);
+      break;
+    default:
+      lignes.push(`Sans armure : 10`);
+      lignes.push(`Modificateur de Dextérité : ${fmt(modDex)}`);
+  }
+  if (bouclier) lignes.push('Bouclier : +2');
+  if (magie) lignes.push(`Bonus magique : ${fmt(magie)}`);
+  if (autre) lignes.push(`Autre bonus : ${fmt(autre)}`);
+  lignes.push(`Total : ${total}`);
+  return lignes.join('\n');
 }
 
 // ── Bloc 5 : Points de Vie ─────────────────────────────────────────────────────
@@ -1521,23 +1549,7 @@ function remplirPV() {
     pvTempEl.addEventListener('input', () => schedulePersoSave({ pv_temporaires: Number(pvTempEl.value) || 0 }));
   }
 
-  document.getElementById('pv-plus')?.addEventListener('click', () => {
-    pvActuelEl.value = Number(pvActuelEl.value) + 1;
-    schedulePersoSave({ pv_actuel: Number(pvActuelEl.value) });
-    recalculerPVBar();
-  });
-  document.getElementById('pv-minus')?.addEventListener('click', () => {
-    const oldPV = perso.pv_actuel ?? 0;
-    pvActuelEl.value = Math.max(0, Number(pvActuelEl.value) - 1);
-    const newPV = Number(pvActuelEl.value);
-    const patch = { pv_actuel: newPV };
-    if (newPV <= 0 && oldPV > 0) { patch.jds_succes = 0; patch.jds_echecs = 0; }
-    schedulePersoSave(patch);
-    if (newPV <= 0 && oldPV > 0) remplirJDSMort();
-    recalculerPVBar();
-  });
-
-  // Soins externes (sort, potion…)
+  // Soins reçus (remplace l'ancien bouton "+1")
   const pvSoinInput = document.getElementById('pv-soin-input');
   const appliqueSoin = () => {
     const soin = Math.max(0, Number(pvSoinInput?.value) || 0);
@@ -1546,13 +1558,12 @@ function remplirPV() {
     const nouveauxPV = Math.min(pvMaxVal, (Number(pvActuelEl?.value) || 0) + soin);
     pvActuelEl.value = nouveauxPV;
     schedulePersoSave({ pv_actuel: nouveauxPV });
-    pvSoinInput.value = '';
     recalculerPVBar();
   };
   document.getElementById('btn-pv-soin')?.addEventListener('click', appliqueSoin);
   pvSoinInput?.addEventListener('keydown', e => { if (e.key === 'Enter') appliqueSoin(); });
 
-  // Dégâts reçus
+  // Dégâts / blessures reçus (remplace l'ancien bouton "-1")
   const pvDegatInput = document.getElementById('pv-degat-input');
   const appliqueDegat = () => {
     const degats = Math.max(0, Number(pvDegatInput?.value) || 0);
@@ -1563,7 +1574,6 @@ function remplirPV() {
     const patch = { pv_actuel: nouveauxPV };
     if (nouveauxPV <= 0 && oldPV > 0) { patch.jds_succes = 0; patch.jds_echecs = 0; }
     schedulePersoSave(patch);
-    pvDegatInput.value = '';
     if (nouveauxPV <= 0 && oldPV > 0) remplirJDSMort();
     recalculerPVBar();
   };
@@ -1734,14 +1744,40 @@ function remplirPVNiveaux() {
   }
 }
 
+// Nombre de blocs affichés dans la barre de PV : un bloc par point de vie max
+function nbBlocsPV(pvMaxVal) {
+  return Math.max(1, Math.round(pvMaxVal || 1));
+}
+
 function recalculerPVBar() {
   const pvActuel = Number(document.getElementById('pv-actuel')?.value) || 0;
   const pvMaxVal = Number(document.getElementById('pv-max')?.textContent) || 1;
-  const pct = Math.max(0, Math.min(100, (pvActuel / pvMaxVal) * 100));
-  const bar = document.getElementById('pv-bar-fill');
-  if (!bar) return;
-  bar.style.width = pct + '%';
-  bar.dataset.state = pct > 50 ? 'bon' : pct > 25 ? 'moyen' : 'critique';
+  const pct   = Math.max(0, Math.min(100, (pvActuel / pvMaxVal) * 100));
+  const etat  = pct > 50 ? 'bon' : pct > 25 ? 'moyen' : 'critique';
+  const blocs = document.getElementById('pv-bar-blocks');
+  if (!blocs) return;
+  blocs.dataset.state = etat;
+
+  const total   = nbBlocsPV(pvMaxVal);
+  const parBloc = pvMaxVal / total;
+
+  if (blocs.childElementCount !== total) {
+    blocs.innerHTML = '';
+    for (let i = 0; i < total; i++) {
+      const bloc = document.createElement('div');
+      bloc.className = 'pv-bar-bloc';
+      const fill = document.createElement('div');
+      fill.className = 'pv-bar-bloc-fill';
+      bloc.appendChild(fill);
+      blocs.appendChild(bloc);
+    }
+  }
+
+  [...blocs.children].forEach((bloc, i) => {
+    const rempli = Math.max(0, Math.min(1, (pvActuel - i * parBloc) / parBloc));
+    bloc.firstElementChild.style.width = (rempli * 100) + '%';
+  });
+
   document.getElementById('jds-mort-section')?.classList.toggle('visible', pvActuel <= 0);
 }
 
@@ -1962,19 +1998,22 @@ function remplirCompetences() {
     const nomAff   = capitaliser(comp.nom);
     const modBase  = modificateur(carac[stat] ?? 10);
     const val      = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
+    const titre    = detailBonusCompetence(modBase, caracNom, comp.maitrise, comp.expertise, perso.niveau ?? 1);
 
     const tr = document.createElement('tr');
+    tr.className = 'comp-row';
     tr.innerHTML = `
       <td><input type="checkbox" class="case-maitrise comp-maitrise" data-id="${comp.id}" ${comp.maitrise ? 'checked' : ''}></td>
       <td><input type="checkbox" class="case-maitrise comp-expertise" data-id="${comp.id}" ${comp.expertise ? 'checked' : ''}></td>
       <td>${nomAff} <span class="comp-carac-label">(${caracNom})</span></td>
-      <td class="comp-val-cell val-clickable champ-calcule" id="comp-val-${comp.id}">${fmt(val)}</td>
+      <td class="comp-val-cell champ-calcule" id="comp-val-${comp.id}" title="${titre}">${fmt(val)}</td>
     `;
     tbody.appendChild(tr);
 
-    // Clic sur la valeur calculée → jet en Mode Jeu
-    tr.querySelector('.comp-val-cell').addEventListener('click', () => {
+    // Clic sur la ligne → jet en Mode Jeu (sauf sur les cases à cocher)
+    tr.addEventListener('click', e => {
       if (getMode() !== 'jeu') return;
+      if (e.target.closest('.case-maitrise')) return;
       const s     = COMP_CARAC[normaliserNom(comp.nom)];
       const mBase = modificateur(carac[s] ?? 10);
       lancerJet(bonusCompetence(mBase, comp.maitrise, comp.expertise, perso.niveau ?? 1), capitaliser(comp.nom));
@@ -1998,13 +2037,31 @@ function remplirCompetences() {
 function recalculerCompetences() {
   if (!competences?.length || !carac) return;
   competences.forEach(comp => {
-    const stat    = COMP_CARAC[normaliserNom(comp.nom)];
-    const modBase = modificateur(carac[stat] ?? 10);
-    const val     = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
-    const el      = document.getElementById('comp-val-' + comp.id);
-    if (el) el.textContent = fmt(val);
+    const stat     = COMP_CARAC[normaliserNom(comp.nom)];
+    const caracNom = STAT_LABELS[stat] ?? '?';
+    const modBase  = modificateur(carac[stat] ?? 10);
+    const val      = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
+    const el       = document.getElementById('comp-val-' + comp.id);
+    if (el) {
+      el.textContent = fmt(val);
+      el.title = detailBonusCompetence(modBase, caracNom, comp.maitrise, comp.expertise, perso.niveau ?? 1);
+    }
   });
   recalculerPerceptionPassive();
+}
+
+// Détail du calcul du bonus d'une compétence, affiché en info-bulle
+function detailBonusCompetence(modBase, caracNom, maitrise, expertise, niveau) {
+  const de = /^[AEIOUÉÈ]/i.test(caracNom) ? "d'" : 'de ';
+  const lignes = [`Modificateur ${de}${caracNom} : ${fmt(modBase)}`];
+  if (expertise) {
+    const bm = bonusMaitrise(niveau);
+    lignes.push(`Expertise : ${fmt(bm * 2)} (bonus de maîtrise x2)`);
+  } else if (maitrise) {
+    lignes.push(`Maîtrise : ${fmt(bonusMaitrise(niveau))}`);
+  }
+  lignes.push(`Total : ${fmt(bonusCompetence(modBase, maitrise, expertise, niveau))}`);
+  return lignes.join('\n');
 }
 
 function recalculerPerceptionPassive() {
