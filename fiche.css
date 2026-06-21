@@ -528,34 +528,32 @@
 .carac-box-val:focus { outline: none; border-color: var(--gold-dim); }
 .carac-box-val::-webkit-inner-spin-button { display: none; }
 
-/* Jets de sauvegarde */
-.jds-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.4rem;
-}
-@media (max-width: 480px) { .jds-grid { grid-template-columns: 1fr; } }
-
-.jds-row {
+/* Jet de sauvegarde — intégré à la carte de caractéristique */
+.carac-box-jds {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 0.35rem 0.5rem;
-  background: var(--stone-mid);
+  gap: 6px;
+  margin-top: 2px;
+  padding: 0.3rem 0.5rem;
+  background: var(--stone-light);
   border: 1px solid var(--border);
   border-radius: 3px;
+  width: 100%;
+  justify-content: center;
 }
 .jds-val {
   font-family: 'Cinzel', serif;
   font-size: 14px;
   color: var(--gold-light);
-  min-width: 28px;
+  min-width: 24px;
   text-align: right;
 }
-.jds-label {
-  font-size: 14px;
-  color: var(--text-muted);
-  flex: 1;
+.jds-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
 }
 
 /* Checkbox stylisée */
