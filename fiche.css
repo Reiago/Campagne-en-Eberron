@@ -20,7 +20,7 @@
   border-bottom: 1px solid var(--border);
   font-size: 11px;
   color: var(--text-dim);
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   letter-spacing: 0.08em;
   min-height: 2.2rem;
 }
@@ -64,7 +64,7 @@
   border-radius: 2px;
   color: var(--text-dim);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -105,7 +105,7 @@
   border-radius: 3px;
   color: var(--text-dim);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -150,7 +150,7 @@
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   letter-spacing: 0.1em;
   padding: 0.4rem 0.8rem;
@@ -193,7 +193,7 @@
 .fiche-bloc.active { display: block; }
 
 .bloc-title {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 13px;
   font-weight: 600;
   color: var(--gold-light);
@@ -205,7 +205,7 @@
 }
 
 .bloc-subtitle {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   color: var(--gold-dim);
   letter-spacing: 0.15em;
@@ -240,7 +240,7 @@
 }
 
 .fiche-field label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -254,7 +254,7 @@
   border: 1px solid var(--border);
   border-radius: 3px;
   color: var(--text-main);
-  font-family: 'Crimson Pro', Georgia, serif;
+  font-family: var(--font-body);
   font-size: 15px;
   padding: 0.45rem 0.65rem;
   width: 100%;
@@ -320,7 +320,7 @@
 .id-box-inline input { width: auto; flex: 1 1 auto; text-align: left; }
 
 .id-box-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -333,7 +333,7 @@
   border: none;
   border-radius: 0;
   color: var(--text-main);
-  font-family: 'Crimson Pro', Georgia, serif;
+  font-family: var(--font-body);
   font-size: 15px;
   line-height: 16px;
   height: 16px;
@@ -353,7 +353,7 @@
 
 /* Le placeholder reprend l'apparence d'un titre de champ tant qu'aucune valeur n'est saisie */
 .id-box input::placeholder {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -397,7 +397,7 @@
 .id-box-inline input { width: auto; flex: 1 1 auto; text-align: left; }
 
 .id-box-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -410,7 +410,7 @@
   border: none;
   border-radius: 0;
   color: var(--text-main);
-  font-family: 'Crimson Pro', Georgia, serif;
+  font-family: var(--font-body);
   font-size: 15px;
   line-height: 16px;
   height: 16px;
@@ -430,7 +430,7 @@
 
 /* Le placeholder reprend l'apparence d'un titre de champ tant qu'aucune valeur n'est saisie */
 .id-box input::placeholder {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -468,7 +468,7 @@
   min-width: 120px;
 }
 .carac-meta-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -476,7 +476,7 @@
   margin-bottom: 4px;
 }
 .carac-meta-val {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 22px;
   font-weight: 700;
   color: var(--gold-light);
@@ -502,7 +502,7 @@
   gap: 4px;
 }
 .carac-box-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -518,7 +518,7 @@
   transition: background 0.15s;
 }
 .carac-box-mod {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 20px;
   font-weight: 700;
   color: var(--gold-light);
@@ -551,7 +551,7 @@
   justify-content: center;
 }
 .jds-val {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 14px;
   color: var(--gold-light);
   min-width: 24px;
@@ -619,7 +619,7 @@ input[type="checkbox"].case-maitrise:checked::after {
 }
 
 .dep-vitesse-val {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 22px;
   font-weight: 700;
   color: var(--gold-light);
@@ -643,7 +643,7 @@ input[type="checkbox"].case-maitrise:checked::after {
 }
 
 .dep-saut-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -652,7 +652,7 @@ input[type="checkbox"].case-maitrise:checked::after {
 }
 
 .dep-saut-val {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 22px;
   font-weight: 700;
   color: var(--gold-light);
@@ -681,7 +681,7 @@ input[type="checkbox"].case-maitrise:checked::after {
 }
 
 .dep-charge-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -690,7 +690,7 @@ input[type="checkbox"].case-maitrise:checked::after {
 }
 
 .dep-charge-val {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 22px;
   font-weight: 700;
   color: var(--gold-light);
@@ -713,7 +713,7 @@ input[type="checkbox"].case-maitrise:checked::after {
   margin-bottom: 1.5rem;
 }
 .ca-display-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -721,7 +721,7 @@ input[type="checkbox"].case-maitrise:checked::after {
   margin-bottom: 4px;
 }
 .ca-display-val {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 48px;
   font-weight: 700;
   color: var(--gold-light);
@@ -809,7 +809,7 @@ input.armure-bouclier-cb:checked ~ .armure-bouclier-bonus {
   border: 2px solid var(--gold-dim);
   border-radius: 4px;
   color: var(--gold-light);
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 32px;
   font-weight: 700;
   padding: 0.4rem 0.5rem;
@@ -825,7 +825,7 @@ input.armure-bouclier-cb:checked ~ .armure-bouclier-bonus {
   align-items: center;
   gap: 2px;
 }
-.pv-max-label { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
+.pv-max-label { font-family: var(--font-heading); font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
 .pv-max-input {
   background: var(--stone-mid);
   border: 1px solid var(--border);
@@ -885,7 +885,7 @@ body.mode-jeu .pv-soin-degat-row.jeu-only { display: flex !important; }
   border: 1px solid var(--border);
   border-radius: 3px;
   color: var(--text-main);
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 18px;
   font-weight: 600;
   padding: 0.25rem 0.4rem;
@@ -899,7 +899,7 @@ body.mode-jeu .pv-soin-degat-row.jeu-only { display: flex !important; }
   border: 1px solid var(--border-strong);
   border-radius: 3px;
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -932,7 +932,7 @@ body.mode-jeu .btn-pv-sd {
   gap: 10px;
   padding: 0.5rem 0;
 }
-.pv-temp-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); flex: 1; }
+.pv-temp-label { font-family: var(--font-heading); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); flex: 1; }
 .pv-temp-input {
   background: var(--stone-mid);
   border: 1px solid var(--border);
@@ -962,9 +962,9 @@ body.mode-jeu .btn-pv-sd {
   flex-wrap: wrap;
   padding: 0.5rem 0;
 }
-.ddv-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); flex-shrink: 0; }
+.ddv-label { font-family: var(--font-heading); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); flex-shrink: 0; }
 .ddv-count {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 12px;
   font-weight: 600;
   color: var(--gold-light);
@@ -1009,7 +1009,7 @@ body.mode-jeu .btn-pv-sd {
 }
 .jds-mort-item { text-align: center; }
 .jds-mort-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1045,7 +1045,7 @@ body.mode-jeu .btn-pv-sd {
   border-radius: 3px;
   color: var(--text-dim);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1071,7 +1071,7 @@ body.mode-jeu .btn-pv-sd {
   border-radius: 3px;
   color: var(--text-muted);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1097,7 +1097,7 @@ body.mode-jeu .btn-pv-sd {
   font-size: 14px;
 }
 .competences-table th {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 8px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1135,8 +1135,8 @@ td.comp-val-cell {
   border: 1px solid var(--border);
   border-radius: 3px;
 }
-.pp-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
-.pp-val { font-family: 'Cinzel', serif; font-size: 18px; color: var(--gold-light); font-weight: 600; }
+.pp-label { font-family: var(--font-heading); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+.pp-val { font-family: var(--font-heading); font-size: 18px; color: var(--gold-light); font-weight: 600; }
 
 /* ── Toast dés ──────────────────────────────────────────────────────────────── */
 .des-toast {
@@ -1169,7 +1169,7 @@ td.comp-val-cell {
 .des-toast.echec-critique { border-color: var(--red-accent); }
 
 .toast-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1177,7 +1177,7 @@ td.comp-val-cell {
 }
 .toast-detail { font-size: 12px; color: var(--text-muted); }
 .toast-total {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 26px;
   font-weight: 700;
   color: var(--gold-light);
@@ -1194,7 +1194,7 @@ td.comp-val-cell {
   border-radius: 3px;
   color: var(--text-dim);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1341,7 +1341,7 @@ body.mode-jeu .btn-structurel { display: none !important; }
 
 /* ── PV max (span calculé, remplace l'input) ────────────────────────────────── */
 .pv-max-val {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 18px;
   font-weight: 600;
   color: var(--text-muted);
@@ -1426,7 +1426,7 @@ body.mode-jeu .jeu-only { display: block !important; }
   padding: 0.5rem 0.4rem;
 }
 .pv-niveau-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 8px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1464,7 +1464,7 @@ body.mode-jeu .jeu-only { display: block !important; }
   padding: 1rem 1rem 0.75rem;
 }
 .repos-panel-title {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1488,7 +1488,7 @@ body.mode-jeu .jeu-only { display: block !important; }
   border-radius: 3px;
   color: var(--text-dim);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1507,7 +1507,7 @@ body.mode-jeu .jeu-only { display: block !important; }
   margin-bottom: 0.9rem;
 }
 .repos-dice-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1537,7 +1537,7 @@ body.mode-jeu .jeu-only { display: block !important; }
 .btn-stepper:hover:not(:disabled) { background: rgba(201,168,108,0.12); }
 .btn-stepper:disabled { opacity: 0.3; cursor: not-allowed; }
 .repos-dice-count {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 22px;
   font-weight: 700;
   color: var(--gold-light);
@@ -1567,7 +1567,7 @@ body.mode-jeu .jeu-only { display: block !important; }
   gap: 2px;
 }
 .repos-roll-total {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 17px;
   font-weight: 600;
   color: var(--gold-light);
@@ -1584,7 +1584,7 @@ body.mode-jeu .jeu-only { display: block !important; }
   border-radius: 3px;
   color: var(--text-dim);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1650,7 +1650,7 @@ body.mode-jeu .repos-panel input[type="number"]:focus {
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1695,7 +1695,7 @@ body.mode-jeu .repos-panel input[type="number"]:focus {
 .arme-total-item { text-align: center; }
 
 .arme-total-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1704,7 +1704,7 @@ body.mode-jeu .repos-panel input[type="number"]:focus {
 }
 
 .arme-total-val {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 22px;
   font-weight: 700;
   color: var(--gold-light);
@@ -1728,7 +1728,7 @@ body.mode-jeu .repos-panel input[type="number"]:focus {
   border-radius: 4px;
   color: var(--text-dim);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1761,7 +1761,7 @@ body.mode-jeu .arme-maitrise-cb:checked {
   margin-bottom: 0.9rem;
 }
 .repos-pv-recup-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1773,7 +1773,7 @@ body.mode-jeu .arme-maitrise-cb:checked {
   border: 1px solid var(--border-strong);
   border-radius: 3px;
   color: var(--gold-light);
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 20px;
   font-weight: 700;
   padding: 0.3rem 0.4rem;
@@ -1786,7 +1786,7 @@ body.mode-jeu .arme-maitrise-cb:checked {
 /* ── Bloc 8 : Équipement & Possessions ─────────────────────────────────────── */
 
 .equipement-section-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1820,7 +1820,7 @@ body.mode-jeu .arme-maitrise-cb:checked {
 }
 
 .monnaie-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -1847,7 +1847,7 @@ body.mode-jeu .arme-maitrise-cb:checked {
   border: 1px solid var(--border-strong);
   border-radius: 3px;
   color: var(--text-bright);
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 16px;
   font-weight: 700;
   padding: 0.2rem 0.3rem;
@@ -1926,7 +1926,7 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
   border-radius: 4px;
   color: var(--text-dim);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1966,7 +1966,7 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
 .sorts-total-item { text-align: center; }
 
 .sorts-total-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1975,7 +1975,7 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
 }
 
 .sorts-total-val {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 22px;
   font-weight: 700;
   color: var(--gold-light);
@@ -2002,7 +2002,7 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
 
 .sort-emp-niveau {
   flex: 0 0 96px;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 12px;
   color: var(--text-muted);
 }
@@ -2058,7 +2058,7 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -2106,7 +2106,7 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
 
 .sort-description-wrap summary {
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -2127,7 +2127,7 @@ body.mode-jeu .sort-card.no-desc .sort-description-wrap { display: none !importa
   border-radius: 4px;
   color: var(--text-dim);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2214,7 +2214,7 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
 }
 
 .capacite-usage-label {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -2234,7 +2234,7 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
   border-radius: 4px;
   color: var(--gold-light);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -2246,7 +2246,7 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
 
 .capacite-description-wrap summary {
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -2267,7 +2267,7 @@ body.mode-jeu .capacite-card.no-desc .capacite-description-wrap { display: none 
   border-radius: 4px;
   color: var(--text-dim);
   cursor: pointer;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;

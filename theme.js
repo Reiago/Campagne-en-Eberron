@@ -3,6 +3,7 @@ const THEME_KEY = 'eberron-theme';
 export const THEMES = [
   { value: 'eberron-gold', label: 'Eberron Gold (dark)' },
   { value: 'light', label: 'Lumière de Sharn (light)' },
+  { value: 'nature', label: 'Forêt d\'Eldeen (nature)' },
 ];
 
 export function getTheme() {

@@ -167,6 +167,45 @@ function activerBloc(id) {
   document.querySelector(`.fiche-tab[data-bloc="${id}"]`)?.classList.add('active');
 }
 
+// ── Swipe mobile entre catégories ──────────────────────────────────────────────
+(function initSwipeBlocs() {
+  const main = document.getElementById('fiche-main');
+  const tabs = Array.from(document.querySelectorAll('.fiche-tab'));
+  const SWIPE_BREAKPOINT = 700;
+  const SWIPE_MIN_DISTANCE = 50;
+  const SWIPE_MAX_OFF_AXIS = 80;
+
+  let startX = 0;
+  let startY = 0;
+  let tracking = false;
+
+  main.addEventListener('touchstart', (e) => {
+    if (window.innerWidth > SWIPE_BREAKPOINT || e.touches.length !== 1) {
+      tracking = false;
+      return;
+    }
+    tracking = true;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  main.addEventListener('touchend', (e) => {
+    if (!tracking) return;
+    tracking = false;
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    if (Math.abs(dx) < SWIPE_MIN_DISTANCE || Math.abs(dy) > SWIPE_MAX_OFF_AXIS) return;
+
+    const currentIndex = tabs.findIndex(t => t.classList.contains('active'));
+    if (currentIndex === -1) return;
+    const nextIndex = dx < 0 ? currentIndex + 1 : currentIndex - 1;
+    if (nextIndex < 0 || nextIndex >= tabs.length) return;
+
+    activerBloc(tabs[nextIndex].dataset.bloc);
+  }, { passive: true });
+})();
+
 // ── Sauvegarde automatique ─────────────────────────────────────────────────────
 function showSave(status) {
   const el = document.getElementById('save-indicator');
