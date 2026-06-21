@@ -946,6 +946,14 @@ body.mode-jeu .btn-pv-sd {
 .pv-temp-input:focus { outline: none; border-color: var(--gold-dim); }
 .pv-temp-input::-webkit-inner-spin-button { display: none; }
 
+/* Dés de vie restants + Type de dé de vie, côte à côte */
+.pv-de-vie-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.pv-de-vie-col { flex: 1; min-width: 160px; }
+
 /* Dés de vie */
 .des-de-vie-row {
   display: flex;

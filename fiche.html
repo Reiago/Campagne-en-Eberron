@@ -334,26 +334,31 @@
       <input class="pv-temp-input mode-jeu-ok" id="pv-temporaires" type="number" min="0" value="0" />
     </div>
 
-    <h3 class="bloc-subtitle">Type de dé de vie</h3>
-    <div class="fiche-field" style="max-width:180px;">
-      <label for="pv-type-de">Dé de vie</label>
-      <select id="pv-type-de">
-        <option value="d6">d6</option>
-        <option value="d8" selected>d8</option>
-        <option value="d10">d10</option>
-        <option value="d12">d12</option>
-      </select>
+    <div class="pv-de-vie-row">
+      <div class="pv-de-vie-col">
+        <h3 class="bloc-subtitle">Dés de vie restants <span id="ddv-count" class="ddv-count"></span></h3>
+        <div class="des-de-vie-row">
+          <div id="des-de-vie"></div>
+        </div>
+      </div>
+      <div class="pv-de-vie-col">
+        <h3 class="bloc-subtitle">Type de dé de vie</h3>
+        <div class="fiche-field" style="max-width:180px;">
+          <label for="pv-type-de">Dé de vie</label>
+          <select id="pv-type-de">
+            <option value="d6">d6</option>
+            <option value="d8" selected>d8</option>
+            <option value="d10">d10</option>
+            <option value="d12">d12</option>
+          </select>
+        </div>
+      </div>
     </div>
 
     <div class="edition-only" id="pv-niveaux-container">
       <h3 class="bloc-subtitle">Jets de PV par niveau</h3>
       <p class="pv-niveaux-info">Niveau 1 = max du dé (automatique). Niveaux suivants = votre jet réel (1–dé). Les cases vides utilisent la valeur moyenne.</p>
       <div class="pv-niveaux-grid" id="pv-niveaux-grid"></div>
-    </div>
-
-    <h3 class="bloc-subtitle">Dés de vie restants <span id="ddv-count" class="ddv-count"></span></h3>
-    <div class="des-de-vie-row">
-      <div id="des-de-vie"></div>
     </div>
 
     <div id="jds-mort-section">
