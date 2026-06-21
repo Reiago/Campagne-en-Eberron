@@ -1923,6 +1923,7 @@ function remplirCompetences() {
     const nomAff   = capitaliser(comp.nom);
     const modBase  = modificateur(carac[stat] ?? 10);
     const val      = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
+    const titre    = detailBonusCompetence(modBase, caracNom, comp.maitrise, comp.expertise, perso.niveau ?? 1);
 
     const tr = document.createElement('tr');
     tr.className = 'comp-row';
@@ -1930,7 +1931,7 @@ function remplirCompetences() {
       <td><input type="checkbox" class="case-maitrise comp-maitrise" data-id="${comp.id}" ${comp.maitrise ? 'checked' : ''}></td>
       <td><input type="checkbox" class="case-maitrise comp-expertise" data-id="${comp.id}" ${comp.expertise ? 'checked' : ''}></td>
       <td>${nomAff} <span class="comp-carac-label">(${caracNom})</span></td>
-      <td class="comp-val-cell champ-calcule" id="comp-val-${comp.id}">${fmt(val)}</td>
+      <td class="comp-val-cell champ-calcule" id="comp-val-${comp.id}" title="${titre}">${fmt(val)}</td>
     `;
     tbody.appendChild(tr);
 
@@ -1961,13 +1962,31 @@ function remplirCompetences() {
 function recalculerCompetences() {
   if (!competences?.length || !carac) return;
   competences.forEach(comp => {
-    const stat    = COMP_CARAC[normaliserNom(comp.nom)];
-    const modBase = modificateur(carac[stat] ?? 10);
-    const val     = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
-    const el      = document.getElementById('comp-val-' + comp.id);
-    if (el) el.textContent = fmt(val);
+    const stat     = COMP_CARAC[normaliserNom(comp.nom)];
+    const caracNom = STAT_LABELS[stat] ?? '?';
+    const modBase  = modificateur(carac[stat] ?? 10);
+    const val      = bonusCompetence(modBase, comp.maitrise, comp.expertise, perso.niveau ?? 1);
+    const el       = document.getElementById('comp-val-' + comp.id);
+    if (el) {
+      el.textContent = fmt(val);
+      el.title = detailBonusCompetence(modBase, caracNom, comp.maitrise, comp.expertise, perso.niveau ?? 1);
+    }
   });
   recalculerPerceptionPassive();
+}
+
+// Détail du calcul du bonus d'une compétence, affiché en info-bulle
+function detailBonusCompetence(modBase, caracNom, maitrise, expertise, niveau) {
+  const de = /^[AEIOUÉÈ]/i.test(caracNom) ? "d'" : 'de ';
+  const lignes = [`Modificateur ${de}${caracNom} : ${fmt(modBase)}`];
+  if (expertise) {
+    const bm = bonusMaitrise(niveau);
+    lignes.push(`Expertise : ${fmt(bm * 2)} (bonus de maîtrise x2)`);
+  } else if (maitrise) {
+    lignes.push(`Maîtrise : ${fmt(bonusMaitrise(niveau))}`);
+  }
+  lignes.push(`Total : ${fmt(bonusCompetence(modBase, maitrise, expertise, niveau))}`);
+  return lignes.join('\n');
 }
 
 function recalculerPerceptionPassive() {
