@@ -1510,23 +1510,7 @@ function remplirPV() {
     pvTempEl.addEventListener('input', () => schedulePersoSave({ pv_temporaires: Number(pvTempEl.value) || 0 }));
   }
 
-  document.getElementById('pv-plus')?.addEventListener('click', () => {
-    pvActuelEl.value = Number(pvActuelEl.value) + 1;
-    schedulePersoSave({ pv_actuel: Number(pvActuelEl.value) });
-    recalculerPVBar();
-  });
-  document.getElementById('pv-minus')?.addEventListener('click', () => {
-    const oldPV = perso.pv_actuel ?? 0;
-    pvActuelEl.value = Math.max(0, Number(pvActuelEl.value) - 1);
-    const newPV = Number(pvActuelEl.value);
-    const patch = { pv_actuel: newPV };
-    if (newPV <= 0 && oldPV > 0) { patch.jds_succes = 0; patch.jds_echecs = 0; }
-    schedulePersoSave(patch);
-    if (newPV <= 0 && oldPV > 0) remplirJDSMort();
-    recalculerPVBar();
-  });
-
-  // Soins externes (sort, potion…)
+  // Soins reçus (remplace l'ancien bouton "+1")
   const pvSoinInput = document.getElementById('pv-soin-input');
   const appliqueSoin = () => {
     const soin = Math.max(0, Number(pvSoinInput?.value) || 0);
@@ -1535,13 +1519,12 @@ function remplirPV() {
     const nouveauxPV = Math.min(pvMaxVal, (Number(pvActuelEl?.value) || 0) + soin);
     pvActuelEl.value = nouveauxPV;
     schedulePersoSave({ pv_actuel: nouveauxPV });
-    pvSoinInput.value = '';
     recalculerPVBar();
   };
   document.getElementById('btn-pv-soin')?.addEventListener('click', appliqueSoin);
   pvSoinInput?.addEventListener('keydown', e => { if (e.key === 'Enter') appliqueSoin(); });
 
-  // Dégâts reçus
+  // Dégâts / blessures reçus (remplace l'ancien bouton "-1")
   const pvDegatInput = document.getElementById('pv-degat-input');
   const appliqueDegat = () => {
     const degats = Math.max(0, Number(pvDegatInput?.value) || 0);
@@ -1552,7 +1535,6 @@ function remplirPV() {
     const patch = { pv_actuel: nouveauxPV };
     if (nouveauxPV <= 0 && oldPV > 0) { patch.jds_succes = 0; patch.jds_echecs = 0; }
     schedulePersoSave(patch);
-    pvDegatInput.value = '';
     if (nouveauxPV <= 0 && oldPV > 0) remplirJDSMort();
     recalculerPVBar();
   };
@@ -1723,14 +1705,40 @@ function remplirPVNiveaux() {
   }
 }
 
+// Nombre de blocs affichés dans la barre de PV : un bloc par point de vie max
+function nbBlocsPV(pvMaxVal) {
+  return Math.max(1, Math.round(pvMaxVal || 1));
+}
+
 function recalculerPVBar() {
   const pvActuel = Number(document.getElementById('pv-actuel')?.value) || 0;
   const pvMaxVal = Number(document.getElementById('pv-max')?.textContent) || 1;
-  const pct = Math.max(0, Math.min(100, (pvActuel / pvMaxVal) * 100));
-  const bar = document.getElementById('pv-bar-fill');
-  if (!bar) return;
-  bar.style.width = pct + '%';
-  bar.dataset.state = pct > 50 ? 'bon' : pct > 25 ? 'moyen' : 'critique';
+  const pct   = Math.max(0, Math.min(100, (pvActuel / pvMaxVal) * 100));
+  const etat  = pct > 50 ? 'bon' : pct > 25 ? 'moyen' : 'critique';
+  const blocs = document.getElementById('pv-bar-blocks');
+  if (!blocs) return;
+  blocs.dataset.state = etat;
+
+  const total   = nbBlocsPV(pvMaxVal);
+  const parBloc = pvMaxVal / total;
+
+  if (blocs.childElementCount !== total) {
+    blocs.innerHTML = '';
+    for (let i = 0; i < total; i++) {
+      const bloc = document.createElement('div');
+      bloc.className = 'pv-bar-bloc';
+      const fill = document.createElement('div');
+      fill.className = 'pv-bar-bloc-fill';
+      bloc.appendChild(fill);
+      blocs.appendChild(bloc);
+    }
+  }
+
+  [...blocs.children].forEach((bloc, i) => {
+    const rempli = Math.max(0, Math.min(1, (pvActuel - i * parBloc) / parBloc));
+    bloc.firstElementChild.style.width = (rempli * 100) + '%';
+  });
+
   document.getElementById('jds-mort-section')?.classList.toggle('visible', pvActuel <= 0);
 }
 

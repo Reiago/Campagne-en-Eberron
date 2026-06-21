@@ -313,27 +313,20 @@
           <span class="champ-calcule pv-max-val" id="pv-max">0</span>
         </div>
       </div>
-      <div class="pv-btn-group">
-        <button class="btn-pv mode-jeu-ok" id="pv-plus" title="Soigner">+</button>
-        <button class="btn-pv mode-jeu-ok" id="pv-minus" title="Blesser">−</button>
+      <div class="pv-soin-degat-row jeu-only">
+        <div class="pv-sd-row">
+          <input type="number" id="pv-soin-input" class="pv-sd-input" min="1" value="1" />
+          <button class="btn-pv-sd btn-soin" id="btn-pv-soin">Soin</button>
+        </div>
+        <div class="pv-sd-row">
+          <input type="number" id="pv-degat-input" class="pv-sd-input" min="1" value="1" />
+          <button class="btn-pv-sd btn-degat" id="btn-pv-degat">Blessure</button>
+        </div>
       </div>
     </div>
 
     <div class="pv-bar-wrap">
-      <div class="pv-bar-fill" id="pv-bar-fill" style="width:100%;" data-state="bon"></div>
-    </div>
-
-    <div class="pv-soin-degat-grid jeu-only">
-      <div class="pv-sd-row">
-        <span class="pv-sd-label">Soins reçus</span>
-        <input type="number" id="pv-soin-input" class="pv-sd-input" min="0" placeholder="0" />
-        <button class="btn-pv-sd btn-soin" id="btn-pv-soin">Soigner</button>
-      </div>
-      <div class="pv-sd-row">
-        <span class="pv-sd-label">Dégâts reçus</span>
-        <input type="number" id="pv-degat-input" class="pv-sd-input" min="0" placeholder="0" />
-        <button class="btn-pv-sd btn-degat" id="btn-pv-degat">Blesser</button>
-      </div>
+      <div class="pv-bar-blocks" id="pv-bar-blocks" data-state="bon"></div>
     </div>
 
     <div class="pv-temp-row">
