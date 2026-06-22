@@ -510,19 +510,28 @@
 }
 .carac-box-roll {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   width: 100%;
   border-radius: 3px;
   transition: background 0.15s;
 }
 .carac-box-mod {
   font-family: var(--font-heading);
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--gold-light);
   min-height: 1.4em;
+  display: flex;
+  align-items: center;
+}
+.carac-box-sep {
+  color: var(--border);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
 }
 .carac-box-val {
   background: var(--stone-light);
@@ -532,7 +541,7 @@
   font-size: 17px;
   padding: 0.3rem;
   text-align: center;
-  width: 52px;
+  width: 44px;
 }
 .carac-box-val:focus { outline: none; border-color: var(--gold-dim); }
 .carac-box-val::-webkit-inner-spin-button { display: none; }
@@ -1254,7 +1263,7 @@ body.mode-jeu textarea {
 body.mode-jeu .carac-box-val {
   color: var(--gold-light) !important;
   font-weight: 600;
-  width: auto;
+  width: 2.4em;
   padding: 0 4px;
 }
 
