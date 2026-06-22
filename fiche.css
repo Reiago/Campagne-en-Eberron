@@ -455,17 +455,18 @@
 
 /* ── Bloc 2 : Caractéristiques ──────────────────────────────────────────────── */
 .carac-meta {
-  display: flex;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
+@media (max-width: 480px) { .carac-meta { grid-template-columns: repeat(2, 1fr); } }
 .carac-meta-item {
   background: var(--stone-mid);
   border: 1px solid var(--border-strong);
   border-radius: 4px;
   padding: 0.75rem 1.25rem;
   text-align: center;
-  min-width: 120px;
 }
 .carac-meta-label {
   font-family: var(--font-heading);
@@ -532,6 +533,7 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 1;
+  margin-right: 4px;
 }
 .carac-box-val {
   background: var(--stone-light);
