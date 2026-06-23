@@ -1836,21 +1836,27 @@ body.mode-jeu .arme-maitrise-cb:checked {
 .monnaie-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0.5rem;
-}
-@media (max-width: 400px) {
-  .monnaie-grid { grid-template-columns: repeat(3, 1fr); }
+  gap: 0.4rem;
 }
 
 .monnaie-card {
   background: var(--stone-mid);
   border: 1px solid var(--border-strong);
   border-radius: 6px;
-  padding: 0.6rem 0.4rem;
+  padding: 0.5rem 0.15rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  min-width: 0;
+}
+
+.monnaie-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
 }
 
 .monnaie-label {
@@ -1858,11 +1864,23 @@ body.mode-jeu .arme-maitrise-cb:checked {
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
+  flex-shrink: 0;
 }
 .monnaie-hint {
   font-size: 11px;
   color: var(--text-dim);
   font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+@media (max-width: 480px) {
+  .monnaie-grid { gap: 0.25rem; }
+  .monnaie-card { padding: 0.4rem 0.1rem; }
+  .monnaie-row { gap: 3px; }
+  .monnaie-label { font-size: 11px; }
+  .monnaie-hint { font-size: 9px; }
 }
 
 .monnaie-pp .monnaie-label { color: #B8C4D4; }
@@ -1884,12 +1902,21 @@ body.mode-jeu .arme-maitrise-cb:checked {
   font-family: var(--font-heading);
   font-size: 16px;
   font-weight: 700;
-  padding: 0.2rem 0.3rem;
+  padding: 0.2rem 0.1rem;
   text-align: center;
-  width: 100%;
+  width: 3.2em;
+  flex-shrink: 0;
+  -moz-appearance: textfield;
 }
 .monnaie-input:focus { outline: none; border-color: var(--gold-dim); }
-.monnaie-input::-webkit-inner-spin-button { display: none; }
+.monnaie-input::-webkit-inner-spin-button,
+.monnaie-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+@media (max-width: 480px) {
+  .monnaie-input { width: 2.6em; font-size: 14px; padding: 0.2rem 0.05rem; }
+}
 
 /* ── Inventaire ── */
 .equipement-inventaire-section { margin-bottom: 0.5rem; }
