@@ -165,7 +165,27 @@ function activerBloc(id) {
   document.querySelectorAll('.fiche-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('bloc-' + id)?.classList.add('active');
   document.querySelector(`.fiche-tab[data-bloc="${id}"]`)?.classList.add('active');
+  placerNavToggle();
 }
+
+// ── Burger devant le titre de l'onglet actif en mobile ──────────────────────────
+const NAV_TOGGLE_BREAKPOINT = 700;
+function placerNavToggle() {
+  const navToggle = document.getElementById('nav-toggle');
+  const navRow = document.getElementById('nav-row');
+  if (!navToggle || !navRow) return;
+  const enMobile = window.innerWidth <= NAV_TOGGLE_BREAKPOINT;
+  if (enMobile) {
+    const titreActif = document.querySelector('.fiche-bloc.active .bloc-title');
+    if (titreActif && navToggle.parentElement !== titreActif) {
+      titreActif.prepend(navToggle);
+    }
+  } else if (navToggle.parentElement !== navRow) {
+    navRow.prepend(navToggle);
+  }
+}
+placerNavToggle();
+window.addEventListener('resize', placerNavToggle);
 
 // ── Swipe mobile entre catégories ──────────────────────────────────────────────
 (function initSwipeBlocs() {

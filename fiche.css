@@ -193,6 +193,9 @@
 .fiche-bloc.active { display: block; }
 
 .bloc-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   font-family: var(--font-heading);
   font-size: 13px;
   font-weight: 600;
@@ -202,6 +205,10 @@
   border-bottom: 1px solid var(--border-strong);
   padding-bottom: 0.6rem;
   margin-bottom: 1.5rem;
+}
+.bloc-title .fiche-nav-toggle {
+  padding: 0;
+  flex-shrink: 0;
 }
 
 .bloc-subtitle {
