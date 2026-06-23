@@ -72,6 +72,7 @@ let reposDiceCount   = 1;   // nombre de dés à dépenser dans le panneau
 let reposRolls       = [];  // résultats des lancers auto [{roll, gain}, ...]
 let reposPanelOpen   = false;
 const DEBOUNCE_MS = 500;
+const ARME_MOBILE_BREAKPOINT = 480;
 let persoTimer = null, caracTimer = null, monnaieTimer = null;
 
 // ── Mode Jeu / Mode Édition ────────────────────────────────────────────────────
@@ -578,37 +579,37 @@ function renderArmeCard(arme) {
       <button class="btn-structurel arme-del-btn" title="Supprimer cette arme">✕</button>
     </div>
     <div class="arme-details-grid">
-      <div class="fiche-field">
+      <div class="fiche-field arme-de-field">
         <label>Dé de dégâts</label>
         <input type="text" class="arme-de-input" placeholder="1d6" />
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field arme-type-field">
         <label>Type de dégâts</label>
         <select class="arme-type-select">
           <option value="">— Choisir —</option>
           ${TYPES_DEGATS.map(t => `<option value="${t}">${t}</option>`).join('')}
         </select>
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field arme-magie-field">
         <label>Bonus magie</label>
         <input type="number" class="arme-magie-input" min="0" placeholder="0" />
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field arme-bspecial-field">
         <label>Att. spécial</label>
         <input type="number" class="arme-bspecial-input" placeholder="0" />
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field arme-bdegats-field">
         <label>Dég. spécial</label>
         <input type="number" class="arme-bdegats-input" placeholder="0" />
       </div>
     </div>
     <div class="arme-totaux">
-      <div class="arme-total-item">
+      <div class="arme-total-item arme-total-attaque">
         <div class="arme-total-label">Attaque</div>
         <div class="arme-total-val champ-calcule val-clickable" id="arme-toucher-${arme.id}">—</div>
         <div class="arme-total-note">pour toucher</div>
       </div>
-      <div class="arme-total-item">
+      <div class="arme-total-item arme-total-degats">
         <div class="arme-total-label">Dégâts</div>
         <div class="arme-total-val champ-calcule val-clickable" id="arme-degats-${arme.id}">—</div>
         <div class="arme-total-note arme-type-note"></div>
@@ -725,8 +726,38 @@ function renderArmeCard(arme) {
   });
 
   recalculerArmeCard(card, arme);
+  ajusterArmeCardLayout(card);
   return card;
 }
+
+// ── Réagencement de la carte d'arme en téléphone ────────────────────────────────
+function ajusterArmeCardLayout(card) {
+  const header      = card.querySelector('.arme-header');
+  const detailsGrid = card.querySelector('.arme-details-grid');
+  const caracField  = card.querySelector('.arme-carac-field');
+  const magieField  = card.querySelector('.arme-magie-field');
+  const maitriseWrap = card.querySelector('.arme-maitrise-wrap');
+  const bspecialField = card.querySelector('.arme-bspecial-field');
+  const bdegatsField  = card.querySelector('.arme-bdegats-field');
+  const totalAttaque  = card.querySelector('.arme-total-attaque');
+  const totalDegats   = card.querySelector('.arme-total-degats');
+  if (!header || !detailsGrid || !caracField || !magieField || !bspecialField || !bdegatsField) return;
+
+  const enMobile = window.innerWidth <= ARME_MOBILE_BREAKPOINT;
+  if (enMobile) {
+    if (caracField.parentElement !== detailsGrid) detailsGrid.insertBefore(caracField, magieField);
+    if (bspecialField.parentElement !== totalAttaque) totalAttaque?.prepend(bspecialField);
+    if (bdegatsField.parentElement !== totalDegats) totalDegats?.prepend(bdegatsField);
+  } else {
+    if (caracField.parentElement !== header) header.insertBefore(caracField, maitriseWrap);
+    if (bdegatsField.parentElement !== detailsGrid) detailsGrid.appendChild(bdegatsField);
+    if (bspecialField.parentElement !== detailsGrid) detailsGrid.insertBefore(bspecialField, bdegatsField);
+  }
+}
+function ajusterToutesLesArmes() {
+  document.querySelectorAll('.arme-card').forEach(ajusterArmeCardLayout);
+}
+window.addEventListener('resize', ajusterToutesLesArmes);
 
 function recalculerArmeCard(card, arme) {
   if (!carac) return;
