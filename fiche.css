@@ -746,12 +746,11 @@ input[type="checkbox"].case-maitrise:checked::after {
   line-height: 1;
 }
 
-/* Bouclier : case compacte accolée à droite de la CA totale */
+/* Bouclier : case compacte accolée en bas à droite de la CA totale */
 .armure-bouclier-row {
   position: absolute;
-  top: 50%;
+  bottom: 0.75rem;
   right: 1rem;
-  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
