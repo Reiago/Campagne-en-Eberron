@@ -827,11 +827,13 @@ input.armure-bouclier-cb:checked ~ .armure-bouclier-bonus {
   border-radius: 4px;
   color: var(--gold-light);
   font-family: var(--font-heading);
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
-  padding: 0.4rem 0.5rem;
+  height: 46px;
+  padding: 0 0.5rem;
   text-align: center;
   width: 90px;
+  box-sizing: border-box;
 }
 .pv-actuel-input:focus { outline: none; border-color: var(--gold); }
 .pv-actuel-input::-webkit-inner-spin-button { display: none; }
@@ -902,9 +904,11 @@ body.mode-jeu .pv-soin-degat-row.jeu-only { display: flex !important; }
   font-family: var(--font-heading);
   font-size: 18px;
   font-weight: 600;
-  padding: 0.25rem 0.4rem;
+  height: 46px;
+  padding: 0 0.4rem;
   text-align: center;
   width: 68px;
+  box-sizing: border-box;
 }
 .pv-sd-input:focus { outline: none; border-color: var(--gold-dim); }
 .pv-sd-input::-webkit-inner-spin-button { display: none; }
@@ -916,13 +920,14 @@ body.mode-jeu .pv-soin-degat-row.jeu-only { display: flex !important; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 46px;
+  height: 46px;
   flex-shrink: 0;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   line-height: 1;
   padding: 0;
+  box-sizing: border-box;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 .btn-soin { color: var(--green-accent); border-color: color-mix(in srgb, var(--green-accent) 45%, transparent); }
