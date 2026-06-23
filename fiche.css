@@ -857,22 +857,19 @@ input.armure-bouclier-cb:checked ~ .armure-bouclier-bonus {
 .pv-max-input::-webkit-inner-spin-button { display: none; }
 
 .pv-bar-wrap {
-  height: 18px;
+  min-height: 18px;
   background: var(--stone-light);
   border-radius: 5px;
-  overflow: hidden;
   margin-bottom: 1rem;
   border: 1px solid var(--border-strong);
   padding: 2px;
 }
 .pv-bar-blocks {
-  display: flex;
-  align-items: stretch;
+  display: grid;
+  grid-auto-rows: 14px;
   gap: 2px;
-  height: 100%;
 }
 .pv-bar-bloc {
-  flex: 1;
   background: var(--stone-mid);
   border-radius: 2px;
   overflow: hidden;
