@@ -986,6 +986,18 @@ body.mode-jeu .btn-pv-sd {
   flex-wrap: wrap;
   padding: 0.5rem 0;
 }
+.pv-type-de-select {
+  margin-left: auto;
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 0.4rem 0.6rem;
+  max-width: 120px;
+}
+.pv-type-de-select:focus { outline: none; border-color: var(--gold-dim); }
 .ddv-label { font-family: var(--font-heading); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); flex-shrink: 0; }
 .ddv-count {
   font-family: var(--font-heading);
