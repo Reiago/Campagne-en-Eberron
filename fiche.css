@@ -1945,17 +1945,14 @@ body.mode-jeu .arme-maitrise-cb:checked {
   background: rgba(201, 168, 108, 0.04);
 }
 
-.equipement-header {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.6rem;
-  margin-bottom: 0.6rem;
-}
+.equipement-card { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.6rem; }
+.equipement-row { display: contents; }
 
-.equipement-nom-field { flex: 1 1 0; min-width: 0; }
-.equipement-qty-field { flex: 0 0 60px; }
-.equipement-poids-field { flex: 0 0 84px; }
-.equipement-type-field { flex: 0 0 130px; }
+.equipement-nom-field { flex: 1 1 0; min-width: 0; order: 1; }
+.equipement-qty-field { flex: 0 0 60px; order: 2; }
+.equipement-poids-field { flex: 0 0 84px; order: 3; }
+.equipement-type-field { flex: 0 0 130px; order: 4; }
+.equipement-chevron { display: none; }
 
 .equipement-del-btn {
   background: transparent;
@@ -1968,11 +1965,12 @@ body.mode-jeu .arme-maitrise-cb:checked {
   flex-shrink: 0;
   align-self: flex-start;
   margin-top: 4px;
+  order: 5;
   transition: color 0.15s, border-color 0.15s;
 }
 .equipement-del-btn:hover { color: #D87060; border-color: rgba(200,80,60,0.3); }
 
-.equipement-desc-field { margin-top: 0.25rem; }
+.equipement-desc-field { flex: 1 1 100%; order: 6; margin-top: 0.25rem; }
 .equipement-desc-input { resize: vertical; min-height: 48px; }
 
 /* Hide description textarea in mode jeu when empty */
@@ -2001,8 +1999,24 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
 }
 
 @media (max-width: 480px) {
-  .equipement-header { flex-wrap: wrap; }
+  .equipement-card { display: block; cursor: pointer; }
+  .equipement-row { display: flex; align-items: flex-end; gap: 0.6rem; }
+  .equipement-row-main { cursor: pointer; }
+  .equipement-row-detail { margin-top: 0.6rem; flex-wrap: wrap; }
   .equipement-poids-field, .equipement-type-field { flex: 1 1 auto; }
+  .equipement-chevron {
+    display: inline-block;
+    align-self: center;
+    color: var(--text-dim);
+    font-size: 12px;
+    transition: transform 0.15s;
+    flex-shrink: 0;
+  }
+  .equipement-row-detail,
+  .equipement-desc-field { display: none; }
+  .equipement-card.expanded .equipement-row-detail { display: flex; }
+  .equipement-card.expanded .equipement-desc-field { display: block; }
+  .equipement-card.expanded .equipement-chevron { transform: rotate(180deg); }
 }
 
 /* ── Bloc 9 : Sorts ──────────────────────────────────────────────────────────── */

@@ -73,6 +73,7 @@ let reposRolls       = [];  // résultats des lancers auto [{roll, gain}, ...]
 let reposPanelOpen   = false;
 const DEBOUNCE_MS = 500;
 const ARME_MOBILE_BREAKPOINT = 480;
+const EQUIPEMENT_MOBILE_BREAKPOINT = 480;
 let persoTimer = null, caracTimer = null, monnaieTimer = null;
 
 // ── Mode Jeu / Mode Édition ────────────────────────────────────────────────────
@@ -824,7 +825,7 @@ function renderEquipementCard(item) {
   card.classList.toggle('no-desc', !item.description);
 
   card.innerHTML = `
-    <div class="equipement-header">
+    <div class="equipement-row equipement-row-main">
       <div class="fiche-field equipement-nom-field">
         <label>Objet</label>
         <input type="text" class="equipement-nom-input" placeholder="Nom de l'objet" />
@@ -833,6 +834,10 @@ function renderEquipementCard(item) {
         <label>Qté</label>
         <input type="number" class="equipement-qty-input" min="1" />
       </div>
+      <span class="equipement-chevron" aria-hidden="true">▾</span>
+      <button class="btn-structurel equipement-del-btn" title="Supprimer">✕</button>
+    </div>
+    <div class="equipement-row equipement-row-detail">
       <div class="fiche-field equipement-poids-field">
         <label>Poids (kg)</label>
         <input type="number" class="equipement-poids-input" min="0" step="0.1" />
@@ -845,7 +850,6 @@ function renderEquipementCard(item) {
           <option value="magique">✦ Magique</option>
         </select>
       </div>
-      <button class="btn-structurel equipement-del-btn" title="Supprimer">✕</button>
     </div>
     <div class="fiche-field equipement-desc-field">
       <label>Description</label>
@@ -909,6 +913,13 @@ function renderEquipementCard(item) {
         container.appendChild(empty);
       }
     } catch (err) { showSave('error'); console.error(err); }
+  });
+
+  // Replié/déplié en téléphone : un clic sur la ligne principale bascule l'affichage
+  card.querySelector('.equipement-row-main').addEventListener('click', e => {
+    if (window.innerWidth > EQUIPEMENT_MOBILE_BREAKPOINT) return;
+    if (e.target.closest('input, select, textarea, button')) return;
+    card.classList.toggle('expanded');
   });
 
   return card;
