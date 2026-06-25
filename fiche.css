@@ -2004,18 +2004,30 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
 
 @media (max-width: 480px) {
   .equipement-card { display: block; cursor: pointer; padding: 0.9rem 0.6rem; }
-  .equipement-row { display: flex; align-items: flex-end; gap: 0.6rem; }
+  .equipement-row { display: flex; align-items: flex-end; gap: 0.35rem; }
   .equipement-row-main { cursor: pointer; }
+  .equipement-nom-input {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .equipement-row-main .equipement-nom-field label,
   .equipement-row-main .equipement-qty-field label { display: none; }
   .equipement-row-detail { margin-top: 0.6rem; flex-wrap: wrap; }
   .equipement-row-detail .equipement-poids-field label,
   .equipement-row-detail .equipement-type-field label { display: none; }
   .equipement-type-field { flex: 1 1 0; min-width: 0; order: 1; }
-  .equipement-poids-field { flex: 0 0 70px; order: 2; }
-  .equipement-qty-row { gap: 2px; }
-  .equipement-qty-unit { display: inline; color: var(--text-dim); font-size: 14px; }
-  .equipement-poids-unit { display: inline; color: var(--text-dim); font-size: 14px; }
+  .equipement-poids-field { flex: 0 0 auto; order: 2; }
+  .equipement-qty-field { flex: 0 0 auto; }
+  .equipement-qty-row, .equipement-poids-row { gap: 2px; }
+  input.equipement-qty-input, input.equipement-poids-input {
+    width: 3ch;
+    flex: 0 0 auto;
+    text-align: right;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .equipement-qty-unit, .equipement-poids-unit { display: inline; color: var(--text-dim); font-size: 14px; }
   .equipement-chevron {
     display: inline-block;
     align-self: center;
