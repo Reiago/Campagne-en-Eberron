@@ -2003,7 +2003,8 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
 }
 
 @media (max-width: 480px) {
-  .equipement-card { display: block; cursor: pointer; padding: 0.9rem 0.6rem; }
+  .equipement-card { display: block; cursor: pointer; padding: 0.5rem 0.6rem; }
+  .equipement-card { margin-bottom: 0.5rem; }
   .equipement-row { display: flex; align-items: flex-end; gap: 0.35rem; }
   .equipement-row-main { cursor: pointer; }
   .equipement-nom-input {
