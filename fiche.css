@@ -1871,12 +1871,12 @@ body.mode-jeu .arme-maitrise-cb:checked {
   width: 100%;
 }
 
-.monnaie-label {
-  font-family: var(--font-heading);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  flex-shrink: 0;
+.monnaie-line {
+  display: block;
+  width: 60%;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--text-dim);
 }
 .monnaie-hint {
   font-size: 11px;
@@ -1891,20 +1891,19 @@ body.mode-jeu .arme-maitrise-cb:checked {
   .monnaie-grid { gap: 0.25rem; }
   .monnaie-card { padding: 0.4rem 0.1rem; }
   .monnaie-row { gap: 3px; }
-  .monnaie-label { font-size: 11px; }
   .monnaie-hint { font-size: 9px; }
 }
 
-.monnaie-pp .monnaie-label { color: #B8C4D4; }
-.monnaie-po .monnaie-label { color: var(--gold-light); }
-.monnaie-pe .monnaie-label { color: #9BBFB8; }
-.monnaie-pa .monnaie-label { color: #C8C8C8; }
-.monnaie-pc .monnaie-label { color: #C8935A; }
+.monnaie-pp .monnaie-line { background: #B8C4D4; }
+.monnaie-po .monnaie-line { background: var(--gold-light); }
+.monnaie-pe .monnaie-line { background: #9BBFB8; }
+.monnaie-pa .monnaie-line { background: #C8C8C8; }
+.monnaie-pc .monnaie-line { background: #C8935A; }
 
-:root[data-theme="light"] .monnaie-pp .monnaie-label { color: #5C6B7A; }
-:root[data-theme="light"] .monnaie-pe .monnaie-label { color: #3F7268; }
-:root[data-theme="light"] .monnaie-pa .monnaie-label { color: #6B6B6B; }
-:root[data-theme="light"] .monnaie-pc .monnaie-label { color: #8C5E2E; }
+:root[data-theme="light"] .monnaie-pp .monnaie-line { background: #5C6B7A; }
+:root[data-theme="light"] .monnaie-pe .monnaie-line { background: #3F7268; }
+:root[data-theme="light"] .monnaie-pa .monnaie-line { background: #6B6B6B; }
+:root[data-theme="light"] .monnaie-pc .monnaie-line { background: #8C5E2E; }
 
 .monnaie-input {
   background: transparent;
