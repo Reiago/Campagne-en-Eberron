@@ -1953,6 +1953,8 @@ body.mode-jeu .arme-maitrise-cb:checked {
 .equipement-poids-field { flex: 0 0 84px; order: 3; }
 .equipement-type-field { flex: 0 0 130px; order: 4; }
 .equipement-chevron { display: none; }
+.equipement-qty-row { display: flex; align-items: center; gap: 4px; }
+.equipement-qty-unit { display: none; }
 
 .equipement-del-btn {
   background: transparent;
@@ -1999,11 +2001,14 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
 }
 
 @media (max-width: 480px) {
-  .equipement-card { display: block; cursor: pointer; }
+  .equipement-card { display: block; cursor: pointer; padding: 0.9rem 0.6rem; }
   .equipement-row { display: flex; align-items: flex-end; gap: 0.6rem; }
   .equipement-row-main { cursor: pointer; }
+  .equipement-row-main .equipement-nom-field label,
+  .equipement-row-main .equipement-qty-field label { display: none; }
   .equipement-row-detail { margin-top: 0.6rem; flex-wrap: wrap; }
   .equipement-poids-field, .equipement-type-field { flex: 1 1 auto; }
+  .equipement-qty-unit { display: inline; color: var(--text-dim); font-size: 14px; }
   .equipement-chevron {
     display: inline-block;
     align-self: center;

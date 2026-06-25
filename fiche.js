@@ -832,7 +832,10 @@ function renderEquipementCard(item) {
       </div>
       <div class="fiche-field equipement-qty-field">
         <label>Qté</label>
-        <input type="number" class="equipement-qty-input" min="1" />
+        <div class="equipement-qty-row">
+          <input type="number" class="equipement-qty-input" min="1" />
+          <span class="equipement-qty-unit" aria-hidden="true">u.</span>
+        </div>
       </div>
       <span class="equipement-chevron" aria-hidden="true">▾</span>
       <button class="btn-structurel equipement-del-btn" title="Supprimer">✕</button>
