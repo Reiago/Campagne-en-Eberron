@@ -843,7 +843,10 @@ function renderEquipementCard(item) {
     <div class="equipement-row equipement-row-detail">
       <div class="fiche-field equipement-poids-field">
         <label>Poids (kg)</label>
-        <input type="number" class="equipement-poids-input" min="0" step="0.1" />
+        <div class="equipement-poids-row">
+          <input type="number" class="equipement-poids-input" min="0" step="0.1" placeholder="—" />
+          <span class="equipement-poids-unit" aria-hidden="true">kg</span>
+        </div>
       </div>
       <div class="fiche-field equipement-type-field">
         <label>Type</label>
