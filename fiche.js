@@ -1011,15 +1011,17 @@ function renderEmplacementRow(emp) {
   const row = document.createElement('div');
   row.className = 'sort-emp-row';
   row.dataset.niveau = emp.niveau_sort;
+  const nomNiveau = NIVEAUX_SORTS_LABELS[emp.niveau_sort];
+  const abrev = emp.niveau_sort === 0 ? 'SM' : 'N' + emp.niveau_sort;
 
   row.innerHTML = `
-    <div class="sort-emp-niveau">${NIVEAUX_SORTS_LABELS[emp.niveau_sort]}</div>
-    <div class="fiche-field sort-emp-max-field">
-      <label>Emplacements</label>
-      <input type="number" class="sort-emp-max-input" min="0" />
+    <div class="sort-emp-niveau" title="${nomNiveau}">${abrev}</div>
+    <div class="sort-emp-numbers" title="${nomNiveau} — emplacements disponibles / sorts préparés">
+      <input type="number" class="sort-emp-max-input" min="0" aria-label="Emplacements (${nomNiveau})" />
+      <span class="sort-emp-sep">|</span>
+      <span class="sort-emp-prepares champ-calcule" id="sort-emp-prepares-${emp.niveau_sort}">0</span>
     </div>
     <div class="sort-emp-cases" id="sort-emp-cases-${emp.niveau_sort}"></div>
-    <div class="sort-emp-prepares champ-calcule" id="sort-emp-prepares-${emp.niveau_sort}">0 préparé(s)</div>
   `;
 
   const maxInput = row.querySelector('.sort-emp-max-input');
@@ -1072,7 +1074,7 @@ function recalculerSortsPrepares() {
   for (let niveau = 0; niveau <= 9; niveau++) {
     const count = sorts.filter(s => s.niveau_sort === niveau && s.prepare).length;
     const el = document.getElementById('sort-emp-prepares-' + niveau);
-    if (el) el.textContent = count + ' préparé(s)';
+    if (el) el.textContent = count;
   }
 }
 
