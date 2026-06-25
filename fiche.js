@@ -72,6 +72,8 @@ let reposDiceCount   = 1;   // nombre de dés à dépenser dans le panneau
 let reposRolls       = [];  // résultats des lancers auto [{roll, gain}, ...]
 let reposPanelOpen   = false;
 const DEBOUNCE_MS = 500;
+const ARME_MOBILE_BREAKPOINT = 480;
+const EQUIPEMENT_MOBILE_BREAKPOINT = 480;
 let persoTimer = null, caracTimer = null, monnaieTimer = null;
 
 // ── Mode Jeu / Mode Édition ────────────────────────────────────────────────────
@@ -165,7 +167,27 @@ function activerBloc(id) {
   document.querySelectorAll('.fiche-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('bloc-' + id)?.classList.add('active');
   document.querySelector(`.fiche-tab[data-bloc="${id}"]`)?.classList.add('active');
+  placerNavToggle();
 }
+
+// ── Burger devant le titre de l'onglet actif en mobile ──────────────────────────
+const NAV_TOGGLE_BREAKPOINT = 700;
+function placerNavToggle() {
+  const navToggle = document.getElementById('nav-toggle');
+  const navRow = document.getElementById('nav-row');
+  if (!navToggle || !navRow) return;
+  const enMobile = window.innerWidth <= NAV_TOGGLE_BREAKPOINT;
+  if (enMobile) {
+    const titreActif = document.querySelector('.fiche-bloc.active .bloc-title');
+    if (titreActif && navToggle.parentElement !== titreActif) {
+      titreActif.prepend(navToggle);
+    }
+  } else if (navToggle.parentElement !== navRow) {
+    navRow.prepend(navToggle);
+  }
+}
+placerNavToggle();
+window.addEventListener('resize', placerNavToggle);
 
 // ── Swipe mobile entre catégories ──────────────────────────────────────────────
 (function initSwipeBlocs() {
@@ -558,37 +580,37 @@ function renderArmeCard(arme) {
       <button class="btn-structurel arme-del-btn" title="Supprimer cette arme">✕</button>
     </div>
     <div class="arme-details-grid">
-      <div class="fiche-field">
+      <div class="fiche-field arme-de-field">
         <label>Dé de dégâts</label>
         <input type="text" class="arme-de-input" placeholder="1d6" />
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field arme-type-field">
         <label>Type de dégâts</label>
         <select class="arme-type-select">
           <option value="">— Choisir —</option>
           ${TYPES_DEGATS.map(t => `<option value="${t}">${t}</option>`).join('')}
         </select>
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field arme-magie-field">
         <label>Bonus magie</label>
         <input type="number" class="arme-magie-input" min="0" placeholder="0" />
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field arme-bspecial-field">
         <label>Att. spécial</label>
         <input type="number" class="arme-bspecial-input" placeholder="0" />
       </div>
-      <div class="fiche-field">
+      <div class="fiche-field arme-bdegats-field">
         <label>Dég. spécial</label>
         <input type="number" class="arme-bdegats-input" placeholder="0" />
       </div>
     </div>
     <div class="arme-totaux">
-      <div class="arme-total-item">
+      <div class="arme-total-item arme-total-attaque">
         <div class="arme-total-label">Attaque</div>
         <div class="arme-total-val champ-calcule val-clickable" id="arme-toucher-${arme.id}">—</div>
         <div class="arme-total-note">pour toucher</div>
       </div>
-      <div class="arme-total-item">
+      <div class="arme-total-item arme-total-degats">
         <div class="arme-total-label">Dégâts</div>
         <div class="arme-total-val champ-calcule val-clickable" id="arme-degats-${arme.id}">—</div>
         <div class="arme-total-note arme-type-note"></div>
@@ -705,8 +727,38 @@ function renderArmeCard(arme) {
   });
 
   recalculerArmeCard(card, arme);
+  ajusterArmeCardLayout(card);
   return card;
 }
+
+// ── Réagencement de la carte d'arme en téléphone ────────────────────────────────
+function ajusterArmeCardLayout(card) {
+  const header      = card.querySelector('.arme-header');
+  const detailsGrid = card.querySelector('.arme-details-grid');
+  const caracField  = card.querySelector('.arme-carac-field');
+  const magieField  = card.querySelector('.arme-magie-field');
+  const maitriseWrap = card.querySelector('.arme-maitrise-wrap');
+  const bspecialField = card.querySelector('.arme-bspecial-field');
+  const bdegatsField  = card.querySelector('.arme-bdegats-field');
+  const totalAttaque  = card.querySelector('.arme-total-attaque');
+  const totalDegats   = card.querySelector('.arme-total-degats');
+  if (!header || !detailsGrid || !caracField || !magieField || !bspecialField || !bdegatsField) return;
+
+  const enMobile = window.innerWidth <= ARME_MOBILE_BREAKPOINT;
+  if (enMobile) {
+    if (caracField.parentElement !== detailsGrid) detailsGrid.insertBefore(caracField, magieField);
+    if (bspecialField.parentElement !== totalAttaque) totalAttaque?.prepend(bspecialField);
+    if (bdegatsField.parentElement !== totalDegats) totalDegats?.prepend(bdegatsField);
+  } else {
+    if (caracField.parentElement !== header) header.insertBefore(caracField, maitriseWrap);
+    if (bdegatsField.parentElement !== detailsGrid) detailsGrid.appendChild(bdegatsField);
+    if (bspecialField.parentElement !== detailsGrid) detailsGrid.insertBefore(bspecialField, bdegatsField);
+  }
+}
+function ajusterToutesLesArmes() {
+  document.querySelectorAll('.arme-card').forEach(ajusterArmeCardLayout);
+}
+window.addEventListener('resize', ajusterToutesLesArmes);
 
 function recalculerArmeCard(card, arme) {
   if (!carac) return;
@@ -773,18 +825,28 @@ function renderEquipementCard(item) {
   card.classList.toggle('no-desc', !item.description);
 
   card.innerHTML = `
-    <div class="equipement-header">
+    <div class="equipement-row equipement-row-main">
       <div class="fiche-field equipement-nom-field">
         <label>Objet</label>
         <input type="text" class="equipement-nom-input" placeholder="Nom de l'objet" />
       </div>
       <div class="fiche-field equipement-qty-field">
         <label>Qté</label>
-        <input type="number" class="equipement-qty-input" min="1" />
+        <div class="equipement-qty-row">
+          <input type="number" class="equipement-qty-input" min="1" />
+          <span class="equipement-qty-unit" aria-hidden="true">u.</span>
+        </div>
       </div>
+      <span class="equipement-chevron" aria-hidden="true">▾</span>
+      <button class="btn-structurel equipement-del-btn" title="Supprimer">✕</button>
+    </div>
+    <div class="equipement-row equipement-row-detail">
       <div class="fiche-field equipement-poids-field">
         <label>Poids (kg)</label>
-        <input type="number" class="equipement-poids-input" min="0" step="0.1" />
+        <div class="equipement-poids-row">
+          <input type="number" class="equipement-poids-input" min="0" step="0.1" placeholder="—" />
+          <span class="equipement-poids-unit" aria-hidden="true">kg</span>
+        </div>
       </div>
       <div class="fiche-field equipement-type-field">
         <label>Type</label>
@@ -794,7 +856,6 @@ function renderEquipementCard(item) {
           <option value="magique">✦ Magique</option>
         </select>
       </div>
-      <button class="btn-structurel equipement-del-btn" title="Supprimer">✕</button>
     </div>
     <div class="fiche-field equipement-desc-field">
       <label>Description</label>
@@ -858,6 +919,13 @@ function renderEquipementCard(item) {
         container.appendChild(empty);
       }
     } catch (err) { showSave('error'); console.error(err); }
+  });
+
+  // Replié/déplié en téléphone : un clic sur la ligne principale bascule l'affichage
+  card.querySelector('.equipement-row-main').addEventListener('click', e => {
+    if (window.innerWidth > EQUIPEMENT_MOBILE_BREAKPOINT) return;
+    if (e.target.closest('input, select, textarea, button')) return;
+    card.classList.toggle('expanded');
   });
 
   return card;
@@ -943,15 +1011,17 @@ function renderEmplacementRow(emp) {
   const row = document.createElement('div');
   row.className = 'sort-emp-row';
   row.dataset.niveau = emp.niveau_sort;
+  const nomNiveau = NIVEAUX_SORTS_LABELS[emp.niveau_sort];
+  const abrev = emp.niveau_sort === 0 ? 'SM' : 'N' + emp.niveau_sort;
 
   row.innerHTML = `
-    <div class="sort-emp-niveau">${NIVEAUX_SORTS_LABELS[emp.niveau_sort]}</div>
-    <div class="fiche-field sort-emp-max-field">
-      <label>Emplacements</label>
-      <input type="number" class="sort-emp-max-input" min="0" />
+    <div class="sort-emp-niveau" title="${nomNiveau}">${abrev}</div>
+    <div class="sort-emp-numbers" title="${nomNiveau} — emplacements disponibles / sorts préparés">
+      <input type="number" class="sort-emp-max-input" min="0" aria-label="Emplacements (${nomNiveau})" />
+      <span class="sort-emp-sep">|</span>
+      <span class="sort-emp-prepares champ-calcule" id="sort-emp-prepares-${emp.niveau_sort}">0</span>
     </div>
     <div class="sort-emp-cases" id="sort-emp-cases-${emp.niveau_sort}"></div>
-    <div class="sort-emp-prepares champ-calcule" id="sort-emp-prepares-${emp.niveau_sort}">0 préparé(s)</div>
   `;
 
   const maxInput = row.querySelector('.sort-emp-max-input');
@@ -1004,7 +1074,7 @@ function recalculerSortsPrepares() {
   for (let niveau = 0; niveau <= 9; niveau++) {
     const count = sorts.filter(s => s.niveau_sort === niveau && s.prepare).length;
     const el = document.getElementById('sort-emp-prepares-' + niveau);
-    if (el) el.textContent = count + ' préparé(s)';
+    if (el) el.textContent = count;
   }
 }
 
@@ -1549,33 +1619,45 @@ function remplirPV() {
     pvTempEl.addEventListener('input', () => schedulePersoSave({ pv_temporaires: Number(pvTempEl.value) || 0 }));
   }
 
+  const VAL_PAR_DEFAUT_SD = '1';
+  function viderAuClic(input) {
+    input?.addEventListener('focus', () => { input.value = ''; });
+    input?.addEventListener('blur', () => { if (input.value === '') input.value = VAL_PAR_DEFAUT_SD; });
+  }
+
   // Soins reçus (remplace l'ancien bouton "+1")
   const pvSoinInput = document.getElementById('pv-soin-input');
+  viderAuClic(pvSoinInput);
   const appliqueSoin = () => {
     const soin = Math.max(0, Number(pvSoinInput?.value) || 0);
-    if (!soin) return;
-    const pvMaxVal   = Number(document.getElementById('pv-max')?.textContent) || 0;
-    const nouveauxPV = Math.min(pvMaxVal, (Number(pvActuelEl?.value) || 0) + soin);
-    pvActuelEl.value = nouveauxPV;
-    schedulePersoSave({ pv_actuel: nouveauxPV });
-    recalculerPVBar();
+    if (soin) {
+      const pvMaxVal   = Number(document.getElementById('pv-max')?.textContent) || 0;
+      const nouveauxPV = Math.min(pvMaxVal, (Number(pvActuelEl?.value) || 0) + soin);
+      pvActuelEl.value = nouveauxPV;
+      schedulePersoSave({ pv_actuel: nouveauxPV });
+      recalculerPVBar();
+    }
+    if (pvSoinInput) pvSoinInput.value = VAL_PAR_DEFAUT_SD;
   };
   document.getElementById('btn-pv-soin')?.addEventListener('click', appliqueSoin);
   pvSoinInput?.addEventListener('keydown', e => { if (e.key === 'Enter') appliqueSoin(); });
 
   // Dégâts / blessures reçus (remplace l'ancien bouton "-1")
   const pvDegatInput = document.getElementById('pv-degat-input');
+  viderAuClic(pvDegatInput);
   const appliqueDegat = () => {
     const degats = Math.max(0, Number(pvDegatInput?.value) || 0);
-    if (!degats) return;
-    const oldPV     = Number(pvActuelEl?.value) || 0;
-    const nouveauxPV = Math.max(0, oldPV - degats);
-    pvActuelEl.value = nouveauxPV;
-    const patch = { pv_actuel: nouveauxPV };
-    if (nouveauxPV <= 0 && oldPV > 0) { patch.jds_succes = 0; patch.jds_echecs = 0; }
-    schedulePersoSave(patch);
-    if (nouveauxPV <= 0 && oldPV > 0) remplirJDSMort();
-    recalculerPVBar();
+    if (degats) {
+      const oldPV     = Number(pvActuelEl?.value) || 0;
+      const nouveauxPV = Math.max(0, oldPV - degats);
+      pvActuelEl.value = nouveauxPV;
+      const patch = { pv_actuel: nouveauxPV };
+      if (nouveauxPV <= 0 && oldPV > 0) { patch.jds_succes = 0; patch.jds_echecs = 0; }
+      schedulePersoSave(patch);
+      if (nouveauxPV <= 0 && oldPV > 0) remplirJDSMort();
+      recalculerPVBar();
+    }
+    if (pvDegatInput) pvDegatInput.value = VAL_PAR_DEFAUT_SD;
   };
   document.getElementById('btn-pv-degat')?.addEventListener('click', appliqueDegat);
   pvDegatInput?.addEventListener('keydown', e => { if (e.key === 'Enter') appliqueDegat(); });
@@ -1760,6 +1842,7 @@ function recalculerPVBar() {
 
   const total   = nbBlocsPV(pvMaxVal);
   const parBloc = pvMaxVal / total;
+  blocs.style.gridTemplateColumns = `repeat(${Math.min(total, 10)}, 1fr)`;
 
   if (blocs.childElementCount !== total) {
     blocs.innerHTML = '';
