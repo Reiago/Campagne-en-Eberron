@@ -5,7 +5,7 @@ import {
   getCompetences, updateCompetence,
   getArmes, addArme, updateArme, deleteArme,
   getEquipement, addEquipement, updateEquipement, deleteEquipement,
-  getTags, addTag, getEquipementTags, linkTag, unlinkTag, searchEquipementBase,
+  getTags, addTag, deleteTag, getEquipementTags, linkTag, unlinkTag, searchEquipementBase,
   getSorts, addSort, updateSort, deleteSort,
   getEmplacementsSorts, updateEmplacementSorts,
   getCapacites, addCapacite, updateCapacite, deleteCapacite,
@@ -810,6 +810,68 @@ function objetEstMonnaie(itemId) {
   return tagsDeObjet(itemId).some(t => t.systeme === 'monnaie');
 }
 
+// Tag-conteneur dont cet objet est le conteneur (ex. la "Bourse" elle-même), s'il y en a un.
+function tagConteneurDeLObjet(itemId) {
+  return tags.find(t => t.conteneur_equipement_id === itemId);
+}
+
+// Désambiguïsation "#n" des tags-conteneurs homonymes, calculée à l'affichage
+// (jamais stockée en DB) : index dans le groupe trié par ordre/date de création.
+function suffixesConteneurs() {
+  const groupes = {};
+  tags.filter(t => t.conteneur_equipement_id).forEach(t => {
+    (groupes[t.nom] ??= []).push(t);
+  });
+  const suffixById = {};
+  Object.values(groupes).forEach(liste => {
+    if (liste.length < 2) return;
+    liste.sort((a, b) => (a.ordre - b.ordre) || (new Date(a.created_at) - new Date(b.created_at)));
+    liste.forEach((t, idx) => { suffixById[t.id] = idx + 1; });
+  });
+  return suffixById;
+}
+
+function libelleTag(tag, suffixes) {
+  if (!tag.conteneur_equipement_id) return tag.nom;
+  const n = suffixes[tag.id];
+  return n ? `📦 ${tag.nom} #${n}` : `📦 ${tag.nom}`;
+}
+
+// Regroupe l'inventaire : objets racine, et enfants par conteneur (objets
+// portant un tag-conteneur lié à un autre objet de l'inventaire).
+function calculerGroupesEquipement() {
+  const conteneurDeLItem = new Map(); // itemId -> id de l'objet conteneur
+  equipement.forEach(item => {
+    const t = tagsDeObjet(item.id).find(tag => tag.conteneur_equipement_id);
+    if (t && t.conteneur_equipement_id !== item.id) conteneurDeLItem.set(item.id, t.conteneur_equipement_id);
+  });
+  const enfantsParConteneur = new Map();
+  equipement.forEach(item => {
+    const cid = conteneurDeLItem.get(item.id);
+    if (!cid) return;
+    if (!enfantsParConteneur.has(cid)) enfantsParConteneur.set(cid, []);
+    enfantsParConteneur.get(cid).push(item);
+  });
+  const racine = equipement.filter(item => !conteneurDeLItem.has(item.id));
+  return { racine, enfantsParConteneur };
+}
+
+// Recharge équipement/tags/liaisons depuis la base puis redessine l'inventaire.
+// Utilisé après toute opération pouvant déclencher une cascade côté DB
+// (suppression d'un conteneur, retrait d'un tag-conteneur).
+async function rafraichirEquipementDepuisDB() {
+  const [eq, tg, liens] = await Promise.all([
+    getEquipement(perso.id),
+    getTags(perso.id),
+    getEquipementTags(perso.id),
+  ]);
+  equipement = eq;
+  tags = tg;
+  tagsByEquipement = {};
+  liens.forEach(link => { (tagsByEquipement[link.equipement_id] ??= []).push(link.tag); });
+  remplirEquipement();
+}
+
 function decomposerPc(totalPc) {
   let reste = totalPc;
   const pp = Math.floor(reste / TAUX_PC.pp); reste %= TAUX_PC.pp;
@@ -850,7 +912,17 @@ function remplirEquipement() {
     empty.textContent = 'Aucun objet — ajoutez-en un en Mode Édition.';
     container.appendChild(empty);
   } else {
-    equipement.forEach(item => container.appendChild(renderEquipementCard(item)));
+    const { racine, enfantsParConteneur } = calculerGroupesEquipement();
+    racine.forEach(item => {
+      container.appendChild(renderEquipementCard(item));
+      const enfants = enfantsParConteneur.get(item.id);
+      if (enfants && enfants.length) {
+        const groupe = document.createElement('div');
+        groupe.className = 'equipement-groupe-conteneur';
+        enfants.forEach(enfant => groupe.appendChild(renderEquipementCard(enfant)));
+        container.appendChild(groupe);
+      }
+    });
   }
 
   initPanneauAjoutEquipement(container);
@@ -1004,6 +1076,7 @@ function renderEquipementCard(item) {
         <select class="equipement-tag-select">
           <option value="">+ Ajouter un tag</option>
         </select>
+        <div class="equipement-conteneur-badge"></div>
       </div>
     </div>
     <div class="fiche-field equipement-desc-field">
@@ -1020,21 +1093,53 @@ function renderEquipementCard(item) {
 
   const tagsList = card.querySelector('.equipement-tags-list');
   const tagSelect = card.querySelector('.equipement-tag-select');
+  const conteneurBadge = card.querySelector('.equipement-conteneur-badge');
+
+  function refreshConteneurBadge() {
+    const tagConteneur = tagConteneurDeLObjet(item.id);
+    if (tagConteneur) {
+      const suffixes = suffixesConteneurs();
+      conteneurBadge.innerHTML = `<span class="equipement-conteneur-statut">${libelleTag(tagConteneur, suffixes)}</span><button type="button" class="equipement-conteneur-retirer" title="Cet objet ne sera plus un conteneur">✕</button>`;
+      conteneurBadge.querySelector('.equipement-conteneur-retirer').addEventListener('click', async () => {
+        try {
+          showSave('saving');
+          await deleteTag(tagConteneur.id);
+          showSave('ok');
+          await rafraichirEquipementDepuisDB();
+        } catch (err) { showSave('error'); console.error(err); }
+      });
+    } else {
+      conteneurBadge.innerHTML = `<button type="button" class="equipement-conteneur-creer">Faire de cet objet un conteneur</button>`;
+      conteneurBadge.querySelector('.equipement-conteneur-creer').addEventListener('click', async () => {
+        try {
+          showSave('saving');
+          await addTag({ personnage_id: perso.id, nom: item.nom || 'Conteneur', conteneur_equipement_id: item.id });
+          showSave('ok');
+          // Recharge complète : la numérotation #n des conteneurs homonymes
+          // doit être recalculée sur toutes les cartes déjà affichées, pas
+          // seulement celle-ci.
+          await rafraichirEquipementDepuisDB();
+        } catch (err) { showSave('error'); console.error(err); }
+      });
+    }
+  }
 
   function refreshTagSelect() {
     const attachedIds = new Set(tagsDeObjet(item.id).map(t => t.id));
-    const options = tags.filter(t => t.systeme !== 'monnaie' && !attachedIds.has(t.id));
+    const suffixes = suffixesConteneurs();
+    const options = tags.filter(t => t.systeme !== 'monnaie' && t.id !== tagConteneurDeLObjet(item.id)?.id && !attachedIds.has(t.id));
     tagSelect.innerHTML = `<option value="">+ Ajouter un tag</option>` +
-      options.map(t => `<option value="${t.id}">${t.nom}</option>`).join('') +
+      options.map(t => `<option value="${t.id}">${libelleTag(t, suffixes)}</option>`).join('') +
       `<option value="__new__">✎ Nouveau tag…</option>`;
   }
 
   function refreshTagChips() {
+    const suffixes = suffixesConteneurs();
     tagsList.innerHTML = '';
     tagsDeObjet(item.id).forEach(tag => {
       const chip = document.createElement('span');
       chip.className = 'equipement-tag-chip';
-      chip.textContent = tag.nom;
+      chip.textContent = libelleTag(tag, suffixes);
       const rm = document.createElement('button');
       rm.type = 'button';
       rm.className = 'equipement-tag-remove';
@@ -1059,6 +1164,7 @@ function renderEquipementCard(item) {
 
   refreshTagChips();
   refreshTagSelect();
+  refreshConteneurBadge();
 
   tagSelect.addEventListener('change', async () => {
     const val = tagSelect.value;
@@ -1127,18 +1233,9 @@ function renderEquipementCard(item) {
       showSave('saving');
       await deleteEquipement(item.id);
       showSave('ok');
-      const etaitMonnaie = objetEstMonnaie(item.id);
-      equipement = equipement.filter(i => i.id !== item.id);
-      delete tagsByEquipement[item.id];
-      card.remove();
-      const container = document.getElementById('equipement-container');
-      if (container && !equipement.length) {
-        const empty = document.createElement('p');
-        empty.className = 'equipement-empty';
-        empty.textContent = 'Aucun objet — ajoutez-en un en Mode Édition.';
-        container.appendChild(empty);
-      }
-      if (etaitMonnaie) recalculerResumeMonnaie();
+      // Recharge complète : un objet supprimé peut être un conteneur dont la
+      // suppression entraîne, côté DB, celle des objets qu'il contenait.
+      await rafraichirEquipementDepuisDB();
     } catch (err) { showSave('error'); console.error(err); }
   });
 

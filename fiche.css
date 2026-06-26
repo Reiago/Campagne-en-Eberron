@@ -2019,6 +2019,45 @@ body.mode-jeu .arme-maitrise-cb:checked {
   max-width: 100%;
 }
 
+.equipement-conteneur-badge { margin-top: 6px; }
+.equipement-conteneur-statut {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--gold-light);
+  font-size: 11px;
+}
+.equipement-conteneur-retirer {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0 2px;
+}
+.equipement-conteneur-retirer:hover { color: #D87060; }
+.equipement-conteneur-creer {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 0;
+  text-decoration: underline dotted;
+}
+.equipement-conteneur-creer:hover { color: var(--gold-light); }
+
+/* Regroupement visuel des objets contenus sous leur conteneur */
+.equipement-groupe-conteneur {
+  margin: -0.4rem 0 0.75rem 1.25rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--border-strong);
+}
+.equipement-groupe-conteneur .equipement-card { margin-bottom: 0.5rem; }
+@media (max-width: 480px) {
+  .equipement-groupe-conteneur { margin-left: 0.6rem; padding-left: 0.5rem; }
+}
+
 .equipement-del-btn {
   background: transparent;
   border: 1px solid transparent;
