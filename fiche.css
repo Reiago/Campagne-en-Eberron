@@ -1948,6 +1948,58 @@ body.mode-jeu .arme-maitrise-cb:checked {
 /* ── Inventaire ── */
 .equipement-inventaire-section { margin-bottom: 0.5rem; }
 
+.equipement-toolbar {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+.equipement-tri-select {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  color: var(--text-bright);
+  font-size: 12px;
+  padding: 0.4rem 0.5rem;
+}
+.equipement-filtre-wrap { position: relative; }
+.equipement-filtre-btn {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  color: var(--text-bright);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0.4rem 0.7rem;
+}
+.equipement-filtre-btn:hover { border-color: var(--gold-dim); }
+.equipement-filtre-count { color: var(--gold-light); }
+.equipement-filtre-panel {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 20;
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  margin-top: 4px;
+  max-height: 240px;
+  overflow-y: auto;
+  min-width: 200px;
+  padding: 0.5rem;
+}
+.equipement-filtre-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-bright);
+  font-size: 13px;
+  padding: 0.3rem 0.2rem;
+  cursor: pointer;
+}
+
 .equipement-empty {
   text-align: center;
   padding: 2rem;
@@ -2058,21 +2110,51 @@ body.mode-jeu .arme-maitrise-cb:checked {
   .equipement-groupe-conteneur { margin-left: 0.6rem; padding-left: 0.5rem; }
 }
 
-.equipement-del-btn {
+.equipement-menu-wrap {
+  position: relative;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 4px;
+  order: 5;
+}
+.equipement-menu-btn {
   background: transparent;
   border: 1px solid transparent;
   border-radius: 3px;
   color: var(--text-dim);
   cursor: pointer;
-  font-size: 14px;
-  padding: 0.2rem 0.4rem;
-  flex-shrink: 0;
-  align-self: flex-start;
-  margin-top: 4px;
-  order: 5;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0.2rem 0.5rem;
   transition: color 0.15s, border-color 0.15s;
 }
-.equipement-del-btn:hover { color: #D87060; border-color: rgba(200,80,60,0.3); }
+.equipement-menu-btn:hover { color: var(--gold-light); border-color: var(--gold-dim); }
+.equipement-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 20;
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  overflow: hidden;
+}
+.equipement-menu-item {
+  background: transparent;
+  border: none;
+  color: var(--text-bright);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0.5rem 0.8rem;
+  text-align: left;
+  white-space: nowrap;
+}
+.equipement-menu-item:hover { background: rgba(201,168,108,0.08); }
+.equipement-action-supprimer:hover { color: #D87060; }
 
 .equipement-desc-field { flex: 1 1 100%; order: 6; margin-top: 0.25rem; }
 .equipement-desc-input { resize: vertical; min-height: 48px; }

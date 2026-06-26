@@ -55,6 +55,18 @@ const ACTIONS_REQUISES = ['Action', 'Action bonus', 'Réaction', 'Libre'];
 // Taux de conversion en pièces de cuivre (PC), utilisés pour la valeur des
 // objets et le résumé de monnaie (objets tagués "Monnaie").
 const TAUX_PC = { pp: 1000, po: 100, pe: 50, pa: 10, pc: 1 };
+// Tri & filtres de l'inventaire (état local, non persisté en DB).
+let equipementSortKey = 'nom-asc';
+let equipementFilterTagIds = new Set();
+let fermetureMenusEquipementInitialisee = false;
+const COMPARATEURS_EQUIPEMENT = {
+  'nom-asc': (a, b) => (a.nom ?? '').localeCompare(b.nom ?? ''),
+  'nom-desc': (a, b) => (b.nom ?? '').localeCompare(a.nom ?? ''),
+  'valeur-asc': (a, b) => (a.valeur_pc ?? 0) - (b.valeur_pc ?? 0),
+  'valeur-desc': (a, b) => (b.valeur_pc ?? 0) - (a.valeur_pc ?? 0),
+  'poids-asc': (a, b) => (a.poids ?? 0) - (b.poids ?? 0),
+  'poids-desc': (a, b) => (b.poids ?? 0) - (a.poids ?? 0),
+};
 
 // Supprime accents + met en minuscules pour la recherche dans COMP_CARAC.
 function normaliserNom(str) {
@@ -837,23 +849,97 @@ function libelleTag(tag, suffixes) {
   return n ? `📦 ${tag.nom} #${n}` : `📦 ${tag.nom}`;
 }
 
-// Regroupe l'inventaire : objets racine, et enfants par conteneur (objets
-// portant un tag-conteneur lié à un autre objet de l'inventaire).
-function calculerGroupesEquipement() {
+// Regroupe une liste d'objets (déjà filtrée/triée) : objets racine, et
+// enfants par conteneur (objets portant un tag-conteneur lié à un autre
+// objet de l'inventaire). Un objet filtré hors résultat ne réapparaît pas
+// sous son conteneur, même si celui-ci est affiché.
+function calculerGroupesEquipement(liste) {
   const conteneurDeLItem = new Map(); // itemId -> id de l'objet conteneur
-  equipement.forEach(item => {
+  liste.forEach(item => {
     const t = tagsDeObjet(item.id).find(tag => tag.conteneur_equipement_id);
     if (t && t.conteneur_equipement_id !== item.id) conteneurDeLItem.set(item.id, t.conteneur_equipement_id);
   });
   const enfantsParConteneur = new Map();
-  equipement.forEach(item => {
+  liste.forEach(item => {
     const cid = conteneurDeLItem.get(item.id);
     if (!cid) return;
     if (!enfantsParConteneur.has(cid)) enfantsParConteneur.set(cid, []);
     enfantsParConteneur.get(cid).push(item);
   });
-  const racine = equipement.filter(item => !conteneurDeLItem.has(item.id));
+  const racine = liste.filter(item => !conteneurDeLItem.has(item.id));
   return { racine, enfantsParConteneur };
+}
+
+function getEquipementAffiche() {
+  let liste = equipement.slice();
+  if (equipementFilterTagIds.size) {
+    liste = liste.filter(item => tagsDeObjet(item.id).some(t => equipementFilterTagIds.has(t.id)));
+  }
+  const cmp = COMPARATEURS_EQUIPEMENT[equipementSortKey] ?? COMPARATEURS_EQUIPEMENT['nom-asc'];
+  return liste.sort(cmp);
+}
+
+// Barre d'outils tri/filtre, insérée une seule fois au-dessus de l'inventaire.
+function initBarreOutilsEquipement(container) {
+  const section = container.parentElement;
+  if (!section || section.querySelector('.equipement-toolbar')) return;
+
+  const toolbar = document.createElement('div');
+  toolbar.className = 'equipement-toolbar';
+  toolbar.innerHTML = `
+    <select class="equipement-tri-select">
+      <option value="nom-asc">Nom (A → Z)</option>
+      <option value="nom-desc">Nom (Z → A)</option>
+      <option value="valeur-asc">Valeur ↑</option>
+      <option value="valeur-desc">Valeur ↓</option>
+      <option value="poids-asc">Poids ↑</option>
+      <option value="poids-desc">Poids ↓</option>
+    </select>
+    <div class="equipement-filtre-wrap">
+      <button type="button" class="equipement-filtre-btn">Filtrer par tag<span class="equipement-filtre-count"></span></button>
+      <div class="equipement-filtre-panel" hidden></div>
+    </div>
+  `;
+  section.insertBefore(toolbar, container);
+
+  const triSelect = toolbar.querySelector('.equipement-tri-select');
+  triSelect.value = equipementSortKey;
+  triSelect.addEventListener('change', () => {
+    equipementSortKey = triSelect.value;
+    remplirEquipement();
+  });
+
+  const filtreBtn = toolbar.querySelector('.equipement-filtre-btn');
+  const filtrePanel = toolbar.querySelector('.equipement-filtre-panel');
+  const filtreCount = toolbar.querySelector('.equipement-filtre-count');
+
+  function refreshFiltreCount() {
+    filtreCount.textContent = equipementFilterTagIds.size ? ` (${equipementFilterTagIds.size})` : '';
+  }
+  refreshFiltreCount();
+
+  filtreBtn.addEventListener('click', () => {
+    if (filtrePanel.hidden) {
+      const tagsUniques = [...new Map(tags.map(t => [t.id, t])).values()];
+      filtrePanel.innerHTML = tagsUniques.length
+        ? tagsUniques.map(t => `
+            <label class="equipement-filtre-item">
+              <input type="checkbox" value="${t.id}" ${equipementFilterTagIds.has(t.id) ? 'checked' : ''} />
+              ${libelleTag(t, suffixesConteneurs())}
+            </label>
+          `).join('')
+        : '<p class="equipement-ajout-vide">Aucun tag créé pour le moment.</p>';
+      filtrePanel.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          if (cb.checked) equipementFilterTagIds.add(cb.value);
+          else equipementFilterTagIds.delete(cb.value);
+          refreshFiltreCount();
+          remplirEquipement();
+        });
+      });
+    }
+    filtrePanel.hidden = !filtrePanel.hidden;
+  });
 }
 
 // Recharge équipement/tags/liaisons depuis la base puis redessine l'inventaire.
@@ -906,23 +992,33 @@ function remplirEquipement() {
   if (!container) return;
   container.innerHTML = '';
 
+  initBarreOutilsEquipement(container);
+
   if (!equipement.length) {
     const empty = document.createElement('p');
     empty.className = 'equipement-empty';
     empty.textContent = 'Aucun objet — ajoutez-en un en Mode Édition.';
     container.appendChild(empty);
   } else {
-    const { racine, enfantsParConteneur } = calculerGroupesEquipement();
-    racine.forEach(item => {
-      container.appendChild(renderEquipementCard(item));
-      const enfants = enfantsParConteneur.get(item.id);
-      if (enfants && enfants.length) {
-        const groupe = document.createElement('div');
-        groupe.className = 'equipement-groupe-conteneur';
-        enfants.forEach(enfant => groupe.appendChild(renderEquipementCard(enfant)));
-        container.appendChild(groupe);
-      }
-    });
+    const listeAffichee = getEquipementAffiche();
+    if (!listeAffichee.length) {
+      const empty = document.createElement('p');
+      empty.className = 'equipement-empty';
+      empty.textContent = 'Aucun objet ne correspond aux filtres sélectionnés.';
+      container.appendChild(empty);
+    } else {
+      const { racine, enfantsParConteneur } = calculerGroupesEquipement(listeAffichee);
+      racine.forEach(item => {
+        container.appendChild(renderEquipementCard(item));
+        const enfants = enfantsParConteneur.get(item.id);
+        if (enfants && enfants.length) {
+          const groupe = document.createElement('div');
+          groupe.className = 'equipement-groupe-conteneur';
+          enfants.forEach(enfant => groupe.appendChild(renderEquipementCard(enfant)));
+          container.appendChild(groupe);
+        }
+      });
+    }
   }
 
   initPanneauAjoutEquipement(container);
@@ -942,6 +1038,35 @@ async function ajouterObjetVide(container) {
     container.querySelector('.equipement-empty')?.remove();
     container.appendChild(renderEquipementCard(created));
   } catch (err) { showSave('error'); console.error(err); }
+}
+
+// Copie indépendante d'un objet : mêmes valeurs, tags recopiés (sauf ceux
+// exclus par nom). Le statut conteneur n'est jamais hérité, puisqu'il dépend
+// uniquement de l'id de l'objet d'origine (jamais copié).
+async function dupliquerObjetEquipement(item, { excludeBaseId = false, excludeTagsByNom = [] } = {}) {
+  const newItem = {
+    personnage_id: perso.id,
+    nom: item.nom,
+    description: item.description,
+    quantite: item.quantite,
+    poids: item.poids,
+    valeur_pc: item.valeur_pc,
+    base_id: excludeBaseId ? null : (item.base_id ?? null),
+  };
+  const created = await addEquipement(newItem);
+  const tagsACopier = tagsDeObjet(item.id).filter(t => !excludeTagsByNom.includes(t.nom));
+  for (const tag of tagsACopier) await linkTag(created.id, tag.id);
+  return created;
+}
+
+// Ferme tout menu d'objet ouvert au clic en dehors (écouteur global, posé une seule fois).
+function initFermetureMenusEquipement() {
+  if (fermetureMenusEquipementInitialisee) return;
+  fermetureMenusEquipementInitialisee = true;
+  document.addEventListener('click', e => {
+    if (e.target.closest('.equipement-menu-wrap')) return;
+    document.querySelectorAll('.equipement-menu').forEach(m => { m.hidden = true; });
+  });
 }
 
 // Renvoie un tag existant du personnage (par nom + systeme) ou le crée.
@@ -1056,7 +1181,14 @@ function renderEquipementCard(item) {
         </div>
       </div>
       <span class="equipement-chevron" aria-hidden="true">▾</span>
-      <button class="btn-structurel equipement-del-btn" title="Supprimer">✕</button>
+      <div class="btn-structurel equipement-menu-wrap">
+        <button type="button" class="equipement-menu-btn" title="Actions">⋮</button>
+        <div class="equipement-menu" hidden>
+          <button type="button" class="equipement-menu-item equipement-action-personnaliser">Personnaliser</button>
+          <button type="button" class="equipement-menu-item equipement-action-dupliquer">Dupliquer</button>
+          <button type="button" class="equipement-menu-item equipement-action-supprimer">Supprimer</button>
+        </div>
+      </div>
     </div>
     <div class="equipement-row equipement-row-detail">
       <div class="fiche-field equipement-poids-field">
@@ -1228,13 +1360,48 @@ function renderEquipementCard(item) {
     scheduleItemSave();
   });
 
-  card.querySelector('.equipement-del-btn').addEventListener('click', async () => {
+  const menuBtn = card.querySelector('.equipement-menu-btn');
+  const menu = card.querySelector('.equipement-menu');
+  const itemPersonnalisable = tagsDeObjet(item.id).some(t => t.systeme === 'base');
+  menu.querySelector('.equipement-action-personnaliser').hidden = !itemPersonnalisable;
+
+  menuBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const dejaOuvert = !menu.hidden;
+    document.querySelectorAll('.equipement-menu').forEach(m => { m.hidden = true; });
+    menu.hidden = dejaOuvert;
+  });
+  initFermetureMenusEquipement();
+
+  menu.querySelector('.equipement-action-supprimer').addEventListener('click', async () => {
+    menu.hidden = true;
     try {
       showSave('saving');
       await deleteEquipement(item.id);
       showSave('ok');
       // Recharge complète : un objet supprimé peut être un conteneur dont la
       // suppression entraîne, côté DB, celle des objets qu'il contenait.
+      await rafraichirEquipementDepuisDB();
+    } catch (err) { showSave('error'); console.error(err); }
+  });
+
+  menu.querySelector('.equipement-action-dupliquer').addEventListener('click', async () => {
+    menu.hidden = true;
+    try {
+      showSave('saving');
+      await dupliquerObjetEquipement(item);
+      showSave('ok');
+      await rafraichirEquipementDepuisDB();
+    } catch (err) { showSave('error'); console.error(err); }
+  });
+
+  menu.querySelector('.equipement-action-personnaliser').addEventListener('click', async () => {
+    menu.hidden = true;
+    try {
+      showSave('saving');
+      await dupliquerObjetEquipement(item, { excludeBaseId: true, excludeTagsByNom: ['Base'] });
+      await deleteEquipement(item.id);
+      showSave('ok');
       await rafraichirEquipementDepuisDB();
     } catch (err) { showSave('error'); console.error(err); }
   });
