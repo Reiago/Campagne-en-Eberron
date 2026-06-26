@@ -1934,6 +1934,17 @@ body.mode-jeu .arme-maitrise-cb:checked {
   .monnaie-input { width: 2.6em; font-size: 14px; padding: 0.2rem 0.05rem; }
 }
 
+/* Résumé monnaie en lecture seule (calculé à partir des objets tagués "Monnaie") */
+.monnaie-value {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-bright);
+}
+@media (max-width: 480px) {
+  .monnaie-value { font-size: 14px; }
+}
+
 /* ── Inventaire ── */
 .equipement-inventaire-section { margin-bottom: 0.5rem; }
 
@@ -1956,7 +1967,7 @@ body.mode-jeu .arme-maitrise-cb:checked {
   transition: border-color 0.2s;
 }
 
-.equipement-card[data-type="magique"] {
+.equipement-card.tag-magique {
   border-color: var(--gold-dim);
   background: rgba(201, 168, 108, 0.04);
 }
@@ -1967,12 +1978,46 @@ body.mode-jeu .arme-maitrise-cb:checked {
 .equipement-nom-field { flex: 1 1 0; min-width: 0; order: 1; }
 .equipement-qty-field { flex: 0 0 60px; order: 2; }
 .equipement-poids-field { flex: 0 0 84px; order: 3; }
-.equipement-type-field { flex: 0 0 130px; order: 4; }
+.equipement-valeur-field { flex: 0 0 84px; order: 4; }
+.equipement-tags-field { flex: 1 1 160px; order: 5; }
 .equipement-chevron { display: none; }
 .equipement-qty-row { display: flex; align-items: center; gap: 4px; }
 .equipement-qty-unit { display: none; }
 .equipement-poids-row { display: flex; align-items: center; gap: 4px; }
 .equipement-poids-unit { display: none; }
+
+.equipement-tags-list { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
+.equipement-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--text-bright);
+  font-size: 11px;
+  padding: 2px 4px 2px 8px;
+  white-space: nowrap;
+}
+.equipement-tag-remove {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0 2px;
+}
+.equipement-tag-remove:hover { color: #D87060; }
+.equipement-tag-select {
+  background: var(--stone-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-dim);
+  font-size: 11px;
+  padding: 0.2rem 0.3rem;
+  max-width: 100%;
+}
 
 .equipement-del-btn {
   background: transparent;
@@ -2032,12 +2077,14 @@ body.mode-jeu .equipement-card.no-desc .equipement-desc-field { display: none !i
   .equipement-row-main .equipement-qty-field label { display: none; }
   .equipement-row-detail { margin-top: 0.6rem; flex-wrap: wrap; }
   .equipement-row-detail .equipement-poids-field label,
-  .equipement-row-detail .equipement-type-field label { display: none; }
-  .equipement-type-field { flex: 1 1 0; min-width: 0; order: 1; }
+  .equipement-row-detail .equipement-valeur-field label,
+  .equipement-row-detail .equipement-tags-field label { display: none; }
+  .equipement-tags-field { flex: 1 1 100%; order: 1; }
   .equipement-poids-field { flex: 0 0 auto; order: 2; }
+  .equipement-valeur-field { flex: 0 0 auto; order: 3; }
   .equipement-qty-field { flex: 0 0 auto; }
   .equipement-qty-row, .equipement-poids-row { gap: 2px; }
-  input.equipement-qty-input, input.equipement-poids-input {
+  input.equipement-qty-input, input.equipement-poids-input, input.equipement-valeur-input {
     width: 3ch;
     flex: 0 0 auto;
     text-align: right;

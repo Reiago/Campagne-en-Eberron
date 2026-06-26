@@ -270,8 +270,6 @@ CREATE TABLE equipement (
   id            uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
   personnage_id uuid        NOT NULL REFERENCES personnages(id) ON DELETE CASCADE,
   nom           text        NOT NULL,
-  -- type : 'equipement' | 'possession' | 'magique'
-  type          text        NOT NULL DEFAULT 'equipement',
   description   text,
   quantite      int         NOT NULL DEFAULT 1,
   poids         numeric(8,3),

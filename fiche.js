@@ -5,6 +5,7 @@ import {
   getCompetences, updateCompetence,
   getArmes, addArme, updateArme, deleteArme,
   getEquipement, addEquipement, updateEquipement, deleteEquipement,
+  getTags, addTag, getEquipementTags, linkTag, unlinkTag,
   getSorts, addSort, updateSort, deleteSort,
   getEmplacementsSorts, updateEmplacementSorts,
   getCapacites, addCapacite, updateCapacite, deleteCapacite,
@@ -51,6 +52,9 @@ const NIVEAUX_SORTS_LABELS = { 0: 'Sorts mineurs' };
 for (let i = 1; i <= 9; i++) NIVEAUX_SORTS_LABELS[i] = 'Niveau ' + i;
 const RECHARGEMENTS = { court: 'Repos court', long: 'Repos long', aube: "À l'aube", jamais: 'Jamais' };
 const ACTIONS_REQUISES = ['Action', 'Action bonus', 'Réaction', 'Libre'];
+// Taux de conversion en pièces de cuivre (PC), utilisés pour la valeur des
+// objets et le résumé de monnaie (objets tagués "Monnaie").
+const TAUX_PC = { pp: 1000, po: 100, pe: 50, pa: 10, pc: 1 };
 
 // Supprime accents + met en minuscules pour la recherche dans COMP_CARAC.
 function normaliserNom(str) {
@@ -64,6 +68,7 @@ function capitaliser(str) {
 
 // ── État ───────────────────────────────────────────────────────────────────────
 let perso = null, carac = null, competences = [], armes = [], equipement = [];
+let tags = [], tagsByEquipement = {};
 let sorts = [], emplacementsSorts = [], capacites = [];
 let emplacementTimers = {};
 let reposMode        = localStorage.getItem('repos-mode') || 'auto'; // 'auto' | 'manuel'
@@ -116,15 +121,22 @@ try {
   perso = ficheId ? await getPersonnageById(ficheId) : await getPersonnage(user.id);
   if (!perso) throw new Error('Aucun personnage trouvé pour ce compte.');
 
-  [carac, competences, armes, equipement, sorts, emplacementsSorts, capacites] = await Promise.all([
+  let equipementTagLinks;
+  [carac, competences, armes, equipement, tags, equipementTagLinks, sorts, emplacementsSorts, capacites] = await Promise.all([
     getCaracteristiques(perso.id),
     getCompetences(perso.id),
     getArmes(perso.id),
     getEquipement(perso.id),
+    getTags(perso.id),
+    getEquipementTags(perso.id),
     getSorts(perso.id),
     getEmplacementsSorts(perso.id),
     getCapacites(perso.id),
   ]);
+  tagsByEquipement = {};
+  equipementTagLinks.forEach(link => {
+    (tagsByEquipement[link.equipement_id] ??= []).push(link.tag);
+  });
 
   if (perso.nom) {
     document.title = perso.nom + ' — Eberron';
@@ -786,6 +798,47 @@ function recalculerArmes() {
 }
 
 // ── Bloc 8 : Équipement & Possessions ─────────────────────────────────────────
+function tagsDeObjet(itemId) {
+  return tagsByEquipement[itemId] || [];
+}
+
+function objetEstMagique(itemId) {
+  return tagsDeObjet(itemId).some(t => t.nom === 'Magique');
+}
+
+function objetEstMonnaie(itemId) {
+  return tagsDeObjet(itemId).some(t => t.systeme === 'monnaie');
+}
+
+function decomposerPc(totalPc) {
+  let reste = totalPc;
+  const pp = Math.floor(reste / TAUX_PC.pp); reste %= TAUX_PC.pp;
+  const po = Math.floor(reste / TAUX_PC.po); reste %= TAUX_PC.po;
+  const pe = Math.floor(reste / TAUX_PC.pe); reste %= TAUX_PC.pe;
+  const pa = Math.floor(reste / TAUX_PC.pa); reste %= TAUX_PC.pa;
+  const pc = reste;
+  return { pp, po, pe, pa, pc };
+}
+
+function recalculerResumeMonnaie() {
+  const container = document.getElementById('equipement-monnaie-section');
+  if (!container) return;
+  const totalPc = equipement.reduce((sum, item) => {
+    return objetEstMonnaie(item.id) ? sum + (item.quantite ?? 0) * (item.valeur_pc ?? 0) : sum;
+  }, 0);
+  const { pp, po, pe, pa, pc } = decomposerPc(totalPc);
+  container.innerHTML = `
+    <h3 class="equipement-section-label">Monnaie</h3>
+    <div class="monnaie-grid monnaie-readonly">
+      <div class="monnaie-card monnaie-pp"><span class="monnaie-value">${pp}</span><span class="monnaie-line"></span><span class="monnaie-hint">Platine</span></div>
+      <div class="monnaie-card monnaie-po"><span class="monnaie-value">${po}</span><span class="monnaie-line"></span><span class="monnaie-hint">Or</span></div>
+      <div class="monnaie-card monnaie-pe"><span class="monnaie-value">${pe}</span><span class="monnaie-line"></span><span class="monnaie-hint">Électrum</span></div>
+      <div class="monnaie-card monnaie-pa"><span class="monnaie-value">${pa}</span><span class="monnaie-line"></span><span class="monnaie-hint">Argent</span></div>
+      <div class="monnaie-card monnaie-pc"><span class="monnaie-value">${pc}</span><span class="monnaie-line"></span><span class="monnaie-hint">Cuivre</span></div>
+    </div>
+  `;
+}
+
 function remplirEquipement() {
   const container = document.getElementById('equipement-container');
   if (!container) return;
@@ -801,24 +854,27 @@ function remplirEquipement() {
   }
 
   document.getElementById('btn-add-equipement')?.addEventListener('click', async () => {
-    const newItem = { personnage_id: perso.id, nom: '', type: 'equipement', description: '', quantite: 1 };
+    const newItem = { personnage_id: perso.id, nom: '', description: '', quantite: 1, valeur_pc: 0 };
     try {
       showSave('saving');
       const created = await addEquipement(newItem);
       showSave('ok');
       equipement.push(created);
+      tagsByEquipement[created.id] = [];
       const emptyEl = container.querySelector('.equipement-empty');
       if (emptyEl) emptyEl.remove();
       container.appendChild(renderEquipementCard(created));
     } catch (err) { showSave('error'); console.error(err); }
   });
+
+  recalculerResumeMonnaie();
 }
 
 function renderEquipementCard(item) {
   const card = document.createElement('div');
   card.className = 'equipement-card';
-  card.dataset.type = item.type ?? 'equipement';
   card.classList.toggle('no-desc', !item.description);
+  card.classList.toggle('tag-magique', objetEstMagique(item.id));
 
   card.innerHTML = `
     <div class="equipement-row equipement-row-main">
@@ -844,12 +900,15 @@ function renderEquipementCard(item) {
           <span class="equipement-poids-unit" aria-hidden="true">kg</span>
         </div>
       </div>
-      <div class="fiche-field equipement-type-field">
-        <label>Type</label>
-        <select class="equipement-type-select">
-          <option value="equipement">Équipement</option>
-          <option value="possession">Possession</option>
-          <option value="magique">✦ Magique</option>
+      <div class="fiche-field equipement-valeur-field">
+        <label>Valeur (pc)</label>
+        <input type="number" class="equipement-valeur-input" min="0" step="1" placeholder="0" />
+      </div>
+      <div class="fiche-field equipement-tags-field">
+        <label>Tags</label>
+        <div class="equipement-tags-list"></div>
+        <select class="equipement-tag-select">
+          <option value="">+ Ajouter un tag</option>
         </select>
       </div>
     </div>
@@ -862,8 +921,76 @@ function renderEquipementCard(item) {
   card.querySelector('.equipement-nom-input').value = item.nom ?? '';
   card.querySelector('.equipement-qty-input').value = item.quantite ?? 1;
   card.querySelector('.equipement-poids-input').value = item.poids ?? '';
-  card.querySelector('.equipement-type-select').value = item.type ?? 'equipement';
+  card.querySelector('.equipement-valeur-input').value = item.valeur_pc ?? 0;
   card.querySelector('.equipement-desc-input').value = item.description ?? '';
+
+  const tagsList = card.querySelector('.equipement-tags-list');
+  const tagSelect = card.querySelector('.equipement-tag-select');
+
+  function refreshTagSelect() {
+    const attachedIds = new Set(tagsDeObjet(item.id).map(t => t.id));
+    const options = tags.filter(t => t.systeme !== 'monnaie' && !attachedIds.has(t.id));
+    tagSelect.innerHTML = `<option value="">+ Ajouter un tag</option>` +
+      options.map(t => `<option value="${t.id}">${t.nom}</option>`).join('') +
+      `<option value="__new__">✎ Nouveau tag…</option>`;
+  }
+
+  function refreshTagChips() {
+    tagsList.innerHTML = '';
+    tagsDeObjet(item.id).forEach(tag => {
+      const chip = document.createElement('span');
+      chip.className = 'equipement-tag-chip';
+      chip.textContent = tag.nom;
+      const rm = document.createElement('button');
+      rm.type = 'button';
+      rm.className = 'equipement-tag-remove';
+      rm.textContent = '×';
+      rm.title = 'Retirer ce tag';
+      rm.addEventListener('click', async () => {
+        try {
+          showSave('saving');
+          await unlinkTag(item.id, tag.id);
+          showSave('ok');
+          tagsByEquipement[item.id] = tagsDeObjet(item.id).filter(t => t.id !== tag.id);
+          refreshTagChips();
+          refreshTagSelect();
+          card.classList.toggle('tag-magique', objetEstMagique(item.id));
+          if (tag.systeme === 'monnaie') recalculerResumeMonnaie();
+        } catch (err) { showSave('error'); console.error(err); }
+      });
+      chip.appendChild(rm);
+      tagsList.appendChild(chip);
+    });
+  }
+
+  refreshTagChips();
+  refreshTagSelect();
+
+  tagSelect.addEventListener('change', async () => {
+    const val = tagSelect.value;
+    if (!val) return;
+    try {
+      let tag;
+      if (val === '__new__') {
+        const nom = window.prompt('Nom du tag :');
+        tagSelect.value = '';
+        if (!nom || !nom.trim()) return;
+        showSave('saving');
+        tag = await addTag({ personnage_id: perso.id, nom: nom.trim() });
+        tags.push(tag);
+      } else {
+        tag = tags.find(t => t.id === val);
+        tagSelect.value = '';
+        showSave('saving');
+      }
+      await linkTag(item.id, tag.id);
+      showSave('ok');
+      tagsByEquipement[item.id] = [...tagsDeObjet(item.id), tag];
+      refreshTagChips();
+      refreshTagSelect();
+      card.classList.toggle('tag-magique', objetEstMagique(item.id));
+    } catch (err) { showSave('error'); console.error(err); }
+  });
 
   let itemTimer = null;
   const scheduleItemSave = () => {
@@ -871,7 +998,7 @@ function renderEquipementCard(item) {
     itemTimer = setTimeout(async () => {
       showSave('saving');
       try {
-        await updateEquipement(item.id, { nom: item.nom, type: item.type, description: item.description, quantite: item.quantite, poids: item.poids ?? null });
+        await updateEquipement(item.id, { nom: item.nom, description: item.description, quantite: item.quantite, poids: item.poids ?? null, valeur_pc: item.valeur_pc ?? 0 });
         showSave('ok');
       } catch { showSave('error'); }
     }, DEBOUNCE_MS);
@@ -884,15 +1011,16 @@ function renderEquipementCard(item) {
   card.querySelector('.equipement-qty-input').addEventListener('input', e => {
     item.quantite = Number(e.target.value) || 1;
     scheduleItemSave();
+    if (objetEstMonnaie(item.id)) recalculerResumeMonnaie();
   });
   card.querySelector('.equipement-poids-input').addEventListener('input', e => {
     item.poids = e.target.value !== '' ? Number(e.target.value) : null;
     scheduleItemSave();
   });
-  card.querySelector('.equipement-type-select').addEventListener('change', e => {
-    item.type = e.target.value;
-    card.dataset.type = e.target.value;
+  card.querySelector('.equipement-valeur-input').addEventListener('input', e => {
+    item.valeur_pc = Number(e.target.value) || 0;
     scheduleItemSave();
+    if (objetEstMonnaie(item.id)) recalculerResumeMonnaie();
   });
   card.querySelector('.equipement-desc-input').addEventListener('input', e => {
     item.description = e.target.value;
@@ -905,7 +1033,9 @@ function renderEquipementCard(item) {
       showSave('saving');
       await deleteEquipement(item.id);
       showSave('ok');
+      const etaitMonnaie = objetEstMonnaie(item.id);
       equipement = equipement.filter(i => i.id !== item.id);
+      delete tagsByEquipement[item.id];
       card.remove();
       const container = document.getElementById('equipement-container');
       if (container && !equipement.length) {
@@ -914,6 +1044,7 @@ function renderEquipementCard(item) {
         empty.textContent = 'Aucun objet — ajoutez-en un en Mode Édition.';
         container.appendChild(empty);
       }
+      if (etaitMonnaie) recalculerResumeMonnaie();
     } catch (err) { showSave('error'); console.error(err); }
   });
 
