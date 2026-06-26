@@ -5,7 +5,7 @@ import {
   getCompetences, updateCompetence,
   getArmes, addArme, updateArme, deleteArme,
   getEquipement, addEquipement, updateEquipement, deleteEquipement,
-  getTags, addTag, getEquipementTags, linkTag, unlinkTag,
+  getTags, addTag, getEquipementTags, linkTag, unlinkTag, searchEquipementBase,
   getSorts, addSort, updateSort, deleteSort,
   getEmplacementsSorts, updateEmplacementSorts,
   getCapacites, addCapacite, updateCapacite, deleteCapacite,
@@ -853,21 +853,115 @@ function remplirEquipement() {
     equipement.forEach(item => container.appendChild(renderEquipementCard(item)));
   }
 
-  document.getElementById('btn-add-equipement')?.addEventListener('click', async () => {
-    const newItem = { personnage_id: perso.id, nom: '', description: '', quantite: 1, valeur_pc: 0 };
-    try {
-      showSave('saving');
-      const created = await addEquipement(newItem);
-      showSave('ok');
-      equipement.push(created);
-      tagsByEquipement[created.id] = [];
-      const emptyEl = container.querySelector('.equipement-empty');
-      if (emptyEl) emptyEl.remove();
-      container.appendChild(renderEquipementCard(created));
-    } catch (err) { showSave('error'); console.error(err); }
-  });
+  initPanneauAjoutEquipement(container);
 
   recalculerResumeMonnaie();
+}
+
+// Crée un objet vierge (comportement historique du bouton "+ Ajouter un objet").
+async function ajouterObjetVide(container) {
+  const newItem = { personnage_id: perso.id, nom: '', description: '', quantite: 1, valeur_pc: 0 };
+  showSave('saving');
+  try {
+    const created = await addEquipement(newItem);
+    showSave('ok');
+    equipement.push(created);
+    tagsByEquipement[created.id] = [];
+    container.querySelector('.equipement-empty')?.remove();
+    container.appendChild(renderEquipementCard(created));
+  } catch (err) { showSave('error'); console.error(err); }
+}
+
+// Renvoie un tag existant du personnage (par nom + systeme) ou le crée.
+async function obtenirOuCreerTag(nom, systeme = null) {
+  let tag = tags.find(t => t.nom === nom && (systeme ? t.systeme === systeme : !t.systeme));
+  if (tag) return tag;
+  tag = await addTag({ personnage_id: perso.id, nom, ...(systeme ? { systeme } : {}) });
+  tags.push(tag);
+  return tag;
+}
+
+// Ajoute un objet pré-rempli depuis la base officielle : pose base_id + tag
+// "Base" + les tags suggérés par le catalogue (créés s'ils n'existent pas déjà).
+async function ajouterDepuisBase(container, baseItem) {
+  const newItem = {
+    personnage_id: perso.id,
+    nom: baseItem.nom,
+    description: baseItem.description ?? '',
+    quantite: 1,
+    poids: baseItem.poids ?? null,
+    valeur_pc: baseItem.valeur_pc ?? 0,
+    base_id: baseItem.id,
+  };
+  showSave('saving');
+  try {
+    const created = await addEquipement(newItem);
+    equipement.push(created);
+    const tagsAttaches = [];
+    for (const nomTag of ['Base', ...(baseItem.tags || [])]) {
+      const tag = await obtenirOuCreerTag(nomTag, nomTag === 'Base' ? 'base' : null);
+      await linkTag(created.id, tag.id);
+      tagsAttaches.push(tag);
+    }
+    tagsByEquipement[created.id] = tagsAttaches;
+    showSave('ok');
+    container.querySelector('.equipement-empty')?.remove();
+    container.appendChild(renderEquipementCard(created));
+  } catch (err) { showSave('error'); console.error(err); }
+}
+
+// Panneau de recherche affiché au clic sur "+ Ajouter un objet" : recherche
+// dans la base officielle pour pré-remplir, ou création d'un objet personnalisé.
+function initPanneauAjoutEquipement(container) {
+  const footer = document.querySelector('.equipement-footer');
+  const addBtn = document.getElementById('btn-add-equipement');
+  if (!footer || !addBtn || footer.querySelector('.equipement-ajout-panel')) return;
+
+  const panel = document.createElement('div');
+  panel.className = 'equipement-ajout-panel';
+  panel.hidden = true;
+  panel.innerHTML = `
+    <input type="text" class="equipement-ajout-recherche" placeholder="Rechercher dans la base officielle…" />
+    <div class="equipement-ajout-resultats"></div>
+    <button type="button" class="equipement-ajout-perso">+ Objet personnalisé</button>
+  `;
+  footer.appendChild(panel);
+
+  addBtn.addEventListener('click', () => {
+    panel.hidden = !panel.hidden;
+    if (!panel.hidden) panel.querySelector('.equipement-ajout-recherche').focus();
+  });
+
+  const rechInput = panel.querySelector('.equipement-ajout-recherche');
+  const resultatsEl = panel.querySelector('.equipement-ajout-resultats');
+  let rechTimer = null;
+
+  rechInput.addEventListener('input', () => {
+    clearTimeout(rechTimer);
+    const q = rechInput.value.trim();
+    if (q.length < 2) { resultatsEl.innerHTML = ''; return; }
+    rechTimer = setTimeout(async () => {
+      let resultats;
+      try { resultats = await searchEquipementBase(q); } catch (err) { console.error(err); return; }
+      resultatsEl.innerHTML = resultats.length
+        ? resultats.map(r => `<button type="button" class="equipement-ajout-resultat" data-id="${r.id}">${r.nom} <span class="equipement-ajout-resultat-valeur">${r.valeur_pc ?? 0} pc</span></button>`).join('')
+        : '<p class="equipement-ajout-vide">Aucun résultat.</p>';
+      resultatsEl.querySelectorAll('.equipement-ajout-resultat').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const baseItem = resultats.find(r => r.id === btn.dataset.id);
+          await ajouterDepuisBase(container, baseItem);
+          panel.hidden = true;
+          rechInput.value = '';
+          resultatsEl.innerHTML = '';
+        });
+      });
+    }, 300);
+  });
+
+  panel.querySelector('.equipement-ajout-perso').addEventListener('click', async () => {
+    await ajouterObjetVide(container);
+    panel.hidden = true;
+  });
 }
 
 function renderEquipementCard(item) {
