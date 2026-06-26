@@ -194,19 +194,93 @@ export async function deleteEquipement(id) {
   if (error) throw error;
 }
 
-// ── Monnaie ──────────────────────────────────────────────────────────────────
+// ── Tags ─────────────────────────────────────────────────────────────────────
 
-export async function getMonnaie(personnageId) {
+export async function getTags(personnageId) {
   const { data, error } = await supabase
-    .from('monnaie')
+    .from('tags')
     .select('*')
     .eq('personnage_id', personnageId)
-    .single();
+    .order('ordre');
   if (error) throw error;
   return data;
 }
 
-export async function updateMonnaie(id, data) {
-  const { error } = await supabase.from('monnaie').update(data).eq('id', id);
+export async function addTag(data) {
+  const { data: result, error } = await supabase.from('tags').insert(data).select().single();
   if (error) throw error;
+  return result;
+}
+
+export async function deleteTag(id) {
+  const { error } = await supabase.from('tags').delete().eq('id', id);
+  if (error) throw error;
+}
+
+// Renvoie, pour un personnage donné, les liaisons equipement_id -> tag (avec
+// le détail du tag embarqué) ; !inner filtre sur tags.personnage_id côté serveur.
+export async function getEquipementTags(personnageId) {
+  const { data, error } = await supabase
+    .from('equipement_tags')
+    .select('equipement_id, tag:tags!inner(id, nom, systeme, conteneur_equipement_id, ordre)')
+    .eq('tag.personnage_id', personnageId);
+  if (error) throw error;
+  return data;
+}
+
+export async function linkTag(equipementId, tagId) {
+  const { error } = await supabase.from('equipement_tags').insert({ equipement_id: equipementId, tag_id: tagId });
+  if (error) throw error;
+}
+
+export async function unlinkTag(equipementId, tagId) {
+  const { error } = await supabase.from('equipement_tags').delete().eq('equipement_id', equipementId).eq('tag_id', tagId);
+  if (error) throw error;
+}
+
+// ── Équipement de base (catalogue officiel MJ) ────────────────────────────────
+
+export async function getEquipementBase() {
+  const { data, error } = await supabase
+    .from('equipement_base')
+    .select('*')
+    .order('nom');
+  if (error) throw error;
+  return data;
+}
+
+export async function searchEquipementBase(query) {
+  const { data, error } = await supabase
+    .from('equipement_base')
+    .select('*')
+    .ilike('nom', `%${query}%`)
+    .order('nom')
+    .limit(20);
+  if (error) throw error;
+  return data;
+}
+
+export async function addEquipementBase(data) {
+  const { data: result, error } = await supabase.from('equipement_base').insert(data).select().single();
+  if (error) throw error;
+  return result;
+}
+
+export async function updateEquipementBase(id, data) {
+  const { error } = await supabase.from('equipement_base').update(data).eq('id', id);
+  if (error) throw error;
+}
+
+export async function deleteEquipementBase(id) {
+  const { error } = await supabase.from('equipement_base').delete().eq('id', id);
+  if (error) throw error;
+}
+
+export async function bulkUpsertEquipementBase(rows) {
+  const { data, error } = await supabase
+    .from('equipement_base')
+    .upsert(rows, { onConflict: 'nom_normalise' })
+    .select();
+  if (error) throw error;
+  return data;
 }

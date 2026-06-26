@@ -1844,6 +1844,11 @@ body.mode-jeu .arme-maitrise-cb:checked {
 
 /* ── Monnaie ── */
 .equipement-monnaie-section { margin-bottom: 1.5rem; }
+.equipement-monnaie-placeholder {
+  color: var(--text-dim);
+  font-style: italic;
+  font-size: 0.9rem;
+}
 
 .monnaie-grid {
   display: grid;

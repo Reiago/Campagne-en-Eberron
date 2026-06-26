@@ -5,7 +5,6 @@ import {
   getCompetences, updateCompetence,
   getArmes, addArme, updateArme, deleteArme,
   getEquipement, addEquipement, updateEquipement, deleteEquipement,
-  getMonnaie, updateMonnaie,
   getSorts, addSort, updateSort, deleteSort,
   getEmplacementsSorts, updateEmplacementSorts,
   getCapacites, addCapacite, updateCapacite, deleteCapacite,
@@ -64,7 +63,7 @@ function capitaliser(str) {
 }
 
 // ── État ───────────────────────────────────────────────────────────────────────
-let perso = null, carac = null, competences = [], armes = [], equipement = [], monnaie = null;
+let perso = null, carac = null, competences = [], armes = [], equipement = [];
 let sorts = [], emplacementsSorts = [], capacites = [];
 let emplacementTimers = {};
 let reposMode        = localStorage.getItem('repos-mode') || 'auto'; // 'auto' | 'manuel'
@@ -74,7 +73,7 @@ let reposPanelOpen   = false;
 const DEBOUNCE_MS = 500;
 const ARME_MOBILE_BREAKPOINT = 480;
 const EQUIPEMENT_MOBILE_BREAKPOINT = 480;
-let persoTimer = null, caracTimer = null, monnaieTimer = null;
+let persoTimer = null, caracTimer = null;
 
 // ── Mode Jeu / Mode Édition ────────────────────────────────────────────────────
 function getMode() {
@@ -117,12 +116,11 @@ try {
   perso = ficheId ? await getPersonnageById(ficheId) : await getPersonnage(user.id);
   if (!perso) throw new Error('Aucun personnage trouvé pour ce compte.');
 
-  [carac, competences, armes, equipement, monnaie, sorts, emplacementsSorts, capacites] = await Promise.all([
+  [carac, competences, armes, equipement, sorts, emplacementsSorts, capacites] = await Promise.all([
     getCaracteristiques(perso.id),
     getCompetences(perso.id),
     getArmes(perso.id),
     getEquipement(perso.id),
-    getMonnaie(perso.id),
     getSorts(perso.id),
     getEmplacementsSorts(perso.id),
     getCapacites(perso.id),
@@ -814,8 +812,6 @@ function remplirEquipement() {
       container.appendChild(renderEquipementCard(created));
     } catch (err) { showSave('error'); console.error(err); }
   });
-
-  remplirMonnaie();
 }
 
 function renderEquipementCard(item) {
@@ -929,30 +925,6 @@ function renderEquipementCard(item) {
   });
 
   return card;
-}
-
-function remplirMonnaie() {
-  if (!monnaie) return;
-  ['pp', 'po', 'pe', 'pa', 'pc'].forEach(key => {
-    const input = document.getElementById('monnaie-' + key);
-    if (!input) return;
-    input.value = monnaie[key] ?? 0;
-    input.addEventListener('change', () => {
-      monnaie[key] = Number(input.value) || 0;
-      scheduleMonnaie();
-    });
-  });
-}
-
-function scheduleMonnaie() {
-  clearTimeout(monnaieTimer);
-  monnaieTimer = setTimeout(async () => {
-    showSave('saving');
-    try {
-      await updateMonnaie(monnaie.id, { pp: monnaie.pp, po: monnaie.po, pe: monnaie.pe, pa: monnaie.pa, pc: monnaie.pc });
-      showSave('ok');
-    } catch { showSave('error'); }
-  }, DEBOUNCE_MS);
 }
 
 // ── Bloc 9 : Sorts ─────────────────────────────────────────────────────────────

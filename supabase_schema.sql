@@ -10,8 +10,10 @@
 -- 0. NETTOYAGE (supprime l'ancien schéma de test)
 -- ══════════════════════════════════════════════════════════════
 
-DROP TABLE IF EXISTS monnaie           CASCADE;
+DROP TABLE IF EXISTS equipement_tags   CASCADE;
+DROP TABLE IF EXISTS tags              CASCADE;
 DROP TABLE IF EXISTS equipement        CASCADE;
+DROP TABLE IF EXISTS equipement_base   CASCADE;
 DROP TABLE IF EXISTS capacites         CASCADE;
 DROP TABLE IF EXISTS sorts             CASCADE;
 DROP TABLE IF EXISTS emplacements_sorts CASCADE;
@@ -24,6 +26,7 @@ DROP TABLE IF EXISTS personnages       CASCADE;
 DROP FUNCTION IF EXISTS init_personnage()          CASCADE;
 DROP FUNCTION IF EXISTS set_updated_at()           CASCADE;
 DROP FUNCTION IF EXISTS create_profil_on_signup()  CASCADE;
+DROP FUNCTION IF EXISTS cascade_delete_conteneur() CASCADE;
 
 
 -- ══════════════════════════════════════════════════════════════
@@ -236,8 +239,32 @@ CREATE TABLE capacites (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 9. ÉQUIPEMENT & POSSESSIONS (N lignes par personnage)
+-- 9. ÉQUIPEMENT DE BASE (catalogue officiel, géré par le MJ)
 -- ══════════════════════════════════════════════════════════════
+-- nom_normalise : calculé côté JS (minuscule, accents retirés) avant insert,
+-- utilisé pour la détection de doublons à l'import CSV.
+-- tags : libellés convertis en tags personnels du joueur lors de l'import
+-- sur sa fiche (pas de FK, les tags sont scopés par personnage).
+
+CREATE TABLE equipement_base (
+  id            uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
+  nom           text        NOT NULL,
+  nom_normalise text        NOT NULL,
+  valeur_pc     int         NOT NULL DEFAULT 0,
+  poids         numeric(8,3),
+  tags          text[]      NOT NULL DEFAULT '{}',
+  description   text,
+  created_at    timestamptz DEFAULT now(),
+  updated_at    timestamptz DEFAULT now()
+);
+
+
+-- ══════════════════════════════════════════════════════════════
+-- 10. ÉQUIPEMENT & POSSESSIONS (N lignes par personnage)
+-- ══════════════════════════════════════════════════════════════
+-- valeur_pc : valeur de l'objet en pièces de cuivre (conversion à l'affichage).
+-- base_id : référence informative vers l'objet officiel d'origine (NULL si
+-- objet custom ou si l'objet de base a été supprimé du catalogue depuis).
 
 CREATE TABLE equipement (
   id            uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -248,23 +275,43 @@ CREATE TABLE equipement (
   description   text,
   quantite      int         NOT NULL DEFAULT 1,
   poids         numeric(8,3),
+  valeur_pc     int         NOT NULL DEFAULT 0,
+  base_id       uuid        REFERENCES equipement_base(id) ON DELETE SET NULL,
   ordre         int         NOT NULL DEFAULT 0,
   created_at    timestamptz DEFAULT now()
 );
 
 
 -- ══════════════════════════════════════════════════════════════
--- 10. MONNAIE (1 ligne par personnage)
+-- 11. TAGS (libres, créés à la demande par personnage)
+-- ══════════════════════════════════════════════════════════════
+-- systeme : 'monnaie' | 'equipe' | 'base' | NULL (tag libre).
+-- conteneur_equipement_id : si non NULL, ce tag est un tag-conteneur lié à
+-- un objet précis de l'inventaire (ex. "Bourse") ; les objets qui portent ce
+-- tag sont considérés comme rangés dans cet objet. Pas de contrainte
+-- UNIQUE(personnage_id, nom) : plusieurs tags-conteneurs homonymes doivent
+-- pouvoir coexister (ex. deux "Bourse" différentes) — désambiguïsation "#n"
+-- calculée côté front à l'affichage, jamais stockée en DB.
+
+CREATE TABLE tags (
+  id                      uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
+  personnage_id           uuid        NOT NULL REFERENCES personnages(id) ON DELETE CASCADE,
+  nom                     text        NOT NULL,
+  systeme                 text,
+  conteneur_equipement_id uuid        REFERENCES equipement(id) ON DELETE CASCADE,
+  ordre                   int         NOT NULL DEFAULT 0,
+  created_at              timestamptz DEFAULT now()
+);
+
+
+-- ══════════════════════════════════════════════════════════════
+-- 12. EQUIPEMENT_TAGS (liaison many-to-many)
 -- ══════════════════════════════════════════════════════════════
 
-CREATE TABLE monnaie (
-  id            uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  personnage_id uuid NOT NULL REFERENCES personnages(id) ON DELETE CASCADE UNIQUE,
-  pp            int  NOT NULL DEFAULT 0,
-  po            int  NOT NULL DEFAULT 0,
-  pe            int  NOT NULL DEFAULT 0,
-  pa            int  NOT NULL DEFAULT 0,
-  pc            int  NOT NULL DEFAULT 0
+CREATE TABLE equipement_tags (
+  equipement_id uuid NOT NULL REFERENCES equipement(id) ON DELETE CASCADE,
+  tag_id        uuid NOT NULL REFERENCES tags(id)       ON DELETE CASCADE,
+  PRIMARY KEY (equipement_id, tag_id)
 );
 
 
@@ -280,7 +327,11 @@ CREATE INDEX idx_emplacements_pid       ON emplacements_sorts(personnage_id, niv
 CREATE INDEX idx_sorts_pid              ON sorts(personnage_id, niveau_sort, ordre);
 CREATE INDEX idx_capacites_pid          ON capacites(personnage_id, ordre);
 CREATE INDEX idx_equipement_pid         ON equipement(personnage_id, ordre);
-CREATE INDEX idx_monnaie_pid            ON monnaie(personnage_id);
+CREATE UNIQUE INDEX idx_equipement_base_nom_normalise ON equipement_base(nom_normalise);
+CREATE INDEX idx_equipement_base_nom    ON equipement_base(nom);
+CREATE INDEX idx_tags_pid               ON tags(personnage_id);
+CREATE INDEX idx_tags_conteneur         ON tags(conteneur_equipement_id);
+CREATE INDEX idx_equipement_tags_tag    ON equipement_tags(tag_id);
 
 
 -- ══════════════════════════════════════════════════════════════
@@ -301,9 +352,34 @@ CREATE TRIGGER trig_personnages_updated_at
   FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
 
+-- ── Cascade conteneur → contenu ──────────────────────────────
+-- Supprimer un objet conteneur (ex. "Bourse") supprime aussi les objets
+-- qui portent le tag-conteneur associé. PostgreSQL gère nativement la
+-- récursion si un conteneur contient un autre conteneur ; aucun cycle
+-- n'est possible puisqu'un objet ne peut pas se contenir lui-même (le
+-- conteneur est lié au tag, pas directement à l'objet contenu).
+CREATE OR REPLACE FUNCTION cascade_delete_conteneur()
+RETURNS TRIGGER AS $$
+BEGIN
+  DELETE FROM equipement
+  WHERE id IN (
+    SELECT et.equipement_id
+    FROM equipement_tags et
+    JOIN tags t ON t.id = et.tag_id
+    WHERE t.conteneur_equipement_id = OLD.id
+  );
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trig_cascade_conteneur
+  BEFORE DELETE ON equipement
+  FOR EACH ROW EXECUTE FUNCTION cascade_delete_conteneur();
+
+
 -- ── Initialisation automatique des tables enfants ────────────
 -- Déclenché après chaque INSERT dans personnages.
--- Crée les lignes obligatoires (1 pour caracteristiques/monnaie,
+-- Crée les lignes obligatoires (1 pour caracteristiques,
 -- 18 pour competences, 10 pour emplacements_sorts).
 CREATE OR REPLACE FUNCTION init_personnage()
 RETURNS TRIGGER AS $$
@@ -329,9 +405,6 @@ BEGIN
   FOR niv IN 0..9 LOOP
     INSERT INTO emplacements_sorts (personnage_id, niveau_sort) VALUES (NEW.id, niv);
   END LOOP;
-
-  -- 1 ligne de monnaie
-  INSERT INTO monnaie (personnage_id) VALUES (NEW.id);
 
   RETURN NEW;
 END;
@@ -374,7 +447,9 @@ ALTER TABLE emplacements_sorts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sorts              ENABLE ROW LEVEL SECURITY;
 ALTER TABLE capacites          ENABLE ROW LEVEL SECURITY;
 ALTER TABLE equipement         ENABLE ROW LEVEL SECURITY;
-ALTER TABLE monnaie            ENABLE ROW LEVEL SECURITY;
+ALTER TABLE equipement_base    ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tags               ENABLE ROW LEVEL SECURITY;
+ALTER TABLE equipement_tags    ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "dev_all" ON personnages        FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON profils            FOR ALL USING (true) WITH CHECK (true);
@@ -385,7 +460,9 @@ CREATE POLICY "dev_all" ON emplacements_sorts FOR ALL USING (true) WITH CHECK (t
 CREATE POLICY "dev_all" ON sorts              FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON capacites          FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON equipement         FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "dev_all" ON monnaie            FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "dev_all" ON equipement_base    FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "dev_all" ON tags               FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "dev_all" ON equipement_tags    FOR ALL USING (true) WITH CHECK (true);
 
 
 -- ══════════════════════════════════════════════════════════════
@@ -477,11 +554,31 @@ CREATE POLICY "prod_equipement" ON equipement
     )
   );
 
-CREATE POLICY "prod_monnaie" ON monnaie
+-- equipement_base : catalogue officiel — lecture pour tous, écriture MJ uniquement
+CREATE POLICY "prod_equipement_base_select" ON equipement_base
+  FOR SELECT USING (true);
+CREATE POLICY "prod_equipement_base_write" ON equipement_base
+  FOR INSERT WITH CHECK (is_mj());
+CREATE POLICY "prod_equipement_base_update" ON equipement_base
+  FOR UPDATE USING (is_mj());
+CREATE POLICY "prod_equipement_base_delete" ON equipement_base
+  FOR DELETE USING (is_mj());
+
+CREATE POLICY "prod_tags" ON tags
   FOR ALL USING (
     EXISTS (
       SELECT 1 FROM personnages p
       WHERE p.id = personnage_id
+        AND (p.user_id = auth.uid() OR is_mj())
+    )
+  );
+
+CREATE POLICY "prod_equipement_tags" ON equipement_tags
+  FOR ALL USING (
+    EXISTS (
+      SELECT 1 FROM equipement e
+      JOIN personnages p ON p.id = e.personnage_id
+      WHERE e.id = equipement_id
         AND (p.user_id = auth.uid() OR is_mj())
     )
   );
@@ -555,11 +652,34 @@ UPDATE caracteristiques SET
 WHERE personnage_id = (SELECT id FROM personnages WHERE nom = 'Brother Toryn');
 
 -- ── Monnaie de démonstration ─────────────────────────────────
-UPDATE monnaie SET po=45, pa=12
-WHERE personnage_id = (SELECT id FROM personnages WHERE nom = 'Kael d''Cannith');
+-- La monnaie est représentée par des objets d'équipement tagués "Monnaie".
+-- Taux en PC : po=100, pa=10, pc=1 (quantite = nombre de pièces, valeur_pc = taux unitaire).
+DO $$
+DECLARE
+  pid uuid;
+  tag_id uuid;
+BEGIN
+  -- Kael d'Cannith : 45 po, 12 pa
+  SELECT id INTO pid FROM personnages WHERE nom = 'Kael d''Cannith';
+  INSERT INTO tags (personnage_id, nom, systeme) VALUES (pid, 'Monnaie', 'monnaie') RETURNING id INTO tag_id;
+  INSERT INTO equipement (personnage_id, nom, quantite, valeur_pc)
+    VALUES (pid, 'Pièces d''or', 45, 100), (pid, 'Pièces d''argent', 12, 10);
+  INSERT INTO equipement_tags (equipement_id, tag_id)
+    SELECT id, tag_id FROM equipement WHERE personnage_id = pid AND nom IN ('Pièces d''or', 'Pièces d''argent');
 
-UPDATE monnaie SET po=120, pc=50
-WHERE personnage_id = (SELECT id FROM personnages WHERE nom = 'Sira Venti');
+  -- Sira Venti : 120 po, 50 pc
+  SELECT id INTO pid FROM personnages WHERE nom = 'Sira Venti';
+  INSERT INTO tags (personnage_id, nom, systeme) VALUES (pid, 'Monnaie', 'monnaie') RETURNING id INTO tag_id;
+  INSERT INTO equipement (personnage_id, nom, quantite, valeur_pc)
+    VALUES (pid, 'Pièces d''or', 120, 100), (pid, 'Pièces de cuivre', 50, 1);
+  INSERT INTO equipement_tags (equipement_id, tag_id)
+    SELECT id, tag_id FROM equipement WHERE personnage_id = pid AND nom IN ('Pièces d''or', 'Pièces de cuivre');
 
-UPDATE monnaie SET po=30, pa=5
-WHERE personnage_id = (SELECT id FROM personnages WHERE nom = 'Brother Toryn');
+  -- Brother Toryn : 30 po, 5 pa
+  SELECT id INTO pid FROM personnages WHERE nom = 'Brother Toryn';
+  INSERT INTO tags (personnage_id, nom, systeme) VALUES (pid, 'Monnaie', 'monnaie') RETURNING id INTO tag_id;
+  INSERT INTO equipement (personnage_id, nom, quantite, valeur_pc)
+    VALUES (pid, 'Pièces d''or', 30, 100), (pid, 'Pièces d''argent', 5, 10);
+  INSERT INTO equipement_tags (equipement_id, tag_id)
+    SELECT id, tag_id FROM equipement WHERE personnage_id = pid AND nom IN ('Pièces d''or', 'Pièces d''argent');
+END $$;
