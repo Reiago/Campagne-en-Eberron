@@ -2099,6 +2099,11 @@ body.mode-jeu .arme-maitrise-cb:checked {
 }
 .equipement-conteneur-creer:hover { color: var(--gold-light); }
 
+/* Mode Jeu : actions d'édition des tags/conteneurs masquées (lecture seule) */
+body.mode-jeu .equipement-tag-select,
+body.mode-jeu .equipement-conteneur-creer,
+body.mode-jeu .equipement-conteneur-retirer { display: none !important; }
+
 /* Regroupement visuel des objets contenus sous leur conteneur */
 .equipement-groupe-conteneur {
   margin: -0.4rem 0 0.75rem 1.25rem;
