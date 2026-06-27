@@ -67,6 +67,20 @@
     .btn-portail:hover { color: var(--gold); }
     .btn-portail::before { content: '← '; }
 
+    .btn-base-link {
+      display: inline-block;
+      color: var(--text-muted);
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+    .btn-base-link:hover { color: var(--gold); }
+    .btn-base-link::before { content: '⚒ '; }
+
     .section-label {
       font-family: 'Cinzel', serif;
       font-size: 10px;
@@ -142,6 +156,8 @@
   </div>
 
   <a href="index.html" class="btn-portail">Retour au portail</a>
+
+  <a href="equipement-base.html" class="btn-base-link">Gérer la base d'équipement officielle</a>
 
   <div class="section-label">Personnages</div>
   <div class="perso-grid" id="perso-grid">

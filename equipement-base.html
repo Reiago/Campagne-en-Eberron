@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Équipement officiel — Eberron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .mj-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .mj-header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .auth-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .btn-logout {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-logout:hover { border-color: var(--gold-dim); color: var(--gold); }
+    .btn-portail {
+      display: inline-block;
+      color: var(--text-muted);
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+    .btn-portail:hover { color: var(--gold); }
+    .btn-portail::before { content: '← '; }
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+    .loading { color: var(--text-muted); font-style: italic; padding: 1rem 0; }
+    .error-msg { color: #D4806A; padding: 1rem 0; }
+
+    /* ── Tableau du catalogue ── */
+    #base-table input, #base-table textarea {
+      width: 100%;
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-bright);
+      font-family: var(--font-body, inherit);
+      font-size: 13px;
+      padding: 0.3rem 0.4rem;
+    }
+    #base-table input[type="number"] { width: 6em; }
+    .btn-del-base {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 0.2rem 0.4rem;
+    }
+    .btn-del-base:hover { color: #D87060; border-color: rgba(200,80,60,0.3); }
+
+    /* ── Formulaire d'ajout ── */
+    .ajout-form {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 2fr;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+    .ajout-form input { grid-column: span 1; }
+    .ajout-form .ajout-desc { grid-column: 1 / -1; }
+    .ajout-form input, .ajout-form textarea {
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-bright);
+      font-size: 13px;
+      padding: 0.4rem 0.5rem;
+    }
+    .btn-gold {
+      background: transparent;
+      border: 1px solid var(--gold-dim);
+      border-radius: 4px;
+      color: var(--gold-light);
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.55rem 1rem;
+      transition: background 0.15s;
+    }
+    .btn-gold:hover { background: rgba(201,168,108,0.08); }
+
+    /* ── Import CSV ── */
+    .csv-zone {
+      border: 1px dashed var(--border-strong);
+      border-radius: 6px;
+      padding: 1.25rem;
+    }
+    .csv-zone input[type="file"] { color: var(--text-muted); margin-bottom: 0.75rem; }
+    .csv-hint { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.75rem; }
+    #csv-review table { font-size: 13px; }
+    .csv-status-new { color: #8FBF9A; }
+    .csv-status-dup { color: #D4A85C; }
+    .csv-action-select {
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-bright);
+      font-size: 12px;
+      padding: 0.2rem 0.3rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="nav-container"></div>
+
+  <div class="mj-header">
+    <h1>Équipement officiel</h1>
+    <div class="auth-bar" id="auth-bar"></div>
+  </div>
+
+  <a href="mj.html" class="btn-portail">Retour à l'espace MJ</a>
+
+  <div class="section-label" style="margin-top:0;">Ajouter un objet</div>
+  <div class="ajout-form">
+    <input type="text" id="ajout-nom" placeholder="Nom de l'objet" />
+    <input type="number" id="ajout-valeur" min="0" step="1" placeholder="Valeur (pc)" />
+    <input type="number" id="ajout-poids" min="0" step="0.1" placeholder="Poids (kg)" />
+    <input type="text" id="ajout-tags" placeholder="Tags (séparés par ;)" />
+    <textarea id="ajout-desc" class="ajout-desc" rows="2" placeholder="Description (optionnel)"></textarea>
+  </div>
+  <button class="btn-gold" id="btn-ajout-base">+ Ajouter au catalogue</button>
+
+  <div class="section-label">Catalogue officiel</div>
+  <div id="base-table">
+    <p class="loading">Chargement…</p>
+  </div>
+
+  <div class="section-label">Importer un CSV</div>
+  <div class="csv-zone">
+    <p class="csv-hint">Colonnes attendues (en-tête requis) : <strong>nom, valeur_pc, poids, tags, description</strong> — tags séparés par <code>;</code>.</p>
+    <input type="file" id="csv-file" accept=".csv,text/csv" />
+    <div id="csv-review"></div>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script type="module">
+  import { requireMJ, logout } from './auth.js';
+  import {
+    getEquipementBase, addEquipementBase, updateEquipementBase, deleteEquipementBase, bulkUpsertEquipementBase,
+  } from './db.js';
+
+  const user = await requireMJ();
+  if (!user) throw new Error('Accès refusé');
+
+  const authBar = document.getElementById('auth-bar');
+  authBar.innerHTML = `<span>${user.email}</span><button class="btn-logout" id="btn-logout">Déconnexion</button>`;
+  document.getElementById('btn-logout').addEventListener('click', logout);
+
+  // Supprime accents + espaces superflus pour la détection de doublons.
+  function normaliserNom(str) {
+    return (str ?? '').toString().trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ');
+  }
+
+  function formaterValeur(pc) {
+    pc = pc ?? 0;
+    const pp = Math.floor(pc / 1000); pc %= 1000;
+    const po = Math.floor(pc / 100); pc %= 100;
+    const pe = Math.floor(pc / 50); pc %= 50;
+    const pa = Math.floor(pc / 10); pc %= 10;
+    const parts = [];
+    if (pp) parts.push(pp + ' pp');
+    if (po) parts.push(po + ' po');
+    if (pe) parts.push(pe + ' pe');
+    if (pa) parts.push(pa + ' pa');
+    if (pc || !parts.length) parts.push(pc + ' pc');
+    return parts.join(' ');
+  }
+
+  let base = [];
+
+  async function chargerBase() {
+    const tableEl = document.getElementById('base-table');
+    try {
+      base = await getEquipementBase();
+      renderBaseTable();
+    } catch (e) {
+      tableEl.innerHTML = `<p class="error-msg">Erreur : ${e.message}</p>`;
+    }
+  }
+
+  function renderBaseTable() {
+    const tableEl = document.getElementById('base-table');
+    if (!base.length) {
+      tableEl.innerHTML = '<p class="loading">Aucun objet dans le catalogue.</p>';
+      return;
+    }
+    tableEl.innerHTML = `
+      <table>
+        <thead>
+          <tr><th>Nom</th><th>Valeur</th><th>Poids (kg)</th><th>Tags</th><th>Description</th><th></th></tr>
+        </thead>
+        <tbody>
+          ${base.map(item => `
+            <tr data-id="${item.id}">
+              <td><input type="text" class="b-nom" value="${item.nom.replace(/"/g, '&quot;')}" /></td>
+              <td><input type="number" min="0" step="1" class="b-valeur" value="${item.valeur_pc ?? 0}" /></td>
+              <td><input type="number" min="0" step="0.1" class="b-poids" value="${item.poids ?? ''}" /></td>
+              <td><input type="text" class="b-tags" value="${(item.tags || []).join('; ')}" /></td>
+              <td><input type="text" class="b-desc" value="${(item.description ?? '').replace(/"/g, '&quot;')}" /></td>
+              <td><button class="btn-del-base" title="Supprimer">✕</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+
+    tableEl.querySelectorAll('tbody tr').forEach(row => {
+      const id = row.dataset.id;
+      const champs = {
+        nom: row.querySelector('.b-nom'),
+        valeur_pc: row.querySelector('.b-valeur'),
+        poids: row.querySelector('.b-poids'),
+        tags: row.querySelector('.b-tags'),
+        description: row.querySelector('.b-desc'),
+      };
+      let timer = null;
+      const save = () => {
+        clearTimeout(timer);
+        timer = setTimeout(async () => {
+          try {
+            await updateEquipementBase(id, {
+              nom: champs.nom.value,
+              nom_normalise: normaliserNom(champs.nom.value),
+              valeur_pc: Number(champs.valeur_pc.value) || 0,
+              poids: champs.poids.value !== '' ? Number(champs.poids.value) : null,
+              tags: champs.tags.value.split(';').map(t => t.trim()).filter(Boolean),
+              description: champs.description.value || null,
+            });
+          } catch (e) { alert('Erreur de sauvegarde : ' + e.message); }
+        }, 500);
+      };
+      Object.values(champs).forEach(input => input.addEventListener('input', save));
+
+      row.querySelector('.btn-del-base').addEventListener('click', async () => {
+        if (!confirm('Supprimer cet objet du catalogue officiel ?')) return;
+        try {
+          await deleteEquipementBase(id);
+          base = base.filter(b => b.id !== id);
+          renderBaseTable();
+        } catch (e) { alert('Erreur : ' + e.message); }
+      });
+    });
+  }
+
+  document.getElementById('btn-ajout-base').addEventListener('click', async () => {
+    const nom = document.getElementById('ajout-nom').value.trim();
+    if (!nom) { alert('Le nom est obligatoire.'); return; }
+    const data = {
+      nom,
+      nom_normalise: normaliserNom(nom),
+      valeur_pc: Number(document.getElementById('ajout-valeur').value) || 0,
+      poids: document.getElementById('ajout-poids').value !== '' ? Number(document.getElementById('ajout-poids').value) : null,
+      tags: document.getElementById('ajout-tags').value.split(';').map(t => t.trim()).filter(Boolean),
+      description: document.getElementById('ajout-desc').value || null,
+    };
+    try {
+      const created = await addEquipementBase(data);
+      base.push(created);
+      renderBaseTable();
+      document.getElementById('ajout-nom').value = '';
+      document.getElementById('ajout-valeur').value = '';
+      document.getElementById('ajout-poids').value = '';
+      document.getElementById('ajout-tags').value = '';
+      document.getElementById('ajout-desc').value = '';
+    } catch (e) {
+      alert(e.code === '23505' ? 'Un objet avec un nom équivalent existe déjà dans le catalogue.' : 'Erreur : ' + e.message);
+    }
+  });
+
+  // ── Import CSV ──────────────────────────────────────────────────────────────
+
+  // Parseur CSV simple gérant les champs entre guillemets (virgules/guillemets échappés).
+  function parserCsv(texte) {
+    const lignes = [];
+    let ligne = [];
+    let champ = '';
+    let dansGuillemets = false;
+    for (let i = 0; i < texte.length; i++) {
+      const c = texte[i];
+      if (dansGuillemets) {
+        if (c === '"') {
+          if (texte[i + 1] === '"') { champ += '"'; i++; }
+          else dansGuillemets = false;
+        } else champ += c;
+      } else if (c === '"') {
+        dansGuillemets = true;
+      } else if (c === ',') {
+        ligne.push(champ); champ = '';
+      } else if (c === '\n' || c === '\r') {
+        if (c === '\r' && texte[i + 1] === '\n') i++;
+        ligne.push(champ); champ = '';
+        if (ligne.some(v => v !== '')) lignes.push(ligne);
+        ligne = [];
+      } else {
+        champ += c;
+      }
+    }
+    if (champ !== '' || ligne.length) { ligne.push(champ); lignes.push(ligne); }
+    if (!lignes.length) return [];
+    const entetes = lignes[0].map(h => h.trim().toLowerCase());
+    return lignes.slice(1).map(vals => {
+      const obj = {};
+      entetes.forEach((h, idx) => { obj[h] = (vals[idx] ?? '').trim(); });
+      return obj;
+    });
+  }
+
+  let lignesImport = [];
+
+  document.getElementById('csv-file').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const texte = await file.text();
+    const rows = parserCsv(texte);
+    const existingByNorm = new Map(base.map(b => [b.nom_normalise, b]));
+    const seenInBatch = new Map();
+
+    lignesImport = rows.filter(r => r.nom).map(r => {
+      const nom = r.nom.trim();
+      const nom_normalise = normaliserNom(nom);
+      const existant = existingByNorm.get(nom_normalise) || seenInBatch.get(nom_normalise);
+      if (!seenInBatch.has(nom_normalise)) seenInBatch.set(nom_normalise, { nom });
+      return {
+        nom,
+        nom_normalise,
+        valeur_pc: Number(r.valeur_pc) || 0,
+        poids: r.poids !== '' && r.poids != null ? Number(r.poids) : null,
+        tags: (r.tags || '').split(';').map(t => t.trim()).filter(Boolean),
+        description: r.description || null,
+        duplicate: !!existant,
+        duplicateNom: existant ? existant.nom : null,
+        action: existant ? 'ignorer' : 'importer',
+      };
+    });
+    renderCsvReview();
+  });
+
+  function renderCsvReview() {
+    const zone = document.getElementById('csv-review');
+    if (!lignesImport.length) {
+      zone.innerHTML = '<p class="loading">Aucune ligne valide trouvée dans le fichier.</p>';
+      return;
+    }
+    const nbNouveaux = lignesImport.filter(l => !l.duplicate).length;
+    const nbDoublons = lignesImport.filter(l => l.duplicate).length;
+    zone.innerHTML = `
+      <p>${lignesImport.length} ligne(s) lues — ${nbNouveaux} nouvelle(s), ${nbDoublons} doublon(s) détecté(s).</p>
+      <table>
+        <thead><tr><th>Nom</th><th>Valeur (pc)</th><th>Statut</th><th>Action</th></tr></thead>
+        <tbody>
+          ${lignesImport.map((l, idx) => `
+            <tr data-idx="${idx}">
+              <td>${l.nom}</td>
+              <td>${l.valeur_pc}</td>
+              <td>${l.duplicate ? `<span class="csv-status-dup">Doublon de « ${l.duplicateNom} »</span>` : '<span class="csv-status-new">Nouveau</span>'}</td>
+              <td>
+                ${l.duplicate ? `
+                  <select class="csv-action-select">
+                    <option value="ignorer" selected>Ignorer</option>
+                    <option value="remplacer">Remplacer l'existant</option>
+                    <option value="importer_quand_meme">Importer quand même (copie)</option>
+                  </select>
+                ` : '—'}
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+      <button class="btn-gold" id="btn-confirmer-import">Importer</button>
+    `;
+    zone.querySelectorAll('tr[data-idx] .csv-action-select').forEach(sel => {
+      const idx = Number(sel.closest('tr').dataset.idx);
+      sel.addEventListener('change', () => { lignesImport[idx].action = sel.value; });
+    });
+    document.getElementById('btn-confirmer-import').addEventListener('click', confirmerImport);
+  }
+
+  async function confirmerImport() {
+    const aUpserter = [];
+    lignesImport.forEach(l => {
+      if (l.action === 'ignorer') return;
+      const payload = { nom: l.nom, nom_normalise: l.nom_normalise, valeur_pc: l.valeur_pc, poids: l.poids, tags: l.tags, description: l.description };
+      if (l.action === 'importer_quand_meme') {
+        payload.nom = payload.nom + ' (copie)';
+        payload.nom_normalise = normaliserNom(payload.nom);
+      }
+      aUpserter.push(payload);
+    });
+    if (!aUpserter.length) { alert('Aucun objet à importer (tout est ignoré).'); return; }
+    try {
+      await bulkUpsertEquipementBase(aUpserter);
+      alert(aUpserter.length + ' objet(s) importé(s).');
+      lignesImport = [];
+      document.getElementById('csv-review').innerHTML = '';
+      document.getElementById('csv-file').value = '';
+      await chargerBase();
+    } catch (e) {
+      alert('Erreur lors de l\'import : ' + e.message);
+    }
+  }
+
+  chargerBase();
+</script>
+</body>
+</html>

@@ -5,7 +5,7 @@ import {
   getCompetences, updateCompetence,
   getArmes, addArme, updateArme, deleteArme,
   getEquipement, addEquipement, updateEquipement, deleteEquipement,
-  getMonnaie, updateMonnaie,
+  getTags, addTag, updateTag, deleteTag, getEquipementTags, linkTag, unlinkTag, searchEquipementBase,
   getSorts, addSort, updateSort, deleteSort,
   getEmplacementsSorts, updateEmplacementSorts,
   getCapacites, addCapacite, updateCapacite, deleteCapacite,
@@ -52,6 +52,21 @@ const NIVEAUX_SORTS_LABELS = { 0: 'Sorts mineurs' };
 for (let i = 1; i <= 9; i++) NIVEAUX_SORTS_LABELS[i] = 'Niveau ' + i;
 const RECHARGEMENTS = { court: 'Repos court', long: 'Repos long', aube: "À l'aube", jamais: 'Jamais' };
 const ACTIONS_REQUISES = ['Action', 'Action bonus', 'Réaction', 'Libre'];
+// Taux de conversion en pièces de cuivre (PC), utilisés pour la valeur des
+// objets et le résumé de monnaie (objets tagués "Monnaie").
+const TAUX_PC = { pp: 1000, po: 100, pe: 50, pa: 10, pc: 1 };
+// Tri & filtres de l'inventaire (état local, non persisté en DB).
+let equipementSortKey = 'nom-asc';
+let equipementFilterTagIds = new Set();
+let fermetureMenusEquipementInitialisee = false;
+const COMPARATEURS_EQUIPEMENT = {
+  'nom-asc': (a, b) => (a.nom ?? '').localeCompare(b.nom ?? ''),
+  'nom-desc': (a, b) => (b.nom ?? '').localeCompare(a.nom ?? ''),
+  'valeur-asc': (a, b) => (a.valeur_pc ?? 0) - (b.valeur_pc ?? 0),
+  'valeur-desc': (a, b) => (b.valeur_pc ?? 0) - (a.valeur_pc ?? 0),
+  'poids-asc': (a, b) => (a.poids ?? 0) - (b.poids ?? 0),
+  'poids-desc': (a, b) => (b.poids ?? 0) - (a.poids ?? 0),
+};
 
 // Supprime accents + met en minuscules pour la recherche dans COMP_CARAC.
 function normaliserNom(str) {
@@ -64,7 +79,8 @@ function capitaliser(str) {
 }
 
 // ── État ───────────────────────────────────────────────────────────────────────
-let perso = null, carac = null, competences = [], armes = [], equipement = [], monnaie = null;
+let perso = null, carac = null, competences = [], armes = [], equipement = [];
+let tags = [], tagsByEquipement = {};
 let sorts = [], emplacementsSorts = [], capacites = [];
 let emplacementTimers = {};
 let reposMode        = localStorage.getItem('repos-mode') || 'auto'; // 'auto' | 'manuel'
@@ -74,7 +90,7 @@ let reposPanelOpen   = false;
 const DEBOUNCE_MS = 500;
 const ARME_MOBILE_BREAKPOINT = 480;
 const EQUIPEMENT_MOBILE_BREAKPOINT = 480;
-let persoTimer = null, caracTimer = null, monnaieTimer = null;
+let persoTimer = null, caracTimer = null;
 
 // ── Mode Jeu / Mode Édition ────────────────────────────────────────────────────
 function getMode() {
@@ -117,16 +133,22 @@ try {
   perso = ficheId ? await getPersonnageById(ficheId) : await getPersonnage(user.id);
   if (!perso) throw new Error('Aucun personnage trouvé pour ce compte.');
 
-  [carac, competences, armes, equipement, monnaie, sorts, emplacementsSorts, capacites] = await Promise.all([
+  let equipementTagLinks;
+  [carac, competences, armes, equipement, tags, equipementTagLinks, sorts, emplacementsSorts, capacites] = await Promise.all([
     getCaracteristiques(perso.id),
     getCompetences(perso.id),
     getArmes(perso.id),
     getEquipement(perso.id),
-    getMonnaie(perso.id),
+    getTags(perso.id),
+    getEquipementTags(perso.id),
     getSorts(perso.id),
     getEmplacementsSorts(perso.id),
     getCapacites(perso.id),
   ]);
+  tagsByEquipement = {};
+  equipementTagLinks.forEach(link => {
+    (tagsByEquipement[link.equipement_id] ??= []).push(link.tag);
+  });
 
   if (perso.nom) {
     document.title = perso.nom + ' — Eberron';
@@ -788,10 +810,189 @@ function recalculerArmes() {
 }
 
 // ── Bloc 8 : Équipement & Possessions ─────────────────────────────────────────
+function tagsDeObjet(itemId) {
+  return tagsByEquipement[itemId] || [];
+}
+
+function objetEstMagique(itemId) {
+  return tagsDeObjet(itemId).some(t => t.nom === 'Magique');
+}
+
+function objetEstMonnaie(itemId) {
+  return tagsDeObjet(itemId).some(t => t.systeme === 'monnaie');
+}
+
+// Tag-conteneur dont cet objet est le conteneur (ex. la "Bourse" elle-même), s'il y en a un.
+function tagConteneurDeLObjet(itemId) {
+  return tags.find(t => t.conteneur_equipement_id === itemId);
+}
+
+// Désambiguïsation "#n" des tags-conteneurs homonymes, calculée à l'affichage
+// (jamais stockée en DB) : index dans le groupe trié par ordre/date de création.
+function suffixesConteneurs() {
+  const groupes = {};
+  tags.filter(t => t.conteneur_equipement_id).forEach(t => {
+    (groupes[t.nom] ??= []).push(t);
+  });
+  const suffixById = {};
+  Object.values(groupes).forEach(liste => {
+    if (liste.length < 2) return;
+    liste.sort((a, b) => (a.ordre - b.ordre) || (new Date(a.created_at) - new Date(b.created_at)));
+    liste.forEach((t, idx) => { suffixById[t.id] = idx + 1; });
+  });
+  return suffixById;
+}
+
+function libelleTag(tag, suffixes) {
+  if (!tag.conteneur_equipement_id) return tag.nom;
+  const n = suffixes[tag.id];
+  return n ? `📦 ${tag.nom} #${n}` : `📦 ${tag.nom}`;
+}
+
+// Regroupe une liste d'objets (déjà filtrée/triée) : objets racine, et
+// enfants par conteneur (objets portant un tag-conteneur lié à un autre
+// objet de l'inventaire). Un objet filtré hors résultat ne réapparaît pas
+// sous son conteneur, même si celui-ci est affiché.
+function calculerGroupesEquipement(liste) {
+  const conteneurDeLItem = new Map(); // itemId -> id de l'objet conteneur
+  liste.forEach(item => {
+    const t = tagsDeObjet(item.id).find(tag => tag.conteneur_equipement_id);
+    if (t && t.conteneur_equipement_id !== item.id) conteneurDeLItem.set(item.id, t.conteneur_equipement_id);
+  });
+  const enfantsParConteneur = new Map();
+  liste.forEach(item => {
+    const cid = conteneurDeLItem.get(item.id);
+    if (!cid) return;
+    if (!enfantsParConteneur.has(cid)) enfantsParConteneur.set(cid, []);
+    enfantsParConteneur.get(cid).push(item);
+  });
+  const racine = liste.filter(item => !conteneurDeLItem.has(item.id));
+  return { racine, enfantsParConteneur };
+}
+
+function getEquipementAffiche() {
+  let liste = equipement.slice();
+  if (equipementFilterTagIds.size) {
+    liste = liste.filter(item => tagsDeObjet(item.id).some(t => equipementFilterTagIds.has(t.id)));
+  }
+  const cmp = COMPARATEURS_EQUIPEMENT[equipementSortKey] ?? COMPARATEURS_EQUIPEMENT['nom-asc'];
+  return liste.sort(cmp);
+}
+
+// Barre d'outils tri/filtre, insérée une seule fois au-dessus de l'inventaire.
+function initBarreOutilsEquipement(container) {
+  const section = container.parentElement;
+  if (!section || section.querySelector('.equipement-toolbar')) return;
+
+  const toolbar = document.createElement('div');
+  toolbar.className = 'equipement-toolbar';
+  toolbar.innerHTML = `
+    <select class="equipement-tri-select">
+      <option value="nom-asc">Nom (A → Z)</option>
+      <option value="nom-desc">Nom (Z → A)</option>
+      <option value="valeur-asc">Valeur ↑</option>
+      <option value="valeur-desc">Valeur ↓</option>
+      <option value="poids-asc">Poids ↑</option>
+      <option value="poids-desc">Poids ↓</option>
+    </select>
+    <div class="equipement-filtre-wrap">
+      <button type="button" class="equipement-filtre-btn">Filtrer par tag<span class="equipement-filtre-count"></span></button>
+      <div class="equipement-filtre-panel" hidden></div>
+    </div>
+  `;
+  section.insertBefore(toolbar, container);
+
+  const triSelect = toolbar.querySelector('.equipement-tri-select');
+  triSelect.value = equipementSortKey;
+  triSelect.addEventListener('change', () => {
+    equipementSortKey = triSelect.value;
+    remplirEquipement();
+  });
+
+  const filtreBtn = toolbar.querySelector('.equipement-filtre-btn');
+  const filtrePanel = toolbar.querySelector('.equipement-filtre-panel');
+  const filtreCount = toolbar.querySelector('.equipement-filtre-count');
+
+  function refreshFiltreCount() {
+    filtreCount.textContent = equipementFilterTagIds.size ? ` (${equipementFilterTagIds.size})` : '';
+  }
+  refreshFiltreCount();
+
+  filtreBtn.addEventListener('click', () => {
+    if (filtrePanel.hidden) {
+      const tagsUniques = [...new Map(tags.map(t => [t.id, t])).values()];
+      filtrePanel.innerHTML = tagsUniques.length
+        ? tagsUniques.map(t => `
+            <label class="equipement-filtre-item">
+              <input type="checkbox" class="mode-jeu-ok" value="${t.id}" ${equipementFilterTagIds.has(t.id) ? 'checked' : ''} />
+              ${libelleTag(t, suffixesConteneurs())}
+            </label>
+          `).join('')
+        : '<p class="equipement-ajout-vide">Aucun tag créé pour le moment.</p>';
+      filtrePanel.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          if (cb.checked) equipementFilterTagIds.add(cb.value);
+          else equipementFilterTagIds.delete(cb.value);
+          refreshFiltreCount();
+          remplirEquipement();
+        });
+      });
+    }
+    filtrePanel.hidden = !filtrePanel.hidden;
+  });
+}
+
+// Recharge équipement/tags/liaisons depuis la base puis redessine l'inventaire.
+// Utilisé après toute opération pouvant déclencher une cascade côté DB
+// (suppression d'un conteneur, retrait d'un tag-conteneur).
+async function rafraichirEquipementDepuisDB() {
+  const [eq, tg, liens] = await Promise.all([
+    getEquipement(perso.id),
+    getTags(perso.id),
+    getEquipementTags(perso.id),
+  ]);
+  equipement = eq;
+  tags = tg;
+  tagsByEquipement = {};
+  liens.forEach(link => { (tagsByEquipement[link.equipement_id] ??= []).push(link.tag); });
+  remplirEquipement();
+}
+
+function decomposerPc(totalPc) {
+  let reste = totalPc;
+  const pp = Math.floor(reste / TAUX_PC.pp); reste %= TAUX_PC.pp;
+  const po = Math.floor(reste / TAUX_PC.po); reste %= TAUX_PC.po;
+  const pe = Math.floor(reste / TAUX_PC.pe); reste %= TAUX_PC.pe;
+  const pa = Math.floor(reste / TAUX_PC.pa); reste %= TAUX_PC.pa;
+  const pc = reste;
+  return { pp, po, pe, pa, pc };
+}
+
+function recalculerResumeMonnaie() {
+  const container = document.getElementById('equipement-monnaie-section');
+  if (!container) return;
+  const totalPc = equipement.reduce((sum, item) => {
+    return objetEstMonnaie(item.id) ? sum + (item.quantite ?? 0) * (item.valeur_pc ?? 0) : sum;
+  }, 0);
+  const { pp, po, pe, pa, pc } = decomposerPc(totalPc);
+  container.innerHTML = `
+    <h3 class="equipement-section-label">Monnaie</h3>
+    <div class="monnaie-grid monnaie-readonly">
+      <div class="monnaie-card monnaie-pp"><span class="monnaie-value">${pp}</span><span class="monnaie-line"></span><span class="monnaie-hint">Platine</span></div>
+      <div class="monnaie-card monnaie-po"><span class="monnaie-value">${po}</span><span class="monnaie-line"></span><span class="monnaie-hint">Or</span></div>
+      <div class="monnaie-card monnaie-pe"><span class="monnaie-value">${pe}</span><span class="monnaie-line"></span><span class="monnaie-hint">Électrum</span></div>
+      <div class="monnaie-card monnaie-pa"><span class="monnaie-value">${pa}</span><span class="monnaie-line"></span><span class="monnaie-hint">Argent</span></div>
+      <div class="monnaie-card monnaie-pc"><span class="monnaie-value">${pc}</span><span class="monnaie-line"></span><span class="monnaie-hint">Cuivre</span></div>
+    </div>
+  `;
+}
+
 function remplirEquipement() {
   const container = document.getElementById('equipement-container');
   if (!container) return;
   container.innerHTML = '';
+
+  initBarreOutilsEquipement(container);
 
   if (!equipement.length) {
     const empty = document.createElement('p');
@@ -799,35 +1000,175 @@ function remplirEquipement() {
     empty.textContent = 'Aucun objet — ajoutez-en un en Mode Édition.';
     container.appendChild(empty);
   } else {
-    equipement.forEach(item => container.appendChild(renderEquipementCard(item)));
+    const listeAffichee = getEquipementAffiche();
+    if (!listeAffichee.length) {
+      const empty = document.createElement('p');
+      empty.className = 'equipement-empty';
+      empty.textContent = 'Aucun objet ne correspond aux filtres sélectionnés.';
+      container.appendChild(empty);
+    } else {
+      const { racine, enfantsParConteneur } = calculerGroupesEquipement(listeAffichee);
+      racine.forEach(item => {
+        container.appendChild(renderEquipementCard(item));
+        const enfants = enfantsParConteneur.get(item.id);
+        if (enfants && enfants.length) {
+          const groupe = document.createElement('div');
+          groupe.className = 'equipement-groupe-conteneur';
+          enfants.forEach(enfant => groupe.appendChild(renderEquipementCard(enfant)));
+          container.appendChild(groupe);
+        }
+      });
+    }
   }
 
-  document.getElementById('btn-add-equipement')?.addEventListener('click', async () => {
-    const newItem = { personnage_id: perso.id, nom: '', type: 'equipement', description: '', quantite: 1 };
-    try {
-      showSave('saving');
-      const created = await addEquipement(newItem);
-      showSave('ok');
-      equipement.push(created);
-      const emptyEl = container.querySelector('.equipement-empty');
-      if (emptyEl) emptyEl.remove();
-      container.appendChild(renderEquipementCard(created));
-    } catch (err) { showSave('error'); console.error(err); }
+  initPanneauAjoutEquipement(container);
+
+  recalculerResumeMonnaie();
+}
+
+// Crée un objet vierge (comportement historique du bouton "+ Ajouter un objet").
+async function ajouterObjetVide(container) {
+  const newItem = { personnage_id: perso.id, nom: '', description: '', quantite: 1, valeur_pc: 0 };
+  showSave('saving');
+  try {
+    const created = await addEquipement(newItem);
+    showSave('ok');
+    equipement.push(created);
+    tagsByEquipement[created.id] = [];
+    container.querySelector('.equipement-empty')?.remove();
+    container.appendChild(renderEquipementCard(created));
+  } catch (err) { showSave('error'); console.error(err); }
+}
+
+// Copie indépendante d'un objet : mêmes valeurs, tags recopiés (sauf ceux
+// exclus par nom). Le statut conteneur n'est jamais hérité, puisqu'il dépend
+// uniquement de l'id de l'objet d'origine (jamais copié).
+async function dupliquerObjetEquipement(item, { excludeBaseId = false, excludeTagsByNom = [] } = {}) {
+  const newItem = {
+    personnage_id: perso.id,
+    nom: item.nom,
+    description: item.description,
+    quantite: item.quantite,
+    poids: item.poids,
+    valeur_pc: item.valeur_pc,
+    base_id: excludeBaseId ? null : (item.base_id ?? null),
+  };
+  const created = await addEquipement(newItem);
+  const tagsACopier = tagsDeObjet(item.id).filter(t => !excludeTagsByNom.includes(t.nom));
+  for (const tag of tagsACopier) await linkTag(created.id, tag.id);
+  return created;
+}
+
+// Ferme tout menu d'objet ouvert au clic en dehors (écouteur global, posé une seule fois).
+function initFermetureMenusEquipement() {
+  if (fermetureMenusEquipementInitialisee) return;
+  fermetureMenusEquipementInitialisee = true;
+  document.addEventListener('click', e => {
+    if (e.target.closest('.equipement-menu-wrap')) return;
+    document.querySelectorAll('.equipement-menu').forEach(m => { m.hidden = true; });
+  });
+}
+
+// Renvoie un tag existant du personnage (par nom + systeme) ou le crée.
+async function obtenirOuCreerTag(nom, systeme = null) {
+  let tag = tags.find(t => t.nom === nom && (systeme ? t.systeme === systeme : !t.systeme));
+  if (tag) return tag;
+  tag = await addTag({ personnage_id: perso.id, nom, ...(systeme ? { systeme } : {}) });
+  tags.push(tag);
+  return tag;
+}
+
+// Ajoute un objet pré-rempli depuis la base officielle : pose base_id + tag
+// "Base" + les tags suggérés par le catalogue (créés s'ils n'existent pas déjà).
+async function ajouterDepuisBase(container, baseItem) {
+  const newItem = {
+    personnage_id: perso.id,
+    nom: baseItem.nom,
+    description: baseItem.description ?? '',
+    quantite: 1,
+    poids: baseItem.poids ?? null,
+    valeur_pc: baseItem.valeur_pc ?? 0,
+    base_id: baseItem.id,
+  };
+  showSave('saving');
+  try {
+    const created = await addEquipement(newItem);
+    const SYSTEME_PAR_TAG = { Base: 'base', Monnaie: 'monnaie' };
+    for (const nomTag of ['Base', ...(baseItem.tags || [])]) {
+      const tag = await obtenirOuCreerTag(nomTag, SYSTEME_PAR_TAG[nomTag] ?? null);
+      await linkTag(created.id, tag.id);
+    }
+    showSave('ok');
+    // Recharge complète : les tags suggérés (Monnaie, conteneur…) peuvent
+    // affecter le résumé de monnaie ou le regroupement visuel.
+    await rafraichirEquipementDepuisDB();
+  } catch (err) { showSave('error'); console.error(err); }
+}
+
+// Panneau de recherche affiché au clic sur "+ Ajouter un objet" : recherche
+// dans la base officielle pour pré-remplir, ou création d'un objet personnalisé.
+function initPanneauAjoutEquipement(container) {
+  const footer = document.querySelector('.equipement-footer');
+  const addBtn = document.getElementById('btn-add-equipement');
+  if (!footer || !addBtn || footer.querySelector('.equipement-ajout-panel')) return;
+
+  const panel = document.createElement('div');
+  panel.className = 'equipement-ajout-panel';
+  panel.hidden = true;
+  panel.innerHTML = `
+    <input type="text" class="equipement-ajout-recherche" placeholder="Rechercher dans la base officielle…" />
+    <div class="equipement-ajout-resultats"></div>
+    <button type="button" class="equipement-ajout-perso">+ Objet personnalisé</button>
+  `;
+  footer.appendChild(panel);
+
+  addBtn.addEventListener('click', () => {
+    panel.hidden = !panel.hidden;
+    if (!panel.hidden) panel.querySelector('.equipement-ajout-recherche').focus();
   });
 
-  remplirMonnaie();
+  const rechInput = panel.querySelector('.equipement-ajout-recherche');
+  const resultatsEl = panel.querySelector('.equipement-ajout-resultats');
+  let rechTimer = null;
+
+  rechInput.addEventListener('input', () => {
+    clearTimeout(rechTimer);
+    const q = rechInput.value.trim();
+    if (q.length < 2) { resultatsEl.innerHTML = ''; return; }
+    rechTimer = setTimeout(async () => {
+      let resultats;
+      try { resultats = await searchEquipementBase(q); } catch (err) { console.error(err); return; }
+      resultatsEl.innerHTML = resultats.length
+        ? resultats.map(r => `<button type="button" class="equipement-ajout-resultat" data-id="${r.id}">${r.nom} <span class="equipement-ajout-resultat-valeur">${r.valeur_pc ?? 0} pc</span></button>`).join('')
+        : '<p class="equipement-ajout-vide">Aucun résultat.</p>';
+      resultatsEl.querySelectorAll('.equipement-ajout-resultat').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const baseItem = resultats.find(r => r.id === btn.dataset.id);
+          await ajouterDepuisBase(container, baseItem);
+          panel.hidden = true;
+          rechInput.value = '';
+          resultatsEl.innerHTML = '';
+        });
+      });
+    }, 300);
+  });
+
+  panel.querySelector('.equipement-ajout-perso').addEventListener('click', async () => {
+    await ajouterObjetVide(container);
+    panel.hidden = true;
+  });
 }
 
 function renderEquipementCard(item) {
   const card = document.createElement('div');
   card.className = 'equipement-card';
-  card.dataset.type = item.type ?? 'equipement';
   card.classList.toggle('no-desc', !item.description);
+  card.classList.toggle('tag-magique', objetEstMagique(item.id));
 
   card.innerHTML = `
     <div class="equipement-row equipement-row-main">
       <div class="fiche-field equipement-nom-field">
-        <label>Objet</label>
+        <label>Objet <span class="equipement-conteneur-indicateur"></span></label>
         <input type="text" class="equipement-nom-input" placeholder="Nom de l'objet" />
       </div>
       <div class="fiche-field equipement-qty-field">
@@ -838,7 +1179,14 @@ function renderEquipementCard(item) {
         </div>
       </div>
       <span class="equipement-chevron" aria-hidden="true">▾</span>
-      <button class="btn-structurel equipement-del-btn" title="Supprimer">✕</button>
+      <div class="btn-structurel equipement-menu-wrap">
+        <button type="button" class="equipement-menu-btn" title="Actions">⋮</button>
+        <div class="equipement-menu" hidden>
+          <button type="button" class="equipement-menu-item equipement-action-personnaliser">Personnaliser</button>
+          <button type="button" class="equipement-menu-item equipement-action-dupliquer">Dupliquer</button>
+          <button type="button" class="equipement-menu-item equipement-action-supprimer">Supprimer</button>
+        </div>
+      </div>
     </div>
     <div class="equipement-row equipement-row-detail">
       <div class="fiche-field equipement-poids-field">
@@ -848,12 +1196,15 @@ function renderEquipementCard(item) {
           <span class="equipement-poids-unit" aria-hidden="true">kg</span>
         </div>
       </div>
-      <div class="fiche-field equipement-type-field">
-        <label>Type</label>
-        <select class="equipement-type-select">
-          <option value="equipement">Équipement</option>
-          <option value="possession">Possession</option>
-          <option value="magique">✦ Magique</option>
+      <div class="fiche-field equipement-valeur-field">
+        <label>Valeur (pc)</label>
+        <input type="number" class="equipement-valeur-input" min="0" step="1" placeholder="0" />
+      </div>
+      <div class="fiche-field equipement-tags-field">
+        <label>Tags</label>
+        <div class="equipement-tags-list"></div>
+        <select class="equipement-tag-select">
+          <option value="">+ Ajouter un tag</option>
         </select>
       </div>
     </div>
@@ -866,8 +1217,123 @@ function renderEquipementCard(item) {
   card.querySelector('.equipement-nom-input').value = item.nom ?? '';
   card.querySelector('.equipement-qty-input').value = item.quantite ?? 1;
   card.querySelector('.equipement-poids-input').value = item.poids ?? '';
-  card.querySelector('.equipement-type-select').value = item.type ?? 'equipement';
+  card.querySelector('.equipement-valeur-input').value = item.valeur_pc ?? 0;
   card.querySelector('.equipement-desc-input').value = item.description ?? '';
+
+  const tagsList = card.querySelector('.equipement-tags-list');
+  const tagSelect = card.querySelector('.equipement-tag-select');
+  const conteneurIndicateur = card.querySelector('.equipement-conteneur-indicateur');
+
+  function refreshConteneurIndicateur() {
+    const tagConteneur = tagConteneurDeLObjet(item.id);
+    if (tagConteneur) {
+      const titre = libelleTag(tagConteneur, suffixesConteneurs());
+      conteneurIndicateur.innerHTML = `<span class="equipement-conteneur-icone actif" title="${titre}">📦</span><button type="button" class="equipement-conteneur-retirer" title="Cet objet ne sera plus un conteneur">✕</button>`;
+      conteneurIndicateur.querySelector('.equipement-conteneur-retirer').addEventListener('click', async e => {
+        e.preventDefault();
+        try {
+          showSave('saving');
+          await deleteTag(tagConteneur.id);
+          showSave('ok');
+          await rafraichirEquipementDepuisDB();
+        } catch (err) { showSave('error'); console.error(err); }
+      });
+    } else {
+      conteneurIndicateur.innerHTML = `<button type="button" class="equipement-conteneur-creer" title="Faire de cet objet un conteneur"><span class="equipement-conteneur-icone">📦</span><span class="equipement-conteneur-plus">+</span></button>`;
+      conteneurIndicateur.querySelector('.equipement-conteneur-creer').addEventListener('click', async e => {
+        e.preventDefault();
+        try {
+          showSave('saving');
+          await addTag({ personnage_id: perso.id, nom: item.nom || 'Conteneur', conteneur_equipement_id: item.id });
+          showSave('ok');
+          // Recharge complète : la numérotation #n des conteneurs homonymes
+          // doit être recalculée sur toutes les cartes déjà affichées, pas
+          // seulement celle-ci.
+          await rafraichirEquipementDepuisDB();
+        } catch (err) { showSave('error'); console.error(err); }
+      });
+    }
+  }
+
+  function refreshTagSelect() {
+    const attachedIds = new Set(tagsDeObjet(item.id).map(t => t.id));
+    const suffixes = suffixesConteneurs();
+    const options = tags.filter(t => t.systeme !== 'monnaie' && t.id !== tagConteneurDeLObjet(item.id)?.id && !attachedIds.has(t.id));
+    tagSelect.innerHTML = `<option value="">+ Ajouter un tag</option>` +
+      options.map(t => `<option value="${t.id}">${libelleTag(t, suffixes)}</option>`).join('') +
+      `<option value="__new__">✎ Nouveau tag…</option>`;
+  }
+
+  function refreshTagChips() {
+    const suffixes = suffixesConteneurs();
+    tagsList.innerHTML = '';
+    tagsDeObjet(item.id).forEach(tag => {
+      const chip = document.createElement('span');
+      chip.className = 'equipement-tag-chip';
+      chip.textContent = libelleTag(tag, suffixes);
+      const rm = document.createElement('button');
+      rm.type = 'button';
+      rm.className = 'equipement-tag-remove';
+      rm.textContent = '×';
+      rm.title = 'Retirer ce tag';
+      rm.addEventListener('click', async () => {
+        try {
+          showSave('saving');
+          await unlinkTag(item.id, tag.id);
+          showSave('ok');
+          if (tag.conteneur_equipement_id) {
+            // Retirer un tag-conteneur replace l'objet à la racine de
+            // l'inventaire : recharger pour mettre à jour le regroupement.
+            await rafraichirEquipementDepuisDB();
+            return;
+          }
+          tagsByEquipement[item.id] = tagsDeObjet(item.id).filter(t => t.id !== tag.id);
+          refreshTagChips();
+          refreshTagSelect();
+          card.classList.toggle('tag-magique', objetEstMagique(item.id));
+          if (tag.systeme === 'monnaie') recalculerResumeMonnaie();
+        } catch (err) { showSave('error'); console.error(err); }
+      });
+      chip.appendChild(rm);
+      tagsList.appendChild(chip);
+    });
+  }
+
+  refreshTagChips();
+  refreshTagSelect();
+  refreshConteneurIndicateur();
+
+  tagSelect.addEventListener('change', async () => {
+    const val = tagSelect.value;
+    if (!val) return;
+    try {
+      let tag;
+      if (val === '__new__') {
+        const nom = window.prompt('Nom du tag :');
+        tagSelect.value = '';
+        if (!nom || !nom.trim()) return;
+        showSave('saving');
+        tag = await addTag({ personnage_id: perso.id, nom: nom.trim() });
+        tags.push(tag);
+      } else {
+        tag = tags.find(t => t.id === val);
+        tagSelect.value = '';
+        showSave('saving');
+      }
+      await linkTag(item.id, tag.id);
+      showSave('ok');
+      if (tag.conteneur_equipement_id) {
+        // Un tag-conteneur change le regroupement visuel de l'inventaire :
+        // recharger pour replacer l'objet sous son nouveau conteneur.
+        await rafraichirEquipementDepuisDB();
+        return;
+      }
+      tagsByEquipement[item.id] = [...tagsDeObjet(item.id), tag];
+      refreshTagChips();
+      refreshTagSelect();
+      card.classList.toggle('tag-magique', objetEstMagique(item.id));
+    } catch (err) { showSave('error'); console.error(err); }
+  });
 
   let itemTimer = null;
   const scheduleItemSave = () => {
@@ -875,7 +1341,17 @@ function renderEquipementCard(item) {
     itemTimer = setTimeout(async () => {
       showSave('saving');
       try {
-        await updateEquipement(item.id, { nom: item.nom, type: item.type, description: item.description, quantite: item.quantite, poids: item.poids ?? null });
+        await updateEquipement(item.id, { nom: item.nom, description: item.description, quantite: item.quantite, poids: item.poids ?? null, valeur_pc: item.valeur_pc ?? 0 });
+        const tagConteneur = tagConteneurDeLObjet(item.id);
+        if (tagConteneur && tagConteneur.nom !== item.nom) {
+          // Le tag-conteneur reprend le nom de son objet : le garder en
+          // phase, sinon la liste des tags affichée sur les objets contenus
+          // resterait incohérente avec le nouveau nom du conteneur.
+          await updateTag(tagConteneur.id, { nom: item.nom });
+          showSave('ok');
+          await rafraichirEquipementDepuisDB();
+          return;
+        }
         showSave('ok');
       } catch { showSave('error'); }
     }, DEBOUNCE_MS);
@@ -888,15 +1364,16 @@ function renderEquipementCard(item) {
   card.querySelector('.equipement-qty-input').addEventListener('input', e => {
     item.quantite = Number(e.target.value) || 1;
     scheduleItemSave();
+    if (objetEstMonnaie(item.id)) recalculerResumeMonnaie();
   });
   card.querySelector('.equipement-poids-input').addEventListener('input', e => {
     item.poids = e.target.value !== '' ? Number(e.target.value) : null;
     scheduleItemSave();
   });
-  card.querySelector('.equipement-type-select').addEventListener('change', e => {
-    item.type = e.target.value;
-    card.dataset.type = e.target.value;
+  card.querySelector('.equipement-valeur-input').addEventListener('input', e => {
+    item.valeur_pc = Number(e.target.value) || 0;
     scheduleItemSave();
+    if (objetEstMonnaie(item.id)) recalculerResumeMonnaie();
   });
   card.querySelector('.equipement-desc-input').addEventListener('input', e => {
     item.description = e.target.value;
@@ -904,20 +1381,49 @@ function renderEquipementCard(item) {
     scheduleItemSave();
   });
 
-  card.querySelector('.equipement-del-btn').addEventListener('click', async () => {
+  const menuBtn = card.querySelector('.equipement-menu-btn');
+  const menu = card.querySelector('.equipement-menu');
+  const itemPersonnalisable = tagsDeObjet(item.id).some(t => t.systeme === 'base');
+  menu.querySelector('.equipement-action-personnaliser').hidden = !itemPersonnalisable;
+
+  menuBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const dejaOuvert = !menu.hidden;
+    document.querySelectorAll('.equipement-menu').forEach(m => { m.hidden = true; });
+    menu.hidden = dejaOuvert;
+  });
+  initFermetureMenusEquipement();
+
+  menu.querySelector('.equipement-action-supprimer').addEventListener('click', async () => {
+    menu.hidden = true;
     try {
       showSave('saving');
       await deleteEquipement(item.id);
       showSave('ok');
-      equipement = equipement.filter(i => i.id !== item.id);
-      card.remove();
-      const container = document.getElementById('equipement-container');
-      if (container && !equipement.length) {
-        const empty = document.createElement('p');
-        empty.className = 'equipement-empty';
-        empty.textContent = 'Aucun objet — ajoutez-en un en Mode Édition.';
-        container.appendChild(empty);
-      }
+      // Recharge complète : un objet supprimé peut être un conteneur dont la
+      // suppression entraîne, côté DB, celle des objets qu'il contenait.
+      await rafraichirEquipementDepuisDB();
+    } catch (err) { showSave('error'); console.error(err); }
+  });
+
+  menu.querySelector('.equipement-action-dupliquer').addEventListener('click', async () => {
+    menu.hidden = true;
+    try {
+      showSave('saving');
+      await dupliquerObjetEquipement(item);
+      showSave('ok');
+      await rafraichirEquipementDepuisDB();
+    } catch (err) { showSave('error'); console.error(err); }
+  });
+
+  menu.querySelector('.equipement-action-personnaliser').addEventListener('click', async () => {
+    menu.hidden = true;
+    try {
+      showSave('saving');
+      await dupliquerObjetEquipement(item, { excludeBaseId: true, excludeTagsByNom: ['Base'] });
+      await deleteEquipement(item.id);
+      showSave('ok');
+      await rafraichirEquipementDepuisDB();
     } catch (err) { showSave('error'); console.error(err); }
   });
 
@@ -929,30 +1435,6 @@ function renderEquipementCard(item) {
   });
 
   return card;
-}
-
-function remplirMonnaie() {
-  if (!monnaie) return;
-  ['pp', 'po', 'pe', 'pa', 'pc'].forEach(key => {
-    const input = document.getElementById('monnaie-' + key);
-    if (!input) return;
-    input.value = monnaie[key] ?? 0;
-    input.addEventListener('change', () => {
-      monnaie[key] = Number(input.value) || 0;
-      scheduleMonnaie();
-    });
-  });
-}
-
-function scheduleMonnaie() {
-  clearTimeout(monnaieTimer);
-  monnaieTimer = setTimeout(async () => {
-    showSave('saving');
-    try {
-      await updateMonnaie(monnaie.id, { pp: monnaie.pp, po: monnaie.po, pe: monnaie.pe, pa: monnaie.pa, pc: monnaie.pc });
-      showSave('ok');
-    } catch { showSave('error'); }
-  }, DEBOUNCE_MS);
 }
 
 // ── Bloc 9 : Sorts ─────────────────────────────────────────────────────────────

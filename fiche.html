@@ -425,55 +425,19 @@
   <section class="fiche-bloc" id="bloc-equipement">
     <h2 class="bloc-title">Équipement &amp; Possessions</h2>
 
-    <!-- Monnaie — toujours éditable -->
-    <div class="equipement-monnaie-section">
+    <!-- Monnaie — résumé calculé à partir des objets tagués "Monnaie" -->
+    <div class="equipement-monnaie-section" id="equipement-monnaie-section">
       <h3 class="equipement-section-label">Monnaie</h3>
-      <div class="monnaie-grid">
-        <div class="monnaie-card monnaie-pp">
-          <div class="monnaie-row">
-            <input type="number" id="monnaie-pp" class="monnaie-input mode-jeu-ok" min="0" value="0" />
-          </div>
-          <span class="monnaie-line"></span>
-          <span class="monnaie-hint">Platine</span>
-        </div>
-        <div class="monnaie-card monnaie-po">
-          <div class="monnaie-row">
-            <input type="number" id="monnaie-po" class="monnaie-input mode-jeu-ok" min="0" value="0" />
-          </div>
-          <span class="monnaie-line"></span>
-          <span class="monnaie-hint">Or</span>
-        </div>
-        <div class="monnaie-card monnaie-pe">
-          <div class="monnaie-row">
-            <input type="number" id="monnaie-pe" class="monnaie-input mode-jeu-ok" min="0" value="0" />
-          </div>
-          <span class="monnaie-line"></span>
-          <span class="monnaie-hint">Électrum</span>
-        </div>
-        <div class="monnaie-card monnaie-pa">
-          <div class="monnaie-row">
-            <input type="number" id="monnaie-pa" class="monnaie-input mode-jeu-ok" min="0" value="0" />
-          </div>
-          <span class="monnaie-line"></span>
-          <span class="monnaie-hint">Argent</span>
-        </div>
-        <div class="monnaie-card monnaie-pc">
-          <div class="monnaie-row">
-            <input type="number" id="monnaie-pc" class="monnaie-input mode-jeu-ok" min="0" value="0" />
-          </div>
-          <span class="monnaie-line"></span>
-          <span class="monnaie-hint">Cuivre</span>
-        </div>
-      </div>
+      <p class="equipement-monnaie-placeholder">Chargement…</p>
     </div>
 
     <!-- Inventaire dynamique -->
     <div class="equipement-inventaire-section">
       <h3 class="equipement-section-label">Inventaire</h3>
-      <div id="equipement-container"></div>
       <div class="edition-only equipement-footer">
         <button class="btn-add-equipement" id="btn-add-equipement">+ Ajouter un objet</button>
       </div>
+      <div id="equipement-container"></div>
     </div>
   </section>
 
