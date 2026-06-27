@@ -2143,6 +2143,7 @@ body.mode-jeu .arme-maitrise-cb:checked {
   min-width: 140px;
   overflow: hidden;
 }
+.equipement-menu[hidden] { display: none; }
 .equipement-menu-item {
   background: transparent;
   border: none;
