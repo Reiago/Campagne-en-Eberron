@@ -212,6 +212,11 @@ export async function addTag(data) {
   return result;
 }
 
+export async function updateTag(id, data) {
+  const { error } = await supabase.from('tags').update(data).eq('id', id);
+  if (error) throw error;
+}
+
 export async function deleteTag(id) {
   const { error } = await supabase.from('tags').delete().eq('id', id);
   if (error) throw error;

@@ -5,7 +5,7 @@ import {
   getCompetences, updateCompetence,
   getArmes, addArme, updateArme, deleteArme,
   getEquipement, addEquipement, updateEquipement, deleteEquipement,
-  getTags, addTag, deleteTag, getEquipementTags, linkTag, unlinkTag, searchEquipementBase,
+  getTags, addTag, updateTag, deleteTag, getEquipementTags, linkTag, unlinkTag, searchEquipementBase,
   getSorts, addSort, updateSort, deleteSort,
   getEmplacementsSorts, updateEmplacementSorts,
   getCapacites, addCapacite, updateCapacite, deleteCapacite,
@@ -1344,6 +1344,16 @@ function renderEquipementCard(item) {
       showSave('saving');
       try {
         await updateEquipement(item.id, { nom: item.nom, description: item.description, quantite: item.quantite, poids: item.poids ?? null, valeur_pc: item.valeur_pc ?? 0 });
+        const tagConteneur = tagConteneurDeLObjet(item.id);
+        if (tagConteneur && tagConteneur.nom !== item.nom) {
+          // Le tag-conteneur reprend le nom de son objet : le garder en
+          // phase, sinon la liste des tags affichée sur les objets contenus
+          // resterait incohérente avec le nouveau nom du conteneur.
+          await updateTag(tagConteneur.id, { nom: item.nom });
+          showSave('ok');
+          await rafraichirEquipementDepuisDB();
+          return;
+        }
         showSave('ok');
       } catch { showSave('error'); }
     }, DEBOUNCE_MS);
