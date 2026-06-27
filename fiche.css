@@ -1987,7 +1987,9 @@ body.mode-jeu .arme-maitrise-cb:checked {
   margin-top: 4px;
   max-height: 240px;
   overflow-y: auto;
+  width: max-content;
   min-width: 200px;
+  max-width: min(320px, 90vw);
   padding: 0.5rem;
 }
 .equipement-filtre-item {
@@ -1997,6 +1999,7 @@ body.mode-jeu .arme-maitrise-cb:checked {
   color: var(--text-bright);
   font-size: 13px;
   padding: 0.3rem 0.2rem;
+  white-space: nowrap;
   cursor: pointer;
 }
 

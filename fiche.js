@@ -924,7 +924,7 @@ function initBarreOutilsEquipement(container) {
       filtrePanel.innerHTML = tagsUniques.length
         ? tagsUniques.map(t => `
             <label class="equipement-filtre-item">
-              <input type="checkbox" value="${t.id}" ${equipementFilterTagIds.has(t.id) ? 'checked' : ''} />
+              <input type="checkbox" class="mode-jeu-ok" value="${t.id}" ${equipementFilterTagIds.has(t.id) ? 'checked' : ''} />
               ${libelleTag(t, suffixesConteneurs())}
             </label>
           `).join('')
