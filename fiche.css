@@ -2071,33 +2071,40 @@ body.mode-jeu .arme-maitrise-cb:checked {
   max-width: 100%;
 }
 
-.equipement-conteneur-badge { margin-top: 6px; }
-.equipement-conteneur-statut {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  color: var(--gold-light);
+.equipement-nom-field label { display: flex; align-items: center; gap: 4px; }
+.equipement-conteneur-indicateur { display: inline-flex; align-items: center; gap: 2px; }
+.equipement-conteneur-icone {
   font-size: 11px;
+  filter: grayscale(1);
+  opacity: 0.4;
 }
+.equipement-conteneur-icone.actif { filter: none; opacity: 1; }
 .equipement-conteneur-retirer {
   background: transparent;
   border: none;
   color: var(--text-dim);
   cursor: pointer;
-  font-size: 12px;
+  font-size: 11px;
+  line-height: 1;
   padding: 0 2px;
 }
 .equipement-conteneur-retirer:hover { color: #D87060; }
 .equipement-conteneur-creer {
   background: transparent;
   border: none;
-  color: var(--text-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
   cursor: pointer;
-  font-size: 11px;
   padding: 0;
-  text-decoration: underline dotted;
 }
-.equipement-conteneur-creer:hover { color: var(--gold-light); }
+.equipement-conteneur-creer .equipement-conteneur-plus {
+  color: var(--text-dim);
+  font-size: 10px;
+  line-height: 1;
+}
+.equipement-conteneur-creer:hover .equipement-conteneur-icone,
+.equipement-conteneur-creer:hover .equipement-conteneur-plus { opacity: 0.75; color: var(--gold-light); }
 
 /* Mode Jeu : actions d'édition des tags/conteneurs masquées (lecture seule) */
 body.mode-jeu .equipement-tag-select,

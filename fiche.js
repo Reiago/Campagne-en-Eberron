@@ -1170,7 +1170,7 @@ function renderEquipementCard(item) {
   card.innerHTML = `
     <div class="equipement-row equipement-row-main">
       <div class="fiche-field equipement-nom-field">
-        <label>Objet</label>
+        <label>Objet <span class="equipement-conteneur-indicateur"></span></label>
         <input type="text" class="equipement-nom-input" placeholder="Nom de l'objet" />
       </div>
       <div class="fiche-field equipement-qty-field">
@@ -1208,7 +1208,6 @@ function renderEquipementCard(item) {
         <select class="equipement-tag-select">
           <option value="">+ Ajouter un tag</option>
         </select>
-        <div class="equipement-conteneur-badge"></div>
       </div>
     </div>
     <div class="fiche-field equipement-desc-field">
@@ -1225,14 +1224,15 @@ function renderEquipementCard(item) {
 
   const tagsList = card.querySelector('.equipement-tags-list');
   const tagSelect = card.querySelector('.equipement-tag-select');
-  const conteneurBadge = card.querySelector('.equipement-conteneur-badge');
+  const conteneurIndicateur = card.querySelector('.equipement-conteneur-indicateur');
 
-  function refreshConteneurBadge() {
+  function refreshConteneurIndicateur() {
     const tagConteneur = tagConteneurDeLObjet(item.id);
     if (tagConteneur) {
-      const suffixes = suffixesConteneurs();
-      conteneurBadge.innerHTML = `<span class="equipement-conteneur-statut">${libelleTag(tagConteneur, suffixes)}</span><button type="button" class="equipement-conteneur-retirer" title="Cet objet ne sera plus un conteneur">✕</button>`;
-      conteneurBadge.querySelector('.equipement-conteneur-retirer').addEventListener('click', async () => {
+      const titre = libelleTag(tagConteneur, suffixesConteneurs());
+      conteneurIndicateur.innerHTML = `<span class="equipement-conteneur-icone actif" title="${titre}">📦</span><button type="button" class="equipement-conteneur-retirer" title="Cet objet ne sera plus un conteneur">✕</button>`;
+      conteneurIndicateur.querySelector('.equipement-conteneur-retirer').addEventListener('click', async e => {
+        e.preventDefault();
         try {
           showSave('saving');
           await deleteTag(tagConteneur.id);
@@ -1241,8 +1241,9 @@ function renderEquipementCard(item) {
         } catch (err) { showSave('error'); console.error(err); }
       });
     } else {
-      conteneurBadge.innerHTML = `<button type="button" class="equipement-conteneur-creer">Faire de cet objet un conteneur</button>`;
-      conteneurBadge.querySelector('.equipement-conteneur-creer').addEventListener('click', async () => {
+      conteneurIndicateur.innerHTML = `<button type="button" class="equipement-conteneur-creer" title="Faire de cet objet un conteneur"><span class="equipement-conteneur-icone">📦</span><span class="equipement-conteneur-plus">+</span></button>`;
+      conteneurIndicateur.querySelector('.equipement-conteneur-creer').addEventListener('click', async e => {
+        e.preventDefault();
         try {
           showSave('saving');
           await addTag({ personnage_id: perso.id, nom: item.nom || 'Conteneur', conteneur_equipement_id: item.id });
@@ -1302,7 +1303,7 @@ function renderEquipementCard(item) {
 
   refreshTagChips();
   refreshTagSelect();
-  refreshConteneurBadge();
+  refreshConteneurIndicateur();
 
   tagSelect.addEventListener('change', async () => {
     const val = tagSelect.value;
