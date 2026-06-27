@@ -1282,6 +1282,12 @@ function renderEquipementCard(item) {
           showSave('saving');
           await unlinkTag(item.id, tag.id);
           showSave('ok');
+          if (tag.conteneur_equipement_id) {
+            // Retirer un tag-conteneur replace l'objet à la racine de
+            // l'inventaire : recharger pour mettre à jour le regroupement.
+            await rafraichirEquipementDepuisDB();
+            return;
+          }
           tagsByEquipement[item.id] = tagsDeObjet(item.id).filter(t => t.id !== tag.id);
           refreshTagChips();
           refreshTagSelect();
@@ -1317,6 +1323,12 @@ function renderEquipementCard(item) {
       }
       await linkTag(item.id, tag.id);
       showSave('ok');
+      if (tag.conteneur_equipement_id) {
+        // Un tag-conteneur change le regroupement visuel de l'inventaire :
+        // recharger pour replacer l'objet sous son nouveau conteneur.
+        await rafraichirEquipementDepuisDB();
+        return;
+      }
       tagsByEquipement[item.id] = [...tagsDeObjet(item.id), tag];
       refreshTagChips();
       refreshTagSelect();
