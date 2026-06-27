@@ -2031,7 +2031,7 @@ body.mode-jeu .arme-maitrise-cb:checked {
 .equipement-qty-field { flex: 0 0 60px; order: 2; }
 .equipement-poids-field { flex: 0 0 84px; order: 3; }
 .equipement-valeur-field { flex: 0 0 84px; order: 4; }
-.equipement-tags-field { flex: 1 1 160px; order: 5; }
+.equipement-tags-field { flex: 0 1 200px; order: 5; margin-left: auto; min-width: 0; }
 .equipement-chevron { display: none; }
 .equipement-qty-row { display: flex; align-items: center; gap: 4px; }
 .equipement-qty-unit { display: none; }
