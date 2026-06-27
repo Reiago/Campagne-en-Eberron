@@ -1093,17 +1093,15 @@ async function ajouterDepuisBase(container, baseItem) {
   showSave('saving');
   try {
     const created = await addEquipement(newItem);
-    equipement.push(created);
-    const tagsAttaches = [];
+    const SYSTEME_PAR_TAG = { Base: 'base', Monnaie: 'monnaie' };
     for (const nomTag of ['Base', ...(baseItem.tags || [])]) {
-      const tag = await obtenirOuCreerTag(nomTag, nomTag === 'Base' ? 'base' : null);
+      const tag = await obtenirOuCreerTag(nomTag, SYSTEME_PAR_TAG[nomTag] ?? null);
       await linkTag(created.id, tag.id);
-      tagsAttaches.push(tag);
     }
-    tagsByEquipement[created.id] = tagsAttaches;
     showSave('ok');
-    container.querySelector('.equipement-empty')?.remove();
-    container.appendChild(renderEquipementCard(created));
+    // Recharge complète : les tags suggérés (Monnaie, conteneur…) peuvent
+    // affecter le résumé de monnaie ou le regroupement visuel.
+    await rafraichirEquipementDepuisDB();
   } catch (err) { showSave('error'); console.error(err); }
 }
 
