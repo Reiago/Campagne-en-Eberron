@@ -822,6 +822,12 @@ function objetEstMonnaie(itemId) {
   return tagsDeObjet(itemId).some(t => t.systeme === 'monnaie');
 }
 
+// Une "Valeur (pc)" n'est exploitable pour le résumé de monnaie que si elle
+// correspond exactement à une dénomination connue (1000/100/50/10/1).
+function valeurMonnaieValide(valeurPc) {
+  return Object.values(TAUX_PC).includes(valeurPc);
+}
+
 // Tag-conteneur dont cet objet est le conteneur (ex. la "Bourse" elle-même), s'il y en a un.
 function tagConteneurDeLObjet(itemId) {
   return tags.find(t => t.conteneur_equipement_id === itemId);
@@ -958,23 +964,18 @@ async function rafraichirEquipementDepuisDB() {
   remplirEquipement();
 }
 
-function decomposerPc(totalPc) {
-  let reste = totalPc;
-  const pp = Math.floor(reste / TAUX_PC.pp); reste %= TAUX_PC.pp;
-  const po = Math.floor(reste / TAUX_PC.po); reste %= TAUX_PC.po;
-  const pe = Math.floor(reste / TAUX_PC.pe); reste %= TAUX_PC.pe;
-  const pa = Math.floor(reste / TAUX_PC.pa); reste %= TAUX_PC.pa;
-  const pc = reste;
-  return { pp, po, pe, pa, pc };
-}
-
 function recalculerResumeMonnaie() {
   const container = document.getElementById('equipement-monnaie-section');
   if (!container) return;
-  const totalPc = equipement.reduce((sum, item) => {
-    return objetEstMonnaie(item.id) ? sum + (item.quantite ?? 0) * (item.valeur_pc ?? 0) : sum;
-  }, 0);
-  const { pp, po, pe, pa, pc } = decomposerPc(totalPc);
+  // Chaque pièce de monnaie garde sa dénomination (pas de reconversion en PC
+  // puis redécomposition, qui transformerait par ex. 100 PA en 10 PO).
+  const totaux = { pp: 0, po: 0, pe: 0, pa: 0, pc: 0 };
+  equipement.forEach(item => {
+    if (!objetEstMonnaie(item.id)) return;
+    const denomination = Object.keys(TAUX_PC).find(k => TAUX_PC[k] === item.valeur_pc);
+    if (denomination) totaux[denomination] += item.quantite ?? 0;
+  });
+  const { pp, po, pe, pa, pc } = totaux;
   container.innerHTML = `
     <h3 class="equipement-section-label">Monnaie</h3>
     <div class="monnaie-grid monnaie-readonly">
@@ -1036,7 +1037,9 @@ async function ajouterObjetVide(container) {
     equipement.push(created);
     tagsByEquipement[created.id] = [];
     container.querySelector('.equipement-empty')?.remove();
-    container.appendChild(renderEquipementCard(created));
+    const card = renderEquipementCard(created);
+    container.prepend(card);
+    card.querySelector('.equipement-nom-input')?.focus();
   } catch (err) { showSave('error'); console.error(err); }
 }
 
@@ -1258,7 +1261,7 @@ function renderEquipementCard(item) {
   function refreshTagSelect() {
     const attachedIds = new Set(tagsDeObjet(item.id).map(t => t.id));
     const suffixes = suffixesConteneurs();
-    const options = tags.filter(t => t.systeme !== 'monnaie' && t.id !== tagConteneurDeLObjet(item.id)?.id && !attachedIds.has(t.id));
+    const options = tags.filter(t => t.id !== tagConteneurDeLObjet(item.id)?.id && !attachedIds.has(t.id));
     tagSelect.innerHTML = `<option value="">+ Ajouter un tag</option>` +
       options.map(t => `<option value="${t.id}">${libelleTag(t, suffixes)}</option>`).join('') +
       `<option value="__new__">✎ Nouveau tag…</option>`;
@@ -1270,6 +1273,10 @@ function renderEquipementCard(item) {
     tagsDeObjet(item.id).forEach(tag => {
       const chip = document.createElement('span');
       chip.className = 'equipement-tag-chip';
+      if (tag.systeme === 'monnaie' && !valeurMonnaieValide(item.valeur_pc)) {
+        chip.classList.add('equipement-tag-chip--invalide');
+        chip.title = 'Valeur (pc) invalide : doit être 1000, 100, 50, 10 ou 1 pour compter dans le résumé de monnaie.';
+      }
       chip.textContent = libelleTag(tag, suffixes);
       const rm = document.createElement('button');
       rm.type = 'button';
@@ -1332,6 +1339,7 @@ function renderEquipementCard(item) {
       refreshTagChips();
       refreshTagSelect();
       card.classList.toggle('tag-magique', objetEstMagique(item.id));
+      if (tag.systeme === 'monnaie') recalculerResumeMonnaie();
     } catch (err) { showSave('error'); console.error(err); }
   });
 
@@ -1373,7 +1381,10 @@ function renderEquipementCard(item) {
   card.querySelector('.equipement-valeur-input').addEventListener('input', e => {
     item.valeur_pc = Number(e.target.value) || 0;
     scheduleItemSave();
-    if (objetEstMonnaie(item.id)) recalculerResumeMonnaie();
+    if (objetEstMonnaie(item.id)) {
+      refreshTagChips();
+      recalculerResumeMonnaie();
+    }
   });
   card.querySelector('.equipement-desc-input').addEventListener('input', e => {
     item.description = e.target.value;

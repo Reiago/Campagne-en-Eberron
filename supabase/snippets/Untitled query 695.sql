@@ -1,0 +1,1 @@
+DELETE FROM tags WHERE id = '696009d3-3fd1-427f-a719-a46d17f0f7ad';
