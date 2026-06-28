@@ -958,23 +958,18 @@ async function rafraichirEquipementDepuisDB() {
   remplirEquipement();
 }
 
-function decomposerPc(totalPc) {
-  let reste = totalPc;
-  const pp = Math.floor(reste / TAUX_PC.pp); reste %= TAUX_PC.pp;
-  const po = Math.floor(reste / TAUX_PC.po); reste %= TAUX_PC.po;
-  const pe = Math.floor(reste / TAUX_PC.pe); reste %= TAUX_PC.pe;
-  const pa = Math.floor(reste / TAUX_PC.pa); reste %= TAUX_PC.pa;
-  const pc = reste;
-  return { pp, po, pe, pa, pc };
-}
-
 function recalculerResumeMonnaie() {
   const container = document.getElementById('equipement-monnaie-section');
   if (!container) return;
-  const totalPc = equipement.reduce((sum, item) => {
-    return objetEstMonnaie(item.id) ? sum + (item.quantite ?? 0) * (item.valeur_pc ?? 0) : sum;
-  }, 0);
-  const { pp, po, pe, pa, pc } = decomposerPc(totalPc);
+  // Chaque pièce de monnaie garde sa dénomination (pas de reconversion en PC
+  // puis redécomposition, qui transformerait par ex. 100 PA en 10 PO).
+  const totaux = { pp: 0, po: 0, pe: 0, pa: 0, pc: 0 };
+  equipement.forEach(item => {
+    if (!objetEstMonnaie(item.id)) return;
+    const denomination = Object.keys(TAUX_PC).find(k => TAUX_PC[k] === item.valeur_pc);
+    if (denomination) totaux[denomination] += item.quantite ?? 0;
+  });
+  const { pp, po, pe, pa, pc } = totaux;
   container.innerHTML = `
     <h3 class="equipement-section-label">Monnaie</h3>
     <div class="monnaie-grid monnaie-readonly">
