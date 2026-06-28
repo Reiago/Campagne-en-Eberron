@@ -2064,6 +2064,11 @@ body.mode-jeu .arme-maitrise-cb:checked {
   padding: 0 2px;
 }
 .equipement-tag-remove:hover { color: #D87060; }
+.equipement-tag-chip--invalide {
+  background: rgba(216, 96, 96, 0.12);
+  border-color: #D86060;
+  color: #D86060;
+}
 .equipement-tag-select {
   background: var(--stone-light);
   border: 1px solid var(--border-strong);

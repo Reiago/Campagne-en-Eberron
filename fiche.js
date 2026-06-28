@@ -822,6 +822,12 @@ function objetEstMonnaie(itemId) {
   return tagsDeObjet(itemId).some(t => t.systeme === 'monnaie');
 }
 
+// Une "Valeur (pc)" n'est exploitable pour le résumé de monnaie que si elle
+// correspond exactement à une dénomination connue (1000/100/50/10/1).
+function valeurMonnaieValide(valeurPc) {
+  return Object.values(TAUX_PC).includes(valeurPc);
+}
+
 // Tag-conteneur dont cet objet est le conteneur (ex. la "Bourse" elle-même), s'il y en a un.
 function tagConteneurDeLObjet(itemId) {
   return tags.find(t => t.conteneur_equipement_id === itemId);
@@ -1265,6 +1271,10 @@ function renderEquipementCard(item) {
     tagsDeObjet(item.id).forEach(tag => {
       const chip = document.createElement('span');
       chip.className = 'equipement-tag-chip';
+      if (tag.systeme === 'monnaie' && !valeurMonnaieValide(item.valeur_pc)) {
+        chip.classList.add('equipement-tag-chip--invalide');
+        chip.title = 'Valeur (pc) invalide : doit être 1000, 100, 50, 10 ou 1 pour compter dans le résumé de monnaie.';
+      }
       chip.textContent = libelleTag(tag, suffixes);
       const rm = document.createElement('button');
       rm.type = 'button';
@@ -1369,7 +1379,10 @@ function renderEquipementCard(item) {
   card.querySelector('.equipement-valeur-input').addEventListener('input', e => {
     item.valeur_pc = Number(e.target.value) || 0;
     scheduleItemSave();
-    if (objetEstMonnaie(item.id)) recalculerResumeMonnaie();
+    if (objetEstMonnaie(item.id)) {
+      refreshTagChips();
+      recalculerResumeMonnaie();
+    }
   });
   card.querySelector('.equipement-desc-input').addEventListener('input', e => {
     item.description = e.target.value;
