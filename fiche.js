@@ -1037,7 +1037,9 @@ async function ajouterObjetVide(container) {
     equipement.push(created);
     tagsByEquipement[created.id] = [];
     container.querySelector('.equipement-empty')?.remove();
-    container.appendChild(renderEquipementCard(created));
+    const card = renderEquipementCard(created);
+    container.prepend(card);
+    card.querySelector('.equipement-nom-input')?.focus();
   } catch (err) { showSave('error'); console.error(err); }
 }
 
