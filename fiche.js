@@ -1253,7 +1253,7 @@ function renderEquipementCard(item) {
   function refreshTagSelect() {
     const attachedIds = new Set(tagsDeObjet(item.id).map(t => t.id));
     const suffixes = suffixesConteneurs();
-    const options = tags.filter(t => t.systeme !== 'monnaie' && t.id !== tagConteneurDeLObjet(item.id)?.id && !attachedIds.has(t.id));
+    const options = tags.filter(t => t.id !== tagConteneurDeLObjet(item.id)?.id && !attachedIds.has(t.id));
     tagSelect.innerHTML = `<option value="">+ Ajouter un tag</option>` +
       options.map(t => `<option value="${t.id}">${libelleTag(t, suffixes)}</option>`).join('') +
       `<option value="__new__">✎ Nouveau tag…</option>`;
@@ -1327,6 +1327,7 @@ function renderEquipementCard(item) {
       refreshTagChips();
       refreshTagSelect();
       card.classList.toggle('tag-magique', objetEstMagique(item.id));
+      if (tag.systeme === 'monnaie') recalculerResumeMonnaie();
     } catch (err) { showSave('error'); console.error(err); }
   });
 
