@@ -169,6 +169,7 @@
   <button class="btn-gold" id="btn-ajout-base">+ Ajouter au catalogue</button>
 
   <div class="section-label">Catalogue officiel</div>
+  <button class="btn-gold" id="btn-export-base" style="margin-bottom: 0.75rem;">⭳ Exporter en CSV</button>
   <div id="base-table">
     <p class="loading">Chargement…</p>
   </div>
@@ -314,6 +315,33 @@
     } catch (e) {
       alert(e.code === '23505' ? 'Un objet avec un nom équivalent existe déjà dans le catalogue.' : 'Erreur : ' + e.message);
     }
+  });
+
+  // ── Export CSV ──────────────────────────────────────────────────────────────
+
+  // Échappe un champ pour le CSV : entre guillemets si virgule, guillemet ou retour ligne présent.
+  function champCsv(valeur) {
+    const str = (valeur ?? '').toString();
+    return /[",\n]/.test(str) ? '"' + str.replace(/"/g, '""') + '"' : str;
+  }
+
+  document.getElementById('btn-export-base').addEventListener('click', () => {
+    const entetes = ['nom', 'valeur_pc', 'poids', 'tags', 'description'];
+    const lignes = base.map(item => [
+      item.nom,
+      item.valeur_pc ?? 0,
+      item.poids ?? '',
+      (item.tags || []).join(';'),
+      item.description ?? '',
+    ].map(champCsv).join(','));
+    const csv = [entetes.join(','), ...lignes].join('\r\n');
+    const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'equipement-base.csv';
+    a.click();
+    URL.revokeObjectURL(url);
   });
 
   // ── Import CSV ──────────────────────────────────────────────────────────────
