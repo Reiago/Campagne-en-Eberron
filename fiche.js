@@ -91,6 +91,7 @@ const DEBOUNCE_MS = 500;
 const ARME_MOBILE_BREAKPOINT = 480;
 const EQUIPEMENT_MOBILE_BREAKPOINT = 480;
 let persoTimer = null, caracTimer = null;
+let persoPendingPatch = {}, caracPendingPatch = {};
 
 // ── Mode Jeu / Mode Édition ────────────────────────────────────────────────────
 function getMode() {
@@ -263,21 +264,27 @@ function showSave(status) {
 
 function schedulePersoSave(patch) {
   Object.assign(perso, patch);
+  Object.assign(persoPendingPatch, patch);
   clearTimeout(persoTimer);
   persoTimer = setTimeout(async () => {
+    const patchToSave = persoPendingPatch;
+    persoPendingPatch = {};
     showSave('saving');
-    try { await updatePersonnage(perso.id, patch); showSave('ok'); }
+    try { await updatePersonnage(perso.id, patchToSave); showSave('ok'); }
     catch { showSave('error'); }
   }, DEBOUNCE_MS);
 }
 
 function scheduleCaracSave(patch) {
   Object.assign(carac, patch);
+  Object.assign(caracPendingPatch, patch);
   clearTimeout(caracTimer);
   caracTimer = setTimeout(async () => {
+    const patchToSave = caracPendingPatch;
+    caracPendingPatch = {};
     showSave('saving');
     try {
-      await updateCaracteristiques(carac.id, patch);
+      await updateCaracteristiques(carac.id, patchToSave);
       showSave('ok');
       recalculerTout();
     } catch { showSave('error'); }
