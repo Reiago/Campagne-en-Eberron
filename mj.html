@@ -76,6 +76,7 @@
       text-transform: uppercase;
       text-decoration: none;
       margin-bottom: 1.5rem;
+      margin-right: 1.5rem;
       transition: color 0.2s;
     }
     .btn-base-link:hover { color: var(--gold); }
@@ -158,6 +159,7 @@
   <a href="index.html" class="btn-portail">Retour au portail</a>
 
   <a href="equipement-base.html" class="btn-base-link">Gérer la base d'équipement officielle</a>
+  <a href="races-classes-base.html" class="btn-base-link">Gérer les races, classes &amp; capacités</a>
 
   <div class="section-label">Personnages</div>
   <div class="perso-grid" id="perso-grid">
@@ -191,7 +193,7 @@
       grid.innerHTML = personnages.map(p => `
         <a class="perso-card" href="fiche.html?id=${p.id}">
           <div class="perso-nom">${p.nom || '(sans nom)'}</div>
-          <div class="perso-info">${p.classe || '—'}${p.race ? ' · ' + p.race : ''}</div>
+          <div class="perso-info">${p.classe?.nom || '—'}${p.race?.nom ? ' · ' + p.race.nom : ''}</div>
           <div class="perso-niveau">Niveau ${p.niveau ?? '?'}</div>
         </a>
       `).join('');

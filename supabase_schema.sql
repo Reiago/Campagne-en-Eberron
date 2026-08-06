@@ -10,18 +10,21 @@
 -- 0. NETTOYAGE (supprime l'ancien schéma de test)
 -- ══════════════════════════════════════════════════════════════
 
-DROP TABLE IF EXISTS equipement_tags   CASCADE;
-DROP TABLE IF EXISTS tags              CASCADE;
-DROP TABLE IF EXISTS equipement        CASCADE;
-DROP TABLE IF EXISTS equipement_base   CASCADE;
-DROP TABLE IF EXISTS capacites         CASCADE;
-DROP TABLE IF EXISTS sorts             CASCADE;
-DROP TABLE IF EXISTS emplacements_sorts CASCADE;
-DROP TABLE IF EXISTS armes             CASCADE;
-DROP TABLE IF EXISTS competences       CASCADE;
-DROP TABLE IF EXISTS caracteristiques  CASCADE;
-DROP TABLE IF EXISTS profils           CASCADE;
-DROP TABLE IF EXISTS personnages       CASCADE;
+DROP TABLE IF EXISTS equipement_tags     CASCADE;
+DROP TABLE IF EXISTS tags                CASCADE;
+DROP TABLE IF EXISTS equipement          CASCADE;
+DROP TABLE IF EXISTS equipement_base     CASCADE;
+DROP TABLE IF EXISTS capacites           CASCADE;
+DROP TABLE IF EXISTS sorts               CASCADE;
+DROP TABLE IF EXISTS emplacements_sorts  CASCADE;
+DROP TABLE IF EXISTS armes               CASCADE;
+DROP TABLE IF EXISTS competences         CASCADE;
+DROP TABLE IF EXISTS caracteristiques    CASCADE;
+DROP TABLE IF EXISTS profils             CASCADE;
+DROP TABLE IF EXISTS personnages         CASCADE;
+DROP TABLE IF EXISTS capacites_catalogue CASCADE;
+DROP TABLE IF EXISTS classes_catalogue   CASCADE;
+DROP TABLE IF EXISTS races_catalogue     CASCADE;
 
 DROP FUNCTION IF EXISTS init_personnage()          CASCADE;
 DROP FUNCTION IF EXISTS set_updated_at()           CASCADE;
@@ -30,7 +33,62 @@ DROP FUNCTION IF EXISTS cascade_delete_conteneur() CASCADE;
 
 
 -- ══════════════════════════════════════════════════════════════
--- 1. TABLE PRINCIPALE — personnages
+-- 1. CATALOGUE — RACES, CLASSES & CAPACITÉS (officiel, géré par le MJ)
+-- ══════════════════════════════════════════════════════════════
+-- Alimente les listes déroulantes Race/Classe du bloc 1 · Identité.
+-- capacites_catalogue : capacités associables à une race OU une classe
+-- (jamais les deux), au format Catégorie / Titre / Valeur, ex. pour
+-- "Féral" → ("Augmentation de caractéristiques", "Dextérité", "+1").
+-- Ces capacités sont copiées (voir capacites.catalogue_id) dans la fiche
+-- d'un personnage au moment où il choisit sa race/classe — elles restent
+-- ensuite éditables indépendamment du catalogue.
+
+CREATE TABLE races_catalogue (
+  id         uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
+  nom        text        NOT NULL UNIQUE,
+  ordre      int         NOT NULL DEFAULT 0,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE classes_catalogue (
+  id         uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
+  nom        text        NOT NULL UNIQUE,
+  ordre      int         NOT NULL DEFAULT 0,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE capacites_catalogue (
+  id         uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
+  race_id    uuid        REFERENCES races_catalogue(id)   ON DELETE CASCADE,
+  classe_id  uuid        REFERENCES classes_catalogue(id) ON DELETE CASCADE,
+  categorie  text        NOT NULL,
+  titre      text        NOT NULL,
+  valeur     text        NOT NULL,
+  ordre      int         NOT NULL DEFAULT 0,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now(),
+  CONSTRAINT capacites_catalogue_un_seul_parent
+    CHECK ((race_id IS NOT NULL)::int + (classe_id IS NOT NULL)::int = 1)
+);
+
+-- Liste officielle imposée par la campagne (issue #30) — le contenu des
+-- capacités associées à chaque race/classe reste à saisir via la page MJ
+-- races-classes-base.html, capacites_catalogue démarre vide.
+INSERT INTO races_catalogue (nom, ordre) VALUES
+  ('Changelin', 1), ('Demi elfe', 2), ('Demi orc', 3), ('Drakeide', 4), ('Elfe', 5),
+  ('Féral', 6), ('Forgelier', 7), ('Gnome', 8), ('Hobbit', 9), ('Humain', 10),
+  ('Kalashtar', 11), ('Nain', 12);
+
+INSERT INTO classes_catalogue (nom, ordre) VALUES
+  ('Artificier', 1), ('Barbare', 2), ('Barde', 3), ('Clerc', 4), ('Ensorceleur', 5),
+  ('Guerrier', 6), ('Magicien', 7), ('Moine', 8), ('Occultiste', 9), ('Paladin', 10),
+  ('Rodeur', 11), ('Roublard', 12);
+
+
+-- ══════════════════════════════════════════════════════════════
+-- 2. TABLE PRINCIPALE — personnages
 -- ══════════════════════════════════════════════════════════════
 
 CREATE TABLE personnages (
@@ -39,9 +97,9 @@ CREATE TABLE personnages (
 
   -- Bloc 1 · Identité
   nom                         text        NOT NULL DEFAULT 'Nouveau personnage',
-  classe                      text,
+  classe_id                   uuid        REFERENCES classes_catalogue(id) ON DELETE SET NULL,
   niveau                      int         NOT NULL DEFAULT 1 CHECK (niveau BETWEEN 1 AND 20),
-  race                        text,
+  race_id                     uuid        REFERENCES races_catalogue(id) ON DELETE SET NULL,
   age                         int,
   taille_cm                   int,
   poids_kg                    numeric(5,1),
@@ -86,8 +144,9 @@ CREATE TABLE personnages (
   caracteristique_incantation text,
 
   -- Bloc 10 · Traits & capacités
-  traits_raciaux              text,
-  capacites_classe            text,
+  -- Les traits raciaux et capacités de classe sont désormais des lignes de
+  -- la table capacites (origine = 'race' / 'classe'), au même titre que les
+  -- capacités à utilisations limitées — voir section 9.
   maitrises_langues           text,
 
   -- Bloc 11 · Personnalité
@@ -108,7 +167,7 @@ CREATE TABLE personnages (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 2. PROFILS UTILISATEURS
+-- 3. PROFILS UTILISATEURS
 -- Étend auth.users avec le rôle MJ / joueur
 -- ══════════════════════════════════════════════════════════════
 
@@ -121,7 +180,7 @@ CREATE TABLE profils (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 3. CARACTÉRISTIQUES (1 ligne par personnage)
+-- 4. CARACTÉRISTIQUES (1 ligne par personnage)
 -- ══════════════════════════════════════════════════════════════
 
 CREATE TABLE caracteristiques (
@@ -147,7 +206,7 @@ CREATE TABLE caracteristiques (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 4. COMPÉTENCES (18 lignes par personnage)
+-- 5. COMPÉTENCES (18 lignes par personnage)
 -- ══════════════════════════════════════════════════════════════
 
 CREATE TABLE competences (
@@ -161,7 +220,7 @@ CREATE TABLE competences (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 5. ARMES (N lignes par personnage)
+-- 6. ARMES (N lignes par personnage)
 -- ══════════════════════════════════════════════════════════════
 
 CREATE TABLE armes (
@@ -183,7 +242,7 @@ CREATE TABLE armes (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 6. EMPLACEMENTS DE SORTS (niveaux 0–9, 10 lignes par personnage)
+-- 7. EMPLACEMENTS DE SORTS (niveaux 0–9, 10 lignes par personnage)
 -- ══════════════════════════════════════════════════════════════
 
 CREATE TABLE emplacements_sorts (
@@ -198,7 +257,7 @@ CREATE TABLE emplacements_sorts (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 7. SORTS (N lignes par personnage)
+-- 8. SORTS (N lignes par personnage)
 -- ══════════════════════════════════════════════════════════════
 
 CREATE TABLE sorts (
@@ -221,13 +280,23 @@ CREATE TABLE sorts (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 8. CAPACITÉS À UTILISATIONS LIMITÉES (N lignes par personnage)
+-- 9. CAPACITÉS (traits raciaux, capacités de classe & à utilisations
+--    limitées — N lignes par personnage)
 -- ══════════════════════════════════════════════════════════════
+-- origine : 'perso' (créée librement par le joueur) | 'race' | 'classe'.
+-- categorie/catalogue_id ne sont renseignés que pour les capacités copiées
+-- depuis capacites_catalogue (voir section 1) ; catalogue_id est une
+-- référence informative (NULL si capacité personnalisée ou si l'entrée du
+-- catalogue d'origine a été supprimée depuis), sur le modèle de
+-- equipement.base_id.
 
 CREATE TABLE capacites (
   id                     uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
   personnage_id          uuid        NOT NULL REFERENCES personnages(id) ON DELETE CASCADE,
   nom                    text        NOT NULL,
+  origine                text        NOT NULL DEFAULT 'perso' CHECK (origine IN ('perso', 'race', 'classe')),
+  categorie              text,
+  catalogue_id           uuid        REFERENCES capacites_catalogue(id) ON DELETE SET NULL,
   max_utilisations       int         NOT NULL DEFAULT 1,
   utilisations_actuelles int         NOT NULL DEFAULT 0,
   -- rechargement : 'court' | 'long' | 'aube' | 'jamais'
@@ -241,7 +310,7 @@ CREATE TABLE capacites (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 9. ÉQUIPEMENT DE BASE (catalogue officiel, géré par le MJ)
+-- 10. ÉQUIPEMENT DE BASE (catalogue officiel, géré par le MJ)
 -- ══════════════════════════════════════════════════════════════
 -- nom_normalise : calculé côté JS (minuscule, accents retirés) avant insert,
 -- utilisé pour la détection de doublons à l'import CSV.
@@ -262,7 +331,7 @@ CREATE TABLE equipement_base (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 10. ÉQUIPEMENT & POSSESSIONS (N lignes par personnage)
+-- 11. ÉQUIPEMENT & POSSESSIONS (N lignes par personnage)
 -- ══════════════════════════════════════════════════════════════
 -- valeur_pc : valeur de l'objet en pièces de cuivre (conversion à l'affichage).
 -- base_id : référence informative vers l'objet officiel d'origine (NULL si
@@ -283,7 +352,7 @@ CREATE TABLE equipement (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 11. TAGS (libres, créés à la demande par personnage)
+-- 12. TAGS (libres, créés à la demande par personnage)
 -- ══════════════════════════════════════════════════════════════
 -- systeme : 'monnaie' | 'equipe' | 'base' | NULL (tag libre).
 -- conteneur_equipement_id : si non NULL, ce tag est un tag-conteneur lié à
@@ -305,7 +374,7 @@ CREATE TABLE tags (
 
 
 -- ══════════════════════════════════════════════════════════════
--- 12. EQUIPEMENT_TAGS (liaison many-to-many)
+-- 13. EQUIPEMENT_TAGS (liaison many-to-many)
 -- ══════════════════════════════════════════════════════════════
 
 CREATE TABLE equipement_tags (
@@ -320,6 +389,11 @@ CREATE TABLE equipement_tags (
 -- ══════════════════════════════════════════════════════════════
 
 CREATE INDEX idx_personnages_user_id    ON personnages(user_id);
+CREATE INDEX idx_personnages_race_id    ON personnages(race_id);
+CREATE INDEX idx_personnages_classe_id  ON personnages(classe_id);
+CREATE INDEX idx_capacites_catalogue_race   ON capacites_catalogue(race_id, ordre);
+CREATE INDEX idx_capacites_catalogue_classe ON capacites_catalogue(classe_id, ordre);
+CREATE INDEX idx_capacites_catalogue_id ON capacites(catalogue_id);
 CREATE INDEX idx_caracteristiques_pid   ON caracteristiques(personnage_id);
 CREATE INDEX idx_competences_pid        ON competences(personnage_id);
 CREATE INDEX idx_armes_pid              ON armes(personnage_id, ordre);
@@ -450,6 +524,9 @@ ALTER TABLE equipement         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE equipement_base    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tags               ENABLE ROW LEVEL SECURITY;
 ALTER TABLE equipement_tags    ENABLE ROW LEVEL SECURITY;
+ALTER TABLE races_catalogue     ENABLE ROW LEVEL SECURITY;
+ALTER TABLE classes_catalogue   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE capacites_catalogue ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "dev_all" ON personnages        FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON profils            FOR ALL USING (true) WITH CHECK (true);
@@ -463,6 +540,9 @@ CREATE POLICY "dev_all" ON equipement         FOR ALL USING (true) WITH CHECK (t
 CREATE POLICY "dev_all" ON equipement_base    FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON tags               FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON equipement_tags    FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "dev_all" ON races_catalogue     FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "dev_all" ON classes_catalogue   FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "dev_all" ON capacites_catalogue FOR ALL USING (true) WITH CHECK (true);
 
 
 -- ══════════════════════════════════════════════════════════════
@@ -564,6 +644,35 @@ CREATE POLICY "prod_equipement_base_update" ON equipement_base
 CREATE POLICY "prod_equipement_base_delete" ON equipement_base
   FOR DELETE USING (is_mj());
 
+-- races_catalogue / classes_catalogue / capacites_catalogue : même pattern
+-- que equipement_base — lecture pour tous, écriture MJ uniquement.
+CREATE POLICY "prod_races_catalogue_select" ON races_catalogue
+  FOR SELECT USING (true);
+CREATE POLICY "prod_races_catalogue_write" ON races_catalogue
+  FOR INSERT WITH CHECK (is_mj());
+CREATE POLICY "prod_races_catalogue_update" ON races_catalogue
+  FOR UPDATE USING (is_mj());
+CREATE POLICY "prod_races_catalogue_delete" ON races_catalogue
+  FOR DELETE USING (is_mj());
+
+CREATE POLICY "prod_classes_catalogue_select" ON classes_catalogue
+  FOR SELECT USING (true);
+CREATE POLICY "prod_classes_catalogue_write" ON classes_catalogue
+  FOR INSERT WITH CHECK (is_mj());
+CREATE POLICY "prod_classes_catalogue_update" ON classes_catalogue
+  FOR UPDATE USING (is_mj());
+CREATE POLICY "prod_classes_catalogue_delete" ON classes_catalogue
+  FOR DELETE USING (is_mj());
+
+CREATE POLICY "prod_capacites_catalogue_select" ON capacites_catalogue
+  FOR SELECT USING (true);
+CREATE POLICY "prod_capacites_catalogue_write" ON capacites_catalogue
+  FOR INSERT WITH CHECK (is_mj());
+CREATE POLICY "prod_capacites_catalogue_update" ON capacites_catalogue
+  FOR UPDATE USING (is_mj());
+CREATE POLICY "prod_capacites_catalogue_delete" ON capacites_catalogue
+  FOR DELETE USING (is_mj());
+
 CREATE POLICY "prod_tags" ON tags
   FOR ALL USING (
     EXISTS (
@@ -604,28 +713,34 @@ ALTER PUBLICATION supabase_realtime ADD TABLE personnages;
 -- ══════════════════════════════════════════════════════════════
 
 INSERT INTO personnages (
-  nom, classe, niveau, race, xp,
+  nom, classe_id, niveau, race_id, xp,
   vitesse_base_m, type_armure, bonus_armure, bouclier,
   type_de_vie, pv_max, pv_actuel,
   caracteristique_incantation,
   maitrises_langues
 ) VALUES
   (
-    'Kael d''Cannith', 'Artificier', 3, 'Forgelier', 900,
+    'Kael d''Cannith',
+    (SELECT id FROM classes_catalogue WHERE nom = 'Artificier'), 3,
+    (SELECT id FROM races_catalogue WHERE nom = 'Forgelier'), 900,
     9, 'intermediaire', 16, false,
     'd8', 24, 24,
     'intelligence',
     'Commun, Nain, Elfique'
   ),
   (
-    'Sira Venti', 'Roublard', 4, 'Changelin', 2700,
+    'Sira Venti',
+    (SELECT id FROM classes_catalogue WHERE nom = 'Roublard'), 4,
+    (SELECT id FROM races_catalogue WHERE nom = 'Changelin'), 2700,
     9, 'legere', 13, false,
     'd8', 28, 20,
     NULL,
     'Commun, Argot des voleurs, Elfe'
   ),
   (
-    'Brother Toryn', 'Paladin', 2, 'Humain', 300,
+    'Brother Toryn',
+    (SELECT id FROM classes_catalogue WHERE nom = 'Paladin'), 2,
+    (SELECT id FROM races_catalogue WHERE nom = 'Humain'), 300,
     9, 'lourde', 18, true,
     'd10', 22, 22,
     'charisme',

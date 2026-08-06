@@ -59,7 +59,10 @@
         <input id="id-nom" type="text" autocomplete="off" placeholder="Nom du personnage" />
       </div>
       <div class="id-box">
-        <input id="id-classe" type="text" autocomplete="off" placeholder="Classe" />
+        <select id="id-classe">
+          <option value="">Classe</option>
+        </select>
+        <div class="id-box-fallback" id="id-classe-fallback" hidden></div>
       </div>
       <div class="id-box id-box-inline">
         <div class="id-box-label">Niveau</div>
@@ -69,7 +72,10 @@
         <input id="id-age" type="text" inputmode="numeric" placeholder="Âge" />
       </div>
       <div class="id-box">
-        <input id="id-race" type="text" autocomplete="off" placeholder="Race" />
+        <select id="id-race">
+          <option value="">Race</option>
+        </select>
+        <div class="id-box-fallback" id="id-race-fallback" hidden></div>
       </div>
       <div class="id-box id-box-inline">
         <div class="id-box-label">Expérience</div>
@@ -485,19 +491,12 @@
     <h2 class="bloc-title">Traits &amp; Capacités</h2>
 
     <div class="fiche-field" style="grid-column:1/-1;">
-      <label for="traits-traits_raciaux">Traits raciaux</label>
-      <textarea id="traits-traits_raciaux" class="mode-jeu-ok" rows="4" placeholder="Vision dans le noir, Résistance…"></textarea>
-    </div>
-    <div class="fiche-field" style="grid-column:1/-1; margin-top:0.6rem;">
-      <label for="traits-capacites_classe">Capacités de classe</label>
-      <textarea id="traits-capacites_classe" rows="4" placeholder="Style de combat, Voie martiale…"></textarea>
-    </div>
-    <div class="fiche-field" style="grid-column:1/-1; margin-top:0.6rem;">
       <label for="traits-maitrises_langues">Maîtrises &amp; langues</label>
       <textarea id="traits-maitrises_langues" rows="3" placeholder="Outils de forgeron, Commun, Nain…"></textarea>
     </div>
 
-    <h3 class="bloc-subtitle">Capacités à utilisations limitées</h3>
+    <h3 class="bloc-subtitle">Capacités</h3>
+    <div id="capacites-catalogue-panel" class="capacites-catalogue-panel" hidden></div>
     <div id="capacites-container"></div>
     <div class="edition-only capacites-footer">
       <button class="btn-add-capacite" id="btn-add-capacite">+ Ajouter une capacité</button>

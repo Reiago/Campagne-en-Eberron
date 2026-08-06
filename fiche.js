@@ -9,6 +9,7 @@ import {
   getSorts, addSort, updateSort, deleteSort,
   getEmplacementsSorts, updateEmplacementSorts,
   getCapacites, addCapacite, updateCapacite, deleteCapacite,
+  getRacesCatalogue, getClassesCatalogue, getCapacitesCatalogueByRace, getCapacitesCatalogueByClasse,
 } from './db.js';
 import { modificateur, bonusMaitrise, caCalculee, bonusCompetence, perceptionPassive, pvMax, sautLongueur, sautHauteur, chargeMax, bonusToucher, ddSorts, bonusAttaqueSorts } from './calculs.js';
 import { lancerJet, lancerDe, lancerJetMort, lancerDegats } from './des.js';
@@ -52,6 +53,7 @@ const NIVEAUX_SORTS_LABELS = { 0: 'Sorts mineurs' };
 for (let i = 1; i <= 9; i++) NIVEAUX_SORTS_LABELS[i] = 'Niveau ' + i;
 const RECHARGEMENTS = { court: 'Repos court', long: 'Repos long', aube: "À l'aube", jamais: 'Jamais' };
 const ACTIONS_REQUISES = ['Action', 'Action bonus', 'Réaction', 'Libre'];
+const ORIGINE_LABELS = { perso: 'Perso', race: 'Race', classe: 'Classe' };
 // Taux de conversion en pièces de cuivre (PC), utilisés pour la valeur des
 // objets et le résumé de monnaie (objets tagués "Monnaie").
 const TAUX_PC = { pp: 1000, po: 100, pe: 50, pa: 10, pc: 1 };
@@ -82,6 +84,7 @@ function capitaliser(str) {
 let perso = null, carac = null, competences = [], armes = [], equipement = [];
 let tags = [], tagsByEquipement = {};
 let sorts = [], emplacementsSorts = [], capacites = [];
+let racesCatalogue = [], classesCatalogue = [], capacitesCatalogueDisponibles = [];
 let emplacementTimers = {};
 let reposMode        = localStorage.getItem('repos-mode') || 'auto'; // 'auto' | 'manuel'
 let reposDiceCount   = 1;   // nombre de dés à dépenser dans le panneau
@@ -134,8 +137,9 @@ try {
   perso = ficheId ? await getPersonnageById(ficheId) : await getPersonnage(user.id);
   if (!perso) throw new Error('Aucun personnage trouvé pour ce compte.');
 
-  let equipementTagLinks;
-  [carac, competences, armes, equipement, tags, equipementTagLinks, sorts, emplacementsSorts, capacites] = await Promise.all([
+  let equipementTagLinks, capsRace, capsClasse;
+  [carac, competences, armes, equipement, tags, equipementTagLinks, sorts, emplacementsSorts, capacites,
+    racesCatalogue, classesCatalogue, capsRace, capsClasse] = await Promise.all([
     getCaracteristiques(perso.id),
     getCompetences(perso.id),
     getArmes(perso.id),
@@ -145,7 +149,12 @@ try {
     getSorts(perso.id),
     getEmplacementsSorts(perso.id),
     getCapacites(perso.id),
+    getRacesCatalogue(),
+    getClassesCatalogue(),
+    perso.race_id ? getCapacitesCatalogueByRace(perso.race_id) : Promise.resolve([]),
+    perso.classe_id ? getCapacitesCatalogueByClasse(perso.classe_id) : Promise.resolve([]),
   ]);
+  capacitesCatalogueDisponibles = [...capsRace, ...capsClasse];
   tagsByEquipement = {};
   equipementTagLinks.forEach(link => {
     (tagsByEquipement[link.equipement_id] ??= []).push(link.tag);
@@ -358,7 +367,7 @@ function bindChampUnite(f) {
 }
 
 function remplirIdentite() {
-  const champsTxt = ['nom', 'classe', 'race', 'dieu', 'devise', 'description_physique'];
+  const champsTxt = ['nom', 'dieu', 'devise', 'description_physique'];
   const champsNum = ['niveau', 'xp'];
   const champsUnite = ['age', 'taille_cm', 'poids_kg'];
 
@@ -405,6 +414,53 @@ function remplirIdentite() {
     sel.value = perso.alignement ?? '';
     sel.addEventListener('change', () => schedulePersoSave({ alignement: sel.value }));
   }
+
+  remplirRaceClasseSelects();
+}
+
+// Remplit les listes déroulantes Race/Classe depuis le catalogue MJ. Si la
+// fiche a une ancienne valeur texte (avant migration vers le catalogue) qui
+// ne correspond à aucune entrée, on l'affiche en fallback sans la perdre.
+function remplirRaceClasseSelects() {
+  [
+    { selId: 'id-classe', fallbackId: 'id-classe-fallback', catalogue: classesCatalogue, field: 'classe_id', legacy: perso.classe },
+    { selId: 'id-race',   fallbackId: 'id-race-fallback',   catalogue: racesCatalogue,   field: 'race_id',   legacy: perso.race },
+  ].forEach(({ selId, fallbackId, catalogue, field, legacy }) => {
+    const sel = document.getElementById(selId);
+    if (!sel) return;
+    catalogue.forEach(item => {
+      const opt = document.createElement('option');
+      opt.value = item.id;
+      opt.textContent = item.nom;
+      sel.appendChild(opt);
+    });
+    sel.value = perso[field] ?? '';
+
+    const fallback = document.getElementById(fallbackId);
+    if (fallback) {
+      if (!perso[field] && legacy) {
+        fallback.hidden = false;
+        fallback.textContent = `Ancienne valeur : ${legacy} — sélectionnez la correspondance ci-dessus.`;
+      } else {
+        fallback.hidden = true;
+      }
+    }
+
+    sel.addEventListener('change', async () => {
+      schedulePersoSave({ [field]: sel.value || null });
+      if (fallback) fallback.hidden = true;
+      await rafraichirCapacitesCatalogueDisponibles();
+      remplirPanneauCapacitesCatalogue();
+    });
+  });
+}
+
+async function rafraichirCapacitesCatalogueDisponibles() {
+  const [capsRace, capsClasse] = await Promise.all([
+    perso.race_id ? getCapacitesCatalogueByRace(perso.race_id) : Promise.resolve([]),
+    perso.classe_id ? getCapacitesCatalogueByClasse(perso.classe_id) : Promise.resolve([]),
+  ]);
+  capacitesCatalogueDisponibles = [...capsRace, ...capsClasse];
 }
 
 // ── Bloc 2 : Caractéristiques ──────────────────────────────────────────────────
@@ -1781,14 +1837,71 @@ function renderSortCard(sort) {
 function remplirTraits() {
   if (!perso) return;
 
-  ['traits_raciaux', 'capacites_classe', 'maitrises_langues'].forEach(f => {
-    const el = document.getElementById('traits-' + f);
-    if (!el) return;
-    el.value = perso[f] ?? '';
-    el.addEventListener('input', () => schedulePersoSave({ [f]: el.value }));
-  });
+  const el = document.getElementById('traits-maitrises_langues');
+  if (el) {
+    el.value = perso.maitrises_langues ?? '';
+    el.addEventListener('input', () => schedulePersoSave({ maitrises_langues: el.value }));
+  }
 
   remplirCapacites();
+  remplirPanneauCapacitesCatalogue();
+}
+
+// Panneau "Capacités disponibles" : capacités du catalogue liées à la race/
+// classe du personnage, pas encore copiées dans sa liste de capacités.
+function remplirPanneauCapacitesCatalogue() {
+  const panel = document.getElementById('capacites-catalogue-panel');
+  if (!panel) return;
+
+  const dejaImportes = new Set(capacites.map(c => c.catalogue_id).filter(Boolean));
+  const disponibles = capacitesCatalogueDisponibles.filter(c => !dejaImportes.has(c.id));
+
+  if (!disponibles.length) {
+    panel.hidden = true;
+    panel.innerHTML = '';
+    return;
+  }
+
+  panel.hidden = false;
+  panel.innerHTML = `
+    <div class="capacites-catalogue-titre">Capacités disponibles pour votre race/classe</div>
+    ${disponibles.map(c => `
+      <button type="button" class="capacite-catalogue-item" data-id="${c.id}">
+        <span class="capacite-catalogue-nom">${c.categorie} — ${c.titre}</span>
+        <span class="capacite-catalogue-valeur">${c.valeur}</span>
+        <span class="capacite-catalogue-add">+ Ajouter</span>
+      </button>
+    `).join('')}
+  `;
+  panel.querySelectorAll('.capacite-catalogue-item').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const cat = disponibles.find(c => c.id === btn.dataset.id);
+      if (cat) await ajouterDepuisCatalogue(cat);
+    });
+  });
+}
+
+// Copie une capacité du catalogue dans la liste du personnage, éditable
+// indépendamment ensuite (catalogue_id garde juste une référence informative).
+async function ajouterDepuisCatalogue(cat) {
+  const newCapacite = {
+    personnage_id: perso.id,
+    nom: cat.titre,
+    categorie: cat.categorie,
+    description: cat.valeur,
+    origine: cat.race_id ? 'race' : 'classe',
+    catalogue_id: cat.id,
+    max_utilisations: 0,
+    rechargement: 'jamais',
+  };
+  showSave('saving');
+  try {
+    const created = await addCapacite(newCapacite);
+    capacites.push(created);
+    remplirCapacites();
+    remplirPanneauCapacitesCatalogue();
+    showSave('ok');
+  } catch (err) { showSave('error'); console.error(err); }
 }
 
 // ── Bloc 11 : Historique / Personnalité ────────────────────────────────────────
@@ -1828,26 +1941,34 @@ function remplirCapacites() {
     capacites.forEach(cap => container.appendChild(renderCapaciteCard(cap)));
   }
 
-  document.getElementById('btn-add-capacite')?.addEventListener('click', async () => {
-    const newCapacite = {
-      personnage_id: perso.id,
-      nom: '',
-      max_utilisations: 1,
-      utilisations_actuelles: 0,
-      rechargement: 'long',
-      action_requise: '',
-      description: '',
-    };
-    try {
-      showSave('saving');
-      const created = await addCapacite(newCapacite);
-      showSave('ok');
-      capacites.push(created);
-      const emptyEl = container.querySelector('.capacites-empty');
-      if (emptyEl) emptyEl.remove();
-      container.appendChild(renderCapaciteCard(created));
-    } catch (err) { showSave('error'); console.error(err); }
-  });
+  // remplirCapacites() est désormais appelée plusieurs fois par session (import
+  // depuis le catalogue, suppression) : n'attacher ce listener qu'une fois pour
+  // éviter d'empiler des créations en double sur les appels suivants.
+  const btnAdd = document.getElementById('btn-add-capacite');
+  if (btnAdd && !btnAdd.dataset.bound) {
+    btnAdd.dataset.bound = '1';
+    btnAdd.addEventListener('click', async () => {
+      const newCapacite = {
+        personnage_id: perso.id,
+        nom: '',
+        max_utilisations: 1,
+        utilisations_actuelles: 0,
+        rechargement: 'long',
+        action_requise: '',
+        description: '',
+      };
+      try {
+        showSave('saving');
+        const created = await addCapacite(newCapacite);
+        showSave('ok');
+        capacites.push(created);
+        const cont = document.getElementById('capacites-container');
+        const emptyEl = cont?.querySelector('.capacites-empty');
+        if (emptyEl) emptyEl.remove();
+        cont?.appendChild(renderCapaciteCard(created));
+      } catch (err) { showSave('error'); console.error(err); }
+    });
+  }
 }
 
 function renderCapaciteCard(cap) {
@@ -1856,11 +1977,17 @@ function renderCapaciteCard(cap) {
   card.dataset.id = cap.id;
   card.classList.toggle('no-desc', !cap.description);
 
+  const origine = cap.origine ?? 'perso';
   card.innerHTML = `
     <div class="capacite-header">
+      <span class="capacite-origine-badge" data-origine="${origine}">${ORIGINE_LABELS[origine] ?? origine}</span>
       <div class="fiche-field capacite-nom-field">
         <label>Nom</label>
         <input type="text" class="capacite-nom-input" placeholder="Rage" />
+      </div>
+      <div class="fiche-field capacite-categorie-field">
+        <label>Catégorie</label>
+        <input type="text" class="capacite-categorie-input" placeholder="Traits raciaux" />
       </div>
       <div class="fiche-field capacite-max-field">
         <label>Max</label>
@@ -1893,6 +2020,7 @@ function renderCapaciteCard(cap) {
   `;
 
   card.querySelector('.capacite-nom-input').value = cap.nom ?? '';
+  card.querySelector('.capacite-categorie-input').value = cap.categorie ?? '';
   card.querySelector('.capacite-max-input').value = cap.max_utilisations ?? 1;
   card.querySelector('.capacite-rechargement-select').value = cap.rechargement ?? 'long';
   card.querySelector('.capacite-action-select').value = cap.action_requise ?? '';
@@ -1906,6 +2034,7 @@ function renderCapaciteCard(cap) {
       try {
         await updateCapacite(cap.id, {
           nom: cap.nom,
+          categorie: cap.categorie || null,
           max_utilisations: cap.max_utilisations,
           utilisations_actuelles: cap.utilisations_actuelles,
           rechargement: cap.rechargement,
@@ -1919,6 +2048,10 @@ function renderCapaciteCard(cap) {
 
   card.querySelector('.capacite-nom-input').addEventListener('input', e => {
     cap.nom = e.target.value;
+    scheduleCapaciteSave();
+  });
+  card.querySelector('.capacite-categorie-input').addEventListener('input', e => {
+    cap.categorie = e.target.value;
     scheduleCapaciteSave();
   });
   card.querySelector('.capacite-max-input').addEventListener('input', e => {
@@ -1961,6 +2094,7 @@ function renderCapaciteCard(cap) {
         empty.textContent = 'Aucune capacité — ajoutez-en une en Mode Édition.';
         container.appendChild(empty);
       }
+      if (cap.catalogue_id) remplirPanneauCapacitesCatalogue();
     } catch (err) { showSave('error'); console.error(err); }
   });
 

@@ -2578,10 +2578,35 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
   margin-bottom: 0.75rem;
 }
 
-.capacite-nom-field { flex: 1 1 0; min-width: 0; }
+.capacite-nom-field { flex: 1 1 90px; min-width: 0; }
+.capacite-categorie-field { flex: 1 1 90px; min-width: 0; }
 .capacite-max-field { flex: 0 0 80px; }
 .capacite-rechargement-field { flex: 0 0 130px; }
 .capacite-action-field { flex: 0 0 140px; }
+
+.capacite-origine-badge {
+  align-self: flex-start;
+  flex-shrink: 0;
+  font-family: var(--font-heading);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  margin-top: 4px;
+  border-radius: 3px;
+  border: 1px solid var(--border-strong);
+  color: var(--text-dim);
+}
+.capacite-origine-badge[data-origine="race"] {
+  color: #8FBF9A;
+  border-color: rgba(143,191,154,0.4);
+  background: rgba(143,191,154,0.08);
+}
+.capacite-origine-badge[data-origine="classe"] {
+  color: #8FA8D8;
+  border-color: rgba(143,168,216,0.4);
+  background: rgba(143,168,216,0.08);
+}
 
 .capacite-del-btn {
   background: transparent;
@@ -2673,6 +2698,59 @@ body.mode-jeu .capacite-card.no-desc .capacite-description-wrap { display: none 
   background: rgba(201,168,108,0.05);
 }
 
-@media (max-width: 480px) {
+.capacites-catalogue-panel {
+  margin-bottom: 0.75rem;
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.75rem;
+}
+.capacites-catalogue-titre {
+  font-family: var(--font-heading);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+.capacite-catalogue-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-bright);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0.4rem 0.2rem;
+  text-align: left;
+}
+.capacite-catalogue-item:last-child { border-bottom: none; }
+.capacite-catalogue-item:hover { background: rgba(201,168,108,0.06); }
+.capacite-catalogue-nom { flex: 1 1 auto; }
+.capacite-catalogue-valeur { color: var(--text-dim); font-size: 11px; flex-shrink: 0; }
+.capacite-catalogue-add {
+  color: var(--gold-light);
+  font-family: var(--font-heading);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* Fallback affiché sous Race/Classe si l'ancienne valeur texte (avant
+   migration vers le catalogue) ne correspond à aucune entrée de la liste. */
+.id-box-fallback {
+  font-size: 9px;
+  color: var(--text-dim);
+  font-style: italic;
+  line-height: 1.3;
+  margin-top: 3px;
+}
+
+@media (max-width: 700px) {
   .capacite-header { flex-wrap: wrap; }
 }
