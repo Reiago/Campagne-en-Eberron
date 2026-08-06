@@ -358,7 +358,7 @@ function bindChampUnite(f) {
 }
 
 function remplirIdentite() {
-  const champsTxt = ['nom', 'classe', 'race', 'dieu', 'devise'];
+  const champsTxt = ['nom', 'classe', 'race', 'dieu', 'devise', 'description_physique'];
   const champsNum = ['niveau', 'xp'];
   const champsUnite = ['age', 'taille_cm', 'poids_kg'];
 
@@ -1806,10 +1806,12 @@ function remplirHistorique() {
 // ── Bloc 12 : Notes ─────────────────────────────────────────────────────────────
 function remplirNotes() {
   if (!perso) return;
-  const el = document.getElementById('notes-notes');
-  if (!el) return;
-  el.value = perso.notes ?? '';
-  el.addEventListener('input', () => schedulePersoSave({ notes: el.value }));
+  ['notes', 'bonus_malus'].forEach(f => {
+    const el = document.getElementById('notes-' + f);
+    if (!el) return;
+    el.value = perso[f] ?? '';
+    el.addEventListener('input', () => schedulePersoSave({ [f]: el.value }));
+  });
 }
 
 function remplirCapacites() {
@@ -1886,7 +1888,7 @@ function renderCapaciteCard(cap) {
     </div>
     <details class="capacite-description-wrap">
       <summary>Description</summary>
-      <textarea class="capacite-description-input" rows="3" placeholder="Description de la capacité…"></textarea>
+      <textarea class="capacite-description-input mode-jeu-ok" rows="3" placeholder="Description de la capacité…"></textarea>
     </details>
   `;
 
