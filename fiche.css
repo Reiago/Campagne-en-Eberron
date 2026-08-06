@@ -1360,15 +1360,18 @@ body.mode-jeu .mode-jeu-ok {
   cursor: pointer !important;
 }
 
-/* Notes de session : restent éditables en Mode Jeu */
-body.mode-jeu #notes-notes {
+/* Champs texte longs (notes, description physique, bonus & malus, traits, capacités…) :
+   restent éditables et défilables en Mode Jeu au lieu d'être figés par la règle générale ci-dessus */
+body.mode-jeu .fiche-field textarea.mode-jeu-ok,
+body.mode-jeu textarea.mode-jeu-ok {
   pointer-events: auto !important;
   background: var(--stone-mid) !important;
   border-color: var(--border) !important;
   color: var(--gold-light) !important;
   cursor: text !important;
 }
-body.mode-jeu #notes-notes:focus {
+body.mode-jeu .fiche-field textarea.mode-jeu-ok:focus,
+body.mode-jeu textarea.mode-jeu-ok:focus {
   border-color: var(--gold-dim) !important;
 }
 

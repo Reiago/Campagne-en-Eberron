@@ -16,3 +16,9 @@ Quand une modification du fichier `supabase_schema.sql` ajoute ou change une col
 
 - Utilise la fiche suivante pour visualiser les modifications :
 fiche.html?id=4e43894d-731a-4ec7-babc-22ce9c49e34a
+
+## Supabase local — ne jamais l'arrêter sans raison
+
+- Avant de lancer `npx supabase start`/`stop` pour tester, vérifier s'il tourne déjà (`docker ps --filter "name=Campagne-en-Eberron"`).
+- Si le stack Supabase local était **déjà lancé** avant l'intervention, **ne jamais l'arrêter** (`npx supabase stop`) à la fin des tests — le laisser tourner tel quel.
+- Ne l'arrêter que s'il a été démarré spécifiquement pour ce test (c'est-à-dire qu'il était éteint avant).

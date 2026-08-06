@@ -49,6 +49,7 @@ CREATE TABLE personnages (
   devise                      text,
   xp                          int         NOT NULL DEFAULT 0,
   alignement                  text,
+  description_physique        text,
 
   -- Bloc 3 · Vitesses (en mètres)
   vitesse_base_m              int         NOT NULL DEFAULT 9,
@@ -99,6 +100,7 @@ CREATE TABLE personnages (
 
   -- Bloc 12 · Notes
   notes                       text,
+  bonus_malus                 text,
 
   created_at                  timestamptz DEFAULT now(),
   updated_at                  timestamptz DEFAULT now()
