@@ -2579,20 +2579,27 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
 }
 
 .capacite-nom-field { flex: 1 1 90px; min-width: 0; }
-.capacite-categorie-field { flex: 1 1 90px; min-width: 0; }
 .capacite-max-field { flex: 0 0 80px; }
 .capacite-rechargement-field { flex: 0 0 130px; }
 .capacite-action-field { flex: 0 0 140px; }
 
+.capacite-meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+.capacite-meta-sep { color: var(--border-strong); flex-shrink: 0; }
+
 .capacite-origine-badge {
-  align-self: flex-start;
   flex-shrink: 0;
   font-family: var(--font-heading);
   font-size: 8px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 3px 7px;
-  margin-top: 4px;
   border-radius: 3px;
   border: 1px solid var(--border-strong);
   color: var(--text-dim);
@@ -2662,6 +2669,22 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
 .btn-capacite-utiliser:hover { background: rgba(201,168,108,0.18); }
 .btn-capacite-utiliser:disabled { opacity: 0.4; cursor: default; }
 
+.capacite-categorie-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-style: italic;
+  font-size: 13px;
+  padding: 0;
+}
+.capacite-categorie-input:focus { outline: none; color: var(--text-bright); }
+.capacite-categorie-input::placeholder { color: var(--text-dim); opacity: 0.7; }
+
+.capacite-description-wrap { flex-shrink: 0; }
+.capacite-description-wrap[open] { flex: 1 1 100%; }
+
 .capacite-description-wrap summary {
   cursor: pointer;
   font-family: var(--font-heading);
@@ -2669,12 +2692,14 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-dim);
+  white-space: nowrap;
 }
 
 .capacite-description-input { resize: vertical; min-height: 48px; width: 100%; margin-top: 0.4rem; }
 
-/* Hide description block in mode jeu when empty */
+/* Hide description block (and its separator) in mode jeu when empty */
 body.mode-jeu .capacite-card.no-desc .capacite-description-wrap { display: none !important; }
+body.mode-jeu .capacite-card.no-desc .capacite-meta-sep:last-of-type { display: none; }
 
 .capacites-footer { margin-top: 0.25rem; }
 

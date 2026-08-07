@@ -1980,14 +1980,9 @@ function renderCapaciteCard(cap) {
   const origine = cap.origine ?? 'perso';
   card.innerHTML = `
     <div class="capacite-header">
-      <span class="capacite-origine-badge" data-origine="${origine}">${ORIGINE_LABELS[origine] ?? origine}</span>
       <div class="fiche-field capacite-nom-field">
         <label>Nom</label>
         <input type="text" class="capacite-nom-input" placeholder="Rage" />
-      </div>
-      <div class="fiche-field capacite-categorie-field">
-        <label>Catégorie</label>
-        <input type="text" class="capacite-categorie-input" placeholder="Traits raciaux" />
       </div>
       <div class="fiche-field capacite-max-field">
         <label>Max</label>
@@ -2013,10 +2008,16 @@ function renderCapaciteCard(cap) {
       <div class="capacite-cases"></div>
       <button class="btn-capacite-utiliser mode-jeu-ok">Utiliser (−1)</button>
     </div>
-    <details class="capacite-description-wrap">
-      <summary>Description</summary>
-      <textarea class="capacite-description-input mode-jeu-ok" rows="3" placeholder="Description de la capacité…"></textarea>
-    </details>
+    <div class="capacite-meta-row">
+      <span class="capacite-origine-badge" data-origine="${origine}">${ORIGINE_LABELS[origine] ?? origine}</span>
+      <span class="capacite-meta-sep">—</span>
+      <input type="text" class="capacite-categorie-input" placeholder="Catégorie" />
+      <span class="capacite-meta-sep">—</span>
+      <details class="capacite-description-wrap">
+        <summary>Description</summary>
+        <textarea class="capacite-description-input mode-jeu-ok" rows="3" placeholder="Description de la capacité…"></textarea>
+      </details>
+    </div>
   `;
 
   card.querySelector('.capacite-nom-input').value = cap.nom ?? '';
