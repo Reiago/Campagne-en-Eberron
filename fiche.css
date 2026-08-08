@@ -2742,9 +2742,10 @@ body.mode-jeu .capacites-catalogue-panel { display: none !important; }
 }
 .capacite-catalogue-item {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.2rem 0.5rem;
   width: 100%;
   background: transparent;
   border: none;
@@ -2757,8 +2758,7 @@ body.mode-jeu .capacites-catalogue-panel { display: none !important; }
 }
 .capacite-catalogue-item:last-child { border-bottom: none; }
 .capacite-catalogue-item:hover { background: rgba(201,168,108,0.06); }
-.capacite-catalogue-nom { flex: 1 1 auto; }
-.capacite-catalogue-valeur { color: var(--text-dim); font-size: 11px; flex-shrink: 0; }
+.capacite-catalogue-nom { flex: 1 1 auto; min-width: 0; order: 1; }
 .capacite-catalogue-add {
   color: var(--gold-light);
   font-family: var(--font-heading);
@@ -2766,6 +2766,17 @@ body.mode-jeu .capacites-catalogue-panel { display: none !important; }
   letter-spacing: 0.1em;
   text-transform: uppercase;
   flex-shrink: 0;
+  order: 2;
+}
+/* Bascule sur sa propre ligne pleine largeur si le texte est long, plutôt
+   que de déborder du panneau. */
+.capacite-catalogue-valeur {
+  color: var(--text-dim);
+  font-size: 11px;
+  flex: 1 1 100%;
+  order: 3;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 /* Fallback affiché sous Race/Classe si l'ancienne valeur texte (avant
