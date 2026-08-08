@@ -2728,6 +2728,9 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
   border-radius: 4px;
   padding: 0.75rem;
 }
+/* Ce panneau ne sert qu'à importer des capacités depuis le catalogue :
+   pas d'utilité en Mode Jeu, où l'on ne fait qu'utiliser la fiche. */
+body.mode-jeu .capacites-catalogue-panel { display: none !important; }
 .capacites-catalogue-titre {
   font-family: var(--font-heading);
   font-size: 9px;
