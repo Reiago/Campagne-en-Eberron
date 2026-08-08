@@ -2722,6 +2722,7 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
 }
 
 .capacites-catalogue-panel {
+  margin-top: 0.75rem;
   margin-bottom: 0.75rem;
   background: var(--stone-mid);
   border: 1px solid var(--border-strong);
