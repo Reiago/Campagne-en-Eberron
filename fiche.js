@@ -2008,16 +2008,18 @@ function renderCapaciteCard(cap) {
       <div class="capacite-cases"></div>
       <button class="btn-capacite-utiliser mode-jeu-ok">Utiliser (−1)</button>
     </div>
-    <div class="capacite-meta-row">
-      <details class="capacite-description-wrap">
-        <summary>Description</summary>
-        <textarea class="capacite-description-input mode-jeu-ok" rows="3" placeholder="Description de la capacité…"></textarea>
-      </details>
-      <span class="capacite-meta-sep">—</span>
-      <span class="capacite-origine-badge" data-origine="${origine}">${ORIGINE_LABELS[origine] ?? origine}</span>
-      <span class="capacite-meta-sep">—</span>
-      <input type="text" class="capacite-categorie-input" placeholder="Catégorie" />
-    </div>
+    <details class="capacite-description-wrap">
+      <summary>
+        <span class="capacite-summary-content">
+          Description
+          <span class="capacite-meta-sep">—</span>
+          <span class="capacite-origine-badge" data-origine="${origine}">${ORIGINE_LABELS[origine] ?? origine}</span>
+          <span class="capacite-meta-sep">—</span>
+          <input type="text" class="capacite-categorie-input" placeholder="Catégorie" />
+        </span>
+      </summary>
+      <textarea class="capacite-description-input mode-jeu-ok" rows="3" placeholder="Description de la capacité…"></textarea>
+    </details>
   `;
 
   card.querySelector('.capacite-nom-input').value = cap.nom ?? '';
@@ -2055,6 +2057,9 @@ function renderCapaciteCard(cap) {
     cap.categorie = e.target.value;
     scheduleCapaciteSave();
   });
+  // Le champ vit dans <summary> (pour rester sur la ligne "Description") :
+  // sans ça, cliquer dedans pour l'éditer replierait/déplierait le détail.
+  card.querySelector('.capacite-categorie-input').addEventListener('click', e => e.stopPropagation());
   card.querySelector('.capacite-max-input').addEventListener('input', e => {
     cap.max_utilisations = Math.max(0, Number(e.target.value) || 0);
     if ((cap.utilisations_actuelles ?? 0) > cap.max_utilisations) cap.utilisations_actuelles = cap.max_utilisations;
