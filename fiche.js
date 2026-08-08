@@ -2009,14 +2009,14 @@ function renderCapaciteCard(cap) {
       <button class="btn-capacite-utiliser mode-jeu-ok">Utiliser (−1)</button>
     </div>
     <div class="capacite-meta-row">
-      <span class="capacite-origine-badge" data-origine="${origine}">${ORIGINE_LABELS[origine] ?? origine}</span>
-      <span class="capacite-meta-sep">—</span>
-      <input type="text" class="capacite-categorie-input" placeholder="Catégorie" />
-      <span class="capacite-meta-sep">—</span>
       <details class="capacite-description-wrap">
         <summary>Description</summary>
         <textarea class="capacite-description-input mode-jeu-ok" rows="3" placeholder="Description de la capacité…"></textarea>
       </details>
+      <span class="capacite-meta-sep">—</span>
+      <span class="capacite-origine-badge" data-origine="${origine}">${ORIGINE_LABELS[origine] ?? origine}</span>
+      <span class="capacite-meta-sep">—</span>
+      <input type="text" class="capacite-categorie-input" placeholder="Catégorie" />
     </div>
   `;
 

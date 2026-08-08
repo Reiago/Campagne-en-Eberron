@@ -2699,7 +2699,7 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
 
 /* Hide description block (and its separator) in mode jeu when empty */
 body.mode-jeu .capacite-card.no-desc .capacite-description-wrap { display: none !important; }
-body.mode-jeu .capacite-card.no-desc .capacite-meta-sep:last-of-type { display: none; }
+body.mode-jeu .capacite-card.no-desc .capacite-meta-sep:first-of-type { display: none; }
 
 .capacites-footer { margin-top: 0.25rem; }
 
