@@ -30,7 +30,7 @@ export async function updatePersonnage(id, data) {
 export async function getAllPersonnages() {
   const { data, error } = await supabase
     .from('personnages')
-    .select('id, nom, classe, niveau, race, user_id')
+    .select('id, nom, niveau, user_id, classe:classes_catalogue(nom), race:races_catalogue(nom)')
     .order('nom');
   if (error) throw error;
   return data;
@@ -288,4 +288,86 @@ export async function bulkUpsertEquipementBase(rows) {
     .select();
   if (error) throw error;
   return data;
+}
+
+// ── Races, classes & capacités liées (catalogue officiel MJ) ──────────────────
+
+export async function getRacesCatalogue() {
+  const { data, error } = await supabase.from('races_catalogue').select('*').order('ordre').order('nom');
+  if (error) throw error;
+  return data;
+}
+
+export async function addRaceCatalogue(data) {
+  const { data: result, error } = await supabase.from('races_catalogue').insert(data).select().single();
+  if (error) throw error;
+  return result;
+}
+
+export async function updateRaceCatalogue(id, data) {
+  const { error } = await supabase.from('races_catalogue').update(data).eq('id', id);
+  if (error) throw error;
+}
+
+export async function deleteRaceCatalogue(id) {
+  const { error } = await supabase.from('races_catalogue').delete().eq('id', id);
+  if (error) throw error;
+}
+
+export async function getClassesCatalogue() {
+  const { data, error } = await supabase.from('classes_catalogue').select('*').order('ordre').order('nom');
+  if (error) throw error;
+  return data;
+}
+
+export async function addClasseCatalogue(data) {
+  const { data: result, error } = await supabase.from('classes_catalogue').insert(data).select().single();
+  if (error) throw error;
+  return result;
+}
+
+export async function updateClasseCatalogue(id, data) {
+  const { error } = await supabase.from('classes_catalogue').update(data).eq('id', id);
+  if (error) throw error;
+}
+
+export async function deleteClasseCatalogue(id) {
+  const { error } = await supabase.from('classes_catalogue').delete().eq('id', id);
+  if (error) throw error;
+}
+
+export async function getCapacitesCatalogueByRace(raceId) {
+  const { data, error } = await supabase
+    .from('capacites_catalogue')
+    .select('*')
+    .eq('race_id', raceId)
+    .order('ordre');
+  if (error) throw error;
+  return data;
+}
+
+export async function getCapacitesCatalogueByClasse(classeId) {
+  const { data, error } = await supabase
+    .from('capacites_catalogue')
+    .select('*')
+    .eq('classe_id', classeId)
+    .order('ordre');
+  if (error) throw error;
+  return data;
+}
+
+export async function addCapaciteCatalogue(data) {
+  const { data: result, error } = await supabase.from('capacites_catalogue').insert(data).select().single();
+  if (error) throw error;
+  return result;
+}
+
+export async function updateCapaciteCatalogue(id, data) {
+  const { error } = await supabase.from('capacites_catalogue').update(data).eq('id', id);
+  if (error) throw error;
+}
+
+export async function deleteCapaciteCatalogue(id) {
+  const { error } = await supabase.from('capacites_catalogue').delete().eq('id', id);
+  if (error) throw error;
 }

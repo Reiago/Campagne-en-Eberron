@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Races, classes & capacités — Eberron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .mj-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .mj-header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .auth-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .btn-logout {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-logout:hover { border-color: var(--gold-dim); color: var(--gold); }
+    .btn-portail {
+      display: inline-block;
+      color: var(--text-muted);
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+    .btn-portail:hover { color: var(--gold); }
+    .btn-portail::before { content: '← '; }
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+    .loading { color: var(--text-muted); font-style: italic; padding: 1rem 0; }
+    .error-msg { color: #D4806A; padding: 1rem 0; }
+
+    /* ── Tableaux ── */
+    .rc-table input, .rc-table select {
+      width: 100%;
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-bright);
+      font-family: var(--font-body, inherit);
+      font-size: 13px;
+      padding: 0.3rem 0.4rem;
+    }
+    .rc-table input[type="number"] { width: 5em; }
+    .btn-del-rc {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 0.2rem 0.4rem;
+    }
+    .btn-del-rc:hover { color: #D87060; border-color: rgba(200,80,60,0.3); }
+
+    /* ── Formulaires d'ajout ── */
+    .ajout-form {
+      display: grid;
+      grid-template-columns: 2fr 1fr auto;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+    .ajout-form-capacite {
+      grid-template-columns: 1.5fr 1.5fr 1.5fr 1fr auto;
+    }
+    .ajout-form input, .ajout-form select {
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-bright);
+      font-size: 13px;
+      padding: 0.4rem 0.5rem;
+    }
+    .btn-gold {
+      background: transparent;
+      border: 1px solid var(--gold-dim);
+      border-radius: 4px;
+      color: var(--gold-light);
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.55rem 1rem;
+      transition: background 0.15s;
+    }
+    .btn-gold:hover { background: rgba(201,168,108,0.08); }
+
+    .rc-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+    @media (max-width: 700px) {
+      .rc-columns { grid-template-columns: 1fr; }
+    }
+
+    #parent-select {
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-bright);
+      font-size: 13px;
+      padding: 0.5rem 0.6rem;
+      margin-bottom: 1rem;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="nav-container"></div>
+
+  <div class="mj-header">
+    <h1>Races, classes &amp; capacités</h1>
+    <div class="auth-bar" id="auth-bar"></div>
+  </div>
+
+  <a href="mj.html" class="btn-portail">Retour à l'espace MJ</a>
+
+  <div class="rc-columns">
+    <div>
+      <div class="section-label" style="margin-top:0;">Races</div>
+      <div class="ajout-form" id="ajout-race-form">
+        <input type="text" id="ajout-race-nom" placeholder="Nom de la race" />
+        <input type="number" id="ajout-race-ordre" step="1" placeholder="Ordre" />
+        <button class="btn-gold" id="btn-ajout-race">+ Ajouter</button>
+      </div>
+      <div id="races-table"><p class="loading">Chargement…</p></div>
+    </div>
+
+    <div>
+      <div class="section-label" style="margin-top:0;">Classes</div>
+      <div class="ajout-form" id="ajout-classe-form">
+        <input type="text" id="ajout-classe-nom" placeholder="Nom de la classe" />
+        <input type="number" id="ajout-classe-ordre" step="1" placeholder="Ordre" />
+        <button class="btn-gold" id="btn-ajout-classe">+ Ajouter</button>
+      </div>
+      <div id="classes-table"><p class="loading">Chargement…</p></div>
+    </div>
+  </div>
+
+  <div class="section-label">Capacités du catalogue</div>
+  <p class="csv-hint" style="color:var(--text-dim); font-size:0.85rem; margin-bottom:0.75rem;">
+    Choisissez une race ou une classe pour gérer les capacités qui lui sont associées
+    (format Catégorie / Titre / Valeur, ex. « Augmentation de caractéristiques / Dextérité / +1 »).
+    Ces capacités apparaissent ensuite dans le panneau « Capacités disponibles » de la fiche des
+    personnages ayant choisi cette race/classe.
+  </p>
+  <select id="parent-select">
+    <option value="">— Choisir une race ou une classe —</option>
+  </select>
+
+  <div id="capacites-section" hidden>
+    <div class="ajout-form ajout-form-capacite" id="ajout-capacite-form">
+      <input type="text" id="ajout-cap-categorie" placeholder="Catégorie" />
+      <input type="text" id="ajout-cap-titre" placeholder="Titre" />
+      <input type="text" id="ajout-cap-valeur" placeholder="Valeur" />
+      <input type="number" id="ajout-cap-ordre" step="1" placeholder="Ordre" />
+      <button class="btn-gold" id="btn-ajout-capacite">+ Ajouter</button>
+    </div>
+    <div id="capacites-table"><p class="loading">Chargement…</p></div>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script type="module">
+  import { requireMJ, logout } from './auth.js';
+  import {
+    getRacesCatalogue, addRaceCatalogue, updateRaceCatalogue, deleteRaceCatalogue,
+    getClassesCatalogue, addClasseCatalogue, updateClasseCatalogue, deleteClasseCatalogue,
+    getCapacitesCatalogueByRace, getCapacitesCatalogueByClasse,
+    addCapaciteCatalogue, updateCapaciteCatalogue, deleteCapaciteCatalogue,
+  } from './db.js';
+
+  const user = await requireMJ();
+  if (!user) throw new Error('Accès refusé');
+
+  const authBar = document.getElementById('auth-bar');
+  authBar.innerHTML = `<span>${user.email}</span><button class="btn-logout" id="btn-logout">Déconnexion</button>`;
+  document.getElementById('btn-logout').addEventListener('click', logout);
+
+  let races = [];
+  let classes = [];
+
+  // ── Races & Classes ──────────────────────────────────────────────────────────
+
+  async function chargerRacesEtClasses() {
+    try {
+      [races, classes] = await Promise.all([getRacesCatalogue(), getClassesCatalogue()]);
+      renderRacesTable();
+      renderClassesTable();
+      renderParentSelect();
+    } catch (e) {
+      document.getElementById('races-table').innerHTML = `<p class="error-msg">Erreur : ${e.message}</p>`;
+      document.getElementById('classes-table').innerHTML = `<p class="error-msg">Erreur : ${e.message}</p>`;
+    }
+  }
+
+  function renderTableGenerique(container, items, { onSave, onDelete, deleteWarning }) {
+    if (!items.length) {
+      container.innerHTML = '<p class="loading">Aucune entrée.</p>';
+      return;
+    }
+    container.innerHTML = `
+      <table>
+        <thead><tr><th>Nom</th><th>Ordre</th><th></th></tr></thead>
+        <tbody>
+          ${items.map(item => `
+            <tr data-id="${item.id}">
+              <td><input type="text" class="rc-nom" value="${(item.nom ?? '').replace(/"/g, '&quot;')}" /></td>
+              <td><input type="number" step="1" class="rc-ordre" value="${item.ordre ?? 0}" /></td>
+              <td><button class="btn-del-rc" title="Supprimer">✕</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+    container.querySelectorAll('tbody tr').forEach(row => {
+      const id = row.dataset.id;
+      const nomInput = row.querySelector('.rc-nom');
+      const ordreInput = row.querySelector('.rc-ordre');
+      let timer = null;
+      const save = () => {
+        clearTimeout(timer);
+        timer = setTimeout(async () => {
+          try {
+            await onSave(id, { nom: nomInput.value, ordre: Number(ordreInput.value) || 0 });
+          } catch (e) { alert('Erreur de sauvegarde : ' + e.message); }
+        }, 500);
+      };
+      nomInput.addEventListener('input', save);
+      ordreInput.addEventListener('input', save);
+
+      row.querySelector('.btn-del-rc').addEventListener('click', async () => {
+        if (!confirm(deleteWarning)) return;
+        try {
+          await onDelete(id);
+        } catch (e) { alert('Erreur : ' + e.message); }
+      });
+    });
+  }
+
+  function renderRacesTable() {
+    const container = document.getElementById('races-table');
+    renderTableGenerique(container, races, {
+      onSave: async (id, data) => updateRaceCatalogue(id, data),
+      onDelete: async (id) => {
+        await deleteRaceCatalogue(id);
+        races = races.filter(r => r.id !== id);
+        renderRacesTable();
+        renderParentSelect();
+      },
+      deleteWarning: 'Supprimer cette race ? Les capacités du catalogue associées seront aussi supprimées, et les personnages qui l\'avaient choisie perdront cette association.',
+    });
+  }
+
+  function renderClassesTable() {
+    const container = document.getElementById('classes-table');
+    renderTableGenerique(container, classes, {
+      onSave: async (id, data) => updateClasseCatalogue(id, data),
+      onDelete: async (id) => {
+        await deleteClasseCatalogue(id);
+        classes = classes.filter(c => c.id !== id);
+        renderClassesTable();
+        renderParentSelect();
+      },
+      deleteWarning: 'Supprimer cette classe ? Les capacités du catalogue associées seront aussi supprimées, et les personnages qui l\'avaient choisie perdront cette association.',
+    });
+  }
+
+  document.getElementById('btn-ajout-race').addEventListener('click', async () => {
+    const nom = document.getElementById('ajout-race-nom').value.trim();
+    if (!nom) { alert('Le nom est obligatoire.'); return; }
+    try {
+      const created = await addRaceCatalogue({ nom, ordre: Number(document.getElementById('ajout-race-ordre').value) || 0 });
+      races.push(created);
+      renderRacesTable();
+      renderParentSelect();
+      document.getElementById('ajout-race-nom').value = '';
+      document.getElementById('ajout-race-ordre').value = '';
+    } catch (e) {
+      alert(e.code === '23505' ? 'Une race avec ce nom existe déjà.' : 'Erreur : ' + e.message);
+    }
+  });
+
+  document.getElementById('btn-ajout-classe').addEventListener('click', async () => {
+    const nom = document.getElementById('ajout-classe-nom').value.trim();
+    if (!nom) { alert('Le nom est obligatoire.'); return; }
+    try {
+      const created = await addClasseCatalogue({ nom, ordre: Number(document.getElementById('ajout-classe-ordre').value) || 0 });
+      classes.push(created);
+      renderClassesTable();
+      renderParentSelect();
+      document.getElementById('ajout-classe-nom').value = '';
+      document.getElementById('ajout-classe-ordre').value = '';
+    } catch (e) {
+      alert(e.code === '23505' ? 'Une classe avec ce nom existe déjà.' : 'Erreur : ' + e.message);
+    }
+  });
+
+  // ── Capacités du catalogue (liées à la race/classe sélectionnée) ──────────────
+
+  let capacitesCatalogue = [];
+  let parentActuel = null; // { type: 'race'|'classe', id }
+
+  function renderParentSelect() {
+    const sel = document.getElementById('parent-select');
+    const valeurActuelle = sel.value;
+    sel.innerHTML = '<option value="">— Choisir une race ou une classe —</option>';
+    if (races.length) {
+      const grp = document.createElement('optgroup');
+      grp.label = 'Races';
+      races.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = 'race:' + r.id;
+        opt.textContent = r.nom;
+        grp.appendChild(opt);
+      });
+      sel.appendChild(grp);
+    }
+    if (classes.length) {
+      const grp = document.createElement('optgroup');
+      grp.label = 'Classes';
+      classes.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = 'classe:' + c.id;
+        opt.textContent = c.nom;
+        grp.appendChild(opt);
+      });
+      sel.appendChild(grp);
+    }
+    sel.value = valeurActuelle;
+  }
+
+  document.getElementById('parent-select').addEventListener('change', async (e) => {
+    const val = e.target.value;
+    const section = document.getElementById('capacites-section');
+    if (!val) {
+      section.hidden = true;
+      parentActuel = null;
+      return;
+    }
+    const [type, id] = val.split(':');
+    parentActuel = { type, id };
+    section.hidden = false;
+    await chargerCapacites();
+  });
+
+  async function chargerCapacites() {
+    const container = document.getElementById('capacites-table');
+    container.innerHTML = '<p class="loading">Chargement…</p>';
+    try {
+      capacitesCatalogue = parentActuel.type === 'race'
+        ? await getCapacitesCatalogueByRace(parentActuel.id)
+        : await getCapacitesCatalogueByClasse(parentActuel.id);
+      renderCapacitesTable();
+    } catch (e) {
+      container.innerHTML = `<p class="error-msg">Erreur : ${e.message}</p>`;
+    }
+  }
+
+  function renderCapacitesTable() {
+    const container = document.getElementById('capacites-table');
+    if (!capacitesCatalogue.length) {
+      container.innerHTML = '<p class="loading">Aucune capacité pour cette race/classe.</p>';
+      return;
+    }
+    container.innerHTML = `
+      <table>
+        <thead><tr><th>Catégorie</th><th>Titre</th><th>Valeur</th><th>Ordre</th><th></th></tr></thead>
+        <tbody>
+          ${capacitesCatalogue.map(cap => `
+            <tr data-id="${cap.id}">
+              <td><input type="text" class="cap-categorie" value="${(cap.categorie ?? '').replace(/"/g, '&quot;')}" /></td>
+              <td><input type="text" class="cap-titre" value="${(cap.titre ?? '').replace(/"/g, '&quot;')}" /></td>
+              <td><input type="text" class="cap-valeur" value="${(cap.valeur ?? '').replace(/"/g, '&quot;')}" /></td>
+              <td><input type="number" step="1" class="cap-ordre" value="${cap.ordre ?? 0}" /></td>
+              <td><button class="btn-del-rc" title="Supprimer">✕</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+    container.querySelectorAll('tbody tr').forEach(row => {
+      const id = row.dataset.id;
+      const champs = {
+        categorie: row.querySelector('.cap-categorie'),
+        titre: row.querySelector('.cap-titre'),
+        valeur: row.querySelector('.cap-valeur'),
+        ordre: row.querySelector('.cap-ordre'),
+      };
+      let timer = null;
+      const save = () => {
+        clearTimeout(timer);
+        timer = setTimeout(async () => {
+          try {
+            await updateCapaciteCatalogue(id, {
+              categorie: champs.categorie.value,
+              titre: champs.titre.value,
+              valeur: champs.valeur.value,
+              ordre: Number(champs.ordre.value) || 0,
+            });
+          } catch (e) { alert('Erreur de sauvegarde : ' + e.message); }
+        }, 500);
+      };
+      Object.values(champs).forEach(input => input.addEventListener('input', save));
+
+      row.querySelector('.btn-del-rc').addEventListener('click', async () => {
+        if (!confirm('Supprimer cette capacité du catalogue ? Les personnages qui l\'ont déjà ajoutée à leur fiche la conservent, seule la référence au catalogue disparaît.')) return;
+        try {
+          await deleteCapaciteCatalogue(id);
+          capacitesCatalogue = capacitesCatalogue.filter(c => c.id !== id);
+          renderCapacitesTable();
+        } catch (e) { alert('Erreur : ' + e.message); }
+      });
+    });
+  }
+
+  document.getElementById('btn-ajout-capacite').addEventListener('click', async () => {
+    if (!parentActuel) return;
+    const categorie = document.getElementById('ajout-cap-categorie').value.trim();
+    const titre = document.getElementById('ajout-cap-titre').value.trim();
+    const valeur = document.getElementById('ajout-cap-valeur').value.trim();
+    if (!categorie || !titre || !valeur) { alert('Catégorie, titre et valeur sont obligatoires.'); return; }
+    const data = {
+      categorie, titre, valeur,
+      ordre: Number(document.getElementById('ajout-cap-ordre').value) || 0,
+      race_id: parentActuel.type === 'race' ? parentActuel.id : null,
+      classe_id: parentActuel.type === 'classe' ? parentActuel.id : null,
+    };
+    try {
+      const created = await addCapaciteCatalogue(data);
+      capacitesCatalogue.push(created);
+      renderCapacitesTable();
+      document.getElementById('ajout-cap-categorie').value = '';
+      document.getElementById('ajout-cap-titre').value = '';
+      document.getElementById('ajout-cap-valeur').value = '';
+      document.getElementById('ajout-cap-ordre').value = '';
+    } catch (e) {
+      alert('Erreur : ' + e.message);
+    }
+  });
+
+  chargerRacesEtClasses();
+</script>
+</body>
+</html>

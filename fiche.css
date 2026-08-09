@@ -2578,10 +2578,34 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
   margin-bottom: 0.75rem;
 }
 
-.capacite-nom-field { flex: 1 1 0; min-width: 0; }
+.capacite-nom-field { flex: 1 1 90px; min-width: 0; }
 .capacite-max-field { flex: 0 0 80px; }
 .capacite-rechargement-field { flex: 0 0 130px; }
 .capacite-action-field { flex: 0 0 140px; }
+
+.capacite-meta-sep { color: var(--border-strong); flex-shrink: 0; }
+
+.capacite-origine-badge {
+  flex-shrink: 0;
+  font-family: var(--font-heading);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 3px;
+  border: 1px solid var(--border-strong);
+  color: var(--text-dim);
+}
+.capacite-origine-badge[data-origine="race"] {
+  color: #8FBF9A;
+  border-color: rgba(143,191,154,0.4);
+  background: rgba(143,191,154,0.08);
+}
+.capacite-origine-badge[data-origine="classe"] {
+  color: #8FA8D8;
+  border-color: rgba(143,168,216,0.4);
+  background: rgba(143,168,216,0.08);
+}
 
 .capacite-del-btn {
   background: transparent;
@@ -2637,6 +2661,22 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
 .btn-capacite-utiliser:hover { background: rgba(201,168,108,0.18); }
 .btn-capacite-utiliser:disabled { opacity: 0.4; cursor: default; }
 
+.capacite-categorie-input {
+  flex: 1 1 auto;
+  min-width: 60px;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-family: var(--font-body, inherit);
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: normal;
+  text-transform: none;
+  padding: 0;
+}
+.capacite-categorie-input:focus { outline: none; color: var(--text-bright); }
+.capacite-categorie-input::placeholder { color: var(--text-dim); opacity: 0.7; }
+
 .capacite-description-wrap summary {
   cursor: pointer;
   font-family: var(--font-heading);
@@ -2646,10 +2686,18 @@ body.mode-jeu input[type="checkbox"].mode-jeu-ok:checked {
   color: var(--text-dim);
 }
 
-.capacite-description-input { resize: vertical; min-height: 48px; width: 100%; margin-top: 0.4rem; }
+/* Badge + catégorie vivent dans <summary>, à côté du libellé "Description",
+   pour rester groupés sur la même ligne que le déplié/replié. */
+.capacite-summary-content {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  max-width: 100%;
+  vertical-align: middle;
+}
 
-/* Hide description block in mode jeu when empty */
-body.mode-jeu .capacite-card.no-desc .capacite-description-wrap { display: none !important; }
+.capacite-description-input { resize: vertical; min-height: 48px; width: 100%; margin-top: 0.4rem; }
 
 .capacites-footer { margin-top: 0.25rem; }
 
@@ -2673,6 +2721,74 @@ body.mode-jeu .capacite-card.no-desc .capacite-description-wrap { display: none 
   background: rgba(201,168,108,0.05);
 }
 
-@media (max-width: 480px) {
+.capacites-catalogue-panel {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0.75rem;
+}
+/* Ce panneau ne sert qu'à importer des capacités depuis le catalogue :
+   pas d'utilité en Mode Jeu, où l'on ne fait qu'utiliser la fiche. */
+body.mode-jeu .capacites-catalogue-panel { display: none !important; }
+.capacites-catalogue-titre {
+  font-family: var(--font-heading);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+.capacite-catalogue-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.2rem 0.5rem;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-bright);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0.4rem 0.2rem;
+  text-align: left;
+}
+.capacite-catalogue-item:last-child { border-bottom: none; }
+.capacite-catalogue-item:hover { background: rgba(201,168,108,0.06); }
+.capacite-catalogue-nom { flex: 1 1 auto; min-width: 0; order: 1; }
+.capacite-catalogue-add {
+  color: var(--gold-light);
+  font-family: var(--font-heading);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  order: 2;
+}
+/* Bascule sur sa propre ligne pleine largeur si le texte est long, plutôt
+   que de déborder du panneau. */
+.capacite-catalogue-valeur {
+  color: var(--text-dim);
+  font-size: 11px;
+  flex: 1 1 100%;
+  order: 3;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+/* Fallback affiché sous Race/Classe si l'ancienne valeur texte (avant
+   migration vers le catalogue) ne correspond à aucune entrée de la liste. */
+.id-box-fallback {
+  font-size: 9px;
+  color: var(--text-dim);
+  font-style: italic;
+  line-height: 1.3;
+  margin-top: 3px;
+}
+
+@media (max-width: 700px) {
   .capacite-header { flex-wrap: wrap; }
 }

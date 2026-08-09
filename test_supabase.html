@@ -194,23 +194,13 @@
         <label for="race">Race</label>
         <select id="race">
           <option value="">— Choisir —</option>
-          <option>Changelin</option>
-          <option>Demi-Elfe</option>
-          <option>Demi-Orc</option>
-          <option>Drakeide</option>
-          <option>Elfe</option>
-          <option>Féral</option>
-          <option>Forgelier</option>
-          <option>Gnome</option>
-          <option>Hobbit</option>
-          <option>Humain</option>
-          <option>Kalashtar</option>
-          <option>Nain</option>
         </select>
       </div>
       <div class="field">
         <label for="classe">Classe</label>
-        <input type="text" id="classe" placeholder="ex. Artificier" />
+        <select id="classe">
+          <option value="">— Choisir —</option>
+        </select>
       </div>
       <div class="field full">
         <label for="notes">Notes</label>
@@ -284,11 +274,31 @@
     setTimeout(() => { notifEl.className = ''; }, 2800);
   }
 
+  // ── Load races/classes catalogue (listes déroulantes) ──
+  async function loadCatalogues() {
+    const [{ data: races }, { data: classes }] = await Promise.all([
+      supabase.from('races_catalogue').select('*').order('ordre'),
+      supabase.from('classes_catalogue').select('*').order('ordre'),
+    ]);
+    const raceSel = document.getElementById('race');
+    const classeSel = document.getElementById('classe');
+    (races ?? []).forEach(r => {
+      const opt = document.createElement('option');
+      opt.value = r.id; opt.textContent = r.nom;
+      raceSel.appendChild(opt);
+    });
+    (classes ?? []).forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.id; opt.textContent = c.nom;
+      classeSel.appendChild(opt);
+    });
+  }
+
   // ── Load data ──
   async function loadPersonnages() {
     const { data, error } = await supabase
       .from('personnages')
-      .select('*')
+      .select('*, race:races_catalogue(nom), classe:classes_catalogue(nom)')
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -314,8 +324,8 @@
     tbodyEl.innerHTML = data.map(p => `
       <tr>
         <td><strong>${esc(p.nom)}</strong></td>
-        <td>${esc(p.race ?? '—')}</td>
-        <td>${esc(p.classe ?? '—')}</td>
+        <td>${esc(p.race?.nom ?? '—')}</td>
+        <td>${esc(p.classe?.nom ?? '—')}</td>
         <td>${esc(p.notes ?? '—')}</td>
         <td>${new Date(p.created_at).toLocaleDateString('fr-FR')}</td>
         <td><button class="btn danger del-btn" onclick="window._del('${p.id}')">Suppr.</button></td>
@@ -333,7 +343,7 @@
     if (!nom) { notify('Le nom est requis.', 'fail'); return; }
 
     btnAdd.disabled = true;
-    const { error } = await supabase.from('personnages').insert({ nom, race: race || null, classe: classe || null, notes: notes || null });
+    const { error } = await supabase.from('personnages').insert({ nom, race_id: race || null, classe_id: classe || null, notes: notes || null });
     btnAdd.disabled = false;
 
     if (error) { notify('Erreur : ' + error.message, 'fail'); return; }
@@ -360,6 +370,7 @@
   }
 
   // ── Init ──
+  loadCatalogues();
   loadPersonnages();
 </script>
 <script src="nav.js"></script>
