@@ -17,6 +17,11 @@ Quand une modification du fichier `supabase_schema.sql` ajoute ou change une col
 - Utilise la fiche suivante pour visualiser les modifications :
 fiche.html?id=4e43894d-731a-4ec7-babc-22ce9c49e34a
 
+## UI — pas de pop-up natives
+
+- Ne jamais utiliser `alert()`, `confirm()` ou `prompt()` (peu fiables sur certains navigateurs, ex. Arc).
+- Utiliser à la place une fenêtre modale HTML/CSS custom, sur le pattern déjà en place dans [races-classes-base.html](races-classes-base.html:150) (`.modal-overlay` / `.modal-box`) et repris dans [equipement-base.html](equipement-base.html:148) pour les modales d'information.
+
 ## Supabase local — ne jamais l'arrêter sans raison
 
 - Avant de lancer `npx supabase start`/`stop` pour tester, vérifier s'il tourne déjà (`docker ps --filter "name=Campagne-en-Eberron"`).
