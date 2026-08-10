@@ -146,7 +146,7 @@
     .csv-hint { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.75rem; }
     #csv-review table { font-size: 13px; }
     .csv-status-new { color: #8FBF9A; }
-    .csv-status-dup { color: #D4A85C; }
+    .csv-status-modif { color: #D4806A; }
     .csv-action-select {
       background: var(--stone-mid);
       border: 1px solid var(--border-strong);
@@ -155,6 +155,31 @@
       font-size: 12px;
       padding: 0.2rem 0.3rem;
     }
+
+    /* ── Modale d'information (résultat d'import) ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+    .modal-overlay[hidden] { display: none; }
+    .modal-box {
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      max-width: 420px;
+      width: 100%;
+      padding: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .modal-box p { color: var(--text-main); font-size: 14px; line-height: 1.5; margin: 0 0 0.5rem; }
+    .modal-box ul { margin: 0 0 1.25rem; padding-left: 1.1rem; color: var(--text-muted); font-size: 13px; line-height: 1.6; }
+    .modal-actions { display: flex; justify-content: flex-end; }
   </style>
 </head>
 <body>
@@ -193,6 +218,16 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="import-result-modal" hidden>
+  <div class="modal-box">
+    <p id="import-result-title"></p>
+    <ul id="import-result-details"></ul>
+    <div class="modal-actions">
+      <button class="btn-gold" id="import-result-close">OK</button>
+    </div>
+  </div>
+</div>
+
 <script src="nav.js"></script>
 <script type="module">
   import { requireMJ, logout } from './auth.js';
@@ -206,6 +241,27 @@
   const authBar = document.getElementById('auth-bar');
   authBar.innerHTML = `<span>${user.email}</span><button class="btn-logout" id="btn-logout">Déconnexion</button>`;
   document.getElementById('btn-logout').addEventListener('click', logout);
+
+  // ── Modale d'information (résultat d'import) ──────────────────────────────────
+  const importResultModalEl = document.getElementById('import-result-modal');
+  const importResultTitleEl = document.getElementById('import-result-title');
+  const importResultDetailsEl = document.getElementById('import-result-details');
+  const importResultCloseEl = document.getElementById('import-result-close');
+
+  function showImportResultModal(titre, details = []) {
+    importResultTitleEl.textContent = titre;
+    importResultDetailsEl.innerHTML = details.map(d => `<li>${d}</li>`).join('');
+    importResultDetailsEl.hidden = !details.length;
+    importResultModalEl.hidden = false;
+    const close = () => {
+      importResultModalEl.hidden = true;
+      importResultCloseEl.removeEventListener('click', close);
+      importResultModalEl.removeEventListener('click', onOverlayClick);
+    };
+    const onOverlayClick = (e) => { if (e.target === importResultModalEl) close(); };
+    importResultCloseEl.addEventListener('click', close);
+    importResultModalEl.addEventListener('click', onOverlayClick);
+  }
 
   // Supprime accents + espaces superflus pour la détection de doublons.
   function normaliserNom(str) {
@@ -412,19 +468,33 @@
     lignesImport = rows.filter(r => r.nom).map(r => {
       const nom = r.nom.trim();
       const nom_normalise = normaliserNom(nom);
-      const existant = existingByNorm.get(nom_normalise) || seenInBatch.get(nom_normalise);
+      const existantDb = existingByNorm.get(nom_normalise);
+      const existant = existantDb || seenInBatch.get(nom_normalise);
       if (!seenInBatch.has(nom_normalise)) seenInBatch.set(nom_normalise, { nom });
+      const valeur_pc = Number(r.valeur_pc) || 0;
+      const poids = r.poids !== '' && r.poids != null ? Number(r.poids.replace(',', '.')) : null;
+      const tags = (r.tags || '').split(';').map(t => t.trim()).filter(Boolean);
+      const description = r.description || null;
+      const conteneur = ['oui', '1', 'vrai', 'true'].includes((r.conteneur || '').trim().toLowerCase());
+      const modifie = !!existantDb && (
+        (existantDb.valeur_pc ?? 0) !== valeur_pc ||
+        (existantDb.poids ?? null) !== poids ||
+        JSON.stringify([...(existantDb.tags || [])].sort()) !== JSON.stringify([...tags].sort()) ||
+        (existantDb.description ?? null) !== description ||
+        !!existantDb.conteneur !== conteneur
+      );
       return {
         nom,
         nom_normalise,
-        valeur_pc: Number(r.valeur_pc) || 0,
-        poids: r.poids !== '' && r.poids != null ? Number(r.poids) : null,
-        tags: (r.tags || '').split(';').map(t => t.trim()).filter(Boolean),
-        description: r.description || null,
-        conteneur: ['oui', '1', 'vrai', 'true'].includes((r.conteneur || '').trim().toLowerCase()),
+        valeur_pc,
+        poids,
+        tags,
+        description,
+        conteneur,
         duplicate: !!existant,
         duplicateNom: existant ? existant.nom : null,
-        action: existant ? 'ignorer' : 'importer',
+        modifie,
+        action: existant ? (modifie ? 'remplacer' : 'ignorer') : 'importer',
       };
     });
     renderCsvReview();
@@ -437,60 +507,81 @@
       return;
     }
     const nbNouveaux = lignesImport.filter(l => !l.duplicate).length;
-    const nbDoublons = lignesImport.filter(l => l.duplicate).length;
+    const nbModifies = lignesImport.filter(l => l.modifie).length;
+    const nbIdentiques = lignesImport.filter(l => l.duplicate && !l.modifie).length;
+    const lignesAffichees = lignesImport
+      .map((l, idx) => ({ l, idx }))
+      .filter(({ l }) => !(l.duplicate && !l.modifie));
+    const resume = `${lignesImport.length} ligne(s) lues — ${nbNouveaux} nouvelle(s), ${nbModifies} modifiée(s)`
+      + (nbIdentiques ? `, ${nbIdentiques} identique(s) déjà à jour (masquée(s))` : '') + '.';
     zone.innerHTML = `
-      <p>${lignesImport.length} ligne(s) lues — ${nbNouveaux} nouvelle(s), ${nbDoublons} doublon(s) détecté(s).</p>
-      <table>
-        <thead><tr><th>Nom</th><th>Valeur (pc)</th><th>Statut</th><th>Action</th></tr></thead>
-        <tbody>
-          ${lignesImport.map((l, idx) => `
-            <tr data-idx="${idx}">
-              <td>${l.nom}</td>
-              <td>${l.valeur_pc}</td>
-              <td>${l.duplicate ? `<span class="csv-status-dup">Doublon de « ${l.duplicateNom} »</span>` : '<span class="csv-status-new">Nouveau</span>'}</td>
-              <td>
-                ${l.duplicate ? `
-                  <select class="csv-action-select">
-                    <option value="ignorer" selected>Ignorer</option>
-                    <option value="remplacer">Remplacer l'existant</option>
-                    <option value="importer_quand_meme">Importer quand même (copie)</option>
-                  </select>
-                ` : '—'}
-              </td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-      <button class="btn-gold" id="btn-confirmer-import">Importer</button>
+      <p>${resume}</p>
+      ${lignesAffichees.length ? `
+        <table>
+          <thead><tr><th>Nom</th><th>Valeur (pc)</th><th>Poids</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody>
+            ${lignesAffichees.map(({ l, idx }) => `
+              <tr data-idx="${idx}">
+                <td>${l.nom}</td>
+                <td>${l.valeur_pc}</td>
+                <td>${l.poids ?? '—'}</td>
+                <td>${l.duplicate
+                  ? `<span class="csv-status-modif">Doublon (modifié) de « ${l.duplicateNom} »</span>`
+                  : '<span class="csv-status-new">Nouveau</span>'}</td>
+                <td>
+                  ${l.duplicate ? `
+                    <select class="csv-action-select">
+                      <option value="ignorer" ${l.action === 'ignorer' ? 'selected' : ''}>Ignorer</option>
+                      <option value="remplacer" ${l.action === 'remplacer' ? 'selected' : ''}>Remplacer l'existant</option>
+                      <option value="importer_quand_meme" ${l.action === 'importer_quand_meme' ? 'selected' : ''}>Importer quand même (copie)</option>
+                    </select>
+                  ` : '—'}
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        <button class="btn-gold" id="btn-confirmer-import">Importer</button>
+      ` : '<p class="loading">Rien à importer : tous les objets sont déjà à jour.</p>'}
     `;
     zone.querySelectorAll('tr[data-idx] .csv-action-select').forEach(sel => {
       const idx = Number(sel.closest('tr').dataset.idx);
       sel.addEventListener('change', () => { lignesImport[idx].action = sel.value; });
     });
-    document.getElementById('btn-confirmer-import').addEventListener('click', confirmerImport);
+    document.getElementById('btn-confirmer-import')?.addEventListener('click', confirmerImport);
   }
 
   async function confirmerImport() {
     const aUpserter = [];
+    let nbAjoutes = 0, nbRemplaces = 0, nbCopies = 0;
     lignesImport.forEach(l => {
       if (l.action === 'ignorer') return;
       const payload = { nom: l.nom, nom_normalise: l.nom_normalise, valeur_pc: l.valeur_pc, poids: l.poids, tags: l.tags, description: l.description, conteneur: l.conteneur };
       if (l.action === 'importer_quand_meme') {
         payload.nom = payload.nom + ' (copie)';
         payload.nom_normalise = normaliserNom(payload.nom);
+        nbCopies++;
+      } else if (l.action === 'remplacer') {
+        nbRemplaces++;
+      } else {
+        nbAjoutes++;
       }
       aUpserter.push(payload);
     });
-    if (!aUpserter.length) { alert('Aucun objet à importer (tout est ignoré).'); return; }
+    if (!aUpserter.length) { showImportResultModal('Aucun objet à importer (tout est ignoré).'); return; }
     try {
       await bulkUpsertEquipementBase(aUpserter);
-      alert(aUpserter.length + ' objet(s) importé(s).');
+      const details = [];
+      if (nbAjoutes) details.push(`${nbAjoutes} objet(s) ajouté(s)`);
+      if (nbRemplaces) details.push(`${nbRemplaces} objet(s) mis à jour`);
+      if (nbCopies) details.push(`${nbCopies} objet(s) importé(s) en copie`);
+      showImportResultModal(`${aUpserter.length} objet(s) importé(s).`, details);
       lignesImport = [];
       document.getElementById('csv-review').innerHTML = '';
       document.getElementById('csv-file').value = '';
       await chargerBase();
     } catch (e) {
-      alert('Erreur lors de l\'import : ' + e.message);
+      showImportResultModal('Erreur lors de l\'import : ' + e.message);
     }
   }
 
