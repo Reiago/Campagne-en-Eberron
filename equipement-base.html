@@ -97,12 +97,22 @@
     /* ── Formulaire d'ajout ── */
     .ajout-form {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 2fr;
+      grid-template-columns: 2fr 1fr 1fr 2fr auto;
       gap: 0.6rem;
       margin-bottom: 0.75rem;
+      align-items: center;
     }
     .ajout-form input { grid-column: span 1; }
     .ajout-form .ajout-desc { grid-column: 1 / -1; }
+    .ajout-conteneur {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    #base-table .b-conteneur { width: auto; }
     .ajout-form input, .ajout-form textarea {
       background: var(--stone-mid);
       border: 1px solid var(--border-strong);
@@ -189,6 +199,7 @@
     <input type="number" id="ajout-valeur" min="0" step="1" placeholder="Valeur (pc)" />
     <input type="number" id="ajout-poids" min="0" step="0.1" placeholder="Poids (kg)" />
     <input type="text" id="ajout-tags" placeholder="Tags (séparés par ;)" />
+    <label class="ajout-conteneur"><input type="checkbox" id="ajout-conteneur" /> Conteneur</label>
     <textarea id="ajout-desc" class="ajout-desc" rows="2" placeholder="Description (optionnel)"></textarea>
   </div>
   <button class="btn-gold" id="btn-ajout-base">+ Ajouter au catalogue</button>
@@ -201,7 +212,7 @@
 
   <div class="section-label">Importer un CSV</div>
   <div class="csv-zone">
-    <p class="csv-hint">Colonnes attendues (en-tête requis) : <strong>nom, valeur_pc, poids, tags, description</strong> — tags séparés par <code>;</code>.</p>
+    <p class="csv-hint">Colonnes attendues (en-tête requis) : <strong>nom, valeur_pc, poids, tags, description, conteneur</strong> — tags séparés par <code>;</code>, conteneur = <code>oui</code>/<code>1</code>/<code>vrai</code> (optionnel, absent = non).</p>
     <input type="file" id="csv-file" accept=".csv,text/csv" />
     <div id="csv-review"></div>
   </div>
@@ -293,7 +304,7 @@
     tableEl.innerHTML = `
       <table>
         <thead>
-          <tr><th>Nom</th><th>Valeur</th><th>Poids (kg)</th><th>Tags</th><th>Description</th><th></th></tr>
+          <tr><th>Nom</th><th>Valeur</th><th>Poids (kg)</th><th>Tags</th><th>Description</th><th>Conteneur</th><th></th></tr>
         </thead>
         <tbody>
           ${base.map(item => `
@@ -303,6 +314,7 @@
               <td><input type="number" min="0" step="0.1" class="b-poids" value="${item.poids ?? ''}" /></td>
               <td><input type="text" class="b-tags" value="${(item.tags || []).join('; ')}" /></td>
               <td><input type="text" class="b-desc" value="${(item.description ?? '').replace(/"/g, '&quot;')}" /></td>
+              <td><input type="checkbox" class="b-conteneur" title="Faire de cet objet un conteneur automatiquement" ${item.conteneur ? 'checked' : ''} /></td>
               <td><button class="btn-del-base" title="Supprimer">✕</button></td>
             </tr>
           `).join('')}
@@ -318,6 +330,7 @@
         poids: row.querySelector('.b-poids'),
         tags: row.querySelector('.b-tags'),
         description: row.querySelector('.b-desc'),
+        conteneur: row.querySelector('.b-conteneur'),
       };
       let timer = null;
       const save = () => {
@@ -331,6 +344,7 @@
               poids: champs.poids.value !== '' ? Number(champs.poids.value) : null,
               tags: champs.tags.value.split(';').map(t => t.trim()).filter(Boolean),
               description: champs.description.value || null,
+              conteneur: champs.conteneur.checked,
             });
           } catch (e) { alert('Erreur de sauvegarde : ' + e.message); }
         }, 500);
@@ -358,6 +372,7 @@
       poids: document.getElementById('ajout-poids').value !== '' ? Number(document.getElementById('ajout-poids').value) : null,
       tags: document.getElementById('ajout-tags').value.split(';').map(t => t.trim()).filter(Boolean),
       description: document.getElementById('ajout-desc').value || null,
+      conteneur: document.getElementById('ajout-conteneur').checked,
     };
     try {
       const created = await addEquipementBase(data);
@@ -368,6 +383,7 @@
       document.getElementById('ajout-poids').value = '';
       document.getElementById('ajout-tags').value = '';
       document.getElementById('ajout-desc').value = '';
+      document.getElementById('ajout-conteneur').checked = false;
     } catch (e) {
       alert(e.code === '23505' ? 'Un objet avec un nom équivalent existe déjà dans le catalogue.' : 'Erreur : ' + e.message);
     }
@@ -382,13 +398,14 @@
   }
 
   document.getElementById('btn-export-base').addEventListener('click', () => {
-    const entetes = ['nom', 'valeur_pc', 'poids', 'tags', 'description'];
+    const entetes = ['nom', 'valeur_pc', 'poids', 'tags', 'description', 'conteneur'];
     const lignes = base.map(item => [
       item.nom,
       item.valeur_pc ?? 0,
       item.poids ?? '',
       (item.tags || []).join(';'),
       item.description ?? '',
+      item.conteneur ? 'oui' : '',
     ].map(champCsv).join(','));
     const csv = [entetes.join(','), ...lignes].join('\r\n');
     const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
@@ -458,11 +475,13 @@
       const poids = r.poids !== '' && r.poids != null ? Number(r.poids.replace(',', '.')) : null;
       const tags = (r.tags || '').split(';').map(t => t.trim()).filter(Boolean);
       const description = r.description || null;
+      const conteneur = ['oui', '1', 'vrai', 'true'].includes((r.conteneur || '').trim().toLowerCase());
       const modifie = !!existantDb && (
         (existantDb.valeur_pc ?? 0) !== valeur_pc ||
         (existantDb.poids ?? null) !== poids ||
         JSON.stringify([...(existantDb.tags || [])].sort()) !== JSON.stringify([...tags].sort()) ||
-        (existantDb.description ?? null) !== description
+        (existantDb.description ?? null) !== description ||
+        !!existantDb.conteneur !== conteneur
       );
       return {
         nom,
@@ -471,6 +490,7 @@
         poids,
         tags,
         description,
+        conteneur,
         duplicate: !!existant,
         duplicateNom: existant ? existant.nom : null,
         modifie,
@@ -536,7 +556,7 @@
     let nbAjoutes = 0, nbRemplaces = 0, nbCopies = 0;
     lignesImport.forEach(l => {
       if (l.action === 'ignorer') return;
-      const payload = { nom: l.nom, nom_normalise: l.nom_normalise, valeur_pc: l.valeur_pc, poids: l.poids, tags: l.tags, description: l.description };
+      const payload = { nom: l.nom, nom_normalise: l.nom_normalise, valeur_pc: l.valeur_pc, poids: l.poids, tags: l.tags, description: l.description, conteneur: l.conteneur };
       if (l.action === 'importer_quand_meme') {
         payload.nom = payload.nom + ' (copie)';
         payload.nom_normalise = normaliserNom(payload.nom);
