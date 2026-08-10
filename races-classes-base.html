@@ -146,6 +146,65 @@
       margin-bottom: 1rem;
       max-width: 100%;
     }
+
+    /* ── Modale de confirmation ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+    .modal-overlay[hidden] { display: none; }
+    .modal-box {
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      max-width: 420px;
+      width: 100%;
+      padding: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .modal-box p {
+      color: var(--text-main);
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0 0 1.25rem;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.6rem;
+    }
+    .btn-modal-cancel {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 0.5rem 1rem;
+      text-transform: uppercase;
+    }
+    .btn-modal-cancel:hover { border-color: var(--gold-dim); color: var(--gold); }
+    .btn-modal-confirm {
+      background: transparent;
+      border: 1px solid rgba(200,80,60,0.5);
+      border-radius: 4px;
+      color: #D87060;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 0.5rem 1rem;
+      text-transform: uppercase;
+    }
+    .btn-modal-confirm:hover { background: rgba(200,80,60,0.1); }
   </style>
 </head>
 <body>
@@ -204,6 +263,16 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="confirm-modal" hidden>
+  <div class="modal-box">
+    <p id="confirm-modal-message"></p>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="confirm-modal-cancel">Annuler</button>
+      <button class="btn-modal-confirm" id="confirm-modal-confirm">Supprimer</button>
+    </div>
+  </div>
+</div>
+
 <script src="nav.js"></script>
 <script type="module">
   import { requireMJ, logout } from './auth.js';
@@ -223,6 +292,35 @@
 
   let races = [];
   let classes = [];
+
+  // ── Modale de confirmation (remplace confirm(), non fiable sur certains navigateurs comme Arc) ──
+  const confirmModalEl = document.getElementById('confirm-modal');
+  const confirmModalMessage = document.getElementById('confirm-modal-message');
+  const confirmModalCancel = document.getElementById('confirm-modal-cancel');
+  const confirmModalConfirm = document.getElementById('confirm-modal-confirm');
+
+  function confirmModal(message) {
+    return new Promise(resolve => {
+      confirmModalMessage.textContent = message;
+      confirmModalEl.hidden = false;
+      const close = (result) => {
+        confirmModalEl.hidden = true;
+        confirmModalCancel.removeEventListener('click', onCancel);
+        confirmModalConfirm.removeEventListener('click', onConfirm);
+        confirmModalEl.removeEventListener('click', onOverlayClick);
+        document.removeEventListener('keydown', onKeydown);
+        resolve(result);
+      };
+      const onCancel = () => close(false);
+      const onConfirm = () => close(true);
+      const onOverlayClick = (e) => { if (e.target === confirmModalEl) close(false); };
+      const onKeydown = (e) => { if (e.key === 'Escape') close(false); };
+      confirmModalCancel.addEventListener('click', onCancel);
+      confirmModalConfirm.addEventListener('click', onConfirm);
+      confirmModalEl.addEventListener('click', onOverlayClick);
+      document.addEventListener('keydown', onKeydown);
+    });
+  }
 
   // ── Races & Classes ──────────────────────────────────────────────────────────
 
@@ -274,7 +372,7 @@
       ordreInput.addEventListener('input', save);
 
       row.querySelector('.btn-del-rc').addEventListener('click', async () => {
-        if (!confirm(deleteWarning)) return;
+        if (!(await confirmModal(deleteWarning))) return;
         try {
           await onDelete(id);
         } catch (e) { alert('Erreur : ' + e.message); }
@@ -448,7 +546,7 @@
       Object.values(champs).forEach(input => input.addEventListener('input', save));
 
       row.querySelector('.btn-del-rc').addEventListener('click', async () => {
-        if (!confirm('Supprimer cette capacité du catalogue ? Les personnages qui l\'ont déjà ajoutée à leur fiche la conservent, seule la référence au catalogue disparaît.')) return;
+        if (!(await confirmModal('Supprimer cette capacité du catalogue ? Les personnages qui l\'ont déjà ajoutée à leur fiche la conservent, seule la référence au catalogue disparaît.'))) return;
         try {
           await deleteCapaciteCatalogue(id);
           capacitesCatalogue = capacitesCatalogue.filter(c => c.id !== id);
