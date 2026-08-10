@@ -137,6 +137,7 @@
     #csv-review table { font-size: 13px; }
     .csv-status-new { color: #8FBF9A; }
     .csv-status-dup { color: #D4A85C; }
+    .csv-status-modif { color: #D4806A; }
     .csv-action-select {
       background: var(--stone-mid);
       border: 1px solid var(--border-strong);
@@ -395,18 +396,30 @@
     lignesImport = rows.filter(r => r.nom).map(r => {
       const nom = r.nom.trim();
       const nom_normalise = normaliserNom(nom);
-      const existant = existingByNorm.get(nom_normalise) || seenInBatch.get(nom_normalise);
+      const existantDb = existingByNorm.get(nom_normalise);
+      const existant = existantDb || seenInBatch.get(nom_normalise);
       if (!seenInBatch.has(nom_normalise)) seenInBatch.set(nom_normalise, { nom });
+      const valeur_pc = Number(r.valeur_pc) || 0;
+      const poids = r.poids !== '' && r.poids != null ? Number(r.poids.replace(',', '.')) : null;
+      const tags = (r.tags || '').split(';').map(t => t.trim()).filter(Boolean);
+      const description = r.description || null;
+      const modifie = !!existantDb && (
+        (existantDb.valeur_pc ?? 0) !== valeur_pc ||
+        (existantDb.poids ?? null) !== poids ||
+        JSON.stringify([...(existantDb.tags || [])].sort()) !== JSON.stringify([...tags].sort()) ||
+        (existantDb.description ?? null) !== description
+      );
       return {
         nom,
         nom_normalise,
-        valeur_pc: Number(r.valeur_pc) || 0,
-        poids: r.poids !== '' && r.poids != null ? Number(r.poids.replace(',', '.')) : null,
-        tags: (r.tags || '').split(';').map(t => t.trim()).filter(Boolean),
-        description: r.description || null,
+        valeur_pc,
+        poids,
+        tags,
+        description,
         duplicate: !!existant,
         duplicateNom: existant ? existant.nom : null,
-        action: existant ? 'ignorer' : 'importer',
+        modifie,
+        action: existant ? (modifie ? 'remplacer' : 'ignorer') : 'importer',
       };
     });
     renderCsvReview();
@@ -420,8 +433,9 @@
     }
     const nbNouveaux = lignesImport.filter(l => !l.duplicate).length;
     const nbDoublons = lignesImport.filter(l => l.duplicate).length;
+    const nbModifies = lignesImport.filter(l => l.modifie).length;
     zone.innerHTML = `
-      <p>${lignesImport.length} ligne(s) lues — ${nbNouveaux} nouvelle(s), ${nbDoublons} doublon(s) détecté(s).</p>
+      <p>${lignesImport.length} ligne(s) lues — ${nbNouveaux} nouvelle(s), ${nbDoublons} doublon(s) détecté(s) dont ${nbModifies} modifié(s).</p>
       <table>
         <thead><tr><th>Nom</th><th>Valeur (pc)</th><th>Poids</th><th>Statut</th><th>Action</th></tr></thead>
         <tbody>
@@ -430,13 +444,17 @@
               <td>${l.nom}</td>
               <td>${l.valeur_pc}</td>
               <td>${l.poids ?? '—'}</td>
-              <td>${l.duplicate ? `<span class="csv-status-dup">Doublon de « ${l.duplicateNom} »</span>` : '<span class="csv-status-new">Nouveau</span>'}</td>
+              <td>${l.duplicate
+                ? (l.modifie
+                  ? `<span class="csv-status-modif">Doublon (modifié) de « ${l.duplicateNom} »</span>`
+                  : `<span class="csv-status-dup">Doublon (identique) de « ${l.duplicateNom} »</span>`)
+                : '<span class="csv-status-new">Nouveau</span>'}</td>
               <td>
                 ${l.duplicate ? `
                   <select class="csv-action-select">
-                    <option value="ignorer" selected>Ignorer</option>
-                    <option value="remplacer">Remplacer l'existant</option>
-                    <option value="importer_quand_meme">Importer quand même (copie)</option>
+                    <option value="ignorer" ${l.action === 'ignorer' ? 'selected' : ''}>Ignorer</option>
+                    <option value="remplacer" ${l.action === 'remplacer' ? 'selected' : ''}>Remplacer l'existant</option>
+                    <option value="importer_quand_meme" ${l.action === 'importer_quand_meme' ? 'selected' : ''}>Importer quand même (copie)</option>
                   </select>
                 ` : '—'}
               </td>
