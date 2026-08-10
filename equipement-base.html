@@ -423,12 +423,13 @@
     zone.innerHTML = `
       <p>${lignesImport.length} ligne(s) lues — ${nbNouveaux} nouvelle(s), ${nbDoublons} doublon(s) détecté(s).</p>
       <table>
-        <thead><tr><th>Nom</th><th>Valeur (pc)</th><th>Statut</th><th>Action</th></tr></thead>
+        <thead><tr><th>Nom</th><th>Valeur (pc)</th><th>Poids</th><th>Statut</th><th>Action</th></tr></thead>
         <tbody>
           ${lignesImport.map((l, idx) => `
             <tr data-idx="${idx}">
               <td>${l.nom}</td>
               <td>${l.valeur_pc}</td>
+              <td>${l.poids ?? '—'}</td>
               <td>${l.duplicate ? `<span class="csv-status-dup">Doublon de « ${l.duplicateNom} »</span>` : '<span class="csv-status-new">Nouveau</span>'}</td>
               <td>
                 ${l.duplicate ? `
