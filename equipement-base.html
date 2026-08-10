@@ -401,7 +401,7 @@
         nom,
         nom_normalise,
         valeur_pc: Number(r.valeur_pc) || 0,
-        poids: r.poids !== '' && r.poids != null ? Number(r.poids) : null,
+        poids: r.poids !== '' && r.poids != null ? Number(r.poids.replace(',', '.')) : null,
         tags: (r.tags || '').split(';').map(t => t.trim()).filter(Boolean),
         description: r.description || null,
         duplicate: !!existant,
