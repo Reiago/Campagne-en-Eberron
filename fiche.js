@@ -1164,6 +1164,10 @@ async function ajouterDepuisBase(container, baseItem) {
       const tag = await obtenirOuCreerTag(nomTag, SYSTEME_PAR_TAG[nomTag] ?? null);
       await linkTag(created.id, tag.id);
     }
+    if (baseItem.conteneur) {
+      const tagConteneur = await addTag({ personnage_id: perso.id, nom: created.nom || 'Conteneur', conteneur_equipement_id: created.id });
+      tags.push(tagConteneur);
+    }
     showSave('ok');
     // Recharge complète : les tags suggérés (Monnaie, conteneur…) peuvent
     // affecter le résumé de monnaie ou le regroupement visuel.
