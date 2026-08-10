@@ -136,7 +136,6 @@
     .csv-hint { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.75rem; }
     #csv-review table { font-size: 13px; }
     .csv-status-new { color: #8FBF9A; }
-    .csv-status-dup { color: #D4A85C; }
     .csv-status-modif { color: #D4806A; }
     .csv-action-select {
       background: var(--stone-mid);
@@ -432,43 +431,48 @@
       return;
     }
     const nbNouveaux = lignesImport.filter(l => !l.duplicate).length;
-    const nbDoublons = lignesImport.filter(l => l.duplicate).length;
     const nbModifies = lignesImport.filter(l => l.modifie).length;
+    const nbIdentiques = lignesImport.filter(l => l.duplicate && !l.modifie).length;
+    const lignesAffichees = lignesImport
+      .map((l, idx) => ({ l, idx }))
+      .filter(({ l }) => !(l.duplicate && !l.modifie));
+    const resume = `${lignesImport.length} ligne(s) lues — ${nbNouveaux} nouvelle(s), ${nbModifies} modifiée(s)`
+      + (nbIdentiques ? `, ${nbIdentiques} identique(s) déjà à jour (masquée(s))` : '') + '.';
     zone.innerHTML = `
-      <p>${lignesImport.length} ligne(s) lues — ${nbNouveaux} nouvelle(s), ${nbDoublons} doublon(s) détecté(s) dont ${nbModifies} modifié(s).</p>
-      <table>
-        <thead><tr><th>Nom</th><th>Valeur (pc)</th><th>Poids</th><th>Statut</th><th>Action</th></tr></thead>
-        <tbody>
-          ${lignesImport.map((l, idx) => `
-            <tr data-idx="${idx}">
-              <td>${l.nom}</td>
-              <td>${l.valeur_pc}</td>
-              <td>${l.poids ?? '—'}</td>
-              <td>${l.duplicate
-                ? (l.modifie
+      <p>${resume}</p>
+      ${lignesAffichees.length ? `
+        <table>
+          <thead><tr><th>Nom</th><th>Valeur (pc)</th><th>Poids</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody>
+            ${lignesAffichees.map(({ l, idx }) => `
+              <tr data-idx="${idx}">
+                <td>${l.nom}</td>
+                <td>${l.valeur_pc}</td>
+                <td>${l.poids ?? '—'}</td>
+                <td>${l.duplicate
                   ? `<span class="csv-status-modif">Doublon (modifié) de « ${l.duplicateNom} »</span>`
-                  : `<span class="csv-status-dup">Doublon (identique) de « ${l.duplicateNom} »</span>`)
-                : '<span class="csv-status-new">Nouveau</span>'}</td>
-              <td>
-                ${l.duplicate ? `
-                  <select class="csv-action-select">
-                    <option value="ignorer" ${l.action === 'ignorer' ? 'selected' : ''}>Ignorer</option>
-                    <option value="remplacer" ${l.action === 'remplacer' ? 'selected' : ''}>Remplacer l'existant</option>
-                    <option value="importer_quand_meme" ${l.action === 'importer_quand_meme' ? 'selected' : ''}>Importer quand même (copie)</option>
-                  </select>
-                ` : '—'}
-              </td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-      <button class="btn-gold" id="btn-confirmer-import">Importer</button>
+                  : '<span class="csv-status-new">Nouveau</span>'}</td>
+                <td>
+                  ${l.duplicate ? `
+                    <select class="csv-action-select">
+                      <option value="ignorer" ${l.action === 'ignorer' ? 'selected' : ''}>Ignorer</option>
+                      <option value="remplacer" ${l.action === 'remplacer' ? 'selected' : ''}>Remplacer l'existant</option>
+                      <option value="importer_quand_meme" ${l.action === 'importer_quand_meme' ? 'selected' : ''}>Importer quand même (copie)</option>
+                    </select>
+                  ` : '—'}
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        <button class="btn-gold" id="btn-confirmer-import">Importer</button>
+      ` : '<p class="loading">Rien à importer : tous les objets sont déjà à jour.</p>'}
     `;
     zone.querySelectorAll('tr[data-idx] .csv-action-select').forEach(sel => {
       const idx = Number(sel.closest('tr').dataset.idx);
       sel.addEventListener('change', () => { lignesImport[idx].action = sel.value; });
     });
-    document.getElementById('btn-confirmer-import').addEventListener('click', confirmerImport);
+    document.getElementById('btn-confirmer-import')?.addEventListener('click', confirmerImport);
   }
 
   async function confirmerImport() {
