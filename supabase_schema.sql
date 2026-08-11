@@ -316,6 +316,9 @@ CREATE TABLE capacites (
 -- utilisé pour la détection de doublons à l'import CSV.
 -- tags : libellés convertis en tags personnels du joueur lors de l'import
 -- sur sa fiche (pas de FK, les tags sont scopés par personnage).
+-- conteneur : si true, l'ajout de cet objet sur une fiche joueur crée
+-- automatiquement le tag-conteneur associé (équivalent du bouton "Faire de
+-- cet objet un conteneur"), sans manipulation supplémentaire du joueur.
 
 CREATE TABLE equipement_base (
   id            uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -325,6 +328,7 @@ CREATE TABLE equipement_base (
   poids         numeric(8,3),
   tags          text[]      NOT NULL DEFAULT '{}',
   description   text,
+  conteneur     boolean     NOT NULL DEFAULT false,
   created_at    timestamptz DEFAULT now(),
   updated_at    timestamptz DEFAULT now()
 );
