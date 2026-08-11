@@ -271,6 +271,41 @@ function showSave(status) {
   }
 }
 
+// ── Modale de saisie (remplace prompt(), non fiable sur certains navigateurs comme Arc) ──
+const promptModalEl = document.getElementById('prompt-modal');
+const promptModalMessage = document.getElementById('prompt-modal-message');
+const promptModalInput = document.getElementById('prompt-modal-input');
+const promptModalCancel = document.getElementById('prompt-modal-cancel');
+const promptModalConfirm = document.getElementById('prompt-modal-confirm');
+
+function promptModal(message) {
+  return new Promise(resolve => {
+    promptModalMessage.textContent = message;
+    promptModalInput.value = '';
+    promptModalEl.hidden = false;
+    promptModalInput.focus();
+    const close = (result) => {
+      promptModalEl.hidden = true;
+      promptModalCancel.removeEventListener('click', onCancel);
+      promptModalConfirm.removeEventListener('click', onConfirm);
+      promptModalEl.removeEventListener('click', onOverlayClick);
+      promptModalInput.removeEventListener('keydown', onKeydown);
+      resolve(result);
+    };
+    const onCancel = () => close(null);
+    const onConfirm = () => close(promptModalInput.value);
+    const onOverlayClick = (e) => { if (e.target === promptModalEl) close(null); };
+    const onKeydown = (e) => {
+      if (e.key === 'Escape') close(null);
+      else if (e.key === 'Enter') close(promptModalInput.value);
+    };
+    promptModalCancel.addEventListener('click', onCancel);
+    promptModalConfirm.addEventListener('click', onConfirm);
+    promptModalEl.addEventListener('click', onOverlayClick);
+    promptModalInput.addEventListener('keydown', onKeydown);
+  });
+}
+
 function schedulePersoSave(patch) {
   Object.assign(perso, patch);
   Object.assign(persoPendingPatch, patch);
@@ -1379,7 +1414,7 @@ function renderEquipementCard(item) {
     try {
       let tag;
       if (val === '__new__') {
-        const nom = window.prompt('Nom du tag :');
+        const nom = await promptModal('Nom du tag :');
         tagSelect.value = '';
         if (!nom || !nom.trim()) return;
         showSave('saving');

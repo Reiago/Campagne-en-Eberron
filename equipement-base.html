@@ -145,6 +145,65 @@
       font-size: 12px;
       padding: 0.2rem 0.3rem;
     }
+
+    /* ── Modales (remplace alert()/confirm(), non fiables sur certains navigateurs comme Arc) ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+    .modal-overlay[hidden] { display: none; }
+    .modal-box {
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      max-width: 420px;
+      width: 100%;
+      padding: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .modal-box p {
+      color: var(--text-main);
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0 0 1.25rem;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.6rem;
+    }
+    .btn-modal-cancel {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 0.5rem 1rem;
+      text-transform: uppercase;
+    }
+    .btn-modal-cancel:hover { border-color: var(--gold-dim); color: var(--gold); }
+    .btn-modal-confirm {
+      background: transparent;
+      border: 1px solid rgba(200,80,60,0.5);
+      border-radius: 4px;
+      color: #D87060;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 0.5rem 1rem;
+      text-transform: uppercase;
+    }
+    .btn-modal-confirm:hover { background: rgba(200,80,60,0.1); }
   </style>
 </head>
 <body>
@@ -182,6 +241,25 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="confirm-modal" hidden>
+  <div class="modal-box">
+    <p id="confirm-modal-message"></p>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="confirm-modal-cancel">Annuler</button>
+      <button class="btn-modal-confirm" id="confirm-modal-confirm">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="alert-modal" hidden>
+  <div class="modal-box">
+    <p id="alert-modal-message"></p>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="alert-modal-ok">OK</button>
+    </div>
+  </div>
+</div>
+
 <script src="nav.js"></script>
 <script type="module">
   import { requireMJ, logout } from './auth.js';
@@ -195,6 +273,60 @@
   const authBar = document.getElementById('auth-bar');
   authBar.innerHTML = `<span>${user.email}</span><button class="btn-logout" id="btn-logout">Déconnexion</button>`;
   document.getElementById('btn-logout').addEventListener('click', logout);
+
+  // ── Modale de confirmation (remplace confirm(), non fiable sur certains navigateurs comme Arc) ──
+  const confirmModalEl = document.getElementById('confirm-modal');
+  const confirmModalMessage = document.getElementById('confirm-modal-message');
+  const confirmModalCancel = document.getElementById('confirm-modal-cancel');
+  const confirmModalConfirm = document.getElementById('confirm-modal-confirm');
+
+  function confirmModal(message) {
+    return new Promise(resolve => {
+      confirmModalMessage.textContent = message;
+      confirmModalEl.hidden = false;
+      const close = (result) => {
+        confirmModalEl.hidden = true;
+        confirmModalCancel.removeEventListener('click', onCancel);
+        confirmModalConfirm.removeEventListener('click', onConfirm);
+        confirmModalEl.removeEventListener('click', onOverlayClick);
+        document.removeEventListener('keydown', onKeydown);
+        resolve(result);
+      };
+      const onCancel = () => close(false);
+      const onConfirm = () => close(true);
+      const onOverlayClick = (e) => { if (e.target === confirmModalEl) close(false); };
+      const onKeydown = (e) => { if (e.key === 'Escape') close(false); };
+      confirmModalCancel.addEventListener('click', onCancel);
+      confirmModalConfirm.addEventListener('click', onConfirm);
+      confirmModalEl.addEventListener('click', onOverlayClick);
+      document.addEventListener('keydown', onKeydown);
+    });
+  }
+
+  // ── Modale d'information (remplace alert(), non fiable sur certains navigateurs comme Arc) ──
+  const alertModalEl = document.getElementById('alert-modal');
+  const alertModalMessage = document.getElementById('alert-modal-message');
+  const alertModalOk = document.getElementById('alert-modal-ok');
+
+  function alertModal(message) {
+    return new Promise(resolve => {
+      alertModalMessage.textContent = message;
+      alertModalEl.hidden = false;
+      const close = () => {
+        alertModalEl.hidden = true;
+        alertModalOk.removeEventListener('click', onOk);
+        alertModalEl.removeEventListener('click', onOverlayClick);
+        document.removeEventListener('keydown', onKeydown);
+        resolve();
+      };
+      const onOk = () => close();
+      const onOverlayClick = (e) => { if (e.target === alertModalEl) close(); };
+      const onKeydown = (e) => { if (e.key === 'Escape' || e.key === 'Enter') close(); };
+      alertModalOk.addEventListener('click', onOk);
+      alertModalEl.addEventListener('click', onOverlayClick);
+      document.addEventListener('keydown', onKeydown);
+    });
+  }
 
   // Supprime accents + espaces superflus pour la détection de doublons.
   function normaliserNom(str) {
@@ -276,25 +408,25 @@
               tags: champs.tags.value.split(';').map(t => t.trim()).filter(Boolean),
               description: champs.description.value || null,
             });
-          } catch (e) { alert('Erreur de sauvegarde : ' + e.message); }
+          } catch (e) { await alertModal('Erreur de sauvegarde : ' + e.message); }
         }, 500);
       };
       Object.values(champs).forEach(input => input.addEventListener('input', save));
 
       row.querySelector('.btn-del-base').addEventListener('click', async () => {
-        if (!confirm('Supprimer cet objet du catalogue officiel ?')) return;
+        if (!(await confirmModal('Supprimer cet objet du catalogue officiel ?'))) return;
         try {
           await deleteEquipementBase(id);
           base = base.filter(b => b.id !== id);
           renderBaseTable();
-        } catch (e) { alert('Erreur : ' + e.message); }
+        } catch (e) { await alertModal('Erreur : ' + e.message); }
       });
     });
   }
 
   document.getElementById('btn-ajout-base').addEventListener('click', async () => {
     const nom = document.getElementById('ajout-nom').value.trim();
-    if (!nom) { alert('Le nom est obligatoire.'); return; }
+    if (!nom) { await alertModal('Le nom est obligatoire.'); return; }
     const data = {
       nom,
       nom_normalise: normaliserNom(nom),
@@ -313,7 +445,7 @@
       document.getElementById('ajout-tags').value = '';
       document.getElementById('ajout-desc').value = '';
     } catch (e) {
-      alert(e.code === '23505' ? 'Un objet avec un nom équivalent existe déjà dans le catalogue.' : 'Erreur : ' + e.message);
+      await alertModal(e.code === '23505' ? 'Un objet avec un nom équivalent existe déjà dans le catalogue.' : 'Erreur : ' + e.message);
     }
   });
 
@@ -463,16 +595,16 @@
       }
       aUpserter.push(payload);
     });
-    if (!aUpserter.length) { alert('Aucun objet à importer (tout est ignoré).'); return; }
+    if (!aUpserter.length) { await alertModal('Aucun objet à importer (tout est ignoré).'); return; }
     try {
       await bulkUpsertEquipementBase(aUpserter);
-      alert(aUpserter.length + ' objet(s) importé(s).');
+      await alertModal(aUpserter.length + ' objet(s) importé(s).');
       lignesImport = [];
       document.getElementById('csv-review').innerHTML = '';
       document.getElementById('csv-file').value = '';
       await chargerBase();
     } catch (e) {
-      alert('Erreur lors de l\'import : ' + e.message);
+      await alertModal('Erreur lors de l\'import : ' + e.message);
     }
   }
 
