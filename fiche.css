@@ -2792,3 +2792,73 @@ body.mode-jeu .capacites-catalogue-panel { display: none !important; }
 @media (max-width: 700px) {
   .capacite-header { flex-wrap: wrap; }
 }
+
+/* ── Modales (remplace alert()/confirm()/prompt(), non fiables sur certains navigateurs comme Arc) ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+.modal-overlay[hidden] { display: none; }
+.modal-box {
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  max-width: 420px;
+  width: 100%;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.modal-box p {
+  color: var(--text-main);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 1.25rem;
+}
+.modal-box input[type="text"] {
+  width: 100%;
+  background: var(--stone-mid);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-bright);
+  font-size: 14px;
+  padding: 0.5rem 0.6rem;
+  margin: 0 0 1.25rem;
+  box-sizing: border-box;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+.btn-modal-cancel {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+}
+.btn-modal-cancel:hover { border-color: var(--gold-dim); color: var(--gold); }
+.btn-modal-confirm {
+  background: transparent;
+  border: 1px solid rgba(200,80,60,0.5);
+  border-radius: 4px;
+  color: #D87060;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+}
+.btn-modal-confirm:hover { background: rgba(200,80,60,0.1); }
