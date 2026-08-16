@@ -306,6 +306,31 @@ function promptModal(message) {
   });
 }
 
+// ── Modale d'information (remplace alert(), non fiable sur certains navigateurs comme Arc) ──
+const alertModalEl = document.getElementById('alert-modal');
+const alertModalMessage = document.getElementById('alert-modal-message');
+const alertModalOk = document.getElementById('alert-modal-ok');
+
+function alertModal(message) {
+  return new Promise(resolve => {
+    alertModalMessage.textContent = message;
+    alertModalEl.hidden = false;
+    const close = () => {
+      alertModalEl.hidden = true;
+      alertModalOk.removeEventListener('click', onOk);
+      alertModalEl.removeEventListener('click', onOverlayClick);
+      document.removeEventListener('keydown', onKeydown);
+      resolve();
+    };
+    const onOk = () => close();
+    const onOverlayClick = (e) => { if (e.target === alertModalEl) close(); };
+    const onKeydown = (e) => { if (e.key === 'Escape' || e.key === 'Enter') close(); };
+    alertModalOk.addEventListener('click', onOk);
+    alertModalEl.addEventListener('click', onOverlayClick);
+    document.addEventListener('keydown', onKeydown);
+  });
+}
+
 function schedulePersoSave(patch) {
   Object.assign(perso, patch);
   Object.assign(persoPendingPatch, patch);
@@ -419,10 +444,17 @@ function remplirIdentite() {
     });
   });
 
+  let niveauAvantEdition = perso.niveau ?? 1;
+
   champsNum.forEach(f => {
     const el = document.getElementById('id-' + f);
     if (!el) return;
     el.value = perso[f] ?? '';
+    if (f === 'niveau') {
+      el.addEventListener('focus', () => {
+        niveauAvantEdition = perso.niveau ?? 1;
+      });
+    }
     el.addEventListener('input', () => {
       schedulePersoSave({ [f]: el.value === '' ? null : Number(el.value) });
       if (f === 'niveau') {
@@ -435,6 +467,15 @@ function remplirIdentite() {
         recalculerSortsTotaux();
       }
     });
+    if (f === 'niveau') {
+      el.addEventListener('change', () => {
+        const nouveauNiveau = el.value === '' ? null : Number(el.value);
+        if (nouveauNiveau !== null && nouveauNiveau < niveauAvantEdition) {
+          alertModal(`Le niveau passe de ${niveauAvantEdition} à ${nouveauNiveau}. Les informations liées au niveau perdu (dés de vie, points de vie, sorts, emplacements, etc.) risquent d'être perdues.`);
+        }
+        niveauAvantEdition = nouveauNiveau ?? niveauAvantEdition;
+      });
+    }
   });
 
   champsUnite.forEach(bindChampUnite);
