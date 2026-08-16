@@ -306,27 +306,33 @@ function promptModal(message) {
   });
 }
 
-// ── Modale d'information (remplace alert(), non fiable sur certains navigateurs comme Arc) ──
-const alertModalEl = document.getElementById('alert-modal');
-const alertModalMessage = document.getElementById('alert-modal-message');
-const alertModalOk = document.getElementById('alert-modal-ok');
+// ── Modale de confirmation (remplace confirm(), non fiable sur certains navigateurs comme Arc) ──
+// Seul un clic sur le bouton OK valide (résout true). Annuler, Échap, Entrée ou un clic
+// en dehors de la fenêtre annulent (résout false).
+const confirmModalEl = document.getElementById('confirm-modal');
+const confirmModalMessage = document.getElementById('confirm-modal-message');
+const confirmModalCancel = document.getElementById('confirm-modal-cancel');
+const confirmModalOk = document.getElementById('confirm-modal-ok');
 
-function alertModal(message) {
+function confirmModal(message) {
   return new Promise(resolve => {
-    alertModalMessage.textContent = message;
-    alertModalEl.hidden = false;
-    const close = () => {
-      alertModalEl.hidden = true;
-      alertModalOk.removeEventListener('click', onOk);
-      alertModalEl.removeEventListener('click', onOverlayClick);
+    confirmModalMessage.textContent = message;
+    confirmModalEl.hidden = false;
+    const close = (result) => {
+      confirmModalEl.hidden = true;
+      confirmModalCancel.removeEventListener('click', onCancel);
+      confirmModalOk.removeEventListener('click', onOk);
+      confirmModalEl.removeEventListener('click', onOverlayClick);
       document.removeEventListener('keydown', onKeydown);
-      resolve();
+      resolve(result);
     };
-    const onOk = () => close();
-    const onOverlayClick = (e) => { if (e.target === alertModalEl) close(); };
-    const onKeydown = (e) => { if (e.key === 'Escape' || e.key === 'Enter') close(); };
-    alertModalOk.addEventListener('click', onOk);
-    alertModalEl.addEventListener('click', onOverlayClick);
+    const onCancel = () => close(false);
+    const onOk = () => close(true);
+    const onOverlayClick = (e) => { if (e.target === confirmModalEl) close(false); };
+    const onKeydown = (e) => { if (e.key === 'Escape' || e.key === 'Enter') close(false); };
+    confirmModalCancel.addEventListener('click', onCancel);
+    confirmModalOk.addEventListener('click', onOk);
+    confirmModalEl.addEventListener('click', onOverlayClick);
     document.addEventListener('keydown', onKeydown);
   });
 }
@@ -445,6 +451,15 @@ function remplirIdentite() {
   });
 
   let niveauAvantEdition = perso.niveau ?? 1;
+  const recalculerNiveau = () => {
+    recalculerBM();
+    recalculerModsEtJdS();
+    recalculerCompetences();
+    remplirDesDeVie();
+    remplirPVNiveaux();
+    recalculerPVMax();
+    recalculerSortsTotaux();
+  };
 
   champsNum.forEach(f => {
     const el = document.getElementById('id-' + f);
@@ -457,21 +472,19 @@ function remplirIdentite() {
     }
     el.addEventListener('input', () => {
       schedulePersoSave({ [f]: el.value === '' ? null : Number(el.value) });
-      if (f === 'niveau') {
-        recalculerBM();
-        recalculerModsEtJdS();
-        recalculerCompetences();
-        remplirDesDeVie();
-        remplirPVNiveaux();
-        recalculerPVMax();
-        recalculerSortsTotaux();
-      }
+      if (f === 'niveau') recalculerNiveau();
     });
     if (f === 'niveau') {
-      el.addEventListener('change', () => {
+      el.addEventListener('change', async () => {
         const nouveauNiveau = el.value === '' ? null : Number(el.value);
         if (nouveauNiveau !== null && nouveauNiveau < niveauAvantEdition) {
-          alertModal(`Le niveau passe de ${niveauAvantEdition} à ${nouveauNiveau}. Les informations liées au niveau perdu (dés de vie, points de vie, sorts, emplacements, etc.) risquent d'être perdues.`);
+          const confirme = await confirmModal(`Le niveau passe de ${niveauAvantEdition} à ${nouveauNiveau}. Les informations liées au niveau perdu (dés de vie, points de vie, sorts, emplacements, etc.) risquent d'être perdues.`);
+          if (!confirme) {
+            el.value = niveauAvantEdition;
+            schedulePersoSave({ niveau: niveauAvantEdition });
+            recalculerNiveau();
+            return;
+          }
         }
         niveauAvantEdition = nouveauNiveau ?? niveauAvantEdition;
       });
