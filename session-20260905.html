@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Marque Noire — Eberron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Extensions locales à cette page (Chronique de session) ─────────── */
+    /* Réutilisent uniquement les variables déjà définies dans style.css,
+       donc suivent automatiquement les trois thèmes du site. */
+
+    .btn-portail {
+      display: inline-block;
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+    .btn-portail:hover { color: var(--gold); }
+    .btn-portail::before { content: '← '; }
+
+    .session-meta {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: center;
+      margin-top: -0.75rem;
+    }
+
+    .act {
+      margin: 3rem 0 1.5rem;
+    }
+    .act:first-of-type { margin-top: 2.5rem; }
+    .act-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.3rem, 4vw, 1.7rem);
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 0.02em;
+      margin-top: 0.4rem;
+    }
+
+    .scene { margin: 2.25rem 0; }
+    .scene-eyebrow {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 0.35rem;
+    }
+    .scene-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.01em;
+    }
+
+    .q { color: var(--red-accent); font-style: italic; }
+
+    .monologue {
+      margin: 1.1rem 0;
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--red-accent);
+      font-size: 16px;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.8;
+    }
+    .monologue p + p { margin-top: 0.7rem; }
+    .monologue cite {
+      display: block;
+      font-style: normal;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="nav-container"></div>
+  <div id="auth-bar" style="display:flex;align-items:center;justify-content:flex-end;gap:1rem;font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;min-height:1.5rem;"></div>
+
+  <a href="index.html" class="btn-portail">Retour au portail</a>
+
+  <header>
+    <div class="eyebrow">Chronique de session — Sharn, cité des Tours</div>
+    <h1>La Marque Noire</h1>
+    <p class="subtitle">Six compagnons, une pluie sans fin, et une malédiction qui grandit chaque nuit</p>
+  </header>
+  <p class="session-meta">Session du 5 septembre</p>
+
+  <div class="section-label">Compagnons</div>
+  <div class="name-tags" style="margin-bottom:2rem;">
+    <span class="name-tag">Da Mao — Rôdeur féral</span>
+    <span class="name-tag">Aristote l'Empaleur — Barbare féral</span>
+    <span class="name-tag">Zarn Grennik — Artificier gnome</span>
+    <span class="name-tag">Brix Grennik « Filigrane » — Roublard gnome</span>
+    <span class="name-tag">Marteau — Forgelier</span>
+    <span class="name-tag">Frack — Forgelier</span>
+  </div>
+
+  <div class="act">
+    <div class="section-label" style="margin-bottom:0.2rem;">Acte I</div>
+    <div class="act-title">La nuit du sceau brisé</div>
+  </div>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 01</div>
+    <div class="scene-title">Le monde après la grande guerre</div>
+    <div class="lore-block">
+      <p>Il y a trois ans, un royaume entier a cessé d'exister. Cyre, l'une des cinq nations nées de l'ancien empire de Galifar, a été rayée de la carte en une nuit, sans que personne ne sache encore ce qui l'a frappée. Un vent noir, disent certains. Une comète tombée du ciel, disent d'autres. Ce qui reste de Cyre s'appelle aujourd'hui les Terres du Deuil. La catastrophe a été si terrible que toutes les nations en guerre depuis des générations ont signé la paix, une paix fragile, gorgée de méfiance.</p>
+      <p>C'est dans ce monde tout juste apaisé que notre histoire commence, à Sharn, la Cité des Tours, dressée sur ses falaises au sud de la Brelande. Une ville qui ne pousse plus que vers le ciel, où les riches vivent dans les hauteurs et où les oubliés survivent tout en bas, près des forges et de la lave, dans les quartiers qu'on appelle les Rouages. Une ville où les porteurs de marques draconiques dirigent le commerce, où le clan Boromar dirige le crime, et où l'on chuchote encore le nom de la maison Tarkanan, qui recrute ceux que leur sang a maudits d'une marque aberrante, imprévisible et redoutée.</p>
+      <p>Deux frères féraux, Da Mao et Aristote l'Empaleur, et deux gnomes, Zarn Grennik et son cousin Brix Grennik, se sont récemment installés à Sharn. C'est Zarn lui-même qui, à son arrivée dans la cité, avait découvert deux forgeliers abandonnés dans un atelier caché de la maison Cannith : Marteau et Frack. Cette nuit-là, sous une pluie que Sharn n'avait plus connue depuis un mois, les six compagnons se sont retrouvés sur une passerelle.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 02</div>
+    <div class="scene-title">Le corps sur la passerelle</div>
+    <div class="lore-block">
+      <p>La pluie tombait comme jamais sur Sharn, dévalant les tours en cascades, noyant la lumière éternelle qui d'ordinaire éclaire la ville. Sur une passerelle de pierre suspendue entre deux tours, le groupe avançait à l'aveugle. C'est alors qu'ils l'ont vu : un corps étendu sur les pavés mouillés, et tout près, une silhouette encapuchonnée qui se figea en les sentant approcher, avant de plonger dans le vide et de disparaître dans la nuit.</p>
+      <p>L'homme au sol semblait mort. Il était bien vêtu, sa sacoche et sa bourse encore sur lui : on avait tenté de le voler, sans finir le travail. Mais en l'examinant de plus près, le groupe comprit qu'il respirait encore.</p>
+      <p>Ce souffle allait le condamner. Car la silhouette encapuchonnée, qui croyait l'avoir tué, revint aussitôt pour achever sa besogne. Son bras se déploya en une hache monstrueuse : ce n'était pas un simple voleur, mais un forgelier, un assassin de métal et de rage.</p>
+      <p>Le combat fut brutal. La créature frappait deux adversaires à la fois, ouvrant de profondes blessures dans les rangs du groupe. Des habitants alertés par le vacarme hurlèrent depuis les fenêtres : <span class="q">« Arrêtez ça ! Appelez la garde ! Au meurtre, ils assassinent cet homme ! »</span> Aristote, la rage aux tripes, encaissait chaque coup en répétant : <span class="q">« La mort nous attend tous, mais moi je l'attendrai debout. »</span></p>
+      <p>La forgelière assassin finit par s'effondrer, vaincue. Alors qu'elle gisait à terre, sans plus pouvoir se défendre, Aristote leva sa hache et lui trancha la tête. <span class="q">« Vos arguments sont bons, dit-il, mais les miens sont tranchants. »</span></p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 03</div>
+    <div class="scene-title">Sous les verrous</div>
+    <div class="lore-block">
+      <p>La garde de Sharn arriva presque aussitôt, menée par un sergent nain porteur d'une lanterne. <span class="q">« Au nom de la garde, posez vos armes. Expliquez-vous »</span>, ordonna-t-il. Le groupe raconta son histoire, brouillant volontairement les faits : l'homme au sol était-il mort, vivant, à moitié l'un et l'autre ? Le sergent ne fut pas dupe, mais laissa filer.</p>
+      <p>Emmenés à l'abri de la pluie, les compagnons furent conduits devant les deux corps avant d'être enfermés pour la nuit. Le sergent, en découvrant la tête tranchée de la forgelière, ne put s'empêcher de remarquer sèchement qu'on ne savait même plus dire si une telle créature était morte ou seulement mise hors d'usage.</p>
+      <p>Dans la cellule commune, Frack tenta de soigner les blessures d'Aristote avec plus de bonne volonté que d'adresse, quand ce n'était pas sur l'ennemi à terre qu'il proposait ses services, en pleine bagarre : <span class="q">« Souhaitez-vous être réparé ? »</span> Aristote, une fois pansé, philosopha à mi-voix : <span class="q">« Les cicatrices sont des souvenirs que le corps refuse d'oublier. »</span></p>
+      <p>C'est en fouillant la sacoche de l'homme au sol, un certain Bonal Gelden, que le groupe découvrit l'objet qui allait tout changer : un carnet à la couverture de cuir brun tissée de fils de mithril, dont les pages, faites d'une matière inconnue, refusaient obstinément toute encre. Zarn reconnut sur la couverture une version ancienne du sceau de la maison Cannith : une enclume et un marteau enlacés dans un cercle.</p>
+      <p>Au matin, le sergent les libéra sans plus de cérémonie, non sans lâcher : <span class="q">« Vous devez avoir des amis très influents. »</span> Et, Aristote répliqua : <span class="q">« Vous savez, parfois les gens mentent, mais le monde dit la vérité. »</span></p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 04</div>
+    <div class="scene-title">Rendez-vous à l'aube</div>
+    <div class="lore-block">
+      <p>À la sortie du poste de garde, Brix Grennik, le cousin gnome de Zarn — celui que ses contacts dans l'ombre surnomment Filigrane —, les attendait déjà. Il leur donna rendez-vous à l'auberge de l'Enclume Brisée, à Callestan, en Bas Dura, s'ils voulaient connaître la vérité sur la mort de Bonal Gelden. <span class="q">« Il en va de la préservation de votre anonymat »</span>, insista-t-il — un avertissement qui pesait lourd pour des porteurs de marques aberrantes déjà traqués.</p>
+      <p>Le chemin vers Callestan les mena à travers les odeurs de métal et les lueurs des forges de Dura. C'est là, non loin de l'auberge, qu'ils tombèrent sur une scène de chasse à l'homme : deux hobbits, une jeune femme aux dagues et son garde du corps aux poings cerclés, encerclés par sept assaillants — gobelins, malfrats, un archer juché sur un toit, et un ogre colossal. Sans hésiter, le groupe se jeta dans la bataille.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 05</div>
+    <div class="scene-title">Le sang des hobbits</div>
+    <div class="lore-block">
+      <p>L'archer fut le premier à tomber, précipité de son perchoir : son crâne heurta le pavé avec un bruit sourd, comme une pastèque écrasée. Les malfrats et les gobelins, pris en tenaille par cette intervention inattendue, ne firent guère long feu. Restait l'ogre, un colosse qu'il fallut frapper coup après coup, à la hache et au marteau, jusqu'à ce qu'il chancelle enfin et s'effondre.</p>
+      <p>Les deux hobbits, blessés mais vivants, révélèrent alors leur identité : la jeune femme, nommée Ariel, n'était autre que la petite-fille de Saïdan Boromar, parrain du plus puissant clan criminel de Sharn.</p>
+      <p>L'ogre survivant, un certain Igor surnommé « le charcutier », fut interrogé sans ménagement. Il avoua avoir été payé pour tendre cette embuscade par un féral marqué d'un furoncle au visage et d'une oreille à demi dévorée. Le groupe hésita à l'achever, puis choisit la clémence. Aristote résuma leur choix à sa manière : <span class="q">« Ce n'est pas à ce qu'un homme prend qu'on reconnaît un homme, c'est à ce qu'il refuse de prendre. »</span> Igor fut relâché, non sans qu'on le soigne une dernière fois, à sa demande.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 06</div>
+    <div class="scene-title">L'héritière reconnaissante</div>
+    <div class="lore-block">
+      <p>À Ariel, encore tremblante, Aristote offrit ces mots : <span class="q">« Sache que les morts ne réclament pas vengeance : ce sont les vivants qui le clament en leur nom. Mais toi, tu es en vie ! »</span> La jeune femme n'était pas n'importe qui : fille d'Ilyra Boromar, elle-même membre du conseil municipal et fille aînée de Mala Boromar d'Jorasco, héritière de la maison draconique Jorasco, et de Saïdan, parrain du clan. En remerciement, Ariel proposa au groupe d'intégrer le réseau de son clan : missions occasionnelles, accès à la contrebande, protection informelle, et une remise dans tous les établissements Boromar de la ville. Un premier lien venait de se nouer entre les compagnons et la pègre de Sharn.</p>
+      <p>C'est elle, accompagnée d'une servante, qui les conduisit ensuite, comme convenu, à l'auberge de l'Enclume Brisée, où une femme les attendait déjà à une table isolée.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 07</div>
+    <div class="scene-title">La dame de la maison Cannith</div>
+    <div class="lore-block">
+      <p>Elle se présenta comme Elaydren d'Vown, de la maison Cannith — une cousine de la lignée de sang, précisa-t-elle aussitôt, mais nullement une héritière de la maison. <span class="q">« Merci d'être venus, dit-elle. Nous avons des affaires importantes à discuter concernant la regrettable mort de Bonal Gelden. Je vous en prie, asseyez-vous. »</span> Gelden, prévôt à l'université de Morgrave, travaillait avec elle sur la piste d'un héritage familial perdu. Il n'était jamais arrivé au rendez-vous prévu ce soir-là. Inquiète, Elaydren avait envoyé quelqu'un à sa recherche — mais ce n'était pas cette personne qui avait porté le coup fatal. Gelden était tombé sous la hache d'une forgelière assassin nommée Cutter, agent du Seigneur des Lames. Elaydren en conçut un regret sincère : jamais elle n'avait voulu cette mort.</p>
+      <p>En posant sa chevalière frappée du sceau Cannith sur le carnet retrouvé sur Gelden, Elaydren fit apparaître un texte jusque-là invisible. Selon la légende familiale, un héritage de la maison Cannith aurait été scellé dans une fonderie perdue, plus ancienne que le royaume de Galifar lui-même, quelque part sous Sharn. Gelden pensait en avoir trouvé l'emplacement.</p>
+      <p>Elle offrit cent pièces d'or et l'effacement de leurs noms des registres de la maison — l'oubli, pour des porteurs de marques aberrantes traqués par la maison Tarkanan — en échange d'un objet : une plaque d'adamantine en forme d'étoile à sept branches, un ancien schéma d'artificier, reposant dans les profondeurs, bien en dessous de la tour Dura.</p>
+      <p>Elle leur parla aussi du Seigneur des Lames : un forgelier devenu prophète, qui prêche l'émancipation de son peuple et la destruction de toute créature pensante qui ne serait pas de métal. La maison Cannith avait déjà intercepté un de ses agents tentant de s'introduire chez elle. D'autres pouvaient rôder dans la ville. À la question d'Aristote — <span class="q">« Si je suis capable de tuer quelqu'un, dois-je le faire ? »</span> — elle répondit simplement : <span class="q">« Non. Pas tout le temps. »</span> Et lorsqu'il lui demanda si sa rage était une part de lui-même ou une bête endormie en lui, elle répondit : <span class="q">« Non. C'est la force de la Furie qui vous entraîne. »</span></p>
+      <p>La route à suivre : au-delà de l'ensemble des vannes E213, une porte scellée portant le sceau Cannith. Il faudrait la briser pour atteindre la fonderie oubliée.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 08</div>
+    <div class="scene-title">Le marché aux rats</div>
+    <div class="lore-block">
+      <p>Reposés, les compagnons redescendirent vers les égouts, où flottait une odeur de métal chaud, comme celle d'un frein qui crisse. Ils atteignirent bientôt le Marché aux Rats, un commerce clandestin tenu par des gobelins, des humains et des féraux dans les profondeurs de la ville. Le marchand Skakan le Magnifique leur vendit quelques curiosités, avant de leur révéler un stock réservé aux bons clients : une pierre dracolite Sidérys de belle taille, que Zarn négocia âprement.</p>
+      <p>C'est là qu'un miroir, tout juste acheté par Da Mao, leur révéla dans son reflet un féral à l'oreille déchirée qui les observait depuis l'ombre avant de s'évanouir sans un bruit. Contre monnaie sonnante, et une surtaxe pour son silence, Skakan leur traça sur une tablette d'argile le chemin exact vers la vanne E213.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 09</div>
+    <div class="scene-title">Embuscade dans les égouts</div>
+    <div class="lore-block">
+      <p>Le chemin tracé les mena droit dans un piège. Deux féraux métamorphes et un forgelier assassin, embusqués dans l'obscurité des tunnels, fondirent sur le groupe. Marteau s'effondra un instant, à terre, avant d'être ranimé de justesse par Frack. Dans la confusion du combat, sa propre marque, instable, le trahit : il frappa l'un des siens par erreur. Mais peu à peu, l'un après l'autre, les assaillants tombèrent, le forgelier assassin achevé sous une attaque décisive, le dernier féral laissé pour mort sur les pavés humides.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 10</div>
+    <div class="scene-title">Le temple d'Onatar</div>
+    <div class="lore-block">
+      <p>Au-delà des tunnels s'ouvrait une salle immense, vestige d'un temps antérieur à Galifar : les ruines d'un ancien complexe, où l'on devinait encore les contours d'un temple et d'une forge. Trois rats géants, surgis des décombres, furent rapidement écartés. Puis le groupe pénétra dans le temple lui-même, où des colonnes sculptées portaient l'effigie d'Onatar, dieu de la forge — un lieu qui inspirait, malgré la poussière des siècles, une étrange sérénité.</p>
+      <p>Cette paix fut brisée par une nuée de scarabées noirs, qui s'abattit sur eux sans qu'aucune arme ne puisse la toucher. Les compagnons improvisèrent : un tuyau rouillé récupéré dans les décombres, rempli d'huile, mis en rotation comme un arrosoir, puis enflammé d'une étincelle. La nuée entière s'embrasa et disparut dans les cendres.</p>
+      <p>Plus loin, un mécanisme caché sous deux demi-disques de pierre révéla d'anciens fonts baptismaux, tandis que les décombres du temple livraient encore quelques trésors oubliés : un fragment d'acier transparent, une bobine d'un métal souple et élastique, un lingot d'un alliage bleuté qui se révélerait plus tard être de l'iridium.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 11</div>
+    <div class="scene-title">Les gardiens dans le noir</div>
+    <div class="lore-block">
+      <p>Au nord-est des ruines se dressait une forge, derrière une double porte scellée d'où provenait un bruit métallique inquiétant. En grimpant sur le toit, le groupe découvrit une brèche béante d'où montait ce bruit suspect. Sans attendre, Marteau sauta dans le trou pour engager seul le combat, dans une salle plongée dans des ténèbres surnaturelles où même la vision dans le noir restait aveugle. Da Mao et Aristote plongèrent aussitôt à sa suite pour lui prêter main-forte, tandis que Frack restait en surveillance sur le toit.</p>
+      <p>Deux gardiens d'acier veillaient là, des automates increvables, vigilants, impossibles à surprendre. Le combat, mené presque à l'aveugle, fut long et cruel : Marteau encaissa coup sur coup avant qu'un morceau de tissu enflammé n'éclaire enfin la scène. Les deux gardiens finirent par céder, l'un d'eux écrasé sous un pan de plafond éboulé pendant la mêlée.</p>
+      <p>Une fois les ténèbres dissipées par un bâton de lumière, la salle révéla un fourneau, un coffre-fort scellé dans le mur, et trois empreintes distinctes creusées dans le sol — un triangle, un carré, un hexagone — qui attendaient leurs clés.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 12</div>
+    <div class="scene-title">L'étoile d'adamantine</div>
+    <div class="lore-block">
+      <p>Les clés se trouvaient sur les gardiens vaincus eux-mêmes : Zarn les en tira, un triangle, un carré, un hexagone. Insérées dans le bon ordre, au bon rythme, elles firent céder le coffre. À l'intérieur : de vieilles pièces d'une valeur bien supérieure à leur poids en métal, des lingots d'or, quatre coffrets de potions et de curiosités — et enfin, dans le dernier, ce qu'ils étaient venus chercher : la plaque d'adamantine en forme d'étoile à sept branches. <span class="q">« On a trouvé ce qu'on cherchait »</span>, soufflèrent-ils, soulagés.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 13</div>
+    <div class="scene-title">Sabre</div>
+    <div class="lore-block">
+      <p>Le repos qu'ils s'accordèrent dans le calme du temple fut brutalement interrompu. En sortant, Marteau reçut en pleine poitrine un carreau d'arbalète tiré depuis l'invisible, et s'effondra sur-le-champ. Tiré à l'abri de justesse, il fut stabilisé de peu. Un second tir toucha bientôt un autre des leurs.</p>
+      <p>Puis ce fut au tour de Da Mao de tomber, à court de souffle, en tentant de s'infiltrer plus avant. Dans l'urgence, Aristote lui fit boire deux des potions trouvées dans le coffre : la première, de respiration aquatique, sans effet utile dans l'instant ; la seconde, une potion de soin, qui le ramena de justesse à la vie, tandis que son sac partait en flammes.</p>
+      <p>Furieux d'avoir failli perdre son frère, Aristote laissa parler le sang de la bête en lui. Il traqua le tireur caché et fondit sur lui au corps à corps. L'ennemi se révéla être un forgelier assassin nommé Sabre, agent du Seigneur des Lames, épaulé d'une complice elfe dont la cape s'embrasa dans la mêlée. Le combat fut acharné, mais Sabre et son associée tombèrent l'un après l'autre. Aristote trancha leurs deux têtes et les abandonna en guise de message. <span class="q">« Vous savez, dit-il, il y a trois sortes de combat : ceux qu'on doit combattre, ceux qu'on doit fuir, et ceux qu'on doit éviter. C'est mon message. »</span></p>
+      <p>Sur le corps de Sabre, une plaque d'identification militaire rattachait le forgelier à un escadron de la Brelande disparu sur l'ancien territoire de Cyre.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 14</div>
+    <div class="scene-title">Le prix de l'oubli</div>
+    <div class="lore-block">
+      <p>De retour à la surface, le groupe remit à Elaydren la plaque d'adamantine tant attendue, et reçut en retour le paiement convenu. <span class="q">« Tu sais, mon ami Marteau, lança Aristote, la vie est courte et la bière est chère. Alors choisis bien tes combats. »</span></p>
+      <p>Elaydren tint parole : <span class="q">« Dans six heures, vos noms ne seront plus associés à la maison. »</span> Elle leur révéla enfin que la maison Cannith s'était fracturée en plusieurs factions rivales depuis la destruction de Cyre — dont on soupçonnait justement une invention Cannith d'être la cause. C'est l'une de ces factions dissidentes qui exploitait l'atelier caché où Zarn avait découvert Marteau et Frack.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 15</div>
+    <div class="scene-title">La rose écarlate</div>
+    <div class="lore-block">
+      <p>Rentrés chacun dans leurs quartiers respectifs, à Dura et à Tavick, les compagnons découvrirent sur leurs lits une rose écarlate et un parchemin. Le message venait du clan Boromar : une nouvelle mission les attendait, pour prouver leur valeur et rejoindre pleinement la famille. Il leur faudrait voler les relevés bancaires d'un conseiller municipal.</p>
+    </div>
+  </article>
+
+  <div class="act">
+    <div class="section-label" style="margin-bottom:0.2rem;">Acte II</div>
+    <div class="act-title">La marque qui grandit</div>
+  </div>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 16</div>
+    <div class="scene-title">Trois jours de répit</div>
+    <div class="lore-block">
+      <p>Les jours suivants furent consacrés à s'installer. Zarn s'activa dans l'atelier des forgeliers, à préparer fioles et outres pour répartir l'eau bénite récupérée dans le temple d'Onatar. Trois priorités s'imposaient : aménager leur repaire, honorer la mission confiée par les Boromar, et faire expertiser les pièces anciennes et les gemmes ramassées au fil de leurs combats. Une sortie au grand Bazar de Mid-Dura permettrait de faire d'une pierre deux coups : quelques achats, et un premier repérage discret du conseiller qui intéressait tant le clan Boromar — un hibou géant nommé Hruitt.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 17</div>
+    <div class="scene-title">L'ombre sur le pont</div>
+    <div class="lore-block">
+      <p>En chemin vers le Bazar, un des leurs repéra, sur une passerelle en hauteur, une elfe au crâne rasé, une cicatrice barrant tout le sommet du crâne, en train de houspiller un groupe hétéroclite : un kobold couvert de symboles arcaniques, un forgelier, un féral, un elfe qui semblait apparaître et disparaître par intermittence. Ce groupe, pourtant redoutable en apparence, paraissait craindre l'elfe balafrée. Prudence de mise : le groupe se fit discret, et l'incident passa sans encombre.</p>
+      <p>Il n'échapperait pas au suivant. Plus loin sur une autre passerelle suspendue au-dessus du vide, des racines jaillirent soudain du sol et enchevêtrèrent la moitié du groupe, les clouant sur place. Un demi-elfe surgit alors, un bandeau sur l'œil, une longue cape noire, la main gauche gantée d'un étrange gantelet violacé parcouru de veines. <span class="q">« Vous n'avez jamais dit qu'il était dangereux de traîner ici ? lança-t-il. Mais le hasard nous a menés vers vous, c'est le destin qui l'a voulu. Ne bougez pas. »</span> Un prêtre à ses côtés venait, disait-il, d'identifier les porteurs de marque parmi eux : <span class="q">« Nous avons juste besoin que vous ne bougiez pas pendant encore douze secondes. »</span> L'un des compagnons encore libre répliqua à l'arbalète, touchant le prêtre en pleine tentative de sort : <span class="q">« On ne touche pas, mon frère ! »</span></p>
+      <p>Un assassin, caché sous le pont, planta une dague empoisonnée dans le dos de Da Mao, qui s'effondra, retenu de justesse par ses bottes accrochées au pont. Puis le demi-elfe leva son bras ganté vers le ciel, et plusieurs flèches noires jaillirent de son gantelet, traversant le pont de part en part pour frapper chaque porteur de marque draconique du groupe. Plusieurs s'effondrèrent, foudroyés — sans mourir, étrangement stabilisés par le sortilège même qui venait de les terrasser. Leur mission accomplie, les agresseurs se retirèrent aussitôt, sans chercher à achever quiconque.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 18</div>
+    <div class="scene-title">Le rêve blanc</div>
+    <div class="lore-block">
+      <p>Ceux qui étaient tombés inconscients ne sombrèrent pas dans un simple sommeil. Ils se retrouvèrent, chacun séparé des autres, dans un espace d'un blanc total, sans sol ni horizon — et face à eux, une ombre prenait forme, silencieuse, et les attaquait.</p>
+      <p>Le combat fut différent pour chacun. L'un tenta de saluer son ombre, en vain. Un autre la frappa de ses griffes, mais l'ombre en retour lui aspira ses forces, sans toutefois parvenir à le briser entièrement. Un troisième, encore métamorphosé, mordit et frappa avec une rage nouvelle, infligeant des dégâts terribles sans jamais faire vaciller la silhouette noire.</p>
+      <p>L'un des leurs, se souvenant d'un conseil qu'Aristote lui avait donné un jour — <span class="q">« Un jour, j'ai essayé de méditer et je me suis endormi. Et je considère ça comme une victoire »</span> — choisit de s'endormir dans son propre rêve pour s'en échapper, et se réveilla dans la réalité, épuisé mais vivant.</p>
+      <p>D'autres eurent moins de chance. L'un d'eux, submergé, confia plus tard : <span class="q">« Sache que je n'en suis pas fier, mais j'ai succombé. J'ai lutté dans la blancheur de mon esprit contre cette part d'ombre. J'ai été submergé. »</span> Un autre ajouta : <span class="q">« Je lui ai asséné argument contre argument. Je n'ai pas su lui faire entendre raison. »</span> Vaincus dans le rêve, ils ne mouraient pas pour autant — mais leur marque, en retour, grandissait, changeait de forme, se rapprochait imperceptiblement de quelque chose d'inconnu et de terrible. <span class="q">« Je me demande, murmura l'un d'eux, si nous ne sommes pas en train de combattre notre propre bête. Et la bête a pris de la force. Elle est plus forte. Et moi, je m'affaiblis. »</span></p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 19</div>
+    <div class="scene-title">Le réveil de la douleur</div>
+    <div class="lore-block">
+      <p>Chacun d'eux se réveilla avec une brûlure sourde au niveau de sa marque draconique — sauf ceux qui n'avaient pas vécu le rêve. Da Mao arracha de son torse la dague empoisonnée que l'assassin fugitif avait abandonnée dans sa fuite. En examinant les marques de ses compagnons, Zarn constata avec inquiétude qu'elles avaient changé d'aspect, comme si deux runes distinctes s'étaient mêlées l'une à l'autre — une découverte qu'il choisit de garder secrète, sauf pour Aristote et Da Mao.</p>
+      <p>Malgré tout, la journée continua : au Bazar de Mid-Dura, on acheta fioles, sac à dos, ceinture de rangement. Chez l'antiquaire Sundry Charmpack, dans sa boutique poussiéreuse, Marteau apprit que les pièces anciennes récupérées valaient une petite fortune une fois expertisées, et découvrit dans la vitrine une relique bien plus impressionnante encore : une enclume géante venue de Xen'drik, proposée à soixante mille pièces d'or.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 20</div>
+    <div class="scene-title">La filature du hibou</div>
+    <div class="lore-block">
+      <p>À Sous-Belvédère, le groupe reprit sa filature du conseiller Hruitt, ce hibou géant qui s'opposait ouvertement au clan Boromar. Ils le suivirent jusqu'à une taverne discrète, le Champ du Coq, où des chambres à l'étage, insonorisées, se louaient pour des conversations que personne ne devait entendre. Le tavernier, fier de son établissement, leur en vanta les mérites : <span class="q">« Personne ne peut entendre ce qui se passe dans la chambre d'à côté. C'est un investissement, et je suis très content de mes chambres. »</span></p>
+      <p>Un homme tout de noir vêtu, une mallette à la main, sortit d'une de ces chambres après une longue attente — sans doute le comptable du conseiller. Hruitt lui-même quitta la pièce peu après, les mains vides. Faute d'avoir suivi l'homme à la mallette à temps, le groupe se contenta de filer discrètement le hibou jusqu'à sa demeure : un petit palais avec jardin, incongru dans ce quartier modeste.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 21</div>
+    <div class="scene-title">Porte close chez les Cannith</div>
+    <div class="lore-block">
+      <p>Une tentative fut faite, ailleurs dans la ville, pour négocier à un comptoir de la maison Cannith l'accès à un parchemin permettant de fabriquer un objet de réfrigération magique. La réponse fut cinglante : la maison ne marchandait pas, et ne faisait pas crédit. Faute de moyens suffisants, le groupe dut renoncer, provisoirement.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 22</div>
+    <div class="scene-title">Le philosophe des tavernes</div>
+    <div class="lore-block">
+      <p>Pendant que ses compagnons enquêtaient, Aristote choisit une autre voie : celle des tavernes populaires, où l'on parle sans se méfier après quelques verres. À la taverne des amateurs de Hrazhak — ce sport féral où deux équipes de sept se disputent, sur un terrain accidenté percé d'un but à chaque extrémité, deux idoles de bois qu'il faut voler à l'adversaire pour les ramener toutes deux dans son propre camp — il tint un discours qui mêlait rage et philosophie : <span class="q">« Mon ami, sais-tu qu'une lame peut trancher des têtes, mais jamais une idée ? »</span> <span class="q">« Cette civilisation qu'on a autour de nous, qu'est-ce que ça vous a appris, à part porter des habits au lieu de respecter cette nature profonde et bestiale qu'on peut avoir ? »</span> <span class="q">« La victoire n'est pas bonne ou mauvaise. La victoire, c'est juste. C'est comme une hache : ça dépend de qui la tient. »</span></p>
+      <p>Il gagna un concours de fléchettes, gagna la sympathie de la foule, et gagna surtout une information précieuse : on y parlait d'un homme en armure noire, cornu, entouré de mercenaires, capable de lancer des flèches noires — la description exacte de leur agresseur du pont. Un rendez-vous fut fixé, au cœur de la nuit, dans le quartier écroulé de Mid-Dura.</p>
+      <p>Dans cette même taverne, Aristote reconnut aussi un visage : le féral à l'oreille déchirée, celui-là même qui avait payé Igor l'ogre pour tendre l'embuscade contre les hobbits Boromar. L'homme haranguait la foule au sujet de l'Arche Noire et du culte des Six Obscurs.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 23</div>
+    <div class="scene-title">Le prix du pouvoir</div>
+    <div class="lore-block">
+      <p>Le lendemain matin, deux des compagnons se réveillèrent avec un don nouveau, né de leur défaite contre l'ombre de la nuit précédente : l'un put désormais puiser une force soudaine dans la mort d'un ennemi, l'autre gagna un instinct de guérisseur capable de déceler n'importe quel mal. Leur marque, en retour, avait encore grossi de quelques millimètres.</p>
+      <p>Pendant ce temps, le groupe s'attela à concentrer le poison trouvé sur la dague de l'assassin du pont, sacrifiant une partie de leur stock pour en accroître la puissance. Mais l'inquiétude grandissait avec les marques elles-mêmes : à ce rythme, calculèrent-ils, en trois mois, elles recouvriraient un corps entier. Zarn entreprit de consigner chaque mesure dans un petit carnet.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 24</div>
+    <div class="scene-title">Deuxième nuit, nouvelles blessures</div>
+    <div class="lore-block">
+      <p>La nuit suivante, l'ombre revint. Marteau invoqua cette fois un pouvoir tout juste éclos de sa marque, une obscurité totale qui engloutit la pièce entière — mais qui l'aveugla lui-même autant que son adversaire, et il perdit son combat, à bout de forces. Brix, de son côté, façonna une lame d'ombre supplémentaire dans sa main libre et frappa avec une violence nouvelle. D'autres luttèrent avec plus ou moins de bonheur ; l'un d'eux sombra, à l'issue de sa défaite, dans un état proche de la catalepsie. Au matin, ceux qui avaient perdu cette nuit-là virent leur marque atteindre la taille de celles, déjà changées, de leurs compagnons — et un nouveau pouvoir se manifesta chez chacun d'eux, aussi certain que la douleur qui l'accompagnait.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 25</div>
+    <div class="scene-title">Le cambriolage de Sous-Belvédère</div>
+    <div class="lore-block">
+      <p>L'heure était venue d'agir contre le conseiller Hruitt. Pendant la pause de midi, le groupe s'infiltra dans le bâtiment où siégeait son bureau. Aristote, en bas, occupa la secrétaire d'un discours mêlant charme et philosophie sur la part d'ombre et la part de lumière de chacun — elle n'y vit que du feu. Pendant ce temps, à l'étage, Brix crocheta la porte du bureau, cossu, tapis et grande fenêtre donnant sur le Bazar. Derrière un tableau se cachait un coffre-fort, qui céda après deux tentatives.</p>
+      <p>À l'intérieur : un acte de propriété et un registre de comptes — exactement ce que le clan Boromar attendait d'eux. Le coffre fut refermé, le tableau replacé, et le groupe ressortit sans éveiller le moindre soupçon, malgré un instant de flottement vite rattrapé par un tour de passe-passe magique. Les documents furent glissés discrètement là où le clan Boromar saurait les trouver.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 26</div>
+    <div class="scene-title">La guilde des marqués</div>
+    <div class="lore-block">
+      <p>Peu après, une jeune femme nommée Sara aborda l'un des compagnons dans la rue. Elle portait, elle aussi, la marque noire. <span class="q">« Cela peut vous paraître étrange, dit-elle, mais tout pourrait vous être expliqué si vous me suivez. Vous possédez la marque, moi aussi, et tous ceux qui se cachent là-bas la possèdent. Venez, et vous aurez des explications. C'est promis. »</span></p>
+      <p>Elle les mena, par des ruelles de plus en plus pauvres, jusqu'à une auberge délabrée nommée Aux Berges. Derrière un rideau, un levier actionné par le tavernier révéla une porte cachée, et de l'autre côté, un homme marqué au front, assis en compagnie d'un changelin sous sa forme naturelle.</p>
+      <div class="monologue">
+        <p>« Bonjour, dit l'homme. Mon nom est Trom. Je suis le chef de cette organisation. Et voici Civax, mon fidèle bras droit. » Il leur expliqua tout, sans détour : tous ceux réunis ici portaient la même marque maudite, reçue de la main des mêmes brigands. « J'ai rassemblé tous ceux qui, comme moi, avaient reçu cette marque noire, à Sharn et ses alentours. Nous ne venons pas tous d'ici : des gens de Sharn, d'ailleurs, et même de Karrnath, nous ont rejoints. »</p>
+        <p>Il révéla la vérité la plus sombre : la marque, chaque nuit, cherchait à prendre possession de son porteur, à s'étendre jusqu'à l'engloutir tout entier — et à le tuer. « La marque peut nous tuer encore plus vite si nous ne faisons rien. Je préfère agir avant qu'elle n'en finisse avec moi. Seuls dans cette cité hostile, nous jouons notre vie. Je vous demande de nous rejoindre, et de prêter votre force à la guilde. »</p>
+        <cite>Trom, chef de la guilde des marqués</cite>
+      </div>
+      <p>Le groupe accepta, et partagea ce qu'il savait de leurs agresseurs communs : le demi-elfe au gantelet violacé, son prêtre, son assassin aux dagues empoisonnées. Trom leur fit visiter les souterrains de la guilde, où d'autres marqués, à un stade bien plus avancé, portaient la preuve vivante de ce qui les attendait tous si rien n'était trouvé à temps.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 27</div>
+    <div class="scene-title">Les archives interdites</div>
+    <div class="lore-block">
+      <p>Pendant que les autres poursuivaient leurs recherches, Frack se rendit à l'université de Morgrave, sous un faux nom, pour fouiller les archives sur les marques draconiques. La doctrine officielle y était formelle : douze marques seulement sont reconnues, les marques aberrantes touchent moins d'un pour cent de la population, et aucune marque, de quelque nature soit-elle, ne peut être transférée ni modifiée après la naissance — un savoir qui contredisait, mot pour mot, ce que le groupe venait de vivre sur le pont. En se faisant passer pour l'élève d'un professeur spécialiste des ruines de Xen'drik, Frack obtint malgré tout un accès plus large aux archives, et la promesse de poursuivre ses recherches.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 28</div>
+    <div class="scene-title">Kate</div>
+    <div class="lore-block">
+      <p>La nuit tombait sur Sharn, et avec elle revenait cette histoire qu'on se raconte à voix basse dans les bas-fonds de la cité, celle d'une femme nommée Kate.</p>
+    </div>
+    <div class="monologue">
+      <p>« Kate se réveilla en sursaut au milieu de la nuit. C'était la seconde fois. "Mais que m'arrive-t-il ?" demanda-t-elle, effrayée. Depuis le jour où elle avait reçu une marque aberrante, elle vivait, sans le savoir, sous l'emprise d'une créature qui prenait peu à peu possession d'elle. »</p>
+    </div>
+    <div class="lore-block">
+      <p>Quelque part sous les tours de Sharn, six compagnons marqués au fer d'une malédiction sans nom savaient déjà qu'ils partageaient, avec Kate, la même nuit sans fin.</p>
+    </div>
+  </article>
+
+  <div class="ornament">— ⬥ —</div>
+</div>
+<script src="nav.js"></script>
+<script type="module">
+  import { requireAuth, logout } from './auth.js';
+
+  const user = await requireAuth('login.html');
+  if (!user) throw new Error();
+
+  const bar = document.getElementById('auth-bar');
+  bar.innerHTML = `
+    <span style="font-family:var(--font-heading);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;">${user.email}</span>
+    <button onclick="" style="background:transparent;border:1px solid var(--border);border-radius:2px;color:var(--text-muted);cursor:pointer;font-family:var(--font-heading);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.7rem;" id="btn-logout">Déconnexion</button>
+  `;
+  document.getElementById('btn-logout').addEventListener('click', logout);
+</script>
+</body>
+</html>
