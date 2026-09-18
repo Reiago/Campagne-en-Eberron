@@ -669,7 +669,7 @@ function updateLinkHint() {
 $('btn-link-mode').addEventListener('click', () => setLinkMode(!linkMode));
 
 document.addEventListener('keydown', (e) => {
-  if (e.key !== 'Escape') return;
+  if (e.key !== 'Escape' && e.keyCode !== 27) return;
   if (!$('node-modal').hidden) { closeNodeModal(); return; }
   if (!$('link-modal').hidden) { closeLinkModal(); return; }
   if (!confirmModalEl.hidden) { closeConfirm(false); return; }
@@ -688,7 +688,7 @@ $('btn-zoom-out').addEventListener('click', () => { const r = svg.getBoundingCli
 
 $('search').addEventListener('input', (e) => { searchTerm = e.target.value; updateClasses(); });
 $('search').addEventListener('keydown', (e) => {
-  if (e.key !== 'Enter') return;
+  if (e.key !== 'Enter' && e.keyCode !== 13) return;
   const term = searchTerm.trim().toLowerCase();
   const hit = term && nodes.find((n) => n.nom.toLowerCase().includes(term));
   if (hit) { select('node', hit.id); centerOn(hit); }
