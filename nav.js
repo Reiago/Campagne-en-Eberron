@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
     { href: root + "Marques_draconiques.html", label: "Marques" },
     { href: root + "Dons.html", label: "Dons" },
     { href: root + "Liens_Ideaux.html", label: "Liens & Idéaux" },
+    { href: root + "relations.html", label: "Relations" },
   ];
 
   const raceMenuHTML =

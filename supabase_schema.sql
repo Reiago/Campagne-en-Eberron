@@ -10,6 +10,8 @@
 -- 0. NETTOYAGE (supprime l'ancien schéma de test)
 -- ══════════════════════════════════════════════════════════════
 
+DROP TABLE IF EXISTS graphe_liens        CASCADE;
+DROP TABLE IF EXISTS graphe_personnages  CASCADE;
 DROP TABLE IF EXISTS equipement_tags     CASCADE;
 DROP TABLE IF EXISTS tags                CASCADE;
 DROP TABLE IF EXISTS equipement          CASCADE;
@@ -389,6 +391,45 @@ CREATE TABLE equipement_tags (
 
 
 -- ══════════════════════════════════════════════════════════════
+-- 14. GRAPHE DES RELATIONS (page relations.html)
+-- ══════════════════════════════════════════════════════════════
+-- Indépendant des fiches (table personnages) : un nœud par personnage,
+-- PNJ ou organisation de la campagne, et un lien par relation.
+-- image : URL ou data URL (image redimensionnée côté client, ~160 px).
+-- pos_x / pos_y : position sur le canevas, NULL = placement automatique.
+-- oriente : true = flèche de source vers cible, false = lien réciproque.
+-- Migration correspondante : supabase/migrations/20260918120000_graphe_relations.sql
+
+CREATE TABLE graphe_personnages (
+  id          uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
+  nom         text        NOT NULL,
+  -- type : 'pj' | 'pnj' | 'organisation'
+  type        text        NOT NULL DEFAULT 'pnj' CHECK (type IN ('pj', 'pnj', 'organisation')),
+  -- statut : 'vivant' | 'mort' | 'inconnu'
+  statut      text        NOT NULL DEFAULT 'vivant' CHECK (statut IN ('vivant', 'mort', 'inconnu')),
+  description text,
+  image       text,
+  pos_x       numeric,
+  pos_y       numeric,
+  created_at  timestamptz DEFAULT now(),
+  updated_at  timestamptz DEFAULT now()
+);
+
+CREATE TABLE graphe_liens (
+  id          uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
+  source_id   uuid        NOT NULL REFERENCES graphe_personnages(id) ON DELETE CASCADE,
+  cible_id    uuid        NOT NULL REFERENCES graphe_personnages(id) ON DELETE CASCADE,
+  -- type : 'allie' | 'ennemi' | 'famille' | 'affaires' | 'neutre'
+  type        text        NOT NULL DEFAULT 'neutre' CHECK (type IN ('allie', 'ennemi', 'famille', 'affaires', 'neutre')),
+  libelle     text,
+  description text,
+  oriente     boolean     NOT NULL DEFAULT false,
+  created_at  timestamptz DEFAULT now(),
+  CONSTRAINT graphe_liens_pas_de_boucle CHECK (source_id <> cible_id)
+);
+
+
+-- ══════════════════════════════════════════════════════════════
 -- INDEX
 -- ══════════════════════════════════════════════════════════════
 
@@ -410,6 +451,8 @@ CREATE INDEX idx_equipement_base_nom    ON equipement_base(nom);
 CREATE INDEX idx_tags_pid               ON tags(personnage_id);
 CREATE INDEX idx_tags_conteneur         ON tags(conteneur_equipement_id);
 CREATE INDEX idx_equipement_tags_tag    ON equipement_tags(tag_id);
+CREATE INDEX idx_graphe_liens_source    ON graphe_liens(source_id);
+CREATE INDEX idx_graphe_liens_cible     ON graphe_liens(cible_id);
 
 
 -- ══════════════════════════════════════════════════════════════
@@ -427,6 +470,10 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trig_personnages_updated_at
   BEFORE UPDATE ON personnages
+  FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+CREATE TRIGGER trig_graphe_personnages_updated_at
+  BEFORE UPDATE ON graphe_personnages
   FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
 
@@ -531,6 +578,8 @@ ALTER TABLE equipement_tags    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE races_catalogue     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE classes_catalogue   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE capacites_catalogue ENABLE ROW LEVEL SECURITY;
+ALTER TABLE graphe_personnages  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE graphe_liens        ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "dev_all" ON personnages        FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON profils            FOR ALL USING (true) WITH CHECK (true);
@@ -547,6 +596,8 @@ CREATE POLICY "dev_all" ON equipement_tags    FOR ALL USING (true) WITH CHECK (t
 CREATE POLICY "dev_all" ON races_catalogue     FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON classes_catalogue   FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON capacites_catalogue FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "dev_all" ON graphe_personnages  FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "dev_all" ON graphe_liens        FOR ALL USING (true) WITH CHECK (true);
 
 
 -- ══════════════════════════════════════════════════════════════

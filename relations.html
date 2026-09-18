@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toile des relations — Eberron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Extensions locales à cette page (graphe des relations) ─────────── */
+    :root {
+      --rel-allie:    var(--green-accent, #5A9A50);
+      --rel-ennemi:   #C0503A;
+      --rel-famille:  var(--gold);
+      --rel-affaires: #5B84B1;
+      --rel-neutre:   var(--text-dim);
+    }
+    :root[data-theme="light"] { --rel-ennemi: #A83E2C; --rel-affaires: #3F6A9A; }
+
+    .container { max-width: 1400px; }
+
+    .btn-portail {
+      display: inline-block;
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+    .btn-portail:hover { color: var(--gold); }
+    .btn-portail::before { content: '← '; }
+
+    header { padding-bottom: 1.5rem; }
+
+    /* Boutons génériques */
+    .btn {
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 0.9rem;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+    .btn.primary { border-color: var(--gold-dim); color: var(--gold-light); background: rgba(201,168,108,0.08); }
+    .btn.primary:hover { background: rgba(201,168,108,0.16); }
+    .btn.active { background: var(--gold-dim); color: var(--stone); border-color: var(--gold-dim); }
+    .btn.danger { border-color: rgba(200,80,60,0.5); color: #D87060; }
+    .btn.danger:hover { background: rgba(200,80,60,0.1); }
+    .btn.icon { padding: 0.45rem 0.65rem; font-size: 13px; line-height: 1; }
+    .btn:disabled { opacity: 0.4; cursor: default; }
+
+    /* Bandeau de stockage */
+    .storage-banner {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      background: rgba(201,168,108,0.06);
+      border: 1px solid var(--border-strong);
+      border-left: 3px solid var(--gold-dim);
+      border-radius: 3px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .storage-banner[hidden] { display: none; }
+    .storage-banner strong { color: var(--text-main); font-weight: 500; }
+    .storage-banner code { font-size: 12px; color: var(--gold-light); }
+
+    /* Barre d'outils */
+    .rel-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .rel-toolbar .sep { width: 1px; height: 22px; background: var(--border-strong); margin: 0 0.25rem; }
+    .rel-toolbar .grow { flex: 1; }
+    .rel-search {
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 0.45rem 0.7rem;
+      min-width: 180px;
+    }
+    .rel-search:focus { outline: none; border-color: var(--gold-dim); }
+
+    /* Disposition canevas + panneau */
+    .rel-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 0.75rem;
+      align-items: stretch;
+    }
+    @media (max-width: 900px) {
+      .rel-layout { grid-template-columns: 1fr; }
+    }
+
+    .rel-canvas-wrap {
+      position: relative;
+      background: var(--stone-mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      height: clamp(460px, 72vh, 900px);
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .rel-canvas-wrap.link-mode { cursor: crosshair; }
+    svg#graph { width: 100%; height: 100%; display: block; cursor: grab; }
+    svg#graph.panning { cursor: grabbing; }
+
+    /* Nœuds */
+    .node { cursor: pointer; }
+    .node .node-halo { fill: var(--gold); opacity: 0; transition: opacity 0.15s; }
+    .node.selected .node-halo, .node.link-source .node-halo { opacity: 0.25; }
+    .node:hover .node-halo { opacity: 0.14; }
+    .node .node-bg { fill: var(--stone-light); }
+    .node .node-ring { fill: none; stroke: var(--text-dim); stroke-width: 2; }
+    .node.type-pj .node-ring { stroke: var(--gold-light); stroke-width: 3; }
+    .node.type-organisation .node-ring { stroke: var(--gold-dim); stroke-dasharray: 6 4; stroke-width: 2.5; }
+    .node .node-initials {
+      fill: var(--gold-light);
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 600;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+    }
+    .node.type-organisation .node-initials { font-size: 15px; fill: var(--gold-dim); }
+    .node .node-label {
+      fill: var(--text-main);
+      font-family: var(--font-heading);
+      font-size: 11.5px;
+      letter-spacing: 0.03em;
+      text-anchor: middle;
+      paint-order: stroke;
+      stroke: var(--stone-mid);
+      stroke-width: 4px;
+      stroke-linejoin: round;
+      pointer-events: none;
+    }
+    .node.type-pj .node-label { fill: var(--gold-light); font-weight: 600; }
+    .node.type-organisation .node-label { fill: var(--text-muted); font-style: italic; }
+    .node.statut-mort .node-bg, .node.statut-mort image { filter: grayscale(1) brightness(0.75); }
+    .node.statut-mort .node-ring { opacity: 0.6; }
+    .node .node-badge {
+      fill: var(--text-main);
+      font-size: 14px;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+    }
+    .node .node-badge-bg { fill: var(--stone); stroke: var(--border-strong); stroke-width: 1; }
+    .node.dimmed { opacity: 0.18; }
+    .node.dimmed:hover { opacity: 0.6; }
+
+    /* Liens */
+    .link { fill: none; stroke-width: 1.8; cursor: pointer; transition: opacity 0.15s; }
+    .link-hit { fill: none; stroke: transparent; stroke-width: 14; cursor: pointer; }
+    .link.type-allie    { stroke: var(--rel-allie); }
+    .link.type-ennemi   { stroke: var(--rel-ennemi); }
+    .link.type-famille  { stroke: var(--rel-famille); }
+    .link.type-affaires { stroke: var(--rel-affaires); }
+    .link.type-neutre   { stroke: var(--rel-neutre); stroke-dasharray: 5 4; }
+    .link.selected { stroke-width: 3.5; }
+    .link.dimmed { opacity: 0.1; }
+    .link-label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-style: italic;
+      fill: var(--text-muted);
+      text-anchor: middle;
+      dominant-baseline: central;
+      paint-order: stroke;
+      stroke: var(--stone-mid);
+      stroke-width: 4px;
+      stroke-linejoin: round;
+      pointer-events: none;
+      transition: opacity 0.15s;
+    }
+    .link-label.dimmed { opacity: 0.1; }
+    .link-label.selected { fill: var(--text-main); font-weight: 500; }
+    marker path { stroke: none; }
+    marker.type-allie path    { fill: var(--rel-allie); }
+    marker.type-ennemi path   { fill: var(--rel-ennemi); }
+    marker.type-famille path  { fill: var(--rel-famille); }
+    marker.type-affaires path { fill: var(--rel-affaires); }
+    marker.type-neutre path   { fill: var(--rel-neutre); }
+    .link-hidden { display: none; }
+
+    /* Légende (types de lien, cliquable) */
+    .rel-legend {
+      position: absolute;
+      left: 0.6rem;
+      bottom: 0.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      max-width: calc(100% - 1.2rem);
+    }
+    .legend-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--stone);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 3px 9px;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+      opacity: 0.9;
+    }
+    .legend-chip .swatch { width: 18px; height: 0; border-top: 2px solid currentColor; }
+    .legend-chip.off { opacity: 0.4; text-decoration: line-through; }
+    .legend-chip[data-type="allie"]    { color: var(--rel-allie); }
+    .legend-chip[data-type="ennemi"]   { color: var(--rel-ennemi); }
+    .legend-chip[data-type="famille"]  { color: var(--rel-famille); }
+    .legend-chip[data-type="affaires"] { color: var(--rel-affaires); }
+    .legend-chip[data-type="neutre"]   { color: var(--rel-neutre); }
+    .legend-chip[data-type="neutre"] .swatch { border-top-style: dashed; }
+
+    /* Indication du mode lien */
+    .rel-hint {
+      position: absolute;
+      top: 0.6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--stone);
+      border: 1px solid var(--gold-dim);
+      border-radius: 3px;
+      padding: 0.4rem 0.9rem;
+      font-size: 13px;
+      color: var(--gold-light);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .rel-hint[hidden] { display: none; }
+
+    /* État vide */
+    .rel-empty {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-style: italic;
+      background: rgba(0,0,0,0.15);
+    }
+    .rel-empty[hidden] { display: none; }
+    .rel-empty .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+
+    /* Panneau latéral */
+    .rel-panel {
+      background: var(--stone-mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.1rem 1.2rem;
+      overflow-y: auto;
+      max-height: clamp(460px, 72vh, 900px);
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .panel-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+    }
+    .panel-portrait {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold-dim);
+      background: var(--stone-light);
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+    .panel-portrait.placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 26px;
+      color: var(--gold-dim);
+    }
+    .panel-badges { display: flex; flex-wrap: wrap; gap: 5px; margin: 0.35rem 0 0.8rem; }
+    .panel-desc { font-size: 14px; line-height: 1.65; margin-bottom: 1rem; white-space: pre-line; }
+    .panel-desc:empty::before { content: 'Aucune description.'; color: var(--text-dim); font-style: italic; }
+    .panel-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.1rem; }
+    .panel-section {
+      font-family: var(--font-heading);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 5px;
+      margin: 0.5rem 0 0.6rem;
+    }
+    .panel-links { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .panel-links li {
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+      padding: 5px 7px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 13.5px;
+    }
+    .panel-links li:hover { background: rgba(201,168,108,0.07); }
+    .panel-links .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; transform: translateY(-1px); }
+    .panel-links .who { color: var(--text-main); }
+    .panel-links .what { color: var(--text-dim); font-style: italic; font-size: 12.5px; }
+    .panel-links .dir { color: var(--text-dim); font-size: 11px; }
+    .dot.type-allie    { background: var(--rel-allie); }
+    .dot.type-ennemi   { background: var(--rel-ennemi); }
+    .dot.type-famille  { background: var(--rel-famille); }
+    .dot.type-affaires { background: var(--rel-affaires); }
+    .dot.type-neutre   { background: var(--rel-neutre); }
+    .panel-help p { margin-bottom: 0.7rem; font-size: 14px; }
+    .panel-help kbd {
+      font-family: var(--font-heading);
+      font-size: 9px;
+      border: 1px solid var(--border-strong);
+      border-radius: 2px;
+      padding: 1px 5px;
+      color: var(--text-main);
+    }
+    .panel-stats { display: flex; gap: 8px; margin-top: 1rem; }
+    .panel-stats .stat-card { flex: 1; padding: 0.5rem; }
+    .link-pair { font-size: 14px; color: var(--text-main); margin-bottom: 0.4rem; }
+    .link-pair .arrow { color: var(--gold-dim); margin: 0 6px; }
+    .badge { margin-bottom: 0; }
+    .badge.mort { color: #D87060; border-color: rgba(200,80,60,0.5); }
+    .badge.inconnu { color: var(--text-dim); border-color: var(--border-strong); }
+
+    /* Modales (jamais alert()/confirm() : voir CLAUDE.md) */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+    .modal-overlay[hidden] { display: none; }
+    .modal-box {
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      max-width: 460px;
+      width: 100%;
+      max-height: calc(100vh - 2rem);
+      overflow-y: auto;
+      padding: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .modal-box h2 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+    }
+    .modal-box p { color: var(--text-main); font-size: 14px; line-height: 1.5; margin: 0 0 1.25rem; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 1.25rem; flex-wrap: wrap; }
+    .modal-actions .left { margin-right: auto; }
+    .btn-modal-cancel {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 0.5rem 1rem;
+      text-transform: uppercase;
+    }
+    .btn-modal-cancel:hover { border-color: var(--gold-dim); color: var(--gold); }
+    .btn-modal-confirm {
+      background: transparent;
+      border: 1px solid rgba(200,80,60,0.5);
+      border-radius: 4px;
+      color: #D87060;
+      cursor: pointer;
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 0.5rem 1rem;
+      text-transform: uppercase;
+    }
+    .btn-modal-confirm:hover { background: rgba(200,80,60,0.1); }
+
+    .field { margin-bottom: 0.85rem; }
+    .field label {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+    .field input[type="text"], .field input[type="url"], .field select, .field textarea {
+      width: 100%;
+      background: var(--stone);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      padding: 0.45rem 0.6rem;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--gold-dim); }
+    .field textarea { min-height: 90px; resize: vertical; line-height: 1.5; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .field-check { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-main); }
+    .field-check input { accent-color: var(--gold); }
+    .image-picker { display: flex; gap: 0.8rem; align-items: center; }
+    .image-picker img, .image-picker .no-img {
+      width: 64px; height: 64px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--gold-dim); background: var(--stone); flex-shrink: 0;
+    }
+    .image-picker .no-img { display: flex; align-items: center; justify-content: center; color: var(--text-dim); font-size: 22px; }
+    .image-picker .no-img[hidden], .image-picker img[hidden] { display: none; }
+    .image-picker .controls { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; }
+    .image-picker input[type="file"] { display: none; }
+    .swap-btn { align-self: end; }
+    .form-error { color: #D87060; font-size: 13px; margin-top: 0.5rem; min-height: 1em; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="nav-container"></div>
+  <div id="auth-bar" style="display:flex;align-items:center;justify-content:flex-end;gap:1rem;font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;min-height:1.5rem;"></div>
+
+  <a href="index.html" class="btn-portail">Retour au portail</a>
+
+  <header>
+    <div class="eyebrow">Chronique de campagne — Sharn, cité des Tours</div>
+    <h1>Toile des relations</h1>
+    <p class="subtitle">Qui connaît qui, qui doit quoi à qui, et qui a tranché la tête de qui</p>
+  </header>
+
+  <div class="storage-banner" id="storage-banner" hidden></div>
+
+  <div class="rel-toolbar">
+    <button class="btn primary" id="btn-add-node">+ Personnage</button>
+    <button class="btn" id="btn-link-mode" title="Cliquer un premier personnage, puis un second">⟷ Créer un lien</button>
+    <span class="sep"></span>
+    <input type="search" class="rel-search" id="search" placeholder="Rechercher un nom…" autocomplete="off" />
+    <span class="grow"></span>
+    <button class="btn icon" id="btn-zoom-out" title="Zoom arrière">−</button>
+    <button class="btn icon" id="btn-zoom-in" title="Zoom avant">+</button>
+    <button class="btn" id="btn-fit" title="Recentrer le graphe">Centrer</button>
+    <span class="sep"></span>
+    <button class="btn" id="btn-export" title="Télécharger le graphe en JSON">Exporter</button>
+    <button class="btn" id="btn-import" title="Ajouter les personnages et liens d'un fichier JSON">Importer</button>
+    <input type="file" id="import-file" accept="application/json,.json" hidden />
+  </div>
+
+  <div class="rel-layout">
+    <div class="rel-canvas-wrap" id="canvas-wrap">
+      <svg id="graph" xmlns="http://www.w3.org/2000/svg">
+        <defs id="defs"></defs>
+        <g id="viewport">
+          <g id="g-links"></g>
+          <g id="g-labels"></g>
+          <g id="g-nodes"></g>
+        </g>
+      </svg>
+      <div class="rel-hint" id="link-hint" hidden></div>
+      <div class="rel-legend" id="legend"></div>
+      <div class="rel-empty" id="empty-state" hidden>
+        <div>La toile est vide pour l'instant.</div>
+        <div class="actions">
+          <button class="btn primary" id="btn-seed">Charger les personnages de la session du 5 septembre</button>
+          <button class="btn" id="btn-add-node-empty">Ajouter un personnage</button>
+        </div>
+      </div>
+    </div>
+    <aside class="rel-panel" id="panel"><p style="font-style:italic;color:var(--text-dim);">Chargement de la toile…</p></aside>
+  </div>
+
+  <div class="ornament">— ⬥ —</div>
+</div>
+
+<!-- Modale personnage -->
+<div class="modal-overlay" id="node-modal" hidden>
+  <form class="modal-box" id="node-form" novalidate>
+    <h2 id="node-modal-title">Nouveau personnage</h2>
+    <div class="field">
+      <label for="node-nom">Nom</label>
+      <input type="text" id="node-nom" maxlength="80" required />
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="node-type">Type</label>
+        <select id="node-type">
+          <option value="pj">Personnage joueur</option>
+          <option value="pnj" selected>Personnage non joueur</option>
+          <option value="organisation">Organisation</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="node-statut">Statut</label>
+        <select id="node-statut">
+          <option value="vivant" selected>Vivant</option>
+          <option value="mort">Mort</option>
+          <option value="inconnu">Inconnu</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Image</label>
+      <div class="image-picker">
+        <img id="node-image-preview" alt="" hidden />
+        <div class="no-img" id="node-image-empty">◌</div>
+        <div class="controls">
+          <label class="btn" for="node-image-file" style="text-align:center;">Choisir un fichier…</label>
+          <input type="file" id="node-image-file" accept="image/*" />
+          <input type="url" id="node-image-url" placeholder="…ou coller une adresse d'image" />
+          <button type="button" class="btn" id="node-image-clear">Retirer l'image</button>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label for="node-desc">Description rapide</label>
+      <textarea id="node-desc" maxlength="1200"></textarea>
+    </div>
+    <div class="form-error" id="node-error"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn-modal-cancel" id="node-cancel">Annuler</button>
+      <button type="submit" class="btn primary" id="node-save">Enregistrer</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modale lien -->
+<div class="modal-overlay" id="link-modal" hidden>
+  <form class="modal-box" id="link-form" novalidate>
+    <h2 id="link-modal-title">Nouveau lien</h2>
+    <div class="field-row">
+      <div class="field">
+        <label for="link-source">De</label>
+        <select id="link-source"></select>
+      </div>
+      <div class="field">
+        <label for="link-cible">Vers</label>
+        <select id="link-cible"></select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="link-type">Nature du lien</label>
+        <select id="link-type">
+          <option value="allie">Allié</option>
+          <option value="ennemi">Ennemi</option>
+          <option value="famille">Famille</option>
+          <option value="affaires">Affaires</option>
+          <option value="neutre" selected>Neutre / inconnu</option>
+        </select>
+      </div>
+      <div class="field">
+        <button type="button" class="btn swap-btn" id="link-swap" style="width:100%;margin-top:18px;">⇄ Inverser</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="link-libelle">Libellé (affiché sur le lien)</label>
+      <input type="text" id="link-libelle" maxlength="90" placeholder="Ex. : Frères, L'a trahi, Commanditaire…" />
+    </div>
+    <div class="field">
+      <label for="link-desc">Détails</label>
+      <textarea id="link-desc" maxlength="1200" style="min-height:70px;"></textarea>
+    </div>
+    <div class="field">
+      <label class="field-check"><input type="checkbox" id="link-oriente" /> Lien orienté (flèche de « De » vers « Vers »)</label>
+    </div>
+    <div class="form-error" id="link-error"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn-modal-cancel" id="link-cancel">Annuler</button>
+      <button type="submit" class="btn primary" id="link-save">Enregistrer</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modale de confirmation -->
+<div class="modal-overlay" id="confirm-modal" hidden>
+  <div class="modal-box">
+    <p id="confirm-modal-message"></p>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="confirm-modal-cancel">Annuler</button>
+      <button class="btn-modal-confirm" id="confirm-modal-confirm">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modale d'information -->
+<div class="modal-overlay" id="alert-modal" hidden>
+  <div class="modal-box">
+    <p id="alert-modal-message"></p>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" id="alert-modal-ok">OK</button>
+    </div>
+  </div>
+</div>
+
+<script src="nav.js"></script>
+<script type="module" src="relations.js"></script>
+</body>
+</html>
