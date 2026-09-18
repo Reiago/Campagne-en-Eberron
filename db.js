@@ -371,3 +371,63 @@ export async function deleteCapaciteCatalogue(id) {
   const { error } = await supabase.from('capacites_catalogue').delete().eq('id', id);
   if (error) throw error;
 }
+
+// ── Graphe des relations (page relations.html) ────────────────────────────────
+
+export async function getGraphePersonnages() {
+  const { data, error } = await supabase.from('graphe_personnages').select('*').order('nom');
+  if (error) throw error;
+  return data;
+}
+
+export async function addGraphePersonnage(data) {
+  const { data: result, error } = await supabase.from('graphe_personnages').insert(data).select().single();
+  if (error) throw error;
+  return result;
+}
+
+export async function updateGraphePersonnage(id, data) {
+  const { error } = await supabase.from('graphe_personnages').update(data).eq('id', id);
+  if (error) throw error;
+}
+
+// Les liens rattachés sont supprimés en cascade côté base (ON DELETE CASCADE).
+export async function deleteGraphePersonnage(id) {
+  const { error } = await supabase.from('graphe_personnages').delete().eq('id', id);
+  if (error) throw error;
+}
+
+export async function getGrapheLiens() {
+  const { data, error } = await supabase.from('graphe_liens').select('*').order('created_at');
+  if (error) throw error;
+  return data;
+}
+
+export async function addGrapheLien(data) {
+  const { data: result, error } = await supabase.from('graphe_liens').insert(data).select().single();
+  if (error) throw error;
+  return result;
+}
+
+export async function updateGrapheLien(id, data) {
+  const { error } = await supabase.from('graphe_liens').update(data).eq('id', id);
+  if (error) throw error;
+}
+
+export async function deleteGrapheLien(id) {
+  const { error } = await supabase.from('graphe_liens').delete().eq('id', id);
+  if (error) throw error;
+}
+
+// Import en masse (données de session, fichier JSON) : les identifiants sont
+// générés côté client pour que les liens puissent référencer les nœuds.
+export async function bulkInsertGraphe(personnages, liens) {
+  if (personnages.length) {
+    const { error } = await supabase.from('graphe_personnages').insert(personnages);
+    if (error) throw error;
+  }
+  if (liens.length) {
+    const { error } = await supabase.from('graphe_liens').insert(liens);
+    if (error) throw error;
+  }
+}
