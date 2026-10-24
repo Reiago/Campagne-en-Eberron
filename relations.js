@@ -380,6 +380,7 @@ function render() {
   populateLegend();
   $('empty-state').hidden = nodes.length > 0;
   renderPanel();
+  updatePrintSheet();
 }
 
 function updatePositions() {
@@ -453,10 +454,91 @@ function populateLegend() {
       if (hiddenLinkTypes.has(type)) hiddenLinkTypes.delete(type); else hiddenLinkTypes.add(type);
       populateLegend();
       updateClasses();
+      updatePrintSheet();
     });
     legend.appendChild(chip);
   }
 }
+
+// ── Version imprimable A4 ─────────────────────────────────────────────────────
+// La feuille #print-sheet contient une copie statique du graphe, cadrée sur
+// l'ensemble des personnages par son viewBox (indépendante du zoom à l'écran).
+// Elle est mise à jour à chaque rendu plutôt qu'au seul « beforeprint », pour
+// que l'impression fonctionne même là où cet événement n'est pas émis
+// (impression sans interface, enregistrement PDF direct).
+
+const printSvg = $('print-graph');
+const printPageStyle = document.createElement('style');
+printPageStyle.id = 'print-page-style';
+document.head.appendChild(printPageStyle);
+
+function graphBounds() {
+  if (!nodes.length) return { x: 0, y: 0, w: 1000, h: 700 };
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const n of nodes) {
+    const r = radiusOf(n);
+    // Marge horizontale pour les étiquettes (≈ 16 caractères), basse pour 3 lignes
+    minX = Math.min(minX, n.pos_x - Math.max(r, 70)); maxX = Math.max(maxX, n.pos_x + Math.max(r, 70));
+    minY = Math.min(minY, n.pos_y - r - 12);          maxY = Math.max(maxY, n.pos_y + r + 54);
+  }
+  return { x: minX, y: minY, w: Math.max(maxX - minX, 1), h: Math.max(maxY - minY, 1) };
+}
+
+function updatePrintSheet() {
+  // Copie du graphe, débarrassée des états d'interface (sélection, recherche)
+  const defs = $('defs').cloneNode(true);
+  const g = svgEl('g');
+  for (const src of [gLinks, gLabels, gNodes]) g.appendChild(src.cloneNode(true));
+  for (const root of [defs, g]) {
+    root.removeAttribute('id');
+    for (const el of root.querySelectorAll('[id]')) el.id = 'p-' + el.id;
+  }
+  for (const attr of ['clip-path', 'marker-end']) {
+    for (const el of g.querySelectorAll(`[${attr}]`)) {
+      el.setAttribute(attr, el.getAttribute(attr).replace('url(#', 'url(#p-'));
+    }
+  }
+  for (const el of g.querySelectorAll('.dimmed, .selected, .link-source')) {
+    el.classList.remove('dimmed', 'selected', 'link-source');
+  }
+  printSvg.replaceChildren(defs, g);
+
+  const b = graphBounds();
+  printSvg.setAttribute('viewBox', `${b.x} ${b.y} ${b.w} ${b.h}`);
+
+  // Orientation selon les proportions du graphe ; hauteur = A4 moins les
+  // marges (8 mm de chaque côté) et 1 mm de sécurité contre une 2e page.
+  const landscape = b.w >= b.h;
+  printPageStyle.textContent = `@media print {
+    @page { size: A4 ${landscape ? 'landscape' : 'portrait'}; margin: 8mm; }
+    .print-sheet { height: ${landscape ? 193 : 280}mm; }
+  }`;
+
+  // En-tête : date et décompte des éléments imprimés
+  const visibleLinks = links.filter((l) => !hiddenLinkTypes.has(l.type)).length;
+  const date = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  const hidden = [...hiddenLinkTypes].map((t) => LINK_TYPES[t]).join(', ');
+  $('print-meta').innerHTML = `${esc(date)}<br>${nodes.length} personnages · ${visibleLinks} liens`
+    + (hidden ? `<br>Liens masqués : ${esc(hidden)}` : '');
+
+  // Légende : natures de lien affichées, puis formes des personnages
+  const line = (type) => `<svg width="22" height="6" aria-hidden="true"><line x1="0" y1="3" x2="22" y2="3" class="link type-${type}" /></svg>`;
+  const disc = (cls, glyph = '') => `<svg width="12" height="12" viewBox="-7 -7 14 14" aria-hidden="true"><g class="node ${cls}"><circle class="node-bg" r="6"/><circle class="node-ring" r="6" style="stroke-width:1.3"/>${glyph ? `<text class="node-badge" style="font-size:8px">${glyph}</text>` : ''}</g></svg>`;
+  const items = Object.entries(LINK_TYPES)
+    .filter(([type]) => !hiddenLinkTypes.has(type))
+    .map(([type, label]) => `<span class="pl-item">${line(type)}${esc(label)}</span>`);
+  items.push('<span class="pl-item">→ Lien orienté</span>', '<span class="pl-sep"></span>');
+  items.push(
+    `<span class="pl-item">${disc('type-pj')}Personnage joueur</span>`,
+    `<span class="pl-item">${disc('type-pnj')}PNJ</span>`,
+    `<span class="pl-item">${disc('type-organisation')}Organisation</span>`,
+    `<span class="pl-item">${disc('type-pnj', '✝')}Mort</span>`,
+    `<span class="pl-item">${disc('type-pnj', '?')}Statut inconnu</span>`,
+  );
+  $('print-legend').innerHTML = items.join('');
+}
+
+window.addEventListener('beforeprint', updatePrintSheet);
 
 // ── Sélection & panneau latéral ───────────────────────────────────────────────
 
@@ -613,6 +695,7 @@ async function endPointer(e) {
     const d = dragging;
     dragging = null;
     if (d.moved) {
+      updatePrintSheet();
       try { await store.updateNode(d.node.id, { pos_x: d.node.pos_x, pos_y: d.node.pos_y }); }
       catch (err) { showAlert('Position non enregistrée : ' + err.message); }
     } else {
@@ -716,6 +799,11 @@ $('btn-export').addEventListener('click', () => {
 });
 
 $('btn-import').addEventListener('click', () => $('import-file').click());
+
+$('btn-print').addEventListener('click', () => {
+  updatePrintSheet();
+  window.print();
+});
 $('import-file').addEventListener('change', async (e) => {
   const file = e.target.files?.[0];
   e.target.value = '';

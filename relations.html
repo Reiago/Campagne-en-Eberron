@@ -278,6 +278,7 @@
     }
     .rel-empty[hidden] { display: none; }
     .rel-empty .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+    .rel-empty .btn { white-space: normal; line-height: 1.5; }
 
     /* Panneau latéral */
     .rel-panel {
@@ -464,6 +465,101 @@
     .image-picker input[type="file"] { display: none; }
     .swap-btn { align-self: end; }
     .form-error { color: #D87060; font-size: 13px; margin-top: 0.5rem; min-height: 1em; }
+
+    /* ── Version imprimable A4 ──────────────────────────────────────────────
+       Une copie du graphe (#print-graph) est tenue à jour par relations.js,
+       cadrée sur l'ensemble des personnages via son viewBox. À l'impression,
+       seule cette feuille est affichée, en couleurs claires pour l'encre.
+       L'orientation (@page) et la hauteur de la feuille sont injectées par
+       relations.js selon les proportions du graphe. */
+    .print-sheet { display: none; }
+
+    @media print {
+      :root, :root[data-theme] {
+        --gold:       #8A6A2A;
+        --gold-light: #4E3812;
+        --gold-dim:   #9C7A3C;
+        --stone:      #FFFFFF;
+        --stone-mid:  #FFFFFF;
+        --stone-light:#F3ECDC;
+        --stone-pale: #E6DCC4;
+        --text-main:  #1E160C;
+        --text-muted: #4A3C28;
+        --text-dim:   #7A6A50;
+        --border:        rgba(90,66,21,0.25);
+        --border-strong: rgba(90,66,21,0.5);
+        --rel-allie:    #3E7A36;
+        --rel-ennemi:   #B03A26;
+        --rel-famille:  #A07B2E;
+        --rel-affaires: #2F5F94;
+        --rel-neutre:   #8A7A60;
+      }
+      html, body { background: #FFFFFF !important; }
+      body { padding: 0; min-height: 0; background-image: none !important; color: var(--text-main); }
+      body > *:not(.print-sheet) { display: none !important; }
+
+      .print-sheet {
+        display: flex;
+        flex-direction: column;
+        gap: 3mm;
+        width: 100%;
+        overflow: hidden;
+        break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .print-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 6mm;
+        border-bottom: 0.4mm solid var(--gold-dim);
+        padding-bottom: 2mm;
+      }
+      .print-eyebrow {
+        font-family: var(--font-heading);
+        font-size: 7pt;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold-dim);
+      }
+      .print-title {
+        font-family: var(--font-heading);
+        font-size: 18pt;
+        font-weight: 700;
+        color: var(--gold-light);
+        line-height: 1.1;
+      }
+      .print-meta {
+        font-family: var(--font-body);
+        font-size: 8.5pt;
+        font-style: italic;
+        color: var(--text-muted);
+        text-align: right;
+        line-height: 1.4;
+      }
+      #print-graph { flex: 1 1 0; min-height: 0; width: 100%; display: block; }
+      #print-graph .node-label { font-size: 13px; }
+      #print-graph .link-label { font-size: 10px; }
+      #print-graph .link { stroke-width: 1.6; }
+      #print-graph .node, #print-graph .link, #print-graph .link-hit { cursor: default; }
+      .print-legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.2mm 3.5mm;
+        border-top: 0.2mm solid var(--border-strong);
+        padding-top: 2mm;
+        font-family: var(--font-heading);
+        font-size: 6pt;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .print-legend .pl-item { display: inline-flex; align-items: center; gap: 1.5mm; white-space: nowrap; }
+      .print-legend .pl-sep { width: 0.2mm; align-self: stretch; background: var(--border-strong); }
+      .print-legend svg { overflow: visible; }
+    }
   </style>
 </head>
 <body>
@@ -493,6 +589,7 @@
     <span class="sep"></span>
     <button class="btn" id="btn-export" title="Télécharger le graphe en JSON">Exporter</button>
     <button class="btn" id="btn-import" title="Ajouter les personnages et liens d'un fichier JSON">Importer</button>
+    <button class="btn" id="btn-print" title="Imprimer la toile sur une page A4, ou l'enregistrer en PDF">Imprimer</button>
     <input type="file" id="import-file" accept="application/json,.json" hidden />
   </div>
 
@@ -521,6 +618,19 @@
 
   <div class="ornament">— ⬥ —</div>
 </div>
+
+<!-- Feuille A4 imprimable (masquée à l'écran, remplie par relations.js) -->
+<section class="print-sheet" id="print-sheet" aria-hidden="true">
+  <div class="print-head">
+    <div>
+      <div class="print-eyebrow">Chronique de campagne — Sharn, cité des Tours</div>
+      <div class="print-title">Toile des relations</div>
+    </div>
+    <div class="print-meta" id="print-meta"></div>
+  </div>
+  <svg id="print-graph" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
+  <div class="print-legend" id="print-legend"></div>
+</section>
 
 <!-- Modale personnage -->
 <div class="modal-overlay" id="node-modal" hidden>
