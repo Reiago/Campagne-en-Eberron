@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'Ombre et la Marée — Eberron</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Quicksand:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Extensions locales à cette page (Chronique de session) ─────────── */
+    /* Réutilisent uniquement les variables déjà définies dans style.css,
+       donc suivent automatiquement les trois thèmes du site. */
+
+    .btn-portail {
+      display: inline-block;
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+    .btn-portail:hover { color: var(--gold); }
+    .btn-portail::before { content: '← '; }
+
+    .session-meta {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: center;
+      margin-top: -0.75rem;
+    }
+
+    .act {
+      margin: 3rem 0 1.5rem;
+    }
+    .act:first-of-type { margin-top: 2.5rem; }
+    .act-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.3rem, 4vw, 1.7rem);
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 0.02em;
+      margin-top: 0.4rem;
+    }
+
+    .scene { margin: 2.25rem 0; }
+    .scene-eyebrow {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 0.35rem;
+    }
+    .scene-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.01em;
+    }
+
+    .q { color: var(--red-accent); font-style: italic; }
+
+    .monologue {
+      margin: 1.1rem 0;
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--red-accent);
+      font-size: 16px;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.8;
+    }
+    .monologue p + p { margin-top: 0.7rem; }
+    .monologue cite {
+      display: block;
+      font-style: normal;
+      font-family: var(--font-heading);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="nav-container"></div>
+  <div id="auth-bar" style="display:flex;align-items:center;justify-content:flex-end;gap:1rem;font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;min-height:1.5rem;"></div>
+
+  <a href="index.html" class="btn-portail">Retour au portail</a>
+
+  <header>
+    <div class="eyebrow">Chronique de session — La route du nord</div>
+    <h1>L'Ombre et la Marée</h1>
+    <p class="subtitle">Une marque qui grandit chaque nuit, un phare éteint et une eau noire qui n'oublie rien</p>
+  </header>
+  <p class="session-meta">Session du 24 octobre</p>
+
+  <div class="section-label">Compagnons</div>
+  <div class="name-tags" style="margin-bottom:2rem;">
+    <span class="name-tag">Da Mao — Rôdeur féral</span>
+    <span class="name-tag">Aristote l'Empaleur — Barbare féral</span>
+    <span class="name-tag">Zarn Grennik — Artificier gnome</span>
+    <span class="name-tag">Brix Grennik « Filigrane » — Roublard gnome</span>
+    <span class="name-tag">Marteau — Forgelier</span>
+    <span class="name-tag">Frack — Forgelier</span>
+  </div>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 01</div>
+    <div class="scene-title">Le prix de la douleur</div>
+    <div class="lore-block">
+      <p>Sous les ruelles de Sharn, derrière un passage secret, la guilde des marqués attendait. Son chef, Trom, était un barde qui avait beaucoup voyagé. Son bras droit, Civax, était un changelin. Mais il n'avait emprunté le visage de personne. La moitié de sa face était noire. L'autre moitié était blanche.</p>
+      <p>Tous deux portaient la marque maudite. Tous deux cherchaient à comprendre. Beaucoup de marqués étaient déjà morts. Alors Trom avait confié une mission à Civax : endurcir les nouveaux venus.</p>
+      <p>Car chaque fois qu'on réveille sa marque draconique, la douleur frappe. Elle peut faire rater un sort. Elle peut faire rater n'importe quel geste.</p>
+      <p>Civax leur montra. Il prit une pomme. Elle se flétrit en quelques instants. Il leur expliqua que leurs pouvoirs restaient liés à leur marque d'origine. Mais en les utilisant, on réveille aussi la part maudite. Elle transforme la marque, un peu plus à chaque fois. Et ce pouvoir-là touche toujours à l'obscurité, à quelque chose de malsain.</p>
+      <p>Pourtant, le caractère ne change pas. Les marqués morts étaient restés gentils, compatissants. Certains avaient perdu la raison juste avant la fin. Les autres étaient morts avant d'avoir le temps de devenir fous.</p>
+      <p>Les compagnons parlèrent alors de l'homme au gantelet violacé. La guilde ne savait pas où il se cachait. Civax fut clair : suivez-les, écoutez-les, mais n'affrontez personne. Ils avaient un druide, un maître assassin venu de Xen'drik, un prêtre sans symbole qui repérait les marques. Et ils n'avaient jamais attaqué quelqu'un qui n'en portait pas.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 02</div>
+    <div class="scene-title">Apprendre à souffrir</div>
+    <div class="lore-block">
+      <p>La douleur, expliqua-t-on, n'est qu'une information. Il faut se convaincre qu'elle n'existe pas, comme on se convainc, dehors, qu'il ne fait pas si froid. Certains saisirent le truc très vite. D'autres échouaient, et se tordaient au sol.</p>
+      <p>L'un d'eux voulut tester sa marque. Il fit surgir une zone de ténèbres tout autour de lui. Ça picotait un peu. Mais on n'y voyait plus rien, et c'était peu pratique pour bricoler.</p>
+      <p>Pendant ce temps, Marteau avait tenté sa chance à l'université de Morgrave. Il avait rencontré le professeur Alberix, spécialiste de l'Argonnessen. Frack avait parlé. Marteau s'était retrouvé dehors, dans le couloir, sans aucun élément concret sur les marques.</p>
+      <p>Les nuits, elles, avaient été mauvaises. Les marques grossissaient. Zarn notait tout, jour après jour, en centimètres et en millimètres. Si la marque finissait par couvrir tout un corps, son porteur mourrait. Chacun le savait.</p>
+      <p>Un matin, Aristote se réveilla en sueur. <span class="q">« Frère, j'ai rêvé »</span>, dit-il. Il avait mal dormi. Il lui paraissait urgent de retourner voir Civax.</p>
+      <p>Da Mao, lui, était revenu en insistant auprès de son frère. Il était vraiment important de subir cet entraînement. Alors tout le monde se mit en route vers la guilde.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 03</div>
+    <div class="scene-title">Deux moines dans la foule</div>
+    <div class="lore-block">
+      <p>Ils marchaient depuis un moment quand Marteau s'arrêta. Il avait remarqué ce que personne d'autre n'avait vu. Deux moines les suivaient. L'un à droite, l'autre à gauche, depuis la sortie de chez Zarn.</p>
+      <p>Zarn tendit une main vers Marteau. Il lui injecta une huile pour l'aider à se concentrer. Puis tout alla très vite.</p>
+      <p>Brix déchaîna sa marque. Son arbalète tira deux fois en une seule seconde. Le premier carreau fila vers un moine. Le second, il tenta de l'attraper pour le renvoyer, mais il rata son geste. Le trait se planta tout près de son cœur.</p>
+      <p>Les deux hommes n'étaient pas au même niveau. Séparés par des ponts, des escaliers, des dizaines de mètres de vide, au milieu d'une foule. Brix bondit d'un seul saut pour s'accrocher à la passerelle supérieure.</p>
+      <p>Zarn, de son côté, enchanta un carreau d'un éclat de lumière aveuglante et le lança. Un moine le saisit au vol, et le lui renvoya. Le trait traversa la distance et se planta dans le ventre du gnome. Zarn tomba en brillant, comme une étoile.</p>
+      <p>Da Mao essaya de décocher une flèche et la corde de son arc céda dans l'effort.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 04</div>
+    <div class="scene-title">Sur les ponts de Sharn</div>
+    <div class="lore-block">
+      <p>Zarn gisait, le carreau planté dans le corps. Aristote se précipita. Il pressa de ses mains autour de la plaie. <span class="q">« Reste avec moi »</span>, lui dit-il. <span class="q">« Mon ami, on dit que les morts rejoignent leurs ancêtres. Dis-leur de me garder une bière au frais. »</span> Puis il lui donna une claque, pour le secouer.</p>
+      <p>Autour d'eux, des passants se mirent à prier. Aristote, lui, se tourna vers Balinor, le dieu de la chasse et de la nature. Il ne demandait pas de miracle. Il demandait seulement que la chasse ne soit pas finie.</p>
+      <p>Zarn réussit pourtant à faire jaillir un soin de sa propre marque, malgré la douleur. Il gravit lentement l'interminable escalier, une marche après l'autre, pendant qu'un carreau lui déchirait la chair à chaque pas.</p>
+      <p>Là-haut, un moine blessé tenait encore debout. Aristote sortit son arbalète lourde. Le tir partit. L'homme s'effondra. <span class="q">« Nous ignorons ce que demain nous réserve »</span>, dit Aristote, <span class="q">« mais pour lui, il n'y aura pas de demain »</span>.</p>
+      <p>Restait l'autre. Marteau le frappa en plein visage. Le moine ne se releva pas. Pour le colosse de métal, la menace était éradiquée.</p>
+      <p>Il y avait soixante personnes autour. La garde, déjà, approchait.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 05</div>
+    <div class="scene-title">La goutte rouge</div>
+    <div class="lore-block">
+      <p>Les corps furent fouillés. Sur l'un d'eux, un tatouage : une goutte rouge, comme une larme. Zarn la reconnut. C'était le signe du Sang de Vol.</p>
+      <p>Cette religion croit que chaque être porte en lui une étincelle de divinité. Elle voit dans la mort un mal absolu, une malédiction. Ses fidèles se disent chercheurs de la divinité intérieure. Ils acceptent d'être ramenés après leur mort, pour continuer à faire le bien. Beaucoup les prennent à tort pour des adorateurs de la mort.</p>
+      <p>Mais ces deux-là venaient d'une branche extrémiste, l'Ordre de la Griffe d'Émeraude. Une faction qui sème la terreur par la nécromancie.</p>
+      <p><span class="q">« Marteau n'aime pas les extrémistes »</span>, déclara le forgelier. <span class="q">« Marteau n'est pas un extrémiste. Marteau est là pour purifier. Marteau est simple, droit. Comme son marteau. »</span></p>
+      <p>Dans leurs affaires, les compagnons trouvèrent trente pièces d'argent, quelques bourses, et surtout une paire de gantelets. Ils étaient lourds, gravés, et dans chacun brillait un éclat draconique. Ces gantelets décuplent la force des coups. Ils offrent aussi de courtes impulsions pour sauter, se propulser, amortir une chute. Les aventuriers en raffolent.</p>
+      <p>Marteau pouvait les porter. On les lui confia.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 06</div>
+    <div class="scene-title">La mouette de cuivre</div>
+    <div class="lore-block">
+      <p>Il fallait quitter les lieux avant l'arrivée de la garde. Da Mao, le rôdeur, les fit passer par mille détours, sous les tours, sur les ponts, par des passages que personne ne connaissait. Ils arrivèrent à l'auberge sans que personne ne les ait suivis.</p>
+      <p>Presque personne. Dans le ciel, une mouette. Une mouette au crâne de cuivre, avec un petit dispositif au niveau de l'oreille. Un animal modifié. Cela ressemblait à du travail de la maison Vadalis. Quelqu'un les observait.</p>
+      <p>À la guilde, Trom était absent. Civax les accueillit. Ils lui racontèrent tout : les deux moines, la goutte rouge, la Griffe d'Émeraude. Civax les écouta. Il leur dit que plusieurs maisons draconiques pourraient s'intéresser à eux. Ils formaient un groupe atypique, et ils avaient sauvé quelqu'un de la famille Boromar.</p>
+      <p>Puis il leur parla des rêves. La marque, expliqua-t-il, prend forme dans l'esprit de son porteur. Plus elle grossit, plus elle grignote sa personnalité. C'est là que les plus faibles meurent, sous le choc. Pour l'empêcher de se propager, il faut la repousser pendant le rêve.</p>
+      <p>Il y avait, à la guilde, un vieux marqué à la marque minuscule. Lui n'avait jamais perdu. Quand l'ombre vient, il lui fait un bras d'honneur, et il continue de dormir. Des dizaines ont essayé. Personne n'a compris comment il faisait.</p>
+      <p>Avant de les laisser partir, Civax insista. Il fallait retrouver la bande. Ne pas les affronter. Les suivre, si possible. Et si possible, en ramener un vivant. <span class="q">« Vous resterez ensemble. Nous espérons beaucoup de vos talents. Bonne chance. »</span></p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 07</div>
+    <div class="scene-title">Le tissu d'Ariel</div>
+    <div class="lore-block">
+      <p>Retrouver une bande de brigands dans une cité d'un million d'habitants ? Brix proposa autre chose. Le clan Boromar avait des espions partout. Le clan leur devait une faveur. Il fallait commencer par la jeune hobbit qu'ils avaient sauvée.</p>
+      <p>Les compagnons demandèrent de l'aide aux espions. En moins d'une heure et demie, on leur donna une adresse. Une boutique de tissus. Ariel y choisissait de l'étoffe pour une robe de bal. Son garde du corps, un barbare aux griffes de métal, les reconnut aussitôt, mais il resta calme.</p>
+      <p>Ariel les accueillit à bras ouverts. <span class="q">« Vous m'avez sauvé la vie »</span>, dit-elle. Elle fut ravie de les revoir. Et quand on lui expliqua qu'ils cherchaient une maison Boromar, elle proposa de les y conduire.</p>
+      <p>Pendant qu'elle choisissait, un des compagnons acheta pour son compte un grand morceau de satin jaune. Trois mètres sur deux. Jaune vif, gai. On pouvait en faire une tente, une voile pour navire volant, ou une cape. On ne saurait pas encore.</p>
+      <p>La vendeuse leur parla aussi d'un tissu étrange, qui prend la couleur de l'endroit où l'on se trouve. Fabriqué à partir d'araignées, par la maison draconique Thuranni.</p>
+      <p>Ariel, sa commande terminée, les accompagna à l'adresse prévue.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 08</div>
+    <div class="scene-title">Le prêteur sur gages</div>
+    <div class="lore-block">
+      <p>L'enseigne annonçait : prêteur sur gages. C'était un bureau du clan Boromar. Dedans, on trouvait de tout. Des bagues, des peintures, des mécanismes. Tout ce que des clients n'avaient pas pu racheter au bout d'un an.</p>
+      <p>Ariel les présenta au tenancier, qu'ils appelaient le tonton. Zarn fouilla les étagères. Il trouva un tube en transpacier, une pièce rare, difficile à fabriquer. L'objet lui ferait gagner six jours de travail sur son système de refroidissement. Deux cents pièces d'or. Il en avait deux cent quarante-et-une.</p>
+      <p>Dans un coin se trouvait un macroscope, un instrument pour voir les choses en grand. Douze cents pièces. Hors de portée.</p>
+      <p>Et puis il y avait des livres. Le tonton proposait de les lire sur place, pour dix pièces d'or l'heure. Frack choisit un ouvrage dont le titre l'avait attiré : <span class="q">« Un soin peut être mortel »</span>. Il se plongea dedans.</p>
+      <p>Pendant ce temps, l'un d'eux demanda des informations. Le tonton conseilla de voir un certain Créla, maître enquêteur. Il vivait à l'avant-dernier niveau de Sharn, tout en haut, au milieu des plus riches. On y accédait par l'ascenseur. Il fallait être bien habillé. Chaque information se payait cher, mais on pouvait toujours marchander.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 09</div>
+    <div class="scene-title">La piste du nord</div>
+    <div class="lore-block">
+      <p>Les compagnons n'étaient pas des diplomates. Un forgelier à l'allure de forgelier serait déplacé dans les hauteurs de la cité. On pouvait louer des tenues de gala à la journée, au Grand Bazar. Mais ce n'était pas leur point fort.</p>
+      <p>Ils décidèrent donc de retourner à la guilde, de donner le nom de l'enquêteur à Trom, et d'attendre. Une pierre de communication resterait dans la taverne.</p>
+      <p>Le lendemain, le message arriva. La guilde avait obtenu des informations sur le groupe qui avait changé leurs marques. Il avait quitté Sharn cinq jours plus tôt, par la porte de Wroann, en direction de la route du nord. Un gros groupe. Des mercenaires, un prêtre, un druide, un assassin, et un demi-elfe borgne.</p>
+      <p>Il n'y avait pas à hésiter. Cinq jours de retard, c'était beaucoup, mais Da Mao savait gagner du temps en terrain découvert.</p>
+      <p>Ils s'équipèrent. Des rations pour cinq jours, des vêtements de voyage, des bottes, des capes de pluie. Il ne leur restait plus beaucoup d'argent. Zarn prépara des objets qui protégeaient, d'autres qui lançaient, des pierres pour s'envoyer de courts messages.</p>
+      <p>À midi, ils franchirent la porte de Wroann.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 10</div>
+    <div class="scene-title">Trois jours sur la route</div>
+    <div class="lore-block">
+      <p>Da Mao passa devant. La route de la capitale était encombrée de charrettes de navets et de marchands. Lui ne les fit pas passer par la route. Il les mena à travers les champs, entre les arbres, par des passages que personne n'aurait vus. Ils sortirent de la ville en deux heures, au lieu de cinq. Ils marchaient vite, et se fatiguaient moins que prévu.</p>
+      <p><span class="q">« Aristote est fier de toi »</span>, lança-t-il à son frère. <span class="q">« C'est le talent des longues pattes »</span>, répondit Da Mao. Les autres suivaient.</p>
+      <p>Trois jours passèrent sans histoire. Puis la mer apparut, avec ses odeurs d'iode et de sel. Le vent changeait. Da Mao sentit venir la tempête. Zarn, qui avait un œil pour l'arcane, comprit autre chose : ce n'était pas une tempête ordinaire. Elle venait du nord-ouest, à trois kilomètres, et elle était magique.</p>
+      <p>Aristote leva les bras vers la mer. <span class="q">« Mes amis, nous passons tellement de temps à vouloir arriver quelque part que nous oublions de vivre les endroits où nous sommes. Regardez la mer comme elle s'agite. »</span></p>
+      <p>Ils pressèrent le pas. Devant eux, un village se dessinait, au bord d'une rivière : Première-Tour.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 11</div>
+    <div class="scene-title">Première-Tour</div>
+    <div class="lore-block">
+      <p>Quatre cent cinquante habitants vivaient là. Au centre, une vieille tour d'avant Galifar, entourée d'une palissade et gardée par une petite garnison. On disait que des symboles effacés s'y montraient parfois, après les orages. Il y avait un relais de la maison Orien, aux écuries impeccables. Il y avait un pont gardé, le guet de la Dague, et la taverne du Pont-Brisé.</p>
+      <p>À la taverne, une demi-orque joviale servait du vin de Wroann aux clients. Les gardes de la garnison y venaient boire. Ils détestaient veiller près de la vieille tour. Ils entendaient des voix la nuit.</p>
+      <p>Au fond de la salle, un marchand nerveux. Brix alla seul lui parler. L'homme avait perdu sa caravane. Trois gardes, six mules, trois chariots. Des brigands avaient attaqué à moins de deux jours de marche vers le nord-ouest. Il ne demandait qu'une chose : récupérer deux caisses rouges, marquées de la maison Orien. Il paierait. Cent soixante-quinze pièces d'or.</p>
+      <p>Au relais, Da Mao fit réserver un cheval pour l'aube. Le groupe qu'ils poursuivaient n'était pas passé par là, ou personne ne l'avait vu.</p>
+      <p>On parla aussi d'un navire échoué. Les marins rescapés étaient soignés au village. Le phare de Cornebrune, plus au nord, n'avait plus de lumière depuis deux jours.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 12</div>
+    <div class="scene-title">Ce que murmure la vieille tour</div>
+    <div class="lore-block">
+      <p>Personne n'avait mangé de la journée. Les compagnons dînèrent comme des princes, pour quelques pièces. Et dehors, la pluie commençait.</p>
+      <p>Les ivrognes parlaient d'une grande pierre noire, au cœur de la vieille tour. Pendant les orages, des runes y apparaissaient. On racontait que ces runes donnaient des réponses. Mais la garnison était à l'extérieur de la palissade, pas dans la tour. On gardait quelque chose. Ou on empêchait quelqu'un d'y aller.</p>
+      <p>Le groupe décida de ne pas attendre. Aller voir cette tour pendant l'orage, sans bruit. Puis, le lendemain, partir à la recherche de la caravane volée et du phare.</p>
+      <p>Brix avait observé les rondes des gardes. Une patrouille toutes les trente minutes. Ce soir, les soldats fêtaient l'anniversaire de leur sergent. Ils avaient acheté un petit tonneau. Bon signe.</p>
+      <p>Les compagnons se reposèrent quelques heures dans de bonnes chambres. À la tombée de la nuit, ils se levèrent. Il pleuvait des cordes. Le vent faisait taire tous les bruits.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 13</div>
+    <div class="scene-title">Dans la tour au monolithe</div>
+    <div class="lore-block">
+      <p>Ils longèrent la lisière de la forêt. Marteau, aidé des gantelets, souleva un rondin de la palissade. Les autres se faufilèrent un à un, avant qu'il ne retombe. Un passage qui resta trop étroit pour les forgeliers. Qui attendraient à l'extérieur.</p>
+      <p>Une patrouille arriva. Tout le monde se plaqua au sol. Brix lança un petit caillou, avec le bruit d'un mulot qui court. Les gardes suivirent le bruit, et passèrent sans les voir.</p>
+      <p>La porte de la tour était fermée à clé, trois serrures. Brix l'avait déjà ouverte en vingt secondes.</p>
+      <p>À l'intérieur, tout était noir. Aristote sortit un morceau de tissu enflammé, qui brûle sans se consumer. Sur le sol, ils trouvèrent un monocle ancien, capable de révéler enchantements, pièges magiques, faiblesses cachées. Zarn le répara. La tour avait été bâtie par des nains autour d'un immense monolithe de pierre noire, lisse, sur deux étages. Il n'y avait aucun piège, aucune trace.</p>
+      <p>Zarn posa la main sur la pierre. Une vibration. Sa marque résonna. La douleur fut atroce. Des runes apparurent. Zarn crut déchiffrer quelques mots, dont <span class="q">« chercher grande ville »</span>.</p>
+      <p>Aristote et d'autres posèrent la main sur son épaule, pour partager le choc. <span class="q">« Ne gaspille pas ton souffle à t'excuser, dit Aristote. Si j'avais voulu des gens parfaits, je serais chez les paladins. »</span> Brix prévint : la patrouille reviendrait dans quinze minutes. Ils repartirent, sous la pluie.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 14</div>
+    <div class="scene-title">La nuit blanche</div>
+    <div class="lore-block">
+      <p>Cette nuit-là, à l'auberge, l'ombre revint. Chacun se retrouva seul dans un monde blanc, sans sol ni horizon.</p>
+      <p>Les armes ordinaires ne servaient à rien. Les épées, les arbalètes, les couteaux passaient dans la brume sans lui faire de mal. Seuls comptaient la magie, la lumière, le feu, et les pouvoirs de la marque.</p>
+      <p>Aristote se mit en rage. Il lança sa hache enchantée, celle qui revient toujours dans sa main. Il frappa, et frappa encore. Au bout de quelques instants, l'ombre disparut. Il avait gagné.</p>
+      <p>Zarn s'enveloppa d'un sanctuaire, un cube de protection qui rendait toute attaque difficile. Brix essaya la méthode du vieux marqué, avec une torche et un bras d'honneur. Marteau frappa de son marteau enflammé.</p>
+      <p>Certains se réveillèrent avant la fin. Leur marque ne grossit que de quelques millimètres. Ceux qui avaient vaincu gagnèrent un peu plus. Ceux qui avaient perdu virent leur marque grossir de plus d'un centimètre.</p>
+      <p>Zarn tenait ses comptes. Il notait tout. Les marques avançaient, nuit après nuit. Combien de temps pourrait-on tenir ?</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 15</div>
+    <div class="scene-title">Les yeux dans le ciel</div>
+    <div class="lore-block">
+      <p>Au matin, la tavernière frappa à la porte avec des plateaux. Des œufs à la coque, des mouillettes de beurre. Aristote regarda son frère. <span class="q">« Moi je suis avec mon frangin, c'est bien. C'est tout. Car nous avons été victorieux, nous avons le ventre plein, et nous sommes au sec. Et ça, c'est déjà une victoire aussi. »</span></p>
+      <p>Mais l'argent manquait. La quête du marchand devenait nécessaire. Aristote voulut aussi préparer sa hache : il enroula un morceau de tissu jaune autour du fer, l'imbiba d'huile, pour pouvoir y mettre le feu avant la prochaine nuit.</p>
+      <p>Ils prirent la route du nord-ouest. Au bout de quelques instants, Da Mao se retourna. Une mouette. Elle avait une armature métallique et une petite lentille. Elle les suivait à deux cents mètres. Elle essayait de lire sur leurs lèvres.</p>
+      <p>Dès qu'elle comprit qu'elle était repérée, elle fit demi-tour, en direction de Sharn.</p>
+      <p>Quelqu'un les espionnait. Quelqu'un voulait savoir où ils allaient.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 16</div>
+    <div class="scene-title">La charrette abandonnée</div>
+    <div class="lore-block">
+      <p>Ils suivirent la piste de la caravane. Au bout d'un moment, ils trouvèrent une charrette abandonnée, loin de la grande route. Du sang séché. Une botte perdue. Des empreintes nombreuses.</p>
+      <p>Da Mao leva la main. Il y avait des mouvements dans les broussailles. Marteau chargea le premier. D'un seul coup, il abattit un pillard. Puis il visa l'archer et l'abattit à son tour.</p>
+      <p>Zarn se glissa sous la charrette pour se mettre à l'abri. Brix disparut dans l'ombre et frappa dans le dos. Des ronces jaillirent du sol sous les pas de Da Mao, et entravèrent un ennemi. Aristote empala.</p>
+      <p>Au bout de quelques instants, il ne resta qu'un seul homme debout, à genoux. Il supplia. <span class="q">« J'étais fermier. Ma ferme a brûlé pendant la guerre. Ma femme et mes enfants sont morts. J'ai juste essayé de survivre. Je ne voulais pas vous faire de mal. »</span></p>
+      <p>Aristote le regarda. <span class="q">« Bravo. La prochaine fois, on parlera peut-être d'abord. »</span></p>
+      <p>On l'interrogea. Il avoua que la bande avait attaqué la caravane, il y a moins de deux jours. Que le camp était à une demi-heure. Qu'ils étaient une vingtaine. Que le chef avait un sanglier géant pour animal de compagnie. Un sanglier qu'on droguait aux champignons pour qu'il charge avec violence. Il y avait aussi une prisonnière.</p>
+      <p>Les compagnons le ligotèrent à un arbre.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 17</div>
+    <div class="scene-title">Les loups</div>
+    <div class="lore-block">
+      <p>Ils avançaient vers le camp quand les arbres s'écartèrent. Un loup. Un loup énorme, accompagné de trois loups plus ordinaires, affamés.</p>
+      <p>Zarn jeta un charme de protection sur l'un des siens. Quelqu'un endormit d'un geste les trois loups ordinaires. Restait le géant.</p>
+      <p>Brix tira, un rayon de chaleur brûla le fauve. Marteau frappa de toute sa masse. Aristote lança sa hache, qui revint. Chacun frappait. Le loup géant ne reculait pas. Mais il saignait, et son souffle devenait rauque.</p>
+      <p>Aristote leva sa hache une dernière fois. Le monstre s'effondra, tranché.</p>
+      <p>Les trois loups dormaient encore. Aristote ne se posa pas de question. Il les décapita, l'un après l'autre. Puis il arracha une dent au géant. <span class="q">« Je m'en ferai un chapeau »</span>, dit-il en plaisantant, en regardant la tête.</p>
+      <p>La forêt s'ouvrait plus loin sur une clairière. Les restes de la caravane étaient là. Trois chariots. Des mules mortes. Une d'entre elles, déchirée, mais pas par une lame. Les pillards avaient tendu des collets tout autour. Ils n'étaient pas fous.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 18</div>
+    <div class="scene-title">Le camp sous l'orage</div>
+    <div class="lore-block">
+      <p>La nuit était tombée. L'orage faisait rage. Le camp était installé dans une clairière, à quatre tentes. Le feu était éteint. Le vent hurlait.</p>
+      <p>Au milieu, une femme enchaînée. Assommée, droguée peut-être. Dans le camp, un sanglier géant, de la taille d'une charrette. Quelque part, le chef.</p>
+      <p><span class="q">« Le courage est contagieux »</span>, dit Aristote. <span class="q">« Alors restez près de moi. »</span></p>
+      <p>Marteau proposa un plan. Un filet sur le sanglier. Puis tout le monde frapperait. Brix se posterait devant la tente du chef. Si quelqu'un sortait, il le poignarderait. Ceux qui savaient endormir endormiraient les ennemis qui apparaîtraient. Zarn jetterait les ténèbres s'il le fallait.</p>
+      <p>Da Mao attira la prisonnière vers eux, grâce au pouvoir de sa marque. Elle franchit neuf mètres, trop rapidement et fut assommée dans la manœuvre.</p>
+      <p>Alors le sanglier chargea. Ses sabots faisaient trembler le sol. Chacun s'écarta. Aristote lança son filet. Le monstre s'étala dans la boue, empêtré dans les mailles. Tous frappèrent. Quelqu'un lui envoya un rocher en pleine face. Aristote l'acheva.</p>
+      <p>Cela dura six secondes. Le sanglier n'avait même pas eu le temps de pousser un cri.</p>
+      <p>Personne, dans le camp, ne fut alerté.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 19</div>
+    <div class="scene-title">Les caisses rouges</div>
+    <div class="lore-block">
+      <p>La tente du trésor était vide de gardes. Pleine de caisses. Un coffre fermé par un cadenas. Et, parmi les ballots, les deux caisses rouges marquées au nom de la maison Orien.</p>
+      <p>Zarn lança un disque flottant, qui porterait tout, pendant une heure, sans effort. Les compagnons chargèrent les caisses sur le disque. Marteau se chargea de la prisonnière.</p>
+      <p>Ils partirent sans réveiller personne.</p>
+      <p>Une heure plus tard, ils s'abritèrent sous des arbres pour regarder leur butin. Brix crocheta le cadenas du coffre, puis celui des chaînes de la prisonnière. Dans le coffre, ils trouvèrent une lampe qui brûle sans jamais s'éteindre. Environ trois cents pièces d'or. Une lettre cachetée au sceau de la maison Orien. Et une arme étrange, un fusil de foudre, forgé autour d'un éclat de Cybéris.</p>
+      <p>Les caisses rouges, elles, portaient un piège magique. Zarn l'avait vu grâce à son monocle. Personne ne les ouvrit.</p>
+      <p>On débattit. Fallait-il rendre le tout au marchand ? Da Mao se méfiait de lui. S'il avait vraiment perdu sa cargaison, pourquoi n'avait-il pas prévenu le relais, juste à côté ? On décida de remettre les caisses et la lettre à la responsable du relais Orien. Sans toucher à la lettre.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 20</div>
+    <div class="scene-title">Le marchand démasqué</div>
+    <div class="lore-block">
+      <p>La nuit s'acheva dans les écuries de l'auberge, sur la paille. Le matin, au relais, la responsable les reçut. Elle examina les caisses, la lettre, le scellé. Puis elle sortit son grand livre, compta, écrivit. Elle leur remit des pièces de platine : vingt-cinq. Bien plus que ce qu'ils attendaient.</p>
+      <p>Da Mao ensuite alla chercher le marchand lui promettant de lui remettre les caisses. Au passage, à quinze mètres du comptoir, il déclencha son pas brumeu pour amener le marchand devant la responsable. L'homme resta figé, comme paralysé. Les gardes du relais l'emmenèrent, dans l'arrière-salle.</p>
+      <p>Ensuite, on loua de vraies chambres. La prisonnière dormait toujours. On lui ôta ses chaînes, on la coucha.</p>
+      <p>Dans leur sommeil, l'ombre revint. Aristote enflamma sa hache. Mais il ne sortit pas de sa rage. Il se retrouva seul dans le monde blanc, longtemps, sans personne à frapper, jusqu'à ce que la fureur retombe. L'un d'eux utilisa le fusil de foudre et toucha trois fois. Frack perdit son combat, et sa marque gagna un centimètre. Les autres se contentèrent de quelques millimètres.</p>
+      <p>On se demanda si l'ombre ne suivait pas les lunes. Il y en a douze qui tournent dans le ciel d'Eberron. Une treizième, autrefois, a été détruite. Chacune est liée à un plan d'existence. La marque était-elle sous l'influence de la lune brisée ? Personne n'en savait rien.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 21</div>
+    <div class="scene-title">La dame aux chaînes</div>
+    <div class="lore-block">
+      <p>Quand elle ouvrit les yeux, la prisonnière était furieuse. Ces vêtements n'étaient pas les siens, disait-elle. Les brigands avaient pris ses robes, trop précieuses pour être gardées. Elle avait trente-cinq ans. Elle appartenait à une famille cousine de la maison Cannith.</p>
+      <p>Les brigands avaient demandé mille cinq cents pièces d'or pour sa libération. <span class="q">« C'est idiot »</span>, dit-elle. Elle valait bien plus. Trente-cinq mille, selon elle. Et ses proches avaient eu quatre jours pour envoyer la rançon.</p>
+      <p>À cet instant, une diligence s'arrêta devant l'auberge. Un majordome en livrée en descendit, portant une petite caisse. Il reconnut la dame.</p>
+      <p>Les compagnons lui rendirent la prisonnière. En échange, le majordome leur remit la caisse destinée aux brigands. Elle était piégée par un sortilège d'explosion. On sortit du village, pour l'ouvrir près de la rivière. Marteau se proposa. Il tira sur le couvercle. La caisse explosa. Marteau sourit. Il avait tout absorbé. Il était rechargé à bloc.</p>
+      <p>Dedans, mille cinq cents pièces d'or.</p>
+      <p><span class="q">« Ce soir, on mange comme des princes »</span>, dit Aristote.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 22</div>
+    <div class="scene-title">La chambre gardée</div>
+    <div class="lore-block">
+      <p>Restait la chambre du marchand arrêté. Les compagnons y montèrent, par curiosité et par prudence. Sur le seuil, un automate de métal sans tête, un cercle sur le torse. Il montait la garde. Personne n'avait le mot qui l'arrêtait. Un coffre fut déplacé à distance pour le récupérer. On referma la porte.</p>
+      <p>Dans le coffre ouvert avec précaution, on trouva des vêtements de rechange, un nécessaire à écrire, deux cent vingt-cinq pièces d'or, et deux boules de terre cuite : des grenades d'artificier, pleines de philtre d'amour très puissant.</p>
+      <p>On ne toucha pas à l'automate. Quelqu'un fit remarquer qu'à l'auberge, la femme de ménage risquait d'avoir une surprise. Il y eut un débat. Il fut décidé de ne rien faire de plus. Le soir tombait, la tempête reprenait. Demain, il y aurait le phare.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 23</div>
+    <div class="scene-title">Le phare éteint</div>
+    <div class="lore-block">
+      <p>Le lendemain, avant de partir, un des compagnons alla trouver les soldats de la garnison. Il leur décrivit l'endroit où campaient les brigands. Frack, lui, passa voir les marins rescapés. Leurs blessures ne s'aggravaient plus.</p>
+      <p>La responsable du relais les rattrapa. Un faucon messager venait d'arriver. Le groupe qu'ils poursuivaient avait été aperçu quatre jours plus tôt, au village de Refuge, sur la grande route de la capitale, entre Première-Tour et un village plus au nord. Ils avaient donc gagné du temps. La pluie avait retardé leurs ennemis.</p>
+      <p>Ils prirent la route de la côte. Le phare de Cornebrune dressait ses dix-huit mètres de pierre sur les rochers, éteint. Deux navires échoués gisaient à son pied. L'un était éventré. L'autre, plus récent, venait d'être jeté contre la base. Une seule étroite passe permettait d'approcher. Idéale pour un piège.</p>
+      <p>Les vagues déferlaient par-dessus la digue. Une lame emporta l'un des gnomes. Aristote l'attrapa par les cheveux, au dernier moment. Et il le garda. Ils parvinrent à la porte du phare, entrouverte.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 24</div>
+    <div class="scene-title">L'escalier bloqué</div>
+    <div class="lore-block">
+      <p>Au pied du phare, une pièce ronde. Une table, un tabouret, des caisses de vivres, un mur d'engrenages. On entendait quelqu'un appeler au secours.</p>
+      <p>Zarn étudia le mécanisme. Il y avait là un escalier mécanique, qui se dépliait vers les étages. Il se bloquait au bout d'un mètre. Entre deux engrenages, on avait glissé un morceau de métal. À travers son monocle, Zarn vit un halo bleu autour de lui. C'était de l'iridium.</p>
+      <p>Un compagnon tira sur le morceau. Le mécanisme se débloqua d'un coup. L'escalier se déroula, en spirale, jusqu'en haut. Cinq étages.</p>
+      <p>Quelqu'un tendit l'oreille. Des ronflements montaient du sous-sol. Les compagnons descendirent. Dans la cave, un demi-elfe blessé à la jambe, la main droite remplacée par un crochet. Il s'était protégé derrière un rempart de sacs et de caisses. C'était le gardien du phare.</p>
+      <p>Il parla d'une noyée. Une noyée qui rôdait. Quelqu'un avait bloqué la lentille et l'escalier. Et dès que l'escalier s'était déplié, l'eau avait commencé à ruisseler.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 25</div>
+    <div class="scene-title">La main d'eau</div>
+    <div class="lore-block">
+      <p>Quand les marins se noient, on les lie à une grosse pierre. Il arrive alors que la mort ne les laisse pas en paix. Ils reviennent, sans maîtrise d'eux-mêmes.</p>
+      <p>La noyée se tenait debout dans la réserve. Corps gonflé, visage cadavérique, yeux entièrement blancs. Elle ne disait rien. Elle ne bougeait presque pas. Mais autour d'elle, l'eau de mer prit vie. Un serpent d'eau d'abord, puis de grandes masses, qui s'agglutinaient aux murs.</p>
+      <p>Les armes ordinaires traversaient l'eau sans effet. La hache d'Aristote, enchantée, tranchait des doigts, qui redevenaient flaques puis repoussaient. Marteau, lui, chauffait. Autour de lui, l'eau s'écartait en vapeur. Les masses avaient peur de sa chaleur.</p>
+      <p>Une main d'eau géante surgit du mur et plaqua Frack contre la pierre. L'eau cherchait à entrer par sa bouche, par ses narines. Il se débattit. Il se dégagea, les côtes fêlées. Aristote, lui, frigorifié par les vagues, n'avait presque plus de force. <span class="q">« Va falloir que je me mette en rage »</span>, lança-t-il. <span class="q">« Bonne chance, tout le monde. »</span></p>
+      <p>Dans la cave, l'eau montait. Quarante-cinq centimètres déjà. Le gardien du phare s'était construit un monticule avec ses caisses. Il fallait agir vite.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 26</div>
+    <div class="scene-title">La lumière revient</div>
+    <div class="lore-block">
+      <p>Zarn lança une charge de foudre dans l'eau. L'électricité se répandit partout. Elle toucha la noyée, qui se retourna vers lui. Un rayon de chaleur trancha un bras de la noyée, qui repoussa aussitôt. Il fallait trouver autre chose.</p>
+      <p>Pendant ce temps, Da Mao avait grimpé jusqu'à la salle de la lentille. Elle était fendue. Un fragment de métal y était incrusté. Il l'arracha. Il était glacial, couvert de traces de sel. C'était de l'iridium, marqué d'une corruption. Da Mao aligna la lentille. Il trouva la vanne du gaz. Il la tourna, en cherchant le bon réglage. Il approcha une flamme.</p>
+      <p>Un éclair de lumière jaillit.</p>
+      <p>Dans l'escalier, la noyée leva la tête. Le trait de lumière lui traversa le visage. Elle perdit sa tête, et disparut. Les murs d'eau retombèrent. Un grand silence s'installa dans la tour.</p>
+      <p>Le phare était rallumé.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 27</div>
+    <div class="scene-title">Le gardien et la perle</div>
+    <div class="lore-block">
+      <p>Les compagnons repêchèrent le gardien du phare. Il crachait de l'eau salée, par litres, pendant une bonne minute. Frack soigna sa jambe, et la banda avec un morceau de tissu jaune.</p>
+      <p>Le gardien n'avait pas grand-chose à offrir. Un petit pécule. Et une perle magique, qui aide à nager. Il la donna de bon cœur.</p>
+      <p>Il fallut quatre heures pour réparer l'escalier, que la bataille avait tordu. Dehors, la tempête s'apaisait, sans disparaître.</p>
+      <p>Des compagnons descendirent ensuite explorer l'épave du second navire, à la base des rochers. Dans la cale, des noyés. Des caisses de transport. Dans l'une, un vase intact, protégé par de la paille. Dans une autre, le journal de bord du navire, avec le nom du capitaine. Un document que certaines compagnies d'assurance préféreraient peut-être voir disparaître.</p>
+      <p>Le morceau d'iridium arraché à la lentille portait lui aussi une petite empreinte gravée : le signe de la maison Cannith. Encore une trace de leur passage.</p>
+      <p>Ils quittèrent le phare en début d'après-midi, direction le nord.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 28</div>
+    <div class="scene-title">Le moulin de Mireille</div>
+    <div class="lore-block">
+      <p>Au milieu de la plaine, un moulin. Un enclos de moutons. Une cabane. La roue grinçait doucement. Sur la route, une vieille femme, les mains calleuses, de la farine plein les vêtements.</p>
+      <p><span class="q">« Hé, aventuriers ! Les meules, elles tournent la nuit. Et il y a des voix qui murmurent sur la pierre. Et puis j'ai vu des silhouettes près de l'eau. »</span></p>
+      <p>Elle s'appelait Mireille. Elle offrait le gîte et le couvert. Elle promettait aussi un médaillon brisé, avec un éclat lumineux, à qui sauverait son moulin. Refuge était à une journée de marche. Ils acceptèrent.</p>
+      <p>La vieille leur versa un alcool de pêche, avec un goût de noyau très prononcé. Aristote en avala sans broncher. Elle sortit ensuite un couteau énorme, rouillé, et décapita un mouton d'un seul geste. Elle le dépeça devant eux. Aristote en resta bouche bée. <span class="q">« Elle me rappelle ma mamie »</span>, murmura-t-il. <span class="q">« Un barbare qui vit vieux, c'est quelqu'un dont il faut se méfier. »</span></p>
+      <p>Son mari, disait-elle, était mort il y a cinq lunes. Il avait été un Manteau rouge. Elle continuait de moudre le grain des fermiers des environs.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 29</div>
+    <div class="scene-title">Le mur qui pivote</div>
+    <div class="lore-block">
+      <p>Les compagnons firent le tour du moulin. La roue tournait, mais l'eau semblait immobile. Dans l'herbe de l'enclos, un fil rouge, de douze centimètres. Des empreintes de bottes, d'autres de pas, qui menaient au canal. Et quelqu'un avait balayé le sol, comme pour effacer des traces.</p>
+      <p>Brix suivit les marques de balai. Il appuya sur plusieurs pierres du mur, l'une après l'autre. La bonne céda. Un pan de mur pivota, découvrant un escalier. Des traces de farine et de pas descendaient dans l'obscurité.</p>
+      <p>Une cache de contrebandiers, pensèrent-ils. Ou autre chose.</p>
+      <p>Ils refermèrent. Frack avait encore les côtes fêlées, depuis la main d'eau du phare. Mireille lui offrit une pâte qui anesthésiait la douleur. Le mouton cuirait pour la soirée. Il restait du temps avant la nuit. Les compagnons décidèrent de descendre voir.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 30</div>
+    <div class="scene-title">La galerie inondée</div>
+    <div class="lore-block">
+      <p>L'escalier menait sous le moulin. Sous leurs pieds, des meules tournaient toutes seules. Plus loin, une galerie inondée coupait le chemin. Au bout, tout au bout, une lumière de bougie.</p>
+      <p>L'un des compagnons franchit la galerie d'un bond et fixa une corde de l'autre côté. Les autres traversèrent par la corde, ou dans l'eau, en marchant au fond. Zarn flottait au-dessus de la surface.</p>
+      <p>L'air devint froid. Le plafond gouttait. Les sons étaient étrangement déformés. On percevait des mots épars, un murmure : <span class="q">« Bientôt la rivière nous parlera et nous guidera vers la vérité. »</span></p>
+      <p>Brix glissa en avant, invisible. Il vit sept silhouettes en cercle, autour de grandes pierres. Au milieu, une coupe pleine d'eau noire, qui tourbillonnait. Autour, au sol, des cadavres flétris.</p>
+      <p>Dans l'ombre, trois formes d'eau à peine visibles. Des esprits.</p>
+      <p>Marteau cria de foncer. Mais le son se perdit dans le brouillard sonore, et seul Da Mao l'entendit. Alors Da Mao fonça, lui aussi.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 31</div>
+    <div class="scene-title">Le cercle de l'eau noire</div>
+    <div class="lore-block">
+      <p>Les compagnons attaquèrent avant de savoir. C'était un réflexe. Une fiole d'acide vola au milieu du cercle. Aristote lança sa hache. Da Mao tira.</p>
+      <p>Le chant des fanatiques se brisa. Les sept hommes paniquèrent. On devina alors ce qu'ils faisaient. Ils n'invoquaient pas : ils tentaient de chasser une corruption. Ils étaient en plein rituel, pour purifier le moulin.</p>
+      <p>Trop tard. L'eau noire prit forme. Un esprit majeur de l'eau corrompue se dressa au-dessus de la coupe. D'un coup, il frappa le chef des incantateurs, un prêtre. Puis il se mit à rouler, à gonfler, et à se jeter en vague noire, corrosive, sur les cultistes. Des corps vieillirent en un instant. D'autres s'effondrèrent.</p>
+      <p>Le prêtre, renversé, se releva. Il invoquait l'Ost des Souverains pour purifier le lieu. Mais le monstre était plus puissant que lui.</p>
+      <p>Certains comprirent, trop tard, qu'ils avaient peut-être frappé ceux qui tentaient de contenir le mal. Il n'y avait pas de temps pour les regrets.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 32</div>
+    <div class="scene-title">Les contrebandiers</div>
+    <div class="lore-block">
+      <p>Au loin, sur l'eau, des lueurs. Une chaloupe approchait, avec des lanternes. Des brigands. Des contrebandiers, sans doute, qui utilisaient cette caverne comme entrepôt depuis longtemps. Peut-être avaient-ils eux-mêmes engagé le prêtre, pour nettoyer une corruption qui gênait leurs affaires.</p>
+      <p>On entendit les arbalètes qu'on armait. Un carreau frappa Da Mao à la cuisse.</p>
+      <p>Marteau s'élança dans l'eau. Il courut, en battant des bras, et grimpa sur la chaloupe. Il frappa le chef des éclaireurs d'un seul coup. Frack s'approcha de Da Mao, lui retira le carreau, et lui fit boire une potion trouvée plus tôt. Le rôdeur reprit quelques forces, incrédule.</p>
+      <p>Les derniers contrebandiers plongèrent dans l'eau noire. L'un tira sur la coque et la troua. La chaloupe sombra lentement.</p>
+      <p>À quelques mètres de là, l'esprit majeur de l'eau poursuivait le prêtre. Les compagnons reculaient.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 33</div>
+    <div class="scene-title">Ce n'était pas leur bataille</div>
+    <div class="lore-block">
+      <p><span class="q">« Ce n'est pas notre bataille »</span>, dit quelqu'un. Les autres hochèrent la tête. L'esprit était trop puissant pour eux. On reviendrait plus tard. Plus fort.</p>
+      <p>Ils emportèrent ce qu'ils purent. Chacun prit une caisse ou deux. Les marchandises étaient là, entassées par les contrebandiers. Zarn prit des tubes de quartz, rares et précieux. Quartz qu'on ne fond qu'à douze cents degrés. Il y avait des engrenages, seize pistons, et vingt-quatre pièces qui ressemblaient à des seringues, avec une aiguille au bout. Peut-être pour simuler la contraction d'un muscle. Des ressorts, des roulements à billes.</p>
+      <p>Les caisses portaient le symbole de la maison Cannith. Elles venaient d'un entrepôt. Volées ? Ou envoyées par la maison elle-même pour échapper aux taxes ? Personne ne savait.</p>
+      <p>Il y avait aussi deux ceintures de fioles, munies de bouchons, qui avaient contenu du philtre d'amour.</p>
+      <p>Ils remontèrent à la surface en fermant soigneusement le mur pivotant derrière eux. Devant le moulin, ils ouvrirent les caisses les unes après les autres.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 34</div>
+    <div class="scene-title">Le repas de la vieille</div>
+    <div class="lore-block">
+      <p>Mireille cuisinait. Elle avait mis sur le feu un mouton entier. Il faudrait cinq heures de cuisson. Elle coupait les oignons, les navets, les carottes. Parfois elle ratait un morceau.</p>
+      <p>Elle parla d'un certain frère Rancel. Un prêtre itinérant, aux yeux doux, avec un chapelet usé aux cordelettes rouges. Il passait de temps en temps, venu d'un monastère à l'est. Les compagnons le notèrent.</p>
+      <p>Zarn répara ce qu'il put. On s'installa pour la nuit dans la grande salle de la ferme. Marteau et Frack, qui n'avaient pas besoin de longues heures de repos, montèrent la garde dehors.</p>
+      <p>Les moutons, disait-on, avaient un air étrangement humain. La vieille aussi, d'ailleurs. Elle avait une force qui ne se voyait pas à son âge. Un mari qui avait été un Manteau rouge. Un couteau si lourd qu'on ne l'aurait pas cru manié par une vieille.</p>
+      <p><span class="q">« Elle me rappelle ma mamie »</span>, répéta Aristote.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 35</div>
+    <div class="scene-title">La flaque</div>
+    <div class="lore-block">
+      <p>Au milieu de la nuit, un cri.</p>
+      <p>Marteau et Frack avaient aperçu une flaque fumante. Une masse noirâtre, visqueuse, qui avançait lentement vers la ferme. C'était ce qui restait de l'esprit majeur de l'eau. Elle avait suivi leur piste.</p>
+      <p>Elle toucha d'abord leurs jambes. Ils hurlèrent. Le métal fuma, rongé.</p>
+      <p>À l'intérieur, les dormeurs se réveillèrent. Quelqu'un jeta de l'huile sur la masse. Un autre songea à la foudre. Mais la flaque continuait d'avancer. Elle entra dans la ferme.</p>
+      <p>Aristote frappa à la porte de Mireille. Il la secoua. <span class="q">« Réveillez-vous, madame ! »</span> Elle dormait en bonnet de nuit. Dehors, la clarté était vive. La masse noire léchait le bas de la porte.</p>
+      <p><span class="q">« C'est quoi, ce truc qui brûle ? »</span> cria la vieille. <span class="q">« Il y a quelqu'un qui a incendié ma maison ! »</span></p>
+      <p>Quelqu'un jeta un seau d'eau, croyant éteindre un feu. Mais ce n'était pas un feu. C'était une eau maléfique. Aristote le comprit.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 36</div>
+    <div class="scene-title">Le couteau rouillé</div>
+    <div class="lore-block">
+      <p>Mireille passa dans la cuisine. Elle en revint avec son grand couteau, rouillé, long comme un bras. Un couteau sans la moindre trace de magie, avaient dit les compagnons. Ils avaient bien regardé.</p>
+      <p>Elle fit un pas. Elle enfonça la lame, d'un coup sec, dans la masse noire.</p>
+      <p>L'esprit n'eut même pas le temps de réagir. Il se défit, comme une bulle qui éclate. Plus de flaque. Plus de corruption.</p>
+      <p>Un silence s'installa. Les compagnons se regardèrent.</p>
+      <p><span class="q">« Je faisais un super rêve, dit la vieille. J'ai vu des moutons. »</span></p>
+      <p>Et elle retourna se coucher.</p>
+    </div>
+  </article>
+
+  <article class="scene">
+    <div class="scene-eyebrow">Scène 37</div>
+    <div class="scene-title">Les réparations</div>
+    <div class="lore-block">
+      <p>Au matin, les jambes de Marteau et de Frack étaient rongées. Zarn avait de quoi les réparer : des tubes de quartz, des pistons, des barres de fer, de l'aluminium qui traînait. Il y en avait pour une journée de travail. Les forgeliers pourraient marcher de nouveau.</p>
+      <p>C'était du retard pour la poursuite. Pendant que Zarn travaillait, certains s'exercèrent à supporter la douleur.</p>
+      <p>D'autres redescendirent sous le moulin, pour vérifier. Le prêtre et ses acolytes étaient morts. Leurs corps, décomposés, jonchaient le sol. Sur eux, on trouva trois colliers, deux bracelets, une boucle d'oreille. De métal précieux, d'une qualité rare.</p>
+      <p>Mireille promit de tenir parole si les bruits de la nuit ne revenaient pas. Pendant le jour, on n'entendit que la roue qui grinçait.</p>
+      <p>La piste du nord restait là, au bout de la route. Quelque part devant eux, un homme au gantelet violet, un prêtre qui repérait les marques, un assassin aux dagues empoisonnées. Et au fond de chaque compagnon, une marque noire, qui grandissait chaque nuit.</p>
+    </div>
+  </article>
+
+  <div class="ornament">— ⬥ —</div>
+</div>
+<script src="nav.js"></script>
+<script type="module">
+  import { requireAuth, logout } from './auth.js';
+
+  const user = await requireAuth('login.html');
+  if (!user) throw new Error();
+
+  const bar = document.getElementById('auth-bar');
+  bar.innerHTML = `
+    <span style="font-family:var(--font-heading);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;">${user.email}</span>
+    <button onclick="" style="background:transparent;border:1px solid var(--border);border-radius:2px;color:var(--text-muted);cursor:pointer;font-family:var(--font-heading);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.7rem;" id="btn-logout">Déconnexion</button>
+  `;
+  document.getElementById('btn-logout').addEventListener('click', logout);
+</script>
+</body>
+</html>
