@@ -283,6 +283,16 @@ h1 {
   margin-top: 1px;
   opacity: 0.55;
 }
+/* Icônes-symboles (texte, pas emoji) de l'accueil : couleur du titre, bien visibles */
+.trait-list.chroniques .trait-icon {
+  font-size: 30px;
+  line-height: 1;
+  width: 32px;
+  text-align: center;
+  margin-top: 0;
+  opacity: 1;
+  color: var(--gold-light);
+}
 .trait-name {
   font-family: var(--font-heading);
   font-size: 13px;
