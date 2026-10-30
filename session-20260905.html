@@ -38,6 +38,25 @@
       margin-top: -0.75rem;
     }
 
+    .podcast-block {
+      margin: 1.5rem 0 0;
+      padding: 1rem 1.25rem 1.25rem;
+      background: var(--stone-mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      scroll-margin-top: 1rem;
+    }
+    .podcast-block .section-label { margin: 0 0 0.9rem; }
+    .podcast-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 0.8rem;
+    }
+    .podcast-block audio { width: 100%; display: block; }
+    .podcast-block a { color: var(--gold-light); }
+
     .act {
       margin: 3rem 0 1.5rem;
     }
@@ -106,6 +125,15 @@
     <p class="subtitle">Six compagnons, une pluie sans fin, et une malédiction qui grandit chaque nuit</p>
   </header>
   <p class="session-meta">Session du 5 septembre</p>
+
+  <section class="podcast-block" id="podcast">
+    <div class="section-label">Version podcast</div>
+    <div class="podcast-title">L'apocalypse silencieuse de la Marque Noire</div>
+    <audio controls preload="none" src="podcast/L_apocalypse_silencieuse_de_la_Marque_Noire.m4a">
+      Votre navigateur ne sait pas lire ce fichier audio.
+      <a href="podcast/L_apocalypse_silencieuse_de_la_Marque_Noire.m4a">Télécharger le podcast</a>.
+    </audio>
+  </section>
 
   <div class="section-label">Compagnons</div>
   <div class="name-tags" style="margin-bottom:2rem;">
