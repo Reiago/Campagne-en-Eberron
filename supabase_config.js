@@ -1,15 +1,16 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 // En local (Wampserver, y compris via un vhost custom type "eberron"),
-// on pointe vers le stack Supabase local (Docker, `npx supabase start`)
-// pour ne jamais toucher la base de production. Les vhosts locaux n'ont
-// pas de point dans leur nom d'hôte (contrairement à un vrai domaine),
-// d'où le test ci-dessous. Sur le domaine réel, on garde la config prod.
+// on pointe vers le stack Supabase de dev, hébergé sur le serveur Ubuntu
+// du réseau local (toujours allumé) pour ne jamais toucher la base de
+// production. Les vhosts locaux n'ont pas de point dans leur nom d'hôte
+// (contrairement à un vrai domaine), d'où le test ci-dessous. Sur le
+// domaine réel, on garde la config prod.
 const hostname = window.location.hostname;
 const isLocal = hostname === 'localhost' || hostname === '127.0.0.1' || !hostname.includes('.');
 
 const SUPABASE_URL      = isLocal
-  ? 'http://127.0.0.1:54321'
+  ? 'http://192.168.0.25:54321'
   : 'https://prbpszazjxomjgrjheuz.supabase.co';
 
 const SUPABASE_ANON_KEY = isLocal

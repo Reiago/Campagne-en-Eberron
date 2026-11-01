@@ -1,6 +1,6 @@
 -- ============================================================
 -- Migration incrémentale — Issue #30 (races/classes en catalogue)
--- À exécuter dans l'éditeur SQL Supabase (local : 127.0.0.1:54323)
+-- À exécuter dans l'éditeur SQL Supabase (local : 192.168.0.25:54323)
 -- Ne PAS ré-exécuter supabase_schema.sql en entier : ce script
 -- applique uniquement les changements nécessaires sur la base
 -- existante, sans perte de données.
