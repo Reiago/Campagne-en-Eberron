@@ -7,6 +7,7 @@
 import { requireAuth, logout } from './auth.js';
 import * as db from './db.js';
 import { SEED_NODES, SEED_LINKS, SEED_LABEL } from './relations-seed.js';
+import { SESSION2_LABEL, SESSION2_MARKER, SESSION2_NOTE, SESSION2_NODES, SESSION2_LINKS, SESSION2_UPDATES } from './relations-session2.js';
 
 // ── Constantes ────────────────────────────────────────────────────────────────
 
@@ -22,6 +23,7 @@ const STATUTS = { vivant: 'Vivant', mort: 'Mort', inconnu: 'Inconnu' };
 const NODE_RADIUS = { pj: 30, pnj: 26, organisation: 32 };
 const IMAGE_SIZE = 160;
 const LOCAL_KEY = 'eberron-relations-graph';
+const LOCAL_SNAP_KEY = 'eberron-relations-snapshots';
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 // ── Authentification ──────────────────────────────────────────────────────────
@@ -83,7 +85,7 @@ function radiusOf(node) { return NODE_RADIUS[node.type] || NODE_RADIUS.pnj; }
 
 function isTableMissing(err) {
   const msg = String(err?.message || '');
-  return err?.code === 'PGRST205' || err?.code === '42P01' || /graphe_(personnages|liens)/.test(msg) && /not find|does not exist|schema cache/i.test(msg);
+  return err?.code === 'PGRST205' || err?.code === '42P01' || /graphe_(personnages|liens|instantanes)/.test(msg) && /not find|does not exist|schema cache/i.test(msg);
 }
 
 // ── Modales génériques ────────────────────────────────────────────────────────
@@ -120,6 +122,11 @@ function makeLocalStore() {
     catch { return { nodes: [], links: [] }; }
   };
   const write = (d) => localStorage.setItem(LOCAL_KEY, JSON.stringify(d));
+  const readSnaps = () => {
+    try { return JSON.parse(localStorage.getItem(LOCAL_SNAP_KEY)) || []; }
+    catch { return []; }
+  };
+  const writeSnaps = (s) => localStorage.setItem(LOCAL_SNAP_KEY, JSON.stringify(s));
   return {
     mode: 'local',
     async load() { return read(); },
@@ -130,6 +137,19 @@ function makeLocalStore() {
     async updateLink(id, patch) { const d = read(); const i = d.links.findIndex((x) => x.id === id); if (i >= 0) d.links[i] = { ...d.links[i], ...patch }; write(d); },
     async deleteLink(id) { const d = read(); d.links = d.links.filter((x) => x.id !== id); write(d); },
     async bulkInsert(nodes, links) { const d = read(); d.nodes.push(...nodes); d.links.push(...links); write(d); },
+    // Instantanés (copie figée de la toile), dans une clé distincte
+    async listSnapshots() { return readSnaps().map(({ id, libelle, created_at }) => ({ id, libelle, created_at })); },
+    async getSnapshot(id) {
+      const s = readSnaps().find((x) => x.id === id);
+      if (!s) throw new Error('Instantané introuvable.');
+      return s;
+    },
+    async addSnapshot(s) {
+      const row = { id: uuid(), created_at: new Date().toISOString(), ...s };
+      writeSnaps([...readSnaps(), row]);
+      return { id: row.id, libelle: row.libelle, created_at: row.created_at };
+    },
+    async deleteSnapshot(id) { writeSnaps(readSnaps().filter((x) => x.id !== id)); },
   };
 }
 
@@ -146,6 +166,10 @@ const supabaseStore = {
   updateLink: (id, patch) => db.updateGrapheLien(id, patch),
   deleteLink: (id) => db.deleteGrapheLien(id),
   bulkInsert: (nodes, links) => db.bulkInsertGraphe(nodes, links),
+  listSnapshots: () => db.getGrapheInstantanes(),
+  getSnapshot: (id) => db.getGrapheInstantane(id),
+  addSnapshot: (s) => db.addGrapheInstantane(s),
+  deleteSnapshot: (id) => db.deleteGrapheInstantane(id),
 };
 
 let store = supabaseStore;
@@ -166,6 +190,11 @@ let links = [];
 const nodeById = new Map();
 const nodeEls = new Map();
 const linkEls = new Map();
+
+let readOnly = false;         // true quand on consulte un instantané
+let currentVersion = 'live';  // 'live' ou l'id de l'instantané affiché
+let snapshots = [];           // { id, libelle, created_at }, du plus ancien au plus récent
+let snapshotsAvailable = true;
 
 let selected = null;          // { kind: 'node' | 'link', id }
 let linkMode = false;
@@ -381,6 +410,7 @@ function render() {
   $('empty-state').hidden = nodes.length > 0;
   renderPanel();
   updatePrintSheet();
+  updateVersionUi();
 }
 
 function updatePositions() {
@@ -518,7 +548,8 @@ function updatePrintSheet() {
   const visibleLinks = links.filter((l) => !hiddenLinkTypes.has(l.type)).length;
   const date = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
   const hidden = [...hiddenLinkTypes].map((t) => LINK_TYPES[t]).join(', ');
-  $('print-meta').innerHTML = `${esc(date)}<br>${nodes.length} personnages · ${visibleLinks} liens`
+  const snapLine = readOnly ? `Instantané : ${esc(snapshots.find((s) => s.id === currentVersion)?.libelle || '')}<br>` : '';
+  $('print-meta').innerHTML = `${snapLine}${esc(date)}<br>${nodes.length} personnages · ${visibleLinks} liens`
     + (hidden ? `<br>Liens masqués : ${esc(hidden)}` : '');
 
   // Légende : natures de lien affichées, puis formes des personnages
@@ -564,8 +595,10 @@ function renderPanel() {
   panel.innerHTML = `
     <div class="panel-title">La toile</div>
     <div class="panel-help">
-      <p>Cliquez un personnage ou un lien pour le consulter. Glissez un personnage pour le déplacer, la molette pour zoomer, le fond pour vous déplacer.</p>
-      <p><kbd>+ Personnage</kbd> ajoute une fiche. <kbd>⟷ Créer un lien</kbd> puis deux clics sur deux personnages tracent une relation.</p>
+      ${readOnly
+        ? `<p>Cliquez un personnage ou un lien pour le consulter. Cet instantané est en lecture seule : la molette zoome, le fond permet de se déplacer.</p>`
+        : `<p>Cliquez un personnage ou un lien pour le consulter. Glissez un personnage pour le déplacer, la molette pour zoomer, le fond pour vous déplacer.</p>
+      <p><kbd>+ Personnage</kbd> ajoute une fiche. <kbd>⟷ Créer un lien</kbd> puis deux clics sur deux personnages tracent une relation.</p>`}
       <p>Les pastilles en bas du canevas masquent ou affichent chaque nature de lien.</p>
     </div>
     <div class="panel-stats">
@@ -591,11 +624,11 @@ function renderNodePanel(n) {
       ${n.statut !== 'vivant' ? badge(STATUTS[n.statut] || n.statut, n.statut) : ''}
     </div>
     <div class="panel-desc"></div>
-    <div class="panel-actions">
+    ${readOnly ? '' : `<div class="panel-actions">
       <button class="btn" id="p-edit">Modifier</button>
       <button class="btn" id="p-link">Lier à…</button>
       <button class="btn danger" id="p-delete">Supprimer</button>
-    </div>
+    </div>`}
     <div class="panel-section">Relations (${rels.length})</div>
     <ul class="panel-links" id="p-links"></ul>
   `;
@@ -614,6 +647,7 @@ function renderNodePanel(n) {
     li.addEventListener('click', () => select('link', l.id));
     ul.appendChild(li);
   }
+  if (readOnly) return;
   $('p-edit').addEventListener('click', () => openNodeModal(n));
   $('p-link').addEventListener('click', () => { setLinkMode(true); linkSource = n.id; updateLinkHint(); updateClasses(); });
   $('p-delete').addEventListener('click', () => deleteNode(n));
@@ -626,10 +660,10 @@ function renderLinkPanel(l) {
     <div class="link-pair"><span class="src"></span><span class="arrow">${l.oriente ? '→' : '⟷'}</span><span class="dst"></span></div>
     <div class="panel-badges"><span class="dot type-${esc(l.type)}" style="display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;"></span>${badge(LINK_TYPES[l.type] || l.type)}</div>
     <div class="panel-desc"></div>
-    <div class="panel-actions">
+    ${readOnly ? '' : `<div class="panel-actions">
       <button class="btn" id="p-edit">Modifier</button>
       <button class="btn danger" id="p-delete">Supprimer</button>
-    </div>
+    </div>`}
     <div class="panel-section">Personnages</div>
     <ul class="panel-links">
       <li id="p-src"><span class="dot type-${esc(l.type)}"></span><span class="who"></span></li>
@@ -644,6 +678,7 @@ function renderLinkPanel(l) {
   $('p-dst').querySelector('.who').textContent = t?.nom || '?';
   $('p-src').addEventListener('click', () => select('node', l.source_id));
   $('p-dst').addEventListener('click', () => select('node', l.cible_id));
+  if (readOnly) return;
   $('p-edit').addEventListener('click', () => openLinkModal(l));
   $('p-delete').addEventListener('click', () => deleteLink(l));
 }
@@ -673,6 +708,7 @@ svg.addEventListener('pointerdown', (e) => {
 
 svg.addEventListener('pointermove', (e) => {
   if (dragging) {
+    if (readOnly) return;   // un instantané ne se réorganise pas
     const p = toLocal(e.clientX, e.clientY);
     const dx = p.x - dragging.startX, dy = p.y - dragging.startY;
     if (!dragging.moved && Math.hypot(dx, dy) * view.k < 4) return;
@@ -732,6 +768,7 @@ function onNodeClick(n) {
 // ── Mode « créer un lien » ────────────────────────────────────────────────────
 
 function setLinkMode(on) {
+  if (on && readOnly) return;
   linkMode = on;
   if (!on) linkSource = null;
   $('btn-link-mode').classList.toggle('active', on);
@@ -755,6 +792,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape' && e.keyCode !== 27) return;
   if (!$('node-modal').hidden) { closeNodeModal(); return; }
   if (!$('link-modal').hidden) { closeLinkModal(); return; }
+  if (!$('snapshot-modal').hidden) { closeSnapshotModal(); return; }
   if (!confirmModalEl.hidden) { closeConfirm(false); return; }
   if (!alertModalEl.hidden) { alertModalEl.hidden = true; return; }
   if (linkMode) setLinkMode(false);
@@ -822,6 +860,7 @@ $('import-file').addEventListener('change', async (e) => {
 // Insère des nœuds/liens venant d'une source externe (données de session ou
 // fichier JSON) en régénérant tous les identifiants.
 async function importGraph(inNodes, inLinks) {
+  if (readOnly) return;
   const idMap = new Map();
   const newNodes = inNodes
     .filter((n) => n && n.nom)
@@ -877,6 +916,7 @@ function setImagePreview(src) {
 }
 
 function openNodeModal(n) {
+  if (readOnly) return;
   editingNode = n;
   $('node-modal-title').textContent = n ? 'Modifier le personnage' : 'Nouveau personnage';
   $('node-nom').value = n?.nom || '';
@@ -1001,6 +1041,7 @@ function fillNodeSelect(sel, value) {
 }
 
 function openLinkModal(l, preset = {}) {
+  if (readOnly) return;
   if (nodes.length < 2) { showAlert('Il faut au moins deux personnages pour tracer un lien.'); return; }
   editingLink = l;
   $('link-modal-title').textContent = l ? 'Modifier le lien' : 'Nouveau lien';
@@ -1070,6 +1111,217 @@ async function deleteLink(l) {
   }
 }
 
+// ── Versions : version actuelle / instantanés ────────────────────────────────
+// Un instantané est une copie figée de la toile (mêmes identifiants, positions
+// et portraits). On le consulte en lecture seule à la place de la version
+// actuelle, que l'on retrouve par « Revenir à la version actuelle ».
+
+const norm = (s) => String(s ?? '').trim().toLowerCase();
+const fmtDate = (iso) => new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+const sessionLoaded = () => nodes.some((n) => norm(n.nom) === norm(SESSION2_MARKER));
+const currentSnapshot = () => snapshots.find((s) => s.id === currentVersion) || null;
+
+function populateVersionSelect() {
+  const sel = $('version-select');
+  sel.replaceChildren(new Option('Version actuelle', 'live'));
+  for (const s of [...snapshots].reverse()) sel.add(new Option(`${s.libelle} — ${fmtDate(s.created_at)}`, s.id));
+  sel.value = currentVersion;
+}
+
+// Boutons, bandeaux et notes qui dépendent de la version affichée
+function updateVersionUi() {
+  for (const id of ['btn-add-node', 'btn-add-node-empty', 'btn-link-mode', 'btn-import', 'btn-seed']) $(id).disabled = readOnly;
+  $('btn-snapshot').disabled = readOnly || !snapshotsAvailable;
+  $('btn-snapshot-delete').hidden = !readOnly;
+  $('btn-session2').hidden = readOnly || !nodes.length || sessionLoaded();
+  const snap = currentSnapshot();
+  $('snapshot-banner').hidden = !readOnly;
+  if (readOnly && snap) {
+    $('snapshot-banner-text').innerHTML = `<strong>Instantané en lecture seule.</strong> « ${esc(snap.libelle)} », pris le ${esc(fmtDate(snap.created_at))}. Rien ne peut y être modifié.`;
+  }
+  const note = $('version-note');
+  note.hidden = snapshotsAvailable;
+  note.textContent = snapshotsAvailable ? '' : 'Instantanés indisponibles : exécutez supabase/migrations/20261101120000_graphe_instantanes.sql dans Supabase.';
+}
+
+async function refreshSnapshots() {
+  try {
+    snapshots = await store.listSnapshots();
+    snapshotsAvailable = true;
+  } catch {
+    snapshots = [];
+    snapshotsAvailable = false;
+  }
+  populateVersionSelect();
+  updateVersionUi();
+}
+
+async function showVersion(id) {
+  let data;
+  try {
+    if (id === 'live') {
+      data = await store.load();
+    } else {
+      const snap = await store.getSnapshot(id);
+      data = { nodes: snap.nodes || [], links: snap.links || [] };
+    }
+  } catch (err) {
+    showAlert('Version introuvable : ' + err.message);
+    $('version-select').value = currentVersion;
+    return;
+  }
+  // Sortie du mode lien avant de remplacer les données : updateClasses() s'appuie
+  // sur les éléments SVG du graphe encore affiché
+  setLinkMode(false);
+  currentVersion = id;
+  readOnly = id !== 'live';
+  nodes = (data.nodes || []).map((n) => ({ ...n }));
+  links = (data.links || []).map(({ _offset, ...l }) => l);
+  selected = null;
+  const url = new URL(location.href);
+  if (readOnly) url.searchParams.set('v', id); else url.searchParams.delete('v');
+  history.replaceState(null, '', url);
+  $('version-select').value = id;
+  render();
+  fitView();
+}
+
+$('version-select').addEventListener('change', (e) => showVersion(e.target.value));
+$('btn-back-live').addEventListener('click', () => showVersion('live'));
+
+// Enregistre une copie de la toile telle qu'elle est affichée (version actuelle)
+async function createSnapshot(libelle) {
+  await store.addSnapshot({
+    libelle,
+    nodes: nodes.map((n) => ({ ...n })),
+    links: links.map(({ _offset, ...l }) => l),
+  });
+  await refreshSnapshots();
+}
+
+function closeSnapshotModal() { $('snapshot-modal').hidden = true; }
+
+$('btn-snapshot').addEventListener('click', () => {
+  if (readOnly) return;
+  $('snapshot-libelle').value = '';
+  $('snapshot-error').textContent = '';
+  $('snapshot-modal').hidden = false;
+  $('snapshot-libelle').focus();
+});
+$('snapshot-cancel').addEventListener('click', closeSnapshotModal);
+$('snapshot-modal').addEventListener('click', (e) => { if (e.target === $('snapshot-modal')) closeSnapshotModal(); });
+$('snapshot-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const libelle = $('snapshot-libelle').value.trim();
+  if (!libelle) { $('snapshot-error').textContent = 'Le nom est obligatoire.'; return; }
+  $('snapshot-save').disabled = true;
+  try {
+    await createSnapshot(libelle);
+    closeSnapshotModal();
+    showAlert(`Instantané « ${libelle} » enregistré. Choisissez-le dans « Version » pour le consulter.`);
+  } catch (err) {
+    $('snapshot-error').textContent = 'Enregistrement impossible : ' + err.message;
+  } finally {
+    $('snapshot-save').disabled = false;
+  }
+});
+
+$('btn-snapshot-delete').addEventListener('click', async () => {
+  const snap = currentSnapshot();
+  if (!snap) return;
+  const ok = await confirmModal(`Supprimer l'instantané « ${snap.libelle} » ? Cette action est définitive.`);
+  if (!ok) return;
+  try {
+    await store.deleteSnapshot(snap.id);
+  } catch (err) {
+    showAlert('Suppression impossible : ' + err.message);
+    return;
+  }
+  await refreshSnapshots();
+  await showVersion('live');
+});
+
+// ── Chargement de la session du 24 octobre (fusion avec la toile existante) ──
+
+async function applySessionDelta() {
+  if (readOnly) return;
+  const needBackup = snapshotsAvailable && !snapshots.length;
+  const backup = needBackup
+    ? ' Un instantané « Avant la session du 24 octobre » sera d\'abord enregistré pour conserver l\'état actuel.'
+    : (snapshotsAvailable ? '' : ' Les instantanés sont indisponibles : l\'état actuel ne sera pas sauvegardé.');
+  const ok = await confirmModal(
+    `Ajouter ${SESSION2_NODES.length} personnages, ${SESSION2_LINKS.length} liens et ${SESSION2_UPDATES.length} précisions de « ${SESSION2_LABEL} » ?${backup}`,
+    'Charger',
+  );
+  if (!ok) return;
+
+  // Personnages déjà présents, retrouvés par leur nom exact
+  const byName = new Map(nodes.map((n) => [norm(n.nom), n]));
+  const missing = new Set();
+  const idMap = new Map();      // slug -> id (nouveau ou déjà présent)
+  const resolve = (key) => {
+    if (!key.startsWith('@')) return idMap.get(key);
+    const hit = byName.get(norm(key.slice(1)));
+    if (!hit) missing.add(key.slice(1));
+    return hit?.id;
+  };
+
+  const newNodes = [];
+  for (const n of SESSION2_NODES) {
+    const existing = byName.get(norm(n.nom));
+    if (existing) { idMap.set(n.id, existing.id); continue; }
+    const id = uuid();
+    idMap.set(n.id, id);
+    newNodes.push({
+      id, nom: n.nom, type: n.type, statut: n.statut,
+      description: n.description || null, image: null, pos_x: n.pos_x, pos_y: n.pos_y,
+    });
+  }
+
+  const sameLink = (a, b) => a.source_id === b.source_id && a.cible_id === b.cible_id && (a.libelle || '') === (b.libelle || '');
+  const newLinks = [];
+  for (const l of SESSION2_LINKS) {
+    const source_id = resolve(l.source_id), cible_id = resolve(l.cible_id);
+    if (!source_id || !cible_id) continue;
+    const row = {
+      id: uuid(), source_id, cible_id, type: l.type, libelle: l.libelle || null,
+      description: l.description || null, oriente: !!l.oriente,
+    };
+    if (![...links, ...newLinks].some((x) => sameLink(x, row))) newLinks.push(row);
+  }
+
+  const patches = [];
+  for (const u of SESSION2_UPDATES) {
+    const hit = byName.get(norm(u.nom));
+    if (!hit) { missing.add(u.nom); continue; }
+    if ((hit.description || '').includes(SESSION2_NOTE)) continue;
+    const description = `${hit.description ? hit.description + '\n\n' : ''}${SESSION2_NOTE} ${u.ajout}`.slice(0, 1200);
+    patches.push({ node: hit, description });
+  }
+
+  if (missing.size) {
+    showAlert('Chargement annulé, rien n\'a été modifié. Ces personnages sont introuvables dans la toile actuelle (renommés ou supprimés ?) : ' + [...missing].join(', ') + '.');
+    return;
+  }
+
+  try {
+    if (needBackup) await createSnapshot('Avant la session du 24 octobre');
+    await store.bulkInsert(newNodes, newLinks);
+    for (const p of patches) {
+      await store.updateNode(p.node.id, { description: p.description });
+      p.node.description = p.description;
+    }
+    nodes.push(...newNodes);
+    links.push(...newLinks);
+    render();
+    fitView();
+  } catch (err) {
+    showAlert('Chargement impossible : ' + err.message);
+  }
+}
+
+$('btn-session2').addEventListener('click', applySessionDelta);
+
 // ── Chargement initial ────────────────────────────────────────────────────────
 
 async function load() {
@@ -1085,6 +1337,10 @@ async function load() {
   links = data.links || [];
   render();
   fitView();
+  await refreshSnapshots();
+  // Lien direct vers un instantané (?v=<id>)
+  const wanted = new URLSearchParams(location.search).get('v');
+  if (wanted && snapshots.some((s) => s.id === wanted)) await showVersion(wanted);
 }
 
 await load();
