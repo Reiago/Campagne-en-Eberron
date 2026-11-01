@@ -10,6 +10,7 @@
 -- 0. NETTOYAGE (supprime l'ancien schéma de test)
 -- ══════════════════════════════════════════════════════════════
 
+DROP TABLE IF EXISTS graphe_instantanes  CASCADE;
 DROP TABLE IF EXISTS graphe_liens        CASCADE;
 DROP TABLE IF EXISTS graphe_personnages  CASCADE;
 DROP TABLE IF EXISTS equipement_tags     CASCADE;
@@ -428,6 +429,17 @@ CREATE TABLE graphe_liens (
   CONSTRAINT graphe_liens_pas_de_boucle CHECK (source_id <> cible_id)
 );
 
+-- Instantanés : copie figée de la toile (nodes / links = lignes des deux
+-- tables ci-dessus), consultable en lecture seule depuis relations.html.
+-- Migration correspondante : supabase/migrations/20261101120000_graphe_instantanes.sql
+CREATE TABLE graphe_instantanes (
+  id          uuid        DEFAULT gen_random_uuid() PRIMARY KEY,
+  libelle     text        NOT NULL,
+  nodes       jsonb       NOT NULL DEFAULT '[]'::jsonb,
+  links       jsonb       NOT NULL DEFAULT '[]'::jsonb,
+  created_at  timestamptz DEFAULT now()
+);
+
 
 -- ══════════════════════════════════════════════════════════════
 -- INDEX
@@ -580,6 +592,7 @@ ALTER TABLE classes_catalogue   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE capacites_catalogue ENABLE ROW LEVEL SECURITY;
 ALTER TABLE graphe_personnages  ENABLE ROW LEVEL SECURITY;
 ALTER TABLE graphe_liens        ENABLE ROW LEVEL SECURITY;
+ALTER TABLE graphe_instantanes  ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "dev_all" ON personnages        FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON profils            FOR ALL USING (true) WITH CHECK (true);
@@ -598,6 +611,7 @@ CREATE POLICY "dev_all" ON classes_catalogue   FOR ALL USING (true) WITH CHECK (
 CREATE POLICY "dev_all" ON capacites_catalogue FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON graphe_personnages  FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "dev_all" ON graphe_liens        FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "dev_all" ON graphe_instantanes  FOR ALL USING (true) WITH CHECK (true);
 
 
 -- ══════════════════════════════════════════════════════════════

@@ -103,6 +103,32 @@
     }
     .rel-search:focus { outline: none; border-color: var(--gold-dim); }
 
+    /* Versions : version actuelle / instantanés */
+    .rel-versions .ver-label {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .rel-select {
+      background: var(--stone-mid);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 0.42rem 0.6rem;
+      max-width: 100%;
+    }
+    .rel-select:focus { outline: none; border-color: var(--gold-dim); }
+    .rel-versions .ver-note { font-size: 13px; font-style: italic; color: var(--text-dim); }
+    .rel-versions .ver-note[hidden] { display: none; }
+    .snapshot-banner { justify-content: space-between; align-items: center; border-left-color: var(--rel-affaires); }
+    .snapshot-banner .btn { flex-shrink: 0; }
+    .modal-text { font-size: 14px; color: var(--text-muted); line-height: 1.55; margin-bottom: 1rem; }
+    .btn[hidden] { display: none; }
+
     /* Disposition canevas + panneau */
     .rel-layout {
       display: grid;
@@ -577,6 +603,18 @@
 
   <div class="storage-banner" id="storage-banner" hidden></div>
 
+  <div class="rel-toolbar rel-versions">
+    <label for="version-select" class="ver-label">Version</label>
+    <select id="version-select" class="rel-select" title="Basculer entre la version actuelle et un instantané"></select>
+    <button class="btn" id="btn-snapshot" title="Enregistrer une copie figée de la toile telle qu'elle est maintenant">Figer l'état actuel</button>
+    <button class="btn danger" id="btn-snapshot-delete" title="Supprimer cet instantané" hidden>Supprimer l'instantané</button>
+    <span class="ver-note" id="version-note" hidden></span>
+  </div>
+  <div class="storage-banner snapshot-banner" id="snapshot-banner" hidden>
+    <div id="snapshot-banner-text"></div>
+    <button class="btn" id="btn-back-live">Revenir à la version actuelle</button>
+  </div>
+
   <div class="rel-toolbar">
     <button class="btn primary" id="btn-add-node">+ Personnage</button>
     <button class="btn" id="btn-link-mode" title="Cliquer un premier personnage, puis un second">⟷ Créer un lien</button>
@@ -588,6 +626,7 @@
     <button class="btn" id="btn-fit" title="Recentrer le graphe">Centrer</button>
     <span class="sep"></span>
     <button class="btn" id="btn-export" title="Télécharger le graphe en JSON">Exporter</button>
+    <button class="btn" id="btn-session2" title="Ajouter les personnages, liens et précisions de la session du 24 octobre" hidden>Charger la session du 24 octobre</button>
     <button class="btn" id="btn-import" title="Ajouter les personnages et liens d'un fichier JSON">Importer</button>
     <button class="btn" id="btn-print" title="Imprimer la toile sur une page A4, ou l'enregistrer en PDF">Imprimer</button>
     <input type="file" id="import-file" accept="application/json,.json" hidden />
@@ -727,6 +766,23 @@
     <div class="modal-actions">
       <button type="button" class="btn-modal-cancel" id="link-cancel">Annuler</button>
       <button type="submit" class="btn primary" id="link-save">Enregistrer</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modale instantané -->
+<div class="modal-overlay" id="snapshot-modal" hidden>
+  <form class="modal-box" id="snapshot-form" novalidate>
+    <h2>Figer l'état actuel</h2>
+    <p class="modal-text">Une copie de la toile (personnages, liens, positions, portraits) sera conservée et consultable en lecture seule.</p>
+    <div class="field">
+      <label for="snapshot-libelle">Nom de l'instantané</label>
+      <input type="text" id="snapshot-libelle" maxlength="80" placeholder="Ex. : Après la session du 5 septembre" required />
+    </div>
+    <div class="form-error" id="snapshot-error"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn-modal-cancel" id="snapshot-cancel">Annuler</button>
+      <button type="submit" class="btn primary" id="snapshot-save">Enregistrer</button>
     </div>
   </form>
 </div>
