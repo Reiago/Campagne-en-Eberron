@@ -419,6 +419,32 @@ export async function deleteGrapheLien(id) {
   if (error) throw error;
 }
 
+// Instantanés de la toile : copie figée des personnages et liens (jsonb).
+// La liste ne ramène pas les données (images comprises) : on ne charge
+// un instantané complet qu'au moment de l'afficher.
+export async function getGrapheInstantanes() {
+  const { data, error } = await supabase.from('graphe_instantanes').select('id, libelle, created_at').order('created_at');
+  if (error) throw error;
+  return data;
+}
+
+export async function getGrapheInstantane(id) {
+  const { data, error } = await supabase.from('graphe_instantanes').select('*').eq('id', id).single();
+  if (error) throw error;
+  return data;
+}
+
+export async function addGrapheInstantane(data) {
+  const { data: result, error } = await supabase.from('graphe_instantanes').insert(data).select('id, libelle, created_at').single();
+  if (error) throw error;
+  return result;
+}
+
+export async function deleteGrapheInstantane(id) {
+  const { error } = await supabase.from('graphe_instantanes').delete().eq('id', id);
+  if (error) throw error;
+}
+
 // Import en masse (données de session, fichier JSON) : les identifiants sont
 // générés côté client pour que les liens puissent référencer les nœuds.
 export async function bulkInsertGraphe(personnages, liens) {
