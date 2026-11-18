@@ -322,6 +322,26 @@ h1 {
 }
 .podcast-link:hover { background: var(--gold-dim); color: var(--stone); }
 .podcast-link .podcast-icon { font-size: 15px; line-height: 1; }
+
+/* Bloc lecteur audio d'une chronique de session */
+.podcast-block {
+  margin: 1.5rem 0 0;
+  padding: 1rem 1.25rem 1.25rem;
+  background: var(--stone-mid);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  scroll-margin-top: 1rem;
+}
+.podcast-block .section-label { margin: 0 0 0.9rem; }
+.podcast-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  margin-bottom: 0.8rem;
+}
+.podcast-block audio { width: 100%; display: block; }
+.podcast-block a { color: var(--gold-light); }
 .trait-name {
   font-family: var(--font-heading);
   font-size: 13px;
