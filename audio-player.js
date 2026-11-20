@@ -10,7 +10,6 @@
     sound: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15 9a4 4 0 0 1 0 6M17.5 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
     muted: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
   };
-  const SPEEDS = [1, 1.25, 1.5, 2, 0.75];
   const VOLUME_KEY = 'eberron-audio-volume';
 
   // iOS impose le volume matériel : audio.volume y est en lecture seule
@@ -26,6 +25,127 @@
   }
   function saveVolume(v) {
     try { localStorage.setItem(VOLUME_KEY, String(v)); } catch { /* stockage indisponible */ }
+  }
+
+  /* ── Équaliseur visuel ───────────────────────────────────────────────────
+     Barres dessinées sur un <canvas> à partir du spectre réel du son
+     (Web Audio API). Un seul AudioContext, créé au premier clic sur lecture
+     (les navigateurs l'exigent). Sans Web Audio, animation simulée. */
+  let audioCtx = null;
+
+  function createAnalyser(audio) {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return null;
+    try {
+      audioCtx = audioCtx || new Ctx();
+      const source = audioCtx.createMediaElementSource(audio);
+      const analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.75;
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      return analyser;
+    } catch { return null; }
+  }
+
+  function makeEqualizer(canvas, audio, ui) {
+    const BAR = 3, GAP = 3, MIN = 2;
+    const ctx = canvas.getContext('2d');
+    let analyser = null, data = null, levels = [], raf = 0, color = '', idleColor = '', frame = 0;
+
+    function readColors() {
+      const cs = getComputedStyle(ui);
+      color = cs.getPropertyValue('--gold').trim() || '#C9A86C';
+      idleColor = cs.getPropertyValue('--text-dim').trim() || '#9E9080';
+    }
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.round(canvas.clientWidth * dpr);
+      canvas.height = Math.round(canvas.clientHeight * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw();
+    }
+
+    function barCount() { return Math.max(0, Math.floor((canvas.clientWidth + GAP) / (BAR + GAP))); }
+
+    function targetLevels(n) {
+      const out = new Array(n).fill(0);
+      if (audio.paused) return out;
+      if (analyser) {
+        // Le signal analysé est déjà atténué par le volume : on décale la plage
+        // en décibels pour que l'amplitude des barres n'en dépende pas.
+        const db = 20 * Math.log10(Math.max(audio.volume, 0.01));
+        const min = -90 + db, max = -12 + db;
+        if (min < analyser.maxDecibels) { analyser.minDecibels = min; analyser.maxDecibels = max; }
+        else { analyser.maxDecibels = max; analyser.minDecibels = min; }
+        analyser.getByteFrequencyData(data);
+        // Répartition logarithmique des barres sur les fréquences utiles
+        const lo = 1, hi = Math.min(data.length - 1, 64);
+        for (let i = 0; i < n; i++) {
+          const a = Math.floor(lo * Math.pow(hi / lo, i / n));
+          const b = Math.max(a + 1, Math.floor(lo * Math.pow(hi / lo, (i + 1) / n)));
+          let sum = 0;
+          for (let k = a; k < b; k++) sum += data[k];
+          // Léger relèvement des aigus, naturellement plus faibles
+          out[i] = Math.min(1, Math.pow(sum / (b - a) / 255, 1.8) * (1 + 0.9 * i / n));
+        }
+      } else {
+        const t = performance.now() / 1000;
+        for (let i = 0; i < n; i++) out[i] = 0.25 + 0.35 * Math.abs(Math.sin(t * (2 + i % 5) + i * 1.7));
+      }
+      return out;
+    }
+
+    function draw() {
+      const w = canvas.clientWidth, h = canvas.clientHeight, n = barCount();
+      ctx.clearRect(0, 0, w, h);
+      if (!n) return;
+      if (levels.length !== n) levels = new Array(n).fill(0);
+      const offset = (w - (n * BAR + (n - 1) * GAP)) / 2;
+      for (let i = 0; i < n; i++) {
+        const bh = Math.max(MIN, Math.round(levels[i] * h));
+        ctx.globalAlpha = levels[i] > 0.02 ? 0.55 + 0.45 * levels[i] : 0.35;
+        ctx.fillStyle = levels[i] > 0.02 ? color : idleColor;
+        ctx.fillRect(offset + i * (BAR + GAP), h - bh, BAR, bh);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function loop() {
+      if (++frame % 60 === 0) readColors();
+      const target = targetLevels(barCount());
+      let moving = false;
+      levels = target.map((v, i) => {
+        const prev = levels[i] || 0;
+        // Montée rapide, retombée douce
+        const next = v > prev ? v : prev * 0.88 + v * 0.12;
+        if (next > 0.005) moving = true;
+        return next < 0.005 ? 0 : next;
+      });
+      draw();
+      raf = moving || !audio.paused ? requestAnimationFrame(loop) : 0;
+    }
+
+    function start() {
+      if (!analyser && !audio.dataset.eqTried) {
+        audio.dataset.eqTried = '1';
+        analyser = createAnalyser(audio);
+        if (analyser) data = new Uint8Array(analyser.frequencyBinCount);
+      }
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      readColors();
+      if (!raf) raf = requestAnimationFrame(loop);
+    }
+
+    audio.addEventListener('play', start);
+    audio.addEventListener('pause', () => { if (!raf) raf = requestAnimationFrame(loop); });
+    if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas);
+    // Changement de thème : redessiner avec les nouvelles couleurs
+    new MutationObserver(() => { readColors(); draw(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    readColors();
+    resize();
   }
 
   function fmt(sec) {
@@ -53,8 +173,8 @@
         <input type="range" class="ap-seek" min="0" max="1000" step="1" value="0" aria-label="Position de lecture">
         <div class="ap-meta">
           <span class="ap-time"><span class="ap-cur">0:00</span> / <span class="ap-dur">--:--</span></span>
+          <canvas class="ap-eq" aria-hidden="true"></canvas>
           <span class="ap-tools">
-            <button type="button" class="ap-speed" aria-label="Vitesse de lecture">1×</button>
             <button type="button" class="ap-mute" aria-label="Couper le son">${ICONS.sound}</button>
             <input type="range" class="ap-seek ap-vol" min="0" max="100" step="1" value="100" aria-label="Volume">
           </span>
@@ -66,7 +186,6 @@
     const seek = ui.querySelector('.ap-seek');
     const cur = ui.querySelector('.ap-cur');
     const dur = ui.querySelector('.ap-dur');
-    const btnSpeed = ui.querySelector('.ap-speed');
     const btnMute = ui.querySelector('.ap-mute');
     let dragging = false;
 
@@ -118,12 +237,6 @@
       }
     });
 
-    btnSpeed.addEventListener('click', () => {
-      const next = SPEEDS[(SPEEDS.indexOf(audio.playbackRate) + 1) % SPEEDS.length] || 1;
-      audio.playbackRate = next;
-      btnSpeed.textContent = String(next).replace('.', ',') + '×';
-    });
-
     const vol = ui.querySelector('.ap-vol');
     let lastVolume = 1;
 
@@ -161,6 +274,7 @@
     }
     syncVolume();
     paintSeek();
+    makeEqualizer(ui.querySelector('.ap-eq'), audio, ui);
   }
 
   function init() {

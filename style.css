@@ -396,18 +396,16 @@ h1 {
 }
 .ap-cur { color: var(--text-muted); }
 .ap-tools { display: inline-flex; align-items: center; gap: 6px; }
-.audio-player .ap-speed {
-  font-family: var(--font-heading);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  min-width: 3.2em;
-  height: 24px;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 0 0.45rem;
-}
-.audio-player .ap-speed:hover { border-color: var(--gold-dim); }
 .audio-player .ap-mute { width: 26px; height: 26px; padding: 3px; }
+
+/* Équaliseur visuel (canvas dessiné par audio-player.js) */
+.audio-player .ap-eq {
+  flex: 1;
+  min-width: 0;
+  height: 22px;
+  margin: 0 18px;
+  display: block;
+}
 
 /* Barre de progression : la partie lue est remplie via --pct */
 .ap-seek {
