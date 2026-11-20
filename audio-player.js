@@ -11,6 +11,22 @@
     muted: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
   };
   const SPEEDS = [1, 1.25, 1.5, 2, 0.75];
+  const VOLUME_KEY = 'eberron-audio-volume';
+
+  // iOS impose le volume matériel : audio.volume y est en lecture seule
+  const VOLUME_SUPPORTED = (() => {
+    try { const t = new Audio(); t.volume = 0.5; return t.volume === 0.5; } catch { return false; }
+  })();
+
+  function loadVolume() {
+    try {
+      const v = parseFloat(localStorage.getItem(VOLUME_KEY));
+      return v >= 0 && v <= 1 ? v : 1;
+    } catch { return 1; }
+  }
+  function saveVolume(v) {
+    try { localStorage.setItem(VOLUME_KEY, String(v)); } catch { /* stockage indisponible */ }
+  }
 
   function fmt(sec) {
     if (!isFinite(sec) || sec < 0) return '--:--';
@@ -40,6 +56,7 @@
           <span class="ap-tools">
             <button type="button" class="ap-speed" aria-label="Vitesse de lecture">1×</button>
             <button type="button" class="ap-mute" aria-label="Couper le son">${ICONS.sound}</button>
+            <input type="range" class="ap-seek ap-vol" min="0" max="100" step="1" value="100" aria-label="Volume">
           </span>
         </div>
       </div>`;
@@ -107,12 +124,42 @@
       btnSpeed.textContent = String(next).replace('.', ',') + '×';
     });
 
-    btnMute.addEventListener('click', () => { audio.muted = !audio.muted; });
-    audio.addEventListener('volumechange', () => {
-      btnMute.innerHTML = audio.muted ? ICONS.muted : ICONS.sound;
-      btnMute.setAttribute('aria-label', audio.muted ? 'Rétablir le son' : 'Couper le son');
+    const vol = ui.querySelector('.ap-vol');
+    let lastVolume = 1;
+
+    function syncVolume() {
+      const silent = audio.muted || audio.volume === 0;
+      btnMute.innerHTML = silent ? ICONS.muted : ICONS.sound;
+      btnMute.setAttribute('aria-label', silent ? 'Rétablir le son' : 'Couper le son');
+      vol.value = silent ? 0 : Math.round(audio.volume * 100);
+      vol.style.setProperty('--pct', vol.value + '%');
+    }
+
+    btnMute.addEventListener('click', () => {
+      if (audio.muted || audio.volume === 0) {
+        if (audio.volume === 0) audio.volume = lastVolume || 1;
+        audio.muted = false;
+      } else {
+        audio.muted = true;
+      }
     });
 
+    vol.addEventListener('input', () => {
+      const v = vol.value / 100;
+      audio.volume = v;
+      audio.muted = v === 0;
+      if (v > 0) { lastVolume = v; saveVolume(v); }
+    });
+
+    audio.addEventListener('volumechange', syncVolume);
+
+    if (VOLUME_SUPPORTED) {
+      audio.volume = loadVolume();
+      if (audio.volume > 0) lastVolume = audio.volume;
+    } else {
+      ui.classList.add('no-volume');
+    }
+    syncVolume();
     paintSeek();
   }
 

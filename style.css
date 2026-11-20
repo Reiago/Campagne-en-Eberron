@@ -451,6 +451,10 @@ h1 {
   box-shadow: 0 0 0 1px var(--gold-dim);
 }
 .ap-seek:hover::-webkit-slider-thumb { transform: scale(1.2); }
+
+/* Curseur de volume : même style que la barre de progression, en plus court */
+.audio-player .ap-vol { width: 72px; flex-shrink: 0; }
+.audio-player.no-volume .ap-vol { display: none; }
 .trait-name {
   font-family: var(--font-heading);
   font-size: 13px;
