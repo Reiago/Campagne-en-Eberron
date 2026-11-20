@@ -342,6 +342,117 @@ h1 {
 }
 .podcast-block audio { width: 100%; display: block; }
 .podcast-block a { color: var(--gold-light); }
+
+/* Lecteur audio custom (audio-player.js) : remplace les contrôles natifs */
+.audio-player {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.audio-player button {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.audio-player button:hover { color: var(--gold-light); }
+.audio-player button:focus-visible,
+.audio-player .ap-seek:focus-visible {
+  outline: 1px solid var(--gold-light);
+  outline-offset: 3px;
+}
+.audio-player svg { width: 100%; height: 100%; fill: currentColor; }
+.audio-player .ap-play {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-dim);
+  color: var(--gold-light);
+  padding: 11px;
+}
+.audio-player .ap-play:hover { background: var(--gold-dim); color: var(--stone); }
+.audio-player.is-playing .ap-play { border-color: var(--gold-light); }
+.audio-player.is-loading .ap-play { animation: ap-pulse 1s ease-in-out infinite; }
+@keyframes ap-pulse { 50% { opacity: 0.45; } }
+.ap-body { flex: 1; min-width: 0; }
+.ap-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.ap-time {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.ap-cur { color: var(--text-muted); }
+.ap-tools { display: inline-flex; align-items: center; gap: 6px; }
+.audio-player .ap-mute { width: 26px; height: 26px; padding: 3px; }
+
+/* Équaliseur visuel (canvas dessiné par audio-player.js) */
+.audio-player .ap-eq {
+  flex: 1;
+  min-width: 0;
+  height: 22px;
+  margin: 0 18px;
+  display: block;
+}
+
+/* Barre de progression : la partie lue est remplie via --pct */
+.ap-seek {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 18px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  --pct: 0%;
+}
+.ap-seek::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--gold) var(--pct), color-mix(in srgb, var(--text-dim) 35%, transparent) var(--pct));
+}
+.ap-seek::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--gold) var(--pct), color-mix(in srgb, var(--text-dim) 35%, transparent) var(--pct));
+}
+.ap-seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  border: 2px solid var(--stone-mid);
+  box-shadow: 0 0 0 1px var(--gold-dim);
+  transition: transform 0.15s;
+}
+.ap-seek::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  border: 2px solid var(--stone-mid);
+  box-shadow: 0 0 0 1px var(--gold-dim);
+}
+.ap-seek:hover::-webkit-slider-thumb { transform: scale(1.2); }
+
+/* Curseur de volume : même style que la barre de progression, en plus court */
+.audio-player .ap-vol { width: 72px; flex-shrink: 0; }
+.audio-player.no-volume .ap-vol { display: none; }
 .trait-name {
   font-family: var(--font-heading);
   font-size: 13px;
